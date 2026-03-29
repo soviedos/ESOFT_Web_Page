@@ -1,0 +1,25 @@
+---
+import Base from '../../layouts/Base.astro';
+import Card from '../../components/Card.astro';
+---
+
+<Base title="Rutas de aprendizaje" description="Rutas profesionales de ESOFT: encontrá el camino ideal para tu carrera en tecnología.">
+  <section class="relative py-10 md:py-16 px-4 overflow-hidden"><div class="absolute inset-0 bg-[radial-gradient(ellipse_60%_40%_at_50%_-10%,rgba(21,97,240,0.05),transparent_70%)]"></div>
+    <div class="relative max-w-6xl mx-auto">
+      <h1 class="text-3xl md:text-4xl font-bold break-words mb-4">Rutas de aprendizaje</h1>
+      <p class="text-content-secondary text-base md:text-lg max-w-3xl">
+        Cada ruta es un camino profesional completo. Elegí la que se alinee con tus metas y avanzá paso a paso hasta convertirte en el profesional que querés ser.
+      </p>
+    </div>
+  </section>
+
+  <section class="max-w-6xl mx-auto px-4 py-10 md:py-16">
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+      <Card title="Software Testing" description="Desde testing manual hasta automatización e IA. Convertite en un QA engineer completo." href="/rutas/software-testing" />
+      <Card title="Desarrollo de Software" description="Full-stack development: front-end, back-end, APIs, bases de datos y despliegue." href="/rutas/desarrollo-software" />
+      <Card title="UX/UI" description="Diseño de experiencias digitales centradas en el usuario, desde investigación hasta prototipado." href="/rutas/ux-ui" />
+      <Card title="Inteligencia Artificial" description="Machine learning, NLP, visión artificial y sistemas inteligentes aplicados al software." href="/rutas/inteligencia-artificial" />
+      <Card title="Arquitectura de Software" description="Diseñá sistemas escalables, resilientes y bien estructurados a nivel enterprise." href="/rutas/arquitectura-software" />
+    </div>
+  </section>
+</Base>

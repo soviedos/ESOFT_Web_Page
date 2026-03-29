@@ -1,0 +1,21 @@
+---
+interface Props {
+  title: string;
+  description: string;
+  href?: string;
+}
+
+const { title, description, href } = Astro.props;
+const Tag = href ? 'a' : 'div';
+---
+
+<Tag
+  href={href}
+  class:list={[
+    'group block rounded-xl border border-border-default bg-bg-secondary/60 p-6 transition-all duration-300',
+    href && 'hover:border-border-strong hover:bg-bg-secondary hover:shadow-md hover:-translate-y-0.5',
+  ]}
+>
+  <h3 class="text-base font-semibold text-content mb-1.5">{title}</h3>
+  <p class="text-sm text-content-muted leading-relaxed">{description}</p>
+</Tag>

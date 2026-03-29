@@ -1,0 +1,46 @@
+---
+import Base from '../../layouts/Base.astro';
+import Card from '../../components/Card.astro';
+---
+
+<Base title="Admisión" description="Proceso de admisión a ESOFT: requisitos, pasos y financiamiento.">
+  <section class="relative py-10 md:py-16 px-4 overflow-hidden"><div class="absolute inset-0 bg-[radial-gradient(ellipse_60%_40%_at_50%_-10%,rgba(21,97,240,0.05),transparent_70%)]"></div>
+    <div class="relative max-w-6xl mx-auto">
+      <h1 class="text-3xl md:text-4xl font-bold break-words mb-4">Admisión</h1>
+      <p class="text-content-secondary text-base md:text-lg max-w-3xl">
+        Tu carrera en tecnología empieza aquí. Conocé el proceso de admisión, los requisitos y las opciones de financiamiento disponibles.
+      </p>
+    </div>
+  </section>
+
+  <section class="max-w-6xl mx-auto px-4 py-10 md:py-16">
+    <div class="max-w-3xl space-y-8">
+      <div>
+        <h2 class="text-xl md:text-2xl font-semibold mb-3">¿Cómo aplicar?</h2>
+        <ol class="space-y-3 text-content-muted">
+          <li class="flex gap-3"><span class="font-bold text-brand">1.</span> Elegí el programa que te interesa</li>
+          <li class="flex gap-3"><span class="font-bold text-brand">2.</span> Completá el formulario de solicitud de información</li>
+          <li class="flex gap-3"><span class="font-bold text-brand">3.</span> Un asesor te contactará para guiarte en el proceso</li>
+          <li class="flex gap-3"><span class="font-bold text-brand">4.</span> Presentá la documentación requerida</li>
+          <li class="flex gap-3"><span class="font-bold text-brand">5.</span> ¡Comenzá tu formación!</li>
+        </ol>
+      </div>
+
+      <div>
+        <h2 class="text-xl md:text-2xl font-semibold mb-3">Modalidades</h2>
+        <p class="text-content-muted">Ofrecemos modalidades presencial, virtual y híbrida según el programa. Consultá la disponibilidad para cada carrera.</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="py-10 md:py-16 px-4 border-t border-border-subtle">
+    <div class="relative max-w-6xl mx-auto">
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+        <Card title="Requisitos" description="Documentación y requisitos para ingresar a cada programa." href="/admision/requisitos" />
+        <Card title="Proceso" description="Detalle paso a paso del proceso de admisión." href="/admision/proceso" />
+        <Card title="Financiamiento" description="Opciones de becas, planes de pago y financiamiento." href="/admision/financiamiento" />
+        <Card title="Solicitar información" description="Completá el formulario y un asesor te contactará." href="/admision/solicitar-informacion" />
+      </div>
+    </div>
+  </section>
+</Base>

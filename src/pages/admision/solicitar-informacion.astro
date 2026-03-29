@@ -1,0 +1,70 @@
+---
+import Base from '../../layouts/Base.astro';
+---
+
+<Base title="Solicitar información" description="Solicitá información sobre los programas de ESOFT.">
+  <section class="max-w-6xl mx-auto px-4 py-10 md:py-16">
+    <nav class="text-sm text-content-muted mb-6">
+      <a href="/admision" class="hover:text-brand">Admisión</a> / <span class="text-content">Solicitar información</span>
+    </nav>
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-8 md:gap-12">
+      <div>
+        <h1 class="text-3xl md:text-4xl font-bold break-words mb-6">Solicitar información</h1>
+        <p class="text-content-muted mb-6 text-lg">
+          Completá el formulario y un asesor académico te contactará para guiarte en el proceso.
+        </p>
+
+        <div class="space-y-4 text-content-muted">
+          <div>
+            <h3 class="font-semibold text-content">¿Qué incluye la asesoría?</h3>
+            <ul class="text-sm space-y-1 mt-2">
+              <li>• Orientación sobre el programa ideal para vos</li>
+              <li>• Información de costos y financiamiento</li>
+              <li>• Detalle de requisitos y proceso</li>
+              <li>• Respuesta a todas tus preguntas</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+      <div>
+        <form class="space-y-4 bg-bg-secondary rounded-lg p-6" method="POST" action="/api/solicitud">
+          <div>
+            <label for="nombre" class="block text-sm font-medium text-content-secondary mb-1">Nombre completo</label>
+            <input type="text" id="nombre" name="nombre" required class="w-full rounded-md border border-border-default bg-bg-tertiary text-content px-3 py-2 text-sm placeholder:text-content-disabled focus:outline-none focus:ring-2 focus:ring-brand focus:border-transparent" />
+          </div>
+          <div>
+            <label for="email" class="block text-sm font-medium text-content-secondary mb-1">Correo electrónico</label>
+            <input type="email" id="email" name="email" required class="w-full rounded-md border border-border-default bg-bg-tertiary text-content px-3 py-2 text-sm placeholder:text-content-disabled focus:outline-none focus:ring-2 focus:ring-brand focus:border-transparent" />
+          </div>
+          <div>
+            <label for="telefono" class="block text-sm font-medium text-content-secondary mb-1">Teléfono</label>
+            <input type="tel" id="telefono" name="telefono" class="w-full rounded-md border border-border-default bg-bg-tertiary text-content px-3 py-2 text-sm placeholder:text-content-disabled focus:outline-none focus:ring-2 focus:ring-brand focus:border-transparent" />
+          </div>
+          <div>
+            <label for="programa" class="block text-sm font-medium text-content-secondary mb-1">Programa de interés</label>
+            <select id="programa" name="programa" class="w-full rounded-md border border-border-default bg-bg-tertiary text-content px-3 py-2 text-sm placeholder:text-content-disabled focus:outline-none focus:ring-2 focus:ring-brand focus:border-transparent">
+              <option value="">Seleccioná un programa</option>
+              <option value="bachillerato-ingenieria-software">Bachillerato en Ingeniería de Software</option>
+              <option value="tecnico-ingenieria-software">Técnico en Ingeniería de Software</option>
+              <option value="tecnico-desarrollo-web-avanzado">Técnico en Desarrollo Web Avanzado</option>
+              <option value="tecnico-diseno-grafico-web-ux">Diseño Gráfico Web y UX</option>
+              <option value="testing-manual-software">Testing Manual de Software</option>
+              <option value="automatizacion-pruebas-software">Automatización de Pruebas</option>
+              <option value="testing-software-ia">Testing con IA y Sistemas Inteligentes</option>
+              <option value="maestria-software-ia">Maestría en Ingeniería de Software e IA</option>
+              <option value="maestria-arquitectura">Maestría en Arquitectura y Diseño de Software</option>
+            </select>
+          </div>
+          <div>
+            <label for="mensaje" class="block text-sm font-medium text-content-secondary mb-1">Mensaje (opcional)</label>
+            <textarea id="mensaje" name="mensaje" rows="3" class="w-full rounded-md border border-border-default bg-bg-tertiary text-content px-3 py-2 text-sm placeholder:text-content-disabled focus:outline-none focus:ring-2 focus:ring-brand focus:border-transparent"></textarea>
+          </div>
+          <button type="submit" class="w-full rounded-md bg-brand px-4 py-3 text-sm font-medium text-white hover:bg-brand-hover transition-all duration-300">
+            Solicitar información
+          </button>
+        </form>
+      </div>
+    </div>
+  </section>
+</Base>

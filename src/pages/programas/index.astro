@@ -1,0 +1,67 @@
+---
+import Base from '../../layouts/Base.astro';
+import Card from '../../components/Card.astro';
+---
+
+<Base title="Programas" description="Oferta académica de ESOFT: bachillerato, técnicos, maestrías y rutas de aprendizaje.">
+  <section class="relative py-10 md:py-16 px-4 overflow-hidden"><div class="absolute inset-0 bg-[radial-gradient(ellipse_60%_40%_at_50%_-10%,rgba(21,97,240,0.05),transparent_70%)]"></div>
+    <div class="relative max-w-6xl mx-auto">
+      <h1 class="text-3xl md:text-4xl font-bold break-words mb-4">Programas académicos</h1>
+      <p class="text-content-secondary text-base md:text-lg max-w-3xl">
+        Formación especializada en software, IA, testing, UX y arquitectura. Elegí el programa que se adapta a tus metas.
+      </p>
+    </div>
+  </section>
+
+  <!-- Bachillerato -->
+  <section class="max-w-6xl mx-auto px-4 py-10 md:py-16">
+    <h2 class="text-xl md:text-2xl font-bold mb-6">Bachillerato</h2>
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+      <Card title="Bachillerato en Ingeniería de Software" description="Programa completo de 4 años para formar ingenieros de software con sólidas bases en desarrollo, arquitectura y gestión de proyectos." href="/programas/bachillerato-ingenieria-software" />
+    </div>
+  </section>
+
+  <!-- Técnicos cuatrimestrales -->
+  <section class="py-10 md:py-16 px-4 border-t border-border-subtle">
+    <div class="relative max-w-6xl mx-auto">
+      <h2 class="text-xl md:text-2xl font-bold mb-6">Técnicos cuatrimestrales</h2>
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+        <Card title="Técnico en Ingeniería de Software" description="Fundamentos sólidos en desarrollo de software, bases de datos, testing y metodologías ágiles." href="/programas/tecnico-ingenieria-software" />
+        <Card title="Técnico en Desarrollo Web Avanzado" description="Desarrollo front-end y back-end con tecnologías modernas, frameworks y despliegue en la nube." href="/programas/tecnico-desarrollo-web-avanzado" />
+      </div>
+    </div>
+  </section>
+
+  <!-- Técnicos ágiles -->
+  <section class="max-w-6xl mx-auto px-4 py-10 md:py-16">
+    <h2 class="text-xl md:text-2xl font-bold mb-6">Técnicos ágiles</h2>
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+      <Card title="Diseño Gráfico Web y UX" description="Diseño de interfaces, experiencia de usuario, prototipado y diseño visual para productos digitales." href="/programas/tecnico-diseno-grafico-web-ux" />
+      <Card title="Testing Manual de Software" description="Fundamentos del testing, diseño de casos de prueba, gestión de defectos y herramientas de QA." href="/programas/testing-manual-software" />
+      <Card title="Automatización de Pruebas" description="Frameworks de automatización, CI/CD, scripting y estrategias de testing automatizado." href="/programas/automatizacion-pruebas-software" />
+      <Card title="Testing de Software con IA" description="Testing potenciado con inteligencia artificial, análisis predictivo de defectos y generación automática de pruebas." href="/programas/testing-software-ia-sistemas-inteligentes" />
+    </div>
+  </section>
+
+  <!-- Maestrías -->
+  <section class="py-10 md:py-16 px-4 border-t border-border-subtle">
+    <div class="relative max-w-6xl mx-auto">
+      <h2 class="text-xl md:text-2xl font-bold mb-6">Maestrías</h2>
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+        <Card title="Maestría en Ingeniería de Software e IA" description="Liderá proyectos de software con inteligencia artificial, machine learning y sistemas inteligentes." href="/programas/maestria-ingenieria-software-ia" />
+        <Card title="Maestría en Arquitectura y Diseño de Software" description="Diseñá sistemas escalables, patrones arquitectónicos y soluciones enterprise." href="/programas/maestria-arquitectura-diseno-software" />
+      </div>
+    </div>
+  </section>
+
+  <!-- CTA -->
+  <section class="py-10 md:py-16 px-4 text-center">
+    <div class="max-w-4xl mx-auto">
+      <h2 class="text-xl md:text-2xl font-bold mb-4">¿No sabés cuál elegir?</h2>
+      <p class="text-content-muted mb-6">Explorá nuestras rutas de aprendizaje para encontrar el camino ideal según tu perfil.</p>
+      <a href="/rutas" class="inline-block rounded-md bg-brand text-white px-6 py-3 text-sm font-semibold hover:bg-brand-hover transition-all duration-300">
+        Ver rutas de aprendizaje
+      </a>
+    </div>
+  </section>
+</Base>

@@ -1,0 +1,134 @@
+---
+import Base from '../layouts/Base.astro';
+import Card from '../components/Card.astro';
+---
+
+<Base title="Inicio" description="ESOFT — Escuela de Software, IA, Testing, UX y Arquitectura. Formá tu carrera en tecnología.">
+
+  <!-- Hero -->
+  <section class="relative -mt-16 min-h-[90vh] flex items-center px-6 overflow-hidden">
+    <!-- Background image overlay -->
+    <div class="absolute inset-0 bg-[url('https://images.unsplash.com/photo-1498050108023-c5249f4df085?w=1920&q=80')] bg-cover bg-center"></div>
+    <div class="absolute inset-0 bg-gradient-to-r from-bg-primary via-bg-primary/90 to-bg-primary/40"></div>
+    <div class="absolute inset-0 bg-gradient-to-t from-bg-primary via-transparent to-transparent"></div>
+
+    <div class="relative max-w-6xl mx-auto w-full grid grid-cols-1 lg:grid-cols-2 gap-12 items-center pt-24 pb-20">
+      <!-- Left: Text -->
+      <div>
+        <span class="inline-block rounded-full bg-brand/15 border border-brand/30 px-4 py-1.5 text-xs font-medium text-brand mb-8">
+          Innovación · Tecnología · Futuro
+        </span>
+        <h1 class="text-4xl sm:text-5xl lg:text-6xl font-bold tracking-tight leading-[1.08]">
+          Formamos a los líderes que construirán el software del mañana.
+        </h1>
+        <p class="mt-6 text-base text-content-muted max-w-lg leading-relaxed">
+          En la Escuela de Ingeniería de Software de la Universidad CENFOTEC, impulsamos una educación moderna, rigurosa y conectada con la industria, para desarrollar talento capaz de transformar organizaciones y sociedad.
+        </p>
+        <div class="mt-10 flex flex-col sm:flex-row gap-3">
+          <a href="/programas" class="inline-flex justify-center items-center bg-brand text-white font-semibold px-7 py-3.5 rounded-lg text-sm hover:bg-brand-hover transition-all duration-300">Explorar programas</a>
+          <a href="/admision/solicitar-informacion" class="inline-flex justify-center items-center border border-border-default text-content-secondary font-medium px-7 py-3.5 rounded-lg text-sm hover:border-content-muted hover:text-content transition-all duration-300">Solicitar información</a>
+        </div>
+      </div>
+
+      <!-- Right: Info card -->
+      <div class="hidden lg:block">
+        <div class="rounded-2xl border border-border-default bg-bg-secondary/80 backdrop-blur-sm p-8">
+          <h3 class="text-xl font-bold text-content mb-2">Educación con visión tecnológica</h3>
+          <p class="text-sm text-content-muted leading-relaxed mb-6">
+            Programas diseñados para responder a las nuevas demandas del mercado, integrando desarrollo de software, arquitectura, inteligencia artificial, nube y transformación digital.
+          </p>
+          <div class="grid grid-cols-2 gap-3">
+            <div class="rounded-xl border border-border-default p-4">
+              <p class="text-2xl font-bold text-content">+1200</p>
+              <p class="text-xs text-content-muted mt-1">Estudiantes</p>
+            </div>
+            <div class="rounded-xl border border-border-default p-4">
+              <p class="text-2xl font-bold text-content">80+</p>
+              <p class="text-xs text-content-muted mt-1">Docentes expertos</p>
+            </div>
+            <div class="rounded-xl border border-border-default p-4">
+              <p class="text-2xl font-bold text-content">IA</p>
+              <p class="text-xs text-content-muted mt-1">Enfoque actual</p>
+            </div>
+            <div class="rounded-xl border border-border-default p-4">
+              <p class="text-2xl font-bold text-content">Industria</p>
+              <p class="text-xs text-content-muted mt-1">Conexión real</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Roles -->
+  <section class="py-16 md:py-24 px-6">
+    <div class="divider-glow mb-16 md:mb-24"></div>
+    <div class="relative max-w-6xl mx-auto">
+      <p class="font-mono text-xs text-content-disabled tracking-widest uppercase mb-3 text-center">Rutas profesionales</p>
+      <h2 class="text-2xl md:text-3xl font-bold text-content text-center tracking-tight">¿Qué querés ser?</h2>
+      <p class="text-content-muted text-center mt-3 mb-12 max-w-lg mx-auto">Tu futuro profesional empieza con una ruta clara.</p>
+      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+        <Card title="Desarrollador de Software" description="Aplicaciones web, móviles y de escritorio con tecnologías modernas." href="/rutas/desarrollo-software" />
+        <Card title="QA / Testing Engineer" description="Testing manual, automatizado e IA para asegurar calidad." href="/rutas/software-testing" />
+        <Card title="Diseñador UX/UI" description="Experiencias digitales centradas en el usuario." href="/rutas/ux-ui" />
+        <Card title="Especialista en IA" description="Sistemas inteligentes y soluciones con inteligencia artificial." href="/rutas/inteligencia-artificial" />
+        <Card title="Arquitecto de Software" description="Sistemas escalables, resilientes y bien estructurados." href="/rutas/arquitectura-software" />
+        <Card title="Todas las rutas" description="Descubrí todas las rutas de aprendizaje disponibles." href="/rutas" />
+      </div>
+    </div>
+  </section>
+
+  <!-- Programas -->
+  <section class="py-16 md:py-24 px-6">
+    <div class="divider-glow mb-16 md:mb-24"></div>
+    <div class="relative max-w-6xl mx-auto">
+      <p class="font-mono text-xs text-content-disabled tracking-widest uppercase mb-3 text-center">Oferta académica</p>
+      <h2 class="text-2xl md:text-3xl font-bold text-content text-center tracking-tight">Programas destacados</h2>
+      <p class="text-content-muted text-center mt-3 mb-12 max-w-lg mx-auto">Desde técnicos ágiles hasta maestrías especializadas.</p>
+      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+        <Card title="Ingeniería del Software" description="Bachillerato · 9 cuatrimestres · 43 cursos. Acreditado SINAES." href="/programas/bachillerato-ingenieria-software" />
+        <Card title="Software e Inteligencia Artificial" description="Maestría · 6 cuatrimestres. Software + IA aplicada." href="/programas/maestria-ingenieria-software-ia" />
+        <Card title="Testing de Software con IA" description="Técnico ágil. Pruebas potenciadas con sistemas inteligentes." href="/programas/testing-software-ia-sistemas-inteligentes" />
+      </div>
+      <div class="text-center mt-10">
+        <a href="/programas" class="text-sm text-content-muted hover:text-content transition-colors">Ver todos los programas →</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- Trust -->
+  <section class="py-16 md:py-24 px-6">
+    <div class="divider-glow mb-16 md:mb-24"></div>
+    <div class="max-w-3xl mx-auto text-center">
+      <p class="font-mono text-xs text-content-disabled tracking-widest uppercase mb-3">Calidad académica</p>
+      <h2 class="text-2xl md:text-3xl font-bold text-content tracking-tight">Formación formal con velocidad de industria</h2>
+      <p class="text-content-muted mt-4 leading-relaxed max-w-xl mx-auto">
+        Programa acreditado por SINAES, formación por competencias, mejora continua e integración con empresas líderes del sector.
+      </p>
+      <div class="mt-8 flex flex-wrap gap-x-6 gap-y-3 justify-center text-sm text-content-muted">
+        <span class="flex items-center gap-2"><span class="w-1.5 h-1.5 rounded-full bg-brand"></span>SINAES</span>
+        <span class="flex items-center gap-2"><span class="w-1.5 h-1.5 rounded-full bg-brand"></span>Mejora continua</span>
+        <span class="flex items-center gap-2"><span class="w-1.5 h-1.5 rounded-full bg-brand"></span>Competencias</span>
+        <span class="flex items-center gap-2"><span class="w-1.5 h-1.5 rounded-full bg-brand"></span>Alianzas globales</span>
+      </div>
+      <div class="mt-8 flex flex-wrap gap-6 justify-center">
+        <a href="/calidad-academica" class="text-sm text-content-muted hover:text-content transition-colors">Calidad académica →</a>
+        <a href="/industria-empleabilidad" class="text-sm text-content-muted hover:text-content transition-colors">Industria y empleabilidad →</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- CTA -->
+  <section class="relative py-16 md:py-24 px-6">
+    <div class="divider-glow mb-16 md:mb-24"></div>
+    <div class="max-w-3xl mx-auto text-center">
+      <h2 class="text-2xl md:text-3xl font-bold tracking-tight">¿Listo para empezar?</h2>
+      <p class="text-content-muted mt-4">Tu carrera en tecnología empieza aquí.</p>
+      <div class="mt-8 flex flex-col sm:flex-row gap-3 justify-center">
+        <a href="/admision/solicitar-informacion" class="inline-flex justify-center items-center bg-brand text-white font-semibold px-7 py-3.5 rounded-lg text-sm hover:bg-brand-hover transition-all duration-300">Solicitar información</a>
+        <a href="/admision" class="inline-flex justify-center items-center border border-border-default text-content-secondary font-medium px-7 py-3.5 rounded-lg text-sm hover:border-content-muted hover:text-content transition-all duration-300">Proceso de admisión →</a>
+      </div>
+    </div>
+  </section>
+
+</Base>

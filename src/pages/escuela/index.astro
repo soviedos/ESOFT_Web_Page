@@ -1,0 +1,58 @@
+---
+import Base from '../../layouts/Base.astro';
+import Card from '../../components/Card.astro';
+---
+
+<Base title="Escuela" description="Conocé ESOFT: misión, visión, modelo educativo y equipo directivo.">
+  <section class="relative py-10 md:py-16 px-4 overflow-hidden"><div class="absolute inset-0 bg-[radial-gradient(ellipse_60%_40%_at_50%_-10%,rgba(21,97,240,0.05),transparent_70%)]"></div>
+    <div class="relative max-w-6xl mx-auto">
+      <h1 class="text-3xl md:text-4xl font-bold break-words mb-4">La Escuela</h1>
+      <p class="text-content-secondary text-base md:text-lg max-w-3xl">
+        ESOFT es una escuela especializada en software, inteligencia artificial, testing, UX y arquitectura de software. Formamos profesionales listos para la industria.
+      </p>
+    </div>
+  </section>
+
+  <section class="max-w-6xl mx-auto px-4 py-10 md:py-16">
+    <h2 class="text-2xl md:text-3xl font-bold mb-6">¿Qué es ESOFT?</h2>
+    <p class="text-content-muted mb-4 max-w-3xl">
+      ESOFT es una institución educativa enfocada exclusivamente en las disciplinas de tecnología de software. Nuestro modelo combina teoría rigurosa con práctica real, preparando profesionales que la industria necesita.
+    </p>
+
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-8 md:gap-12 mt-12">
+      <div>
+        <h3 class="text-xl font-semibold mb-3">Misión</h3>
+        <p class="text-content-muted">
+          Formar profesionales en ingeniería de software y disciplinas tecnológicas afines, a través de programas académicos de alta calidad, vinculados con la industria y orientados a la innovación.
+        </p>
+      </div>
+      <div>
+        <h3 class="text-xl font-semibold mb-3">Visión</h3>
+        <p class="text-content-muted">
+          Ser la escuela de referencia en Centroamérica para la formación especializada en software, IA, testing, UX y arquitectura de sistemas.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <section class="py-10 md:py-16 px-4 border-t border-border-subtle">
+    <div class="relative max-w-6xl mx-auto">
+      <h2 class="text-2xl md:text-3xl font-bold mb-4">Diferenciadores</h2>
+      <p class="text-content-muted mb-10">Lo que hace única a ESOFT.</p>
+      <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
+        <Card title="Enfoque 100% en software" description="No somos una universidad generalista. Todo nuestro ecosistema gira en torno a la ingeniería de software y sus especialidades." />
+        <Card title="Modelo por competencias" description="Aprendizaje práctico, basado en proyectos reales y evaluación por competencias profesionales." />
+        <Card title="Conexión con la industria" description="Alianzas con empresas tecnológicas, certificaciones y proyectos reales desde el primer día." />
+      </div>
+    </div>
+  </section>
+
+  <section class="max-w-6xl mx-auto px-4 py-10 md:py-16">
+    <h2 class="text-2xl md:text-3xl font-bold mb-10">Conocé más</h2>
+    <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
+      <Card title="Dirección" description="Conocé al equipo directivo que lidera ESOFT." href="/escuela/director" />
+      <Card title="Docentes" description="Profesionales activos en la industria que comparten su experiencia." href="/escuela/docentes" />
+      <Card title="Metodología" description="Nuestro modelo educativo y enfoque pedagógico." href="/escuela/metodologia" />
+    </div>
+  </section>
+</Base>

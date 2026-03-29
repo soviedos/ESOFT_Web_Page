@@ -1,0 +1,101 @@
+@import "tailwindcss";
+
+@theme {
+  /* Backgrounds */
+  --color-bg-primary: #131313;
+  --color-bg-secondary: #2B2B2B;
+  --color-bg-tertiary: #363636;
+  --color-bg-elevated: #404040;
+
+  /* Accent — Azul tecnológico */
+  --color-brand: #1561F0;
+  --color-brand-hover: #3479FF;
+  --color-brand-soft: #6BA0FF;
+
+  /* Accent secundario (badges, detalles sutiles) */
+  --color-accent: #1561F0;
+  --color-accent-hover: #3479FF;
+  --color-accent-soft: #6BA0FF;
+
+  /* Text */
+  --color-content: #FFFFFF;
+  --color-content-secondary: #C7C7CC;
+  --color-content-muted: #86868B;
+  --color-content-disabled: #48484A;
+
+  /* Borders */
+  --color-border-subtle: rgba(134, 134, 139, 0.15);
+  --color-border-default: rgba(134, 134, 139, 0.30);
+  --color-border-strong: rgba(134, 134, 139, 0.55);
+
+  /* States */
+  --color-success: #30D158;
+  --color-warning: #FFD60A;
+  --color-error: #FF453A;
+
+  /* Shadows */
+  --shadow-sm: 0 2px 8px rgba(0,0,0,0.4);
+  --shadow-md: 0 8px 24px rgba(0,0,0,0.5);
+  --shadow-lg: 0 16px 48px rgba(0,0,0,0.6);
+  --shadow-glow: 0 0 20px rgba(21,97,240,0.25), 0 0 40px rgba(21,97,240,0.08);
+  --shadow-glow-soft: 0 0 10px rgba(21,97,240,0.15), 0 0 25px rgba(21,97,240,0.05);
+  --shadow-glow-accent: 0 0 20px rgba(21,97,240,0.25), 0 0 40px rgba(21,97,240,0.08);
+
+  /* Radius */
+  --radius-sm: 6px;
+  --radius-md: 10px;
+  --radius-lg: 16px;
+  --radius-xl: 24px;
+
+  /* Fonts */
+  --font-sans: 'Inter', 'SF Pro Display', -apple-system, sans-serif;
+}
+
+:root {
+  /* Gradients */
+  --gradient-hero: linear-gradient(
+    90deg,
+    rgba(19,19,19,0.95) 0%,
+    rgba(19,19,19,0.85) 30%,
+    rgba(19,19,19,0.50) 55%,
+    rgba(19,19,19,0.15) 100%
+  );
+
+  --gradient-bottom: linear-gradient(
+    180deg,
+    rgba(19,19,19,0.05) 0%,
+    rgba(19,19,19,0.75) 70%,
+    rgba(19,19,19,0.98) 100%
+  );
+
+  --gradient-primary: linear-gradient(135deg, #1561F0 0%, #3479FF 100%);
+  --gradient-accent: linear-gradient(135deg, #1561F0 0%, #6BA0FF 100%);
+
+  /* Transitions */
+  --transition-fast: 0.2s ease;
+  --transition-normal: 0.3s ease;
+  --transition-slow: 0.5s ease;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  background-color: var(--color-bg-primary);
+  color: var(--color-content);
+  font-family: var(--font-sans);
+}
+
+::selection {
+  background-color: rgba(21, 97, 240, 0.35);
+  color: #FFFFFF;
+}
+
+/* Subtle section divider */
+.divider-glow {
+  height: 1px;
+  background: linear-gradient(90deg, transparent 0%, rgba(134,134,139,0.25) 50%, transparent 100%);
+}
