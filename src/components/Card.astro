@@ -24,22 +24,22 @@ const svgPath = icon ? iconMap[icon] : null;
 <Tag
   href={href}
   class:list={[
-    'group block card-premium rounded-[20px] p-8',
+    'group block card-premium rounded-[20px] p-8 md:p-10',
     href && 'cursor-pointer',
   ]}
 >
   {svgPath && (
-    <div class="w-10 h-10 rounded-2xl bg-white/[0.04] border border-border-subtle flex items-center justify-center mb-5">
-      <svg class="w-[18px] h-[18px] text-brand" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24">
+    <div class="w-12 h-12 rounded-2xl bg-brand-soft border border-border-brand flex items-center justify-center mb-6">
+      <svg class="w-5 h-5 text-brand" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24">
         <path stroke-linecap="round" stroke-linejoin="round" d={svgPath} />
       </svg>
     </div>
   )}
   {!svgPath && icon && <span class="text-2xl mb-4 block">{icon}</span>}
-  <h3 class="text-[15px] font-semibold text-content mb-2 tracking-tight">{title}</h3>
-  <p class="text-[13px] text-content-muted leading-[1.6]">{description}</p>
+  <h3 class="text-[16px] font-bold text-content mb-3 tracking-tight">{title}</h3>
+  <p class="text-[14px] text-content-secondary leading-[1.7]">{description}</p>
   {href && (
-    <span class="inline-flex items-center gap-1 text-[13px] text-content-muted group-hover:text-brand mt-5 transition-colors duration-500">
+    <span class="inline-flex items-center gap-1.5 text-[13px] text-content-muted group-hover:text-brand mt-6 transition-colors duration-500 font-medium">
       Explorar
       <svg class="w-3.5 h-3.5 transform group-hover:translate-x-1 transition-transform duration-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
