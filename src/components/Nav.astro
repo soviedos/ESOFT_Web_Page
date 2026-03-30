@@ -26,13 +26,13 @@ const isActive = (href: string) =>
       </svg>
     </button>
 
-    <ul class="hidden md:flex items-center gap-8">
+    <ul class="hidden md:flex items-center gap-9">
       {links.map(({ href, label }) => (
         <li>
           <a
             href={href}
             class:list={[
-              'text-[13px] font-medium tracking-wide transition-colors duration-300',
+              'text-[13px] font-normal tracking-[0.01em] transition-colors duration-300',
               isActive(href)
                 ? 'text-content'
                 : 'text-content-secondary hover:text-content',
@@ -42,10 +42,10 @@ const isActive = (href: string) =>
           </a>
         </li>
       ))}
-      <li class="ml-3">
+      <li class="ml-2">
         <a
           href="/admision/solicitar-informacion"
-          class="btn-primary inline-flex items-center rounded-full bg-brand px-6 py-2.5 text-[13px] font-semibold text-white"
+          class="btn-primary inline-flex items-center rounded-full bg-brand px-5 py-2 text-[13px] font-medium text-white"
         >
           Aplicar ahora
         </a>
@@ -85,10 +85,10 @@ const isActive = (href: string) =>
 
   const update = () => {
     const s = window.scrollY > 10;
-    header.style.background = s ? 'rgba(19,19,19,0.88)' : 'rgba(19,19,19,0.4)';
-    header.style.backdropFilter = s ? 'blur(40px) saturate(1.8)' : 'blur(20px) saturate(1.2)';
+    header.style.background = s ? 'rgba(19,19,19,0.82)' : 'transparent';
+    header.style.backdropFilter = s ? 'blur(40px) saturate(1.6)' : 'none';
     (header.style as any).webkitBackdropFilter = header.style.backdropFilter;
-    header.style.borderBottom = s ? '1px solid rgba(255,255,255,0.06)' : '1px solid transparent';
+    header.style.borderBottom = s ? '1px solid rgba(255,255,255,0.04)' : '1px solid transparent';
   };
 
   window.addEventListener('scroll', update, { passive: true });
