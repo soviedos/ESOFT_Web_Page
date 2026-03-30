@@ -13,28 +13,31 @@ const isActive = (href: string) =>
   href === '/' ? currentPath === '/' : currentPath.startsWith(href);
 ---
 
-<header id="site-header" class="fixed top-0 w-full z-50 transition-all duration-500">
-  <nav class="max-w-6xl mx-auto px-6 flex items-center justify-between h-16">
-    <a href="/" class="text-xl font-bold tracking-tight text-content">
+<header id="site-header" class="fixed top-0 w-full z-50 transition-all duration-700 ease-out">
+  <div class="absolute inset-x-0 bottom-0 h-px bg-gradient-to-r from-transparent via-white/0 to-transparent transition-all duration-700" id="header-border"></div>
+  <nav class="max-w-[1200px] mx-auto px-6 flex items-center justify-between h-[60px]">
+    <a href="/" class="relative text-[17px] font-bold tracking-[-0.02em] text-content">
       ESOFT
     </a>
 
     <!-- Mobile toggle -->
-    <button id="menu-toggle" class="md:hidden p-2 -mr-2 text-content-muted touch-manipulation" aria-label="Menú">
+    <button id="menu-toggle" class="md:hidden p-2 -mr-2 text-content-muted touch-manipulation" aria-label="Menu">
       <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M4 6h16M4 12h16M4 18h16" />
       </svg>
     </button>
 
     <!-- Desktop nav -->
-    <ul class="hidden md:flex items-center gap-8">
+    <ul class="hidden md:flex items-center gap-7">
       {links.map(({ href, label }) => (
         <li>
           <a
             href={href}
             class:list={[
-              'text-[13px] tracking-wide transition-colors duration-200',
-              isActive(href) ? 'text-content font-medium' : 'text-content-muted hover:text-content',
+              'text-[13px] transition-colors duration-300',
+              isActive(href)
+                ? 'text-content font-medium'
+                : 'text-content-muted hover:text-content',
             ]}
           >
             {label}
@@ -44,7 +47,7 @@ const isActive = (href: string) =>
       <li>
         <a
           href="/admision/solicitar-informacion"
-          class="btn-primary inline-flex items-center rounded-full bg-brand px-5 py-2 text-[13px] font-medium text-white hover:bg-brand-hover transition-all duration-300"
+          class="btn-primary inline-flex items-center rounded-full bg-brand px-5 py-[7px] text-[13px] font-medium text-white hover:bg-brand-hover"
         >
           Aplicar
         </a>
@@ -53,15 +56,15 @@ const isActive = (href: string) =>
   </nav>
 
   <!-- Mobile nav -->
-  <div id="mobile-menu" class="hidden md:hidden bg-bg-primary/95 backdrop-blur-xl border-t border-border-subtle px-6 pb-6">
-    <ul class="flex flex-col gap-1 pt-3">
+  <div id="mobile-menu" class="hidden md:hidden border-t border-border-subtle px-6 pb-6" style="background: rgba(10,10,10,0.97); backdrop-filter: blur(24px); -webkit-backdrop-filter: blur(24px);">
+    <ul class="flex flex-col gap-1 pt-4">
       {links.map(({ href, label }) => (
         <li>
           <a
             href={href}
             class:list={[
-              'block py-2.5 text-sm transition-colors touch-manipulation',
-              isActive(href) ? 'text-content font-medium' : 'text-content-muted hover:text-content',
+              'block py-2.5 text-[15px] transition-colors duration-200 touch-manipulation',
+              isActive(href) ? 'text-content font-medium' : 'text-content-muted',
             ]}
           >
             {label}
@@ -71,7 +74,7 @@ const isActive = (href: string) =>
       <li class="pt-3">
         <a
           href="/admision/solicitar-informacion"
-          class="block text-center rounded-full bg-brand px-4 py-2.5 text-sm font-medium text-white hover:bg-brand-hover transition-colors touch-manipulation"
+          class="block text-center rounded-full bg-brand px-4 py-2.5 text-sm font-medium text-white touch-manipulation"
         >
           Aplicar
         </a>
@@ -82,16 +85,20 @@ const isActive = (href: string) =>
 
 <script>
   const header = document.getElementById('site-header');
-  let lastScroll = 0;
+  const border = document.getElementById('header-border');
 
   const updateHeader = () => {
-    const scrollY = window.scrollY;
-    if (scrollY > 40) {
-      header?.classList.add('bg-bg-primary/80', 'backdrop-blur-xl', 'border-b', 'border-border-subtle');
+    if (window.scrollY > 20) {
+      header!.style.background = 'rgba(10,10,10,0.85)';
+      header!.style.backdropFilter = 'blur(24px) saturate(1.2)';
+      header!.style.webkitBackdropFilter = 'blur(24px) saturate(1.2)';
+      border!.style.background = 'linear-gradient(90deg, transparent, rgba(255,255,255,0.06) 50%, transparent)';
     } else {
-      header?.classList.remove('bg-bg-primary/80', 'backdrop-blur-xl', 'border-b', 'border-border-subtle');
+      header!.style.background = 'transparent';
+      header!.style.backdropFilter = 'none';
+      header!.style.webkitBackdropFilter = 'none';
+      border!.style.background = 'linear-gradient(90deg, transparent, rgba(255,255,255,0) 50%, transparent)';
     }
-    lastScroll = scrollY;
   };
 
   window.addEventListener('scroll', updateHeader, { passive: true });

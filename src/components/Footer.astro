@@ -33,26 +33,26 @@ const footerSections = [
 ---
 
 <footer class="relative bg-bg-primary border-t border-border-subtle text-content-muted overflow-hidden">
-  <!-- Ambient top glow -->
-  <div class="absolute top-0 left-1/2 -translate-x-1/2 w-[600px] h-[1px] bg-gradient-to-r from-transparent via-brand/20 to-transparent"></div>
+  <!-- Subtle gradient top line -->
+  <div class="absolute top-0 inset-x-0 h-px bg-gradient-to-r from-transparent via-white/[0.06] to-transparent"></div>
 
-  <div class="max-w-6xl mx-auto px-6 py-16 md:py-20">
+  <div class="max-w-[1100px] mx-auto px-6 py-16 md:py-20">
     <div class="grid grid-cols-2 md:grid-cols-4 gap-10 md:gap-16">
       <!-- Brand -->
       <div class="col-span-2 md:col-span-1">
-        <a href="/" class="text-xl font-bold text-content tracking-tight">ESOFT</a>
-        <p class="mt-4 text-sm leading-relaxed max-w-xs">
-          Formamos a los ingenieros de software que la industria necesita. IA, Cloud, Testing, UX y Arquitectura.
+        <a href="/" class="text-[17px] font-bold text-content tracking-[-0.02em]">ESOFT</a>
+        <p class="mt-4 text-[13px] leading-relaxed max-w-xs">
+          Formamos a los ingenieros de software que la industria necesita.
         </p>
       </div>
 
       {footerSections.map((section) => (
         <div>
-          <h4 class="text-xs font-semibold text-content-secondary uppercase tracking-wider mb-5">{section.title}</h4>
+          <h4 class="text-[11px] font-semibold text-content-secondary uppercase tracking-[0.12em] mb-5">{section.title}</h4>
           <ul class="space-y-3">
             {section.links.map(({ href, label }) => (
               <li>
-                <a href={href} class="text-sm hover:text-content transition-colors duration-200">
+                <a href={href} class="text-[13px] hover:text-content transition-colors duration-300">
                   {label}
                 </a>
               </li>
@@ -62,9 +62,9 @@ const footerSections = [
       ))}
     </div>
 
-    <div class="mt-16 pt-8 border-t border-border-subtle flex flex-col sm:flex-row justify-between items-center gap-4 text-xs text-content-disabled">
-      <span>&copy; {year} ESOFT · Universidad CENFOTEC</span>
-      <span>Hecho con tecnología que enseñamos.</span>
+    <div class="mt-16 pt-8 border-t border-border-subtle flex flex-col sm:flex-row justify-between items-center gap-4 text-[11px] text-content-disabled">
+      <span>&copy; {year} ESOFT &middot; Universidad CENFOTEC</span>
+      <span class="text-content-disabled/60">Hecho con la tecnologia que ensenamos.</span>
     </div>
   </div>
 </footer>
