@@ -35,17 +35,30 @@ const footerSections = [
 <footer class="relative bg-bg-primary text-content-muted">
   <div class="section-divider"></div>
 
+  <!-- Final CTA -->
+  <div class="max-w-[700px] mx-auto px-8 lg:px-12 pt-20 pb-16 text-center">
+    <h2 class="headline-display text-[clamp(1.75rem,4vw,2.5rem)] mb-4">
+      Tu carrera en software <span class="text-gradient-hero">empieza hoy.</span>
+    </h2>
+    <p class="text-content-secondary text-[16px] leading-[1.7] mb-8 max-w-[460px] mx-auto">
+      Unite a la comunidad de ingenieros que ya estan transformando la industria tech en Costa Rica y el mundo.
+    </p>
+    <a href="/admision/solicitar-informacion" class="btn-primary inline-flex items-center bg-brand text-white font-semibold px-8 py-3.5 rounded-full text-[15px]">
+      Solicitar informacion
+    </a>
+  </div>
+
   <div class="max-w-[1100px] mx-auto px-8 lg:px-12 py-16 md:py-20">
     <div class="grid grid-cols-2 md:grid-cols-4 gap-12 md:gap-14">
       <!-- Brand -->
       <div class="col-span-2 md:col-span-1">
         <a href="/" class="inline-block">
-          <img src="/ESOFT_Software-Engineering-Negro.png" alt="ESOFT" class="h-7 w-auto invert" />
+          <img src="/ESOFT_Software-Engineering-Negro.png" alt="ESOFT" class="w-[120px] h-auto invert" />
         </a>
         <p class="mt-4 text-[13px] leading-[1.7] max-w-[220px] text-content-secondary">
           Donde se forma el talento que construye el software del futuro.
         </p>
-        <img src="/UCENFOTEC_LogoHorizontal-Negro.png" alt="Universidad CENFOTEC" class="mt-5 h-5 w-auto invert opacity-50" />
+        <img src="/UCENFOTEC_LogoHorizontal-Negro.png" alt="Universidad CENFOTEC" class="mt-5 w-[90px] h-auto invert opacity-50" />
       </div>
 
       {footerSections.map((section) => (

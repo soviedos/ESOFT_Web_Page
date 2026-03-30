@@ -8,7 +8,7 @@ import Card from '../components/Card.astro';
   <!-- ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
        1. HERO — Cinematic, high-impact
   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ -->
-  <section class="relative min-h-[100dvh] flex flex-col items-center justify-center overflow-hidden -mt-16">
+  <section class="relative min-h-[100dvh] flex flex-col items-center justify-center overflow-hidden -mt-[72px]">
     <!-- Ambient glow layers -->
     <div class="ambient-glow w-[900px] h-[500px] top-[-15%] left-1/2 -translate-x-1/2 animate-pulse-glow" style="background: radial-gradient(ellipse at center, rgba(21,97,240,0.12) 0%, transparent 65%);"></div>
     <div class="ambient-glow w-[600px] h-[400px] top-[10%] left-[20%] -translate-x-1/2" style="background: radial-gradient(ellipse at center, rgba(21,97,240,0.05) 0%, transparent 60%); animation: pulse-glow 8s ease-in-out 2s infinite;"></div>
@@ -17,19 +17,19 @@ import Card from '../components/Card.astro';
 
     <div class="relative max-w-[800px] mx-auto text-center px-6">
       <!-- Logos -->
-      <div class="flex items-center justify-center gap-5 mb-8 animate-fade-up">
-        <img src="/ESOFT_Software-Engineering-Negro.png" alt="ESOFT" class="h-7 md:h-8 w-auto invert opacity-60" />
-        <div class="w-px h-5 bg-content-disabled"></div>
-        <img src="/UCENFOTEC_LogoHorizontal-Negro.png" alt="Universidad CENFOTEC" class="h-5 md:h-6 w-auto invert opacity-60" />
+      <div class="flex items-center justify-center gap-5 mb-10 animate-fade-up">
+        <img src="/ESOFT_Software-Engineering-Negro.png" alt="ESOFT" class="w-[100px] md:w-[140px] h-auto invert opacity-60" />
+        <div class="w-px h-6 bg-content-disabled"></div>
+        <img src="/UCENFOTEC_LogoHorizontal-Negro.png" alt="Universidad CENFOTEC" class="w-[80px] md:w-[110px] h-auto invert opacity-60" />
       </div>
 
-      <h1 class="headline-display text-[clamp(3rem,9vw,5.5rem)] animate-fade-up" style="animation-delay: 0.08s">
-        El software del<br />
-        <span class="text-gradient-hero">futuro se construye aquí.</span>
+      <h1 class="headline-display text-[clamp(2.5rem,7vw,4rem)] animate-fade-up" style="animation-delay: 0.08s">
+        El software del futuro<br />
+        <span class="text-gradient-hero">se construye aquí.</span>
       </h1>
 
-      <p class="mt-8 text-[clamp(1.05rem,2.2vw,1.35rem)] text-content-secondary leading-[1.6] max-w-[540px] mx-auto animate-fade-up" style="animation-delay: 0.16s">
-        La única escuela 100% enfocada en Ingeniería de Software. IA, cloud, microservicios y arquitecturas modernas. Desde el día uno, con tecnología real.
+      <p class="mt-8 text-[clamp(1.05rem,2.2vw,1.25rem)] text-content-secondary leading-[1.7] max-w-[520px] mx-auto animate-fade-up" style="animation-delay: 0.16s">
+        La única escuela 100&percnt; enfocada en Ingeniería de Software en Costa Rica. IA, cloud, microservicios y arquitectura moderna — desde el día uno.
       </p>
 
       <div class="mt-12 flex flex-col sm:flex-row gap-4 justify-center animate-fade-up" style="animation-delay: 0.24s">
@@ -45,30 +45,30 @@ import Card from '../components/Card.astro';
 
 
   <!-- ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-       2. TRUST BAR — Impact numbers
+       2. TRUST BAR — Impact numbers in cards
   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ -->
   <section class="relative py-28 px-6">
     <div class="section-divider max-w-[600px] mx-auto mb-20"></div>
     <div class="max-w-[1100px] mx-auto reveal">
-      <p class="text-center text-content-secondary text-[clamp(1rem,2vw,1.2rem)] max-w-[560px] mx-auto mb-20 leading-[1.7]">
+      <p class="text-center text-content-secondary text-[clamp(1rem,2vw,1.15rem)] max-w-[540px] mx-auto mb-16 leading-[1.7]">
         No somos una facultad de informática con un programa de software. Cada recurso, cada docente y cada decisión existe para formar ingenieros de software de clase mundial.
       </p>
-      <div class="grid grid-cols-2 lg:grid-cols-4 gap-10 lg:gap-8">
-        <div class="text-center">
-          <p class="text-[clamp(2.5rem,5vw,4rem)] font-extrabold tracking-tight stat-number text-content">+1,200</p>
-          <p class="text-[14px] text-content-muted mt-3">Ingenieros en la industria</p>
+      <div class="grid grid-cols-2 lg:grid-cols-4 gap-4 lg:gap-5">
+        <div class="rounded-2xl bg-bg-card border border-border-subtle p-6 md:p-8 text-center">
+          <p class="text-[clamp(2rem,4vw,3rem)] font-extrabold tracking-tight stat-number text-content">+1,200</p>
+          <p class="text-[13px] text-content-muted mt-2">Ingenieros en la industria</p>
         </div>
-        <div class="text-center">
-          <p class="text-[clamp(2.5rem,5vw,4rem)] font-extrabold tracking-tight stat-number text-content">93<span class="text-brand">%</span></p>
-          <p class="text-[14px] text-content-muted mt-3">Colocación laboral en 6 meses</p>
+        <div class="rounded-2xl bg-bg-card border border-border-subtle p-6 md:p-8 text-center">
+          <p class="text-[clamp(2rem,4vw,3rem)] font-extrabold tracking-tight stat-number text-content">93<span class="text-brand">%</span></p>
+          <p class="text-[13px] text-content-muted mt-2">Colocación laboral en 6 meses</p>
         </div>
-        <div class="text-center">
-          <p class="text-[clamp(2.5rem,5vw,4rem)] font-extrabold tracking-tight stat-number text-content">80+</p>
-          <p class="text-[14px] text-content-muted mt-3">Profesionales tech como docentes</p>
+        <div class="rounded-2xl bg-bg-card border border-border-subtle p-6 md:p-8 text-center">
+          <p class="text-[clamp(2rem,4vw,3rem)] font-extrabold tracking-tight stat-number text-content">80+</p>
+          <p class="text-[13px] text-content-muted mt-2">Profesionales tech como docentes</p>
         </div>
-        <div class="text-center">
-          <p class="text-[clamp(2.5rem,5vw,4rem)] font-extrabold tracking-tight text-brand">SINAES</p>
-          <p class="text-[14px] text-content-muted mt-3">Acreditación nacional</p>
+        <div class="rounded-2xl bg-bg-card border border-border-subtle p-6 md:p-8 text-center">
+          <p class="text-[clamp(2rem,4vw,3rem)] font-extrabold tracking-tight text-brand">SINAES</p>
+          <p class="text-[13px] text-content-muted mt-2">Acreditación nacional</p>
         </div>
       </div>
     </div>
@@ -151,7 +151,7 @@ import Card from '../components/Card.astro';
 
       <!-- Two secondary programs -->
       <div class="grid grid-cols-1 md:grid-cols-2 gap-5 reveal-stagger">
-        <div class="card-premium rounded-[20px] p-8 md:p-10 group">
+        <div class="card-premium rounded-[16px] p-8 md:p-10 group">
           <p class="text-[11px] font-bold text-brand tracking-widest uppercase mb-4">Maestría &middot; 6 cuatrimestres</p>
           <h3 class="text-lg md:text-xl font-bold tracking-tight mb-3">Software e Inteligencia Artificial</h3>
           <p class="text-content-muted text-[14px] leading-[1.7] mb-8">Pasá de ejecutar a definir la estrategia técnica. IA aplicada, arquitectura avanzada y liderazgo de equipos de ingeniería.</p>
@@ -159,7 +159,7 @@ import Card from '../components/Card.astro';
             Explorar <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7" /></svg>
           </a>
         </div>
-        <div class="card-premium rounded-[20px] p-8 md:p-10 group">
+        <div class="card-premium rounded-[16px] p-8 md:p-10 group">
           <p class="text-[11px] font-bold text-brand tracking-widest uppercase mb-4">Técnico</p>
           <h3 class="text-lg md:text-xl font-bold tracking-tight mb-3">Testing de Software con IA</h3>
           <p class="text-content-muted text-[14px] leading-[1.7] mb-8">La ruta más rápida hacia la industria de QA. Testing manual, automatizado y potenciado con sistemas inteligentes.</p>
@@ -174,6 +174,24 @@ import Card from '../components/Card.astro';
           Ver todos los programas
         </a>
       </div>
+    </div>
+  </section>
+
+
+  <!-- ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+       MID CTA — Conversion break
+  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ -->
+  <section class="relative py-24 px-6">
+    <div class="max-w-[700px] mx-auto text-center reveal">
+      <h2 class="headline-display text-[clamp(1.75rem,4vw,2.5rem)] mb-5">
+        ¿Listo para construir el software que el mundo necesita?
+      </h2>
+      <p class="text-content-secondary text-[16px] leading-[1.7] mb-10 max-w-[480px] mx-auto">
+        Descubrí cuál es la ruta ideal para vos. En minutos tenés toda la información.
+      </p>
+      <a href="/admision/solicitar-informacion" class="btn-primary inline-flex items-center bg-brand text-white font-semibold px-8 py-3.5 rounded-full text-[15px]">
+        Solicitar información
+      </a>
     </div>
   </section>
 
@@ -194,7 +212,7 @@ import Card from '../components/Card.astro';
       </div>
 
       <div class="grid grid-cols-1 md:grid-cols-3 gap-6 reveal-stagger">
-        <div class="card-premium rounded-[20px] p-8 md:p-10 text-center">
+        <div class="card-premium rounded-[16px] p-8 md:p-10 text-center">
           <div class="w-14 h-14 rounded-2xl bg-brand-soft border border-border-brand flex items-center justify-center mx-auto mb-7">
             <svg class="w-6 h-6 text-brand" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M6.75 7.5l3 2.25-3 2.25m4.5 0h3m-9 8.25h13.5A2.25 2.25 0 0021 18V6a2.25 2.25 0 00-2.25-2.25H5.25A2.25 2.25 0 003 6v12a2.25 2.25 0 002.25 2.25z" /></svg>
           </div>
@@ -202,7 +220,7 @@ import Card from '../components/Card.astro';
           <p class="text-[14px] text-content-secondary leading-[1.7]">No somos generalistas. Cada recurso, cada curso y cada docente existe para una sola cosa: software.</p>
         </div>
 
-        <div class="card-premium rounded-[20px] p-8 md:p-10 text-center">
+        <div class="card-premium rounded-[16px] p-8 md:p-10 text-center">
           <div class="w-14 h-14 rounded-2xl bg-brand-soft border border-border-brand flex items-center justify-center mx-auto mb-7">
             <svg class="w-6 h-6 text-brand" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9.813 15.904L9 18.75l-.813-2.846a4.5 4.5 0 00-3.09-3.09L2.25 12l2.846-.813a4.5 4.5 0 003.09-3.09L9 5.25l.813 2.846a4.5 4.5 0 003.09 3.09L15.75 12l-2.846.813a4.5 4.5 0 00-3.09 3.09zM18.259 8.715L18 9.75l-.259-1.035a3.375 3.375 0 00-2.455-2.456L14.25 6l1.036-.259a3.375 3.375 0 002.455-2.456L18 2.25l.259 1.035a3.375 3.375 0 002.455 2.456L21.75 6l-1.036.259a3.375 3.375 0 00-2.455 2.456z" /></svg>
           </div>
@@ -210,7 +228,7 @@ import Card from '../components/Card.astro';
           <p class="text-[14px] text-content-secondary leading-[1.7]">No es una optativa. La inteligencia artificial está en cada programa, cada proyecto y cada evaluación.</p>
         </div>
 
-        <div class="card-premium rounded-[20px] p-8 md:p-10 text-center">
+        <div class="card-premium rounded-[16px] p-8 md:p-10 text-center">
           <div class="w-14 h-14 rounded-2xl bg-brand-soft border border-border-brand flex items-center justify-center mx-auto mb-7">
             <svg class="w-6 h-6 text-brand" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M20.25 14.15v4.25c0 1.094-.787 2.036-1.872 2.18-2.087.277-4.216.42-6.378.42s-4.291-.143-6.378-.42c-1.085-.144-1.872-1.086-1.872-2.18v-4.25m16.5 0a2.18 2.18 0 00.75-1.661V8.706c0-1.081-.768-2.015-1.837-2.175a48.114 48.114 0 00-3.413-.387m4.5 8.006c-.194.165-.42.295-.673.38A23.978 23.978 0 0112 15.75c-2.648 0-5.195-.429-7.577-1.22a2.016 2.016 0 01-.673-.38m0 0A2.18 2.18 0 013 12.489V8.706c0-1.081.768-2.015 1.837-2.175a48.111 48.111 0 013.413-.387m7.5 0V5.25A2.25 2.25 0 0013.5 3h-3a2.25 2.25 0 00-2.25 2.25v.894m7.5 0a48.667 48.667 0 00-7.5 0" /></svg>
           </div>
@@ -249,19 +267,19 @@ import Card from '../components/Card.astro';
           </div>
         </div>
         <div class="grid grid-cols-2 gap-5 reveal-stagger">
-          <div class="card-premium rounded-[20px] p-7 text-center">
+          <div class="card-premium rounded-[16px] p-7 text-center">
             <p class="text-[2.5rem] font-extrabold text-brand stat-number mb-2">93%</p>
             <p class="text-[13px] text-content-muted">Empleabilidad comprobada</p>
           </div>
-          <div class="card-premium rounded-[20px] p-7 text-center">
+          <div class="card-premium rounded-[16px] p-7 text-center">
             <p class="text-[2.5rem] font-extrabold stat-number mb-2">6<span class="text-content-muted text-xl ml-1">meses</span></p>
             <p class="text-[13px] text-content-muted">Inserción laboral promedio</p>
           </div>
-          <div class="card-premium rounded-[20px] p-7 text-center">
+          <div class="card-premium rounded-[16px] p-7 text-center">
             <p class="text-[2.5rem] font-extrabold stat-number mb-2">50+</p>
             <p class="text-[13px] text-content-muted">Empresas aliadas</p>
           </div>
-          <div class="card-premium rounded-[20px] p-7 text-center">
+          <div class="card-premium rounded-[16px] p-7 text-center">
             <p class="text-[2.5rem] font-extrabold text-brand stat-number mb-2">Global</p>
             <p class="text-[13px] text-content-muted">Certificaciones reconocidas</p>
           </div>
