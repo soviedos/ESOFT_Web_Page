@@ -12,9 +12,11 @@ import Card from '../components/Card.astro';
     <div class="absolute top-[-20%] left-1/2 -translate-x-1/2 w-[1000px] h-[600px] rounded-full" style="background: radial-gradient(ellipse at center, rgba(41,151,255,0.07) 0%, transparent 70%); filter: blur(40px);"></div>
 
     <div class="relative max-w-[720px] mx-auto text-center px-6">
-      <p class="text-[13px] text-content-muted mb-6 animate-fade-up">
-        ESOFT &middot; Universidad CENFOTEC
-      </p>
+      <div class="flex items-center justify-center gap-4 mb-6 animate-fade-up">
+        <img src="/ESOFT_Software-Engineering-Negro.png" alt="ESOFT" class="h-6 w-auto invert opacity-70" />
+        <span class="text-content-muted/30 text-lg font-thin">|</span>
+        <img src="/UCENFOTEC_LogoHorizontal-Negro.png" alt="Universidad CENFOTEC" class="h-5 w-auto invert opacity-70" />
+      </div>
 
       <h1 class="headline-display text-[clamp(3rem,8vw,5.5rem)] animate-fade-up" style="animation-delay: 0.08s">
         El software del<br />
