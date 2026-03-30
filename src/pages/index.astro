@@ -5,128 +5,266 @@ import Card from '../components/Card.astro';
 
 <Base title="Inicio" description="ESOFT — Escuela de Software, IA, Testing, UX y Arquitectura. Formá tu carrera en tecnología.">
 
-  <!-- Hero -->
-  <section class="relative -mt-16 min-h-[90vh] flex items-center px-6 overflow-hidden">
-    <!-- Background image overlay -->
-    <div class="absolute inset-0 bg-[url('https://images.unsplash.com/photo-1498050108023-c5249f4df085?w=1920&q=80')] bg-cover bg-center"></div>
-    <div class="absolute inset-0 bg-gradient-to-r from-bg-primary via-bg-primary/90 to-bg-primary/40"></div>
-    <div class="absolute inset-0 bg-gradient-to-t from-bg-primary via-transparent to-transparent"></div>
+  <!-- ━━━ HERO: Cinematic full-screen ━━━ -->
+  <section class="relative -mt-16 min-h-screen flex items-center justify-center overflow-hidden">
+    <!-- Deep ambient glow -->
+    <div class="absolute inset-0 bg-bg-primary"></div>
+    <div class="absolute top-0 left-1/2 -translate-x-1/2 w-[800px] h-[600px] bg-[radial-gradient(ellipse_at_center,rgba(21,97,240,0.10)_0%,transparent_65%)]"></div>
+    <div class="absolute bottom-0 left-1/2 -translate-x-1/2 w-full h-1/3 bg-gradient-to-t from-bg-primary to-transparent"></div>
 
-    <div class="relative max-w-6xl mx-auto w-full grid grid-cols-1 lg:grid-cols-2 gap-12 items-center pt-24 pb-20">
-      <!-- Left: Text -->
-      <div>
-        <span class="inline-block rounded-full bg-brand/15 border border-brand/30 px-4 py-1.5 text-xs font-medium text-brand mb-8">
-          Innovación · Tecnología · Futuro
-        </span>
-        <h1 class="text-4xl sm:text-5xl lg:text-6xl font-bold tracking-tight leading-[1.08]">
-          Formamos a los líderes que construirán el software del mañana.
-        </h1>
-        <p class="mt-6 text-base text-content-muted max-w-lg leading-relaxed">
-          En la Escuela de Ingeniería de Software de la Universidad CENFOTEC, impulsamos una educación moderna, rigurosa y conectada con la industria, para desarrollar talento capaz de transformar organizaciones y sociedad.
-        </p>
-        <div class="mt-10 flex flex-col sm:flex-row gap-3">
-          <a href="/programas" class="inline-flex justify-center items-center bg-brand text-white font-semibold px-7 py-3.5 rounded-lg text-sm hover:bg-brand-hover transition-all duration-300">Explorar programas</a>
-          <a href="/admision/solicitar-informacion" class="inline-flex justify-center items-center border border-border-default text-content-secondary font-medium px-7 py-3.5 rounded-lg text-sm hover:border-content-muted hover:text-content transition-all duration-300">Solicitar información</a>
+    <!-- Grid pattern overlay -->
+    <div class="absolute inset-0 opacity-[0.03]" style="background-image: linear-gradient(rgba(255,255,255,0.1) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,0.1) 1px, transparent 1px); background-size: 60px 60px;"></div>
+
+    <div class="relative max-w-4xl mx-auto text-center px-6 pt-32 pb-24">
+      <div class="inline-flex items-center gap-2 rounded-full border border-border-default bg-bg-secondary/50 backdrop-blur-sm px-4 py-1.5 mb-8 animate-fade-up">
+        <span class="w-1.5 h-1.5 rounded-full bg-brand animate-pulse"></span>
+        <span class="text-xs text-content-muted tracking-wide">Universidad CENFOTEC · Escuela de Software</span>
+      </div>
+
+      <h1 class="text-5xl sm:text-6xl lg:text-7xl font-bold tracking-tight leading-[1.05] animate-fade-up" style="animation-delay: 0.1s">
+        El software del futuro<br />
+        <span class="text-content-muted">se construye aquí.</span>
+      </h1>
+
+      <p class="mt-8 text-lg sm:text-xl text-content-muted max-w-2xl mx-auto leading-relaxed animate-fade-up" style="animation-delay: 0.2s">
+        IA, cloud, arquitectura, testing y UX. Formamos ingenieros de software con mentalidad de industria, no de aula.
+      </p>
+
+      <div class="mt-12 flex flex-col sm:flex-row gap-4 justify-center animate-fade-up" style="animation-delay: 0.3s">
+        <a href="/programas" class="btn-primary inline-flex justify-center items-center bg-brand text-white font-semibold px-8 py-4 rounded-full text-sm hover:bg-brand-hover transition-all duration-300">
+          Explorar programas
+        </a>
+        <a href="/admision/solicitar-informacion" class="inline-flex justify-center items-center border border-border-default text-content-secondary font-medium px-8 py-4 rounded-full text-sm hover:border-border-strong hover:text-content transition-all duration-300">
+          Solicitar información
+        </a>
+      </div>
+    </div>
+
+    <!-- Scroll indicator -->
+    <div class="absolute bottom-8 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2 animate-fade-up" style="animation-delay: 0.5s">
+      <span class="text-[10px] text-content-disabled tracking-widest uppercase">Scroll</span>
+      <div class="w-px h-8 bg-gradient-to-b from-content-disabled to-transparent"></div>
+    </div>
+  </section>
+
+  <!-- ━━━ TRUST BAR: Numbers that matter ━━━ -->
+  <section class="relative py-20 px-6">
+    <div class="max-w-6xl mx-auto">
+      <div class="grid grid-cols-2 lg:grid-cols-4 gap-8 lg:gap-4">
+        <div class="text-center">
+          <p class="text-4xl lg:text-5xl font-bold tracking-tight text-content">+1200</p>
+          <p class="text-sm text-content-muted mt-2">Estudiantes formados</p>
+        </div>
+        <div class="text-center">
+          <p class="text-4xl lg:text-5xl font-bold tracking-tight text-content">93%</p>
+          <p class="text-sm text-content-muted mt-2">Tasa de empleabilidad</p>
+        </div>
+        <div class="text-center">
+          <p class="text-4xl lg:text-5xl font-bold tracking-tight text-content">80+</p>
+          <p class="text-sm text-content-muted mt-2">Docentes de industria</p>
+        </div>
+        <div class="text-center">
+          <p class="text-4xl lg:text-5xl font-bold tracking-tight text-brand">SINAES</p>
+          <p class="text-sm text-content-muted mt-2">Acreditación nacional</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ━━━ WHAT WE BUILD: Storytelling section ━━━ -->
+  <section class="relative py-24 md:py-32 px-6 overflow-hidden">
+    <div class="ambient-blue absolute inset-0"></div>
+    <div class="relative max-w-6xl mx-auto">
+      <div class="max-w-2xl mb-16">
+        <p class="text-xs font-semibold text-brand tracking-widest uppercase mb-4">Lo que formamos</p>
+        <h2 class="text-3xl md:text-5xl font-bold tracking-tight leading-tight">
+          No enseñamos tecnología.<br />
+          <span class="text-content-muted">Formamos a quienes la crean.</span>
+        </h2>
+      </div>
+
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
+        <Card title="Desarrollo Full-Stack" description="De la idea al deploy. JavaScript, TypeScript, React, Node, Python, bases de datos y cloud." href="/rutas/desarrollo-software" />
+        <Card title="QA & Testing con IA" description="Testing manual, automatizado y potenciado con inteligencia artificial. Calidad como cultura." href="/rutas/software-testing" />
+        <Card title="Diseño UX/UI" description="Investigación, prototipado y diseño de experiencias digitales centradas en el usuario." href="/rutas/ux-ui" />
+        <Card title="Inteligencia Artificial" description="Machine learning, deep learning, MLOps. Construí sistemas inteligentes para problemas reales." href="/rutas/inteligencia-artificial" />
+        <Card title="Arquitectura de Software" description="Microservicios, cloud-native, event-driven. Diseñá sistemas que escalan." href="/rutas/arquitectura-software" />
+        <Card title="Todas las rutas" description="Descubrí tu camino profesional con rutas claras desde cero hasta especialización." href="/rutas" />
+      </div>
+    </div>
+  </section>
+
+  <!-- ━━━ FEATURED PROGRAMS: Premium cards ━━━ -->
+  <section class="py-24 md:py-32 px-6">
+    <div class="max-w-6xl mx-auto">
+      <div class="flex flex-col md:flex-row md:items-end md:justify-between gap-4 mb-16">
+        <div>
+          <p class="text-xs font-semibold text-brand tracking-widest uppercase mb-4">Programas</p>
+          <h2 class="text-3xl md:text-5xl font-bold tracking-tight">Oferta académica</h2>
+        </div>
+        <a href="/programas" class="text-sm text-content-muted hover:text-content transition-colors inline-flex items-center gap-1 group">
+          Ver todos
+          <svg class="w-4 h-4 transform group-hover:translate-x-0.5 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" /></svg>
+        </a>
+      </div>
+
+      <!-- Feature program: Bachillerato -->
+      <div class="rounded-2xl border border-border-subtle bg-bg-secondary/30 p-8 md:p-12 mb-6 card-shine group hover:border-border-default transition-all duration-300">
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-8 items-center">
+          <div>
+            <span class="inline-block text-xs font-medium text-brand bg-brand-soft px-3 py-1 rounded-full mb-4">Bachillerato · 9 cuatrimestres</span>
+            <h3 class="text-2xl md:text-3xl font-bold tracking-tight mb-4">Ingeniería de Software</h3>
+            <p class="text-content-muted leading-relaxed mb-6">
+              Formación integral de 4 años. Desarrollo, testing, IA, arquitectura y gestión de proyectos. Acreditado por SINAES.
+            </p>
+            <a href="/programas/bachillerato-ingenieria-software" class="btn-primary inline-flex items-center bg-brand text-white font-medium px-6 py-3 rounded-full text-sm hover:bg-brand-hover transition-all duration-300">
+              Conocer más
+            </a>
+          </div>
+          <div class="hidden md:grid grid-cols-2 gap-3">
+            <div class="glass rounded-xl p-4">
+              <p class="text-2xl font-bold text-content">43</p>
+              <p class="text-xs text-content-muted mt-1">Cursos</p>
+            </div>
+            <div class="glass rounded-xl p-4">
+              <p class="text-2xl font-bold text-content">4</p>
+              <p class="text-xs text-content-muted mt-1">Años</p>
+            </div>
+            <div class="glass rounded-xl p-4">
+              <p class="text-2xl font-bold text-brand">IA</p>
+              <p class="text-xs text-content-muted mt-1">Integrada</p>
+            </div>
+            <div class="glass rounded-xl p-4">
+              <p class="text-2xl font-bold text-content">100%</p>
+              <p class="text-xs text-content-muted mt-1">Práctico</p>
+            </div>
+          </div>
         </div>
       </div>
 
-      <!-- Right: Info card -->
-      <div class="hidden lg:block">
-        <div class="rounded-2xl border border-border-default bg-bg-secondary/80 backdrop-blur-sm p-8">
-          <h3 class="text-xl font-bold text-content mb-2">Educación con visión tecnológica</h3>
-          <p class="text-sm text-content-muted leading-relaxed mb-6">
-            Programas diseñados para responder a las nuevas demandas del mercado, integrando desarrollo de software, arquitectura, inteligencia artificial, nube y transformación digital.
+      <!-- Secondary programs -->
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-5">
+        <div class="rounded-2xl border border-border-subtle bg-bg-secondary/30 p-8 card-shine group hover:border-border-default transition-all duration-300">
+          <span class="inline-block text-xs font-medium text-brand bg-brand-soft px-3 py-1 rounded-full mb-4">Maestría · 6 cuatrimestres</span>
+          <h3 class="text-xl font-bold tracking-tight mb-3">Software e Inteligencia Artificial</h3>
+          <p class="text-content-muted text-sm leading-relaxed mb-6">Liderá la innovación combinando ingeniería de software con IA y machine learning.</p>
+          <a href="/programas/maestria-ingenieria-software-ia" class="text-sm text-content-muted hover:text-brand transition-colors inline-flex items-center gap-1 group">
+            Explorar <svg class="w-3.5 h-3.5 transform group-hover:translate-x-0.5 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" /></svg>
+          </a>
+        </div>
+        <div class="rounded-2xl border border-border-subtle bg-bg-secondary/30 p-8 card-shine group hover:border-border-default transition-all duration-300">
+          <span class="inline-block text-xs font-medium text-brand bg-brand-soft px-3 py-1 rounded-full mb-4">Técnico ágil</span>
+          <h3 class="text-xl font-bold tracking-tight mb-3">Testing de Software con IA</h3>
+          <p class="text-content-muted text-sm leading-relaxed mb-6">Pruebas manuales, automatizadas y potenciadas con sistemas inteligentes.</p>
+          <a href="/programas/testing-software-ia-sistemas-inteligentes" class="text-sm text-content-muted hover:text-brand transition-colors inline-flex items-center gap-1 group">
+            Explorar <svg class="w-3.5 h-3.5 transform group-hover:translate-x-0.5 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" /></svg>
+          </a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ━━━ DIFFERENTIATORS: Full-width impact ━━━ -->
+  <section class="relative py-24 md:py-32 px-6 overflow-hidden">
+    <div class="absolute inset-0 bg-bg-secondary/30"></div>
+    <div class="absolute top-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-border-default to-transparent"></div>
+    <div class="absolute bottom-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-border-default to-transparent"></div>
+
+    <div class="relative max-w-6xl mx-auto">
+      <div class="text-center mb-16">
+        <p class="text-xs font-semibold text-brand tracking-widest uppercase mb-4">¿Por qué ESOFT?</p>
+        <h2 class="text-3xl md:text-5xl font-bold tracking-tight">
+          Construida para la industria.<br class="hidden sm:block" />
+          <span class="text-content-muted">No para el papel.</span>
+        </h2>
+      </div>
+
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+        <div class="glass glass-hover rounded-2xl p-8 transition-all duration-300">
+          <div class="w-10 h-10 rounded-xl bg-brand/10 flex items-center justify-center mb-5">
+            <svg class="w-5 h-5 text-brand" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M9.75 17L9 20l-1 1h8l-1-1-.75-3M3 13h18M5 17h14a2 2 0 002-2V5a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" /></svg>
+          </div>
+          <h3 class="text-lg font-semibold mb-2">100% Software</h3>
+          <p class="text-sm text-content-muted leading-relaxed">No somos generalistas. Todo nuestro ecosistema gira en torno a la ingeniería de software y sus especialidades.</p>
+        </div>
+
+        <div class="glass glass-hover rounded-2xl p-8 transition-all duration-300">
+          <div class="w-10 h-10 rounded-xl bg-brand/10 flex items-center justify-center mb-5">
+            <svg class="w-5 h-5 text-brand" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M13 10V3L4 14h7v7l9-11h-7z" /></svg>
+          </div>
+          <h3 class="text-lg font-semibold mb-2">IA desde el día uno</h3>
+          <p class="text-sm text-content-muted leading-relaxed">Inteligencia artificial integrada en cada programa. No como optativa, como parte del ADN de la formación.</p>
+        </div>
+
+        <div class="glass glass-hover rounded-2xl p-8 transition-all duration-300">
+          <div class="w-10 h-10 rounded-xl bg-brand/10 flex items-center justify-center mb-5">
+            <svg class="w-5 h-5 text-brand" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M21 13.255A23.931 23.931 0 0112 15c-3.183 0-6.22-.62-9-1.745M16 6V4a2 2 0 00-2-2h-4a2 2 0 00-2 2v2m4 6h.01M5 20h14a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" /></svg>
+          </div>
+          <h3 class="text-lg font-semibold mb-2">Docentes de industria</h3>
+          <p class="text-sm text-content-muted leading-relaxed">Profesionales activos en empresas tech líderes. Aprendés de quienes construyen software real todos los días.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ━━━ INDUSTRY: Social proof ━━━ -->
+  <section class="py-24 md:py-32 px-6">
+    <div class="max-w-6xl mx-auto">
+      <div class="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
+        <div>
+          <p class="text-xs font-semibold text-brand tracking-widest uppercase mb-4">Industria</p>
+          <h2 class="text-3xl md:text-4xl font-bold tracking-tight leading-tight mb-6">
+            Conectamos talento<br />con la industria real.
+          </h2>
+          <p class="text-content-muted leading-relaxed mb-8">
+            Alianzas estratégicas con empresas tecnológicas, certificaciones internacionales y proyectos reales desde el primer cuatrimestre. No simulamos la industria — te conectamos con ella.
           </p>
-          <div class="grid grid-cols-2 gap-3">
-            <div class="rounded-xl border border-border-default p-4">
-              <p class="text-2xl font-bold text-content">+1200</p>
-              <p class="text-xs text-content-muted mt-1">Estudiantes</p>
-            </div>
-            <div class="rounded-xl border border-border-default p-4">
-              <p class="text-2xl font-bold text-content">80+</p>
-              <p class="text-xs text-content-muted mt-1">Docentes expertos</p>
-            </div>
-            <div class="rounded-xl border border-border-default p-4">
-              <p class="text-2xl font-bold text-content">IA</p>
-              <p class="text-xs text-content-muted mt-1">Enfoque actual</p>
-            </div>
-            <div class="rounded-xl border border-border-default p-4">
-              <p class="text-2xl font-bold text-content">Industria</p>
-              <p class="text-xs text-content-muted mt-1">Conexión real</p>
-            </div>
+          <div class="flex flex-wrap gap-4">
+            <a href="/industria-empleabilidad" class="text-sm text-content-muted hover:text-brand transition-colors inline-flex items-center gap-1">Empleabilidad →</a>
+            <a href="/industria-empleabilidad/alianzas" class="text-sm text-content-muted hover:text-brand transition-colors inline-flex items-center gap-1">Alianzas →</a>
+            <a href="/industria-empleabilidad/certificaciones" class="text-sm text-content-muted hover:text-brand transition-colors inline-flex items-center gap-1">Certificaciones →</a>
+          </div>
+        </div>
+        <div class="grid grid-cols-2 gap-4">
+          <div class="glass rounded-2xl p-6 text-center">
+            <p class="text-3xl font-bold text-brand mb-1">93%</p>
+            <p class="text-xs text-content-muted">Empleabilidad</p>
+          </div>
+          <div class="glass rounded-2xl p-6 text-center">
+            <p class="text-3xl font-bold text-content mb-1">6 meses</p>
+            <p class="text-xs text-content-muted">Tiempo promedio de inserción</p>
+          </div>
+          <div class="glass rounded-2xl p-6 text-center">
+            <p class="text-3xl font-bold text-content mb-1">50+</p>
+            <p class="text-xs text-content-muted">Empresas aliadas</p>
+          </div>
+          <div class="glass rounded-2xl p-6 text-center">
+            <p class="text-3xl font-bold text-content mb-1">Global</p>
+            <p class="text-xs text-content-muted">Certificaciones</p>
           </div>
         </div>
       </div>
     </div>
   </section>
 
-  <!-- Roles -->
-  <section class="py-16 md:py-24 px-6">
-    <div class="divider-glow mb-16 md:mb-24"></div>
-    <div class="relative max-w-6xl mx-auto">
-      <p class="font-mono text-xs text-content-disabled tracking-widest uppercase mb-3 text-center">Rutas profesionales</p>
-      <h2 class="text-2xl md:text-3xl font-bold text-content text-center tracking-tight">¿Qué querés ser?</h2>
-      <p class="text-content-muted text-center mt-3 mb-12 max-w-lg mx-auto">Tu futuro profesional empieza con una ruta clara.</p>
-      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
-        <Card title="Desarrollador de Software" description="Aplicaciones web, móviles y de escritorio con tecnologías modernas." href="/rutas/desarrollo-software" />
-        <Card title="QA / Testing Engineer" description="Testing manual, automatizado e IA para asegurar calidad." href="/rutas/software-testing" />
-        <Card title="Diseñador UX/UI" description="Experiencias digitales centradas en el usuario." href="/rutas/ux-ui" />
-        <Card title="Especialista en IA" description="Sistemas inteligentes y soluciones con inteligencia artificial." href="/rutas/inteligencia-artificial" />
-        <Card title="Arquitecto de Software" description="Sistemas escalables, resilientes y bien estructurados." href="/rutas/arquitectura-software" />
-        <Card title="Todas las rutas" description="Descubrí todas las rutas de aprendizaje disponibles." href="/rutas" />
-      </div>
-    </div>
-  </section>
+  <!-- ━━━ CTA: Final conversion ━━━ -->
+  <section class="relative py-24 md:py-32 px-6 overflow-hidden">
+    <!-- Ambient glow -->
+    <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[400px] bg-[radial-gradient(ellipse_at_center,rgba(21,97,240,0.08)_0%,transparent_65%)]"></div>
 
-  <!-- Programas -->
-  <section class="py-16 md:py-24 px-6">
-    <div class="divider-glow mb-16 md:mb-24"></div>
-    <div class="relative max-w-6xl mx-auto">
-      <p class="font-mono text-xs text-content-disabled tracking-widest uppercase mb-3 text-center">Oferta académica</p>
-      <h2 class="text-2xl md:text-3xl font-bold text-content text-center tracking-tight">Programas destacados</h2>
-      <p class="text-content-muted text-center mt-3 mb-12 max-w-lg mx-auto">Desde técnicos ágiles hasta maestrías especializadas.</p>
-      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
-        <Card title="Ingeniería del Software" description="Bachillerato · 9 cuatrimestres · 43 cursos. Acreditado SINAES." href="/programas/bachillerato-ingenieria-software" />
-        <Card title="Software e Inteligencia Artificial" description="Maestría · 6 cuatrimestres. Software + IA aplicada." href="/programas/maestria-ingenieria-software-ia" />
-        <Card title="Testing de Software con IA" description="Técnico ágil. Pruebas potenciadas con sistemas inteligentes." href="/programas/testing-software-ia-sistemas-inteligentes" />
-      </div>
-      <div class="text-center mt-10">
-        <a href="/programas" class="text-sm text-content-muted hover:text-content transition-colors">Ver todos los programas →</a>
-      </div>
-    </div>
-  </section>
-
-  <!-- Trust -->
-  <section class="py-16 md:py-24 px-6">
-    <div class="divider-glow mb-16 md:mb-24"></div>
-    <div class="max-w-3xl mx-auto text-center">
-      <p class="font-mono text-xs text-content-disabled tracking-widest uppercase mb-3">Calidad académica</p>
-      <h2 class="text-2xl md:text-3xl font-bold text-content tracking-tight">Formación formal con velocidad de industria</h2>
-      <p class="text-content-muted mt-4 leading-relaxed max-w-xl mx-auto">
-        Programa acreditado por SINAES, formación por competencias, mejora continua e integración con empresas líderes del sector.
-      </p>
-      <div class="mt-8 flex flex-wrap gap-x-6 gap-y-3 justify-center text-sm text-content-muted">
-        <span class="flex items-center gap-2"><span class="w-1.5 h-1.5 rounded-full bg-brand"></span>SINAES</span>
-        <span class="flex items-center gap-2"><span class="w-1.5 h-1.5 rounded-full bg-brand"></span>Mejora continua</span>
-        <span class="flex items-center gap-2"><span class="w-1.5 h-1.5 rounded-full bg-brand"></span>Competencias</span>
-        <span class="flex items-center gap-2"><span class="w-1.5 h-1.5 rounded-full bg-brand"></span>Alianzas globales</span>
-      </div>
-      <div class="mt-8 flex flex-wrap gap-6 justify-center">
-        <a href="/calidad-academica" class="text-sm text-content-muted hover:text-content transition-colors">Calidad académica →</a>
-        <a href="/industria-empleabilidad" class="text-sm text-content-muted hover:text-content transition-colors">Industria y empleabilidad →</a>
-      </div>
-    </div>
-  </section>
-
-  <!-- CTA -->
-  <section class="relative py-16 md:py-24 px-6">
-    <div class="divider-glow mb-16 md:mb-24"></div>
-    <div class="max-w-3xl mx-auto text-center">
-      <h2 class="text-2xl md:text-3xl font-bold tracking-tight">¿Listo para empezar?</h2>
-      <p class="text-content-muted mt-4">Tu carrera en tecnología empieza aquí.</p>
-      <div class="mt-8 flex flex-col sm:flex-row gap-3 justify-center">
-        <a href="/admision/solicitar-informacion" class="inline-flex justify-center items-center bg-brand text-white font-semibold px-7 py-3.5 rounded-lg text-sm hover:bg-brand-hover transition-all duration-300">Solicitar información</a>
-        <a href="/admision" class="inline-flex justify-center items-center border border-border-default text-content-secondary font-medium px-7 py-3.5 rounded-lg text-sm hover:border-content-muted hover:text-content transition-all duration-300">Proceso de admisión →</a>
+    <div class="relative max-w-3xl mx-auto text-center">
+      <h2 class="text-3xl md:text-5xl font-bold tracking-tight leading-tight">
+        Tu siguiente línea de código<br />
+        <span class="text-content-muted">empieza con una decisión.</span>
+      </h2>
+      <p class="text-content-muted mt-6 text-lg">Solicitá información y empezá tu camino en ingeniería de software.</p>
+      <div class="mt-10 flex flex-col sm:flex-row gap-4 justify-center">
+        <a href="/admision/solicitar-informacion" class="btn-primary inline-flex justify-center items-center bg-brand text-white font-semibold px-8 py-4 rounded-full text-sm hover:bg-brand-hover transition-all duration-300">
+          Solicitar información
+        </a>
+        <a href="/admision" class="inline-flex justify-center items-center border border-border-default text-content-secondary font-medium px-8 py-4 rounded-full text-sm hover:border-border-strong hover:text-content transition-all duration-300">
+          Proceso de admisión
+        </a>
       </div>
     </div>
   </section>

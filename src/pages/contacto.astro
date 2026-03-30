@@ -3,8 +3,8 @@ import Base from '../layouts/Base.astro';
 ---
 
 <Base title="Contacto" description="Contactá a ESOFT: formulario, WhatsApp, correo y ubicación.">
-  <section class="max-w-6xl mx-auto px-4 py-10 md:py-16">
-    <h1 class="text-3xl md:text-4xl font-bold break-words mb-6">Contacto</h1>
+  <section class="max-w-6xl mx-auto px-6 py-12 md:py-20">
+    <h1 class="text-3xl md:text-5xl font-bold tracking-tight mb-6">Contacto</h1>
     <div class="grid grid-cols-1 md:grid-cols-2 gap-8 md:gap-12">
       <div>
         <p class="text-content-muted mb-6 md:mb-8 text-base md:text-lg">
@@ -33,20 +33,20 @@ import Base from '../layouts/Base.astro';
         </div>
       </div>
 
-      <form class="space-y-4 bg-bg-secondary rounded-lg p-6" method="POST" action="/api/contact">
+      <form class="space-y-5 glass rounded-2xl p-8" method="POST" action="/api/contact">
         <div>
-          <label for="name" class="block text-sm font-medium text-content-secondary mb-1">Nombre</label>
-          <input type="text" id="name" name="name" required class="w-full rounded-md border border-border-default bg-bg-tertiary text-content px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-brand focus:border-transparent placeholder:text-content-disabled" />
+          <label for="name" class="block text-sm font-medium text-content-secondary mb-1.5">Nombre</label>
+          <input type="text" id="name" name="name" required class="w-full rounded-xl border border-border-default bg-bg-tertiary text-content px-4 py-3 text-sm focus:outline-none focus:ring-2 focus:ring-brand focus:border-transparent placeholder:text-content-disabled" />
         </div>
         <div>
-          <label for="email" class="block text-sm font-medium text-content-secondary mb-1">Email</label>
-          <input type="email" id="email" name="email" required class="w-full rounded-md border border-border-default bg-bg-tertiary text-content px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-brand focus:border-transparent placeholder:text-content-disabled" />
+          <label for="email" class="block text-sm font-medium text-content-secondary mb-1.5">Email</label>
+          <input type="email" id="email" name="email" required class="w-full rounded-xl border border-border-default bg-bg-tertiary text-content px-4 py-3 text-sm focus:outline-none focus:ring-2 focus:ring-brand focus:border-transparent placeholder:text-content-disabled" />
         </div>
         <div>
-          <label for="message" class="block text-sm font-medium text-content-secondary mb-1">Mensaje</label>
-          <textarea id="message" name="message" rows="4" required class="w-full rounded-md border border-border-default bg-bg-tertiary text-content px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-brand focus:border-transparent placeholder:text-content-disabled"></textarea>
+          <label for="message" class="block text-sm font-medium text-content-secondary mb-1.5">Mensaje</label>
+          <textarea id="message" name="message" rows="4" required class="w-full rounded-xl border border-border-default bg-bg-tertiary text-content px-4 py-3 text-sm focus:outline-none focus:ring-2 focus:ring-brand focus:border-transparent placeholder:text-content-disabled"></textarea>
         </div>
-        <button type="submit" class="w-full rounded-md bg-brand px-4 py-2 text-sm font-medium text-white hover:bg-brand-hover transition-all duration-300">
+        <button type="submit" class="btn-primary w-full rounded-full bg-brand px-4 py-3 text-sm font-semibold text-white hover:bg-brand-hover hover:shadow-glow-soft transition-all duration-300">
           Enviar mensaje
         </button>
       </form>
