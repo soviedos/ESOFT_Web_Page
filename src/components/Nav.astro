@@ -53,7 +53,7 @@ const isActive = (href: string) =>
     </ul>
   </nav>
 
-  <div id="mobile-menu" class="hidden md:hidden border-t border-border-subtle px-5 pb-8 pt-5" style="background: rgba(8,9,15,0.97); backdrop-filter: blur(40px) saturate(1.6); -webkit-backdrop-filter: blur(40px) saturate(1.6);">
+  <div id="mobile-menu" class="hidden md:hidden border-t border-border-subtle px-5 pb-8 pt-5" style="background: rgba(7,7,10,0.97); backdrop-filter: blur(40px) saturate(1.6); -webkit-backdrop-filter: blur(40px) saturate(1.6);">
     <ul class="flex flex-col gap-0">
       {links.map(({ href, label }) => (
         <li>
@@ -85,7 +85,7 @@ const isActive = (href: string) =>
 
   const update = () => {
     const s = window.scrollY > 10;
-    header.style.background = s ? 'rgba(8,9,15,0.82)' : 'transparent';
+    header.style.background = s ? 'rgba(7,7,10,0.85)' : 'transparent';
     header.style.backdropFilter = s ? 'blur(40px) saturate(1.6)' : 'none';
     (header.style as any).webkitBackdropFilter = header.style.backdropFilter;
     header.style.borderBottom = s ? '1px solid rgba(255,255,255,0.04)' : '1px solid transparent';

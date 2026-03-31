@@ -1,21 +1,21 @@
 @import "tailwindcss";
 
 @theme {
-  /* ── Backgrounds (infused with subtle blue tint) ── */
-  --color-bg-primary: #08090F;
-  --color-bg-secondary: #0E1017;
-  --color-bg-tertiary: #13151E;
-  --color-bg-elevated: #181B26;
-  --color-bg-card: #13151E;
-  --color-bg-card-hover: #1A1D2A;
+  /* ── Layer system (Phase 1+2) ─────────────────────── */
+  --color-bg-primary: #07070A;       /* L0 · body / deepest */
+  --color-bg-secondary: #0D0D12;     /* L1 · sections */
+  --color-bg-tertiary: #11131A;      /* L2 · cards / surfaces */
+  --color-bg-elevated: #161A22;      /* L3 · highlighted elements */
+  --color-bg-card: #11131A;          /* surface = L2 */
+  --color-bg-card-hover: #161A22;    /* elevated = L3 */
 
-  /* ── Brand / Accent (slightly desaturated for dark) ─ */
-  --color-brand: #00D4F0;
-  --color-brand-hover: #2EEAFF;
-  --color-brand-soft: rgba(0, 212, 240, 0.08);
-  --color-brand-glow: rgba(0, 212, 240, 0.30);
+  /* ── Brand / Accent (not 100 % saturated) ─────────── */
+  --color-brand: #00E5FF;
+  --color-brand-hover: #33EDFF;
+  --color-brand-soft: rgba(0, 229, 255, 0.15);
+  --color-brand-glow: rgba(0, 229, 255, 0.30);
 
-  /* ── Accent 2 — Purple (desaturated ~20%) ────────── */
+  /* ── Accent 2 — Purple (desaturated ~20 %) ────────── */
   --color-accent2: #8B5CF6;
   --color-accent2-soft: rgba(139, 92, 246, 0.10);
   --color-accent2-glow: rgba(139, 92, 246, 0.30);
@@ -23,17 +23,17 @@
   /* ── Accent 3 — Green highlight ──────────────────── */
   --color-accent3: #34D399;
 
-  /* ── Text (soft white, not pure #FFF) ────────────── */
-  --color-content: #F0F0F5;
-  --color-content-secondary: #A0A0B0;
-  --color-content-muted: #5C5C6F;
+  /* ── Text ─────────────────────────────────────────── */
+  --color-content: #FFFFFF;
+  --color-content-secondary: #A1A1AA;
+  --color-content-muted: #71717A;
   --color-content-disabled: #3A3A48;
 
-  /* ── Borders (tinted with brand hue) ─────────────── */
+  /* ── Borders (tinted with accent hue) ────────────── */
   --color-border-subtle: rgba(160, 180, 255, 0.05);
   --color-border-default: rgba(160, 180, 255, 0.08);
   --color-border-strong: rgba(160, 180, 255, 0.14);
-  --color-border-brand: rgba(0, 212, 240, 0.20);
+  --color-border-brand: rgba(0, 229, 255, 0.20);
 
   /* ── Fonts ────────────────────────────────────────── */
   --font-sans: 'Inter', 'SF Pro Display', -apple-system, system-ui, sans-serif;
@@ -55,7 +55,7 @@ body {
 }
 
 ::selection {
-  background: rgba(0, 212, 240, 0.25);
+  background: rgba(0, 229, 255, 0.25);
   color: #fff;
 }
 
@@ -69,7 +69,7 @@ body {
 
 /* ── Gradient text ────────────────────────── */
 .text-gradient-hero {
-  background: linear-gradient(180deg, #ffffff 0%, rgba(0, 229, 255, 0.7) 100%);
+  background: linear-gradient(180deg, #ffffff 0%, rgba(0, 229, 255, 0.75) 100%);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
@@ -97,12 +97,12 @@ body {
   border: 1px solid rgba(255, 255, 255, 0.08);
 }
 
-/* ── Premium card with depth + glow ───────── */
+/* ── Premium card — Phase 5: hover-only glow ── */
 .card-premium {
   position: relative;
   overflow: hidden;
   background: var(--color-bg-card);
-  border: 1px solid rgba(160, 180, 255, 0.06);
+  border: 1px solid rgba(255, 255, 255, 0.08);
   border-radius: 20px;
   box-shadow: 0 2px 16px rgba(0,0,0,0.3);
   transition: all 0.4s cubic-bezier(0.23, 1, 0.32, 1);
@@ -111,18 +111,18 @@ body {
   content: '';
   position: absolute;
   inset: 0;
-  background: linear-gradient(180deg, rgba(0, 212, 240, 0.05) 0%, transparent 40%);
+  background: linear-gradient(180deg, rgba(0, 229, 255, 0.05) 0%, transparent 40%);
   pointer-events: none;
   opacity: 0;
   transition: opacity 0.4s ease;
 }
 .card-premium:hover {
   background: var(--color-bg-card-hover);
-  border-color: rgba(0, 212, 240, 0.12);
+  border-color: rgba(0, 229, 255, 0.12);
   transform: translateY(-4px) scale(1.02);
   box-shadow:
-    0 10px 30px rgba(0,0,0,0.5),
-    0 0 30px rgba(0, 212, 240, 0.12);
+    0 10px 40px rgba(0,0,0,0.7),
+    0 0 30px rgba(0, 229, 255, 0.12);
 }
 .card-premium:hover::before {
   opacity: 1;
@@ -133,7 +133,7 @@ body {
   position: relative;
   overflow: hidden;
   background: var(--color-bg-card);
-  border: 1px solid rgba(160, 180, 255, 0.06);
+  border: 1px solid rgba(255, 255, 255, 0.08);
   border-radius: 20px;
   box-shadow: 0 2px 16px rgba(0,0,0,0.3);
   transition: all 0.4s cubic-bezier(0.23, 1, 0.32, 1);
@@ -145,22 +145,22 @@ body {
   left: 0;
   right: 0;
   height: 1px;
-  background: linear-gradient(90deg, transparent 15%, rgba(0, 212, 240, 0.15) 50%, transparent 85%);
+  background: linear-gradient(90deg, transparent 15%, rgba(0, 229, 255, 0.15) 50%, transparent 85%);
   opacity: 0;
   transition: opacity 0.4s ease;
 }
 .card-feature:hover {
-  border-color: rgba(0, 212, 240, 0.12);
+  border-color: rgba(0, 229, 255, 0.12);
   transform: translateY(-3px) scale(1.005);
   box-shadow:
-    0 10px 30px rgba(0,0,0,0.5),
-    0 0 30px rgba(0, 212, 240, 0.12);
+    0 10px 40px rgba(0,0,0,0.7),
+    0 0 30px rgba(0, 229, 255, 0.12);
 }
 .card-feature:hover::after {
   opacity: 1;
 }
 
-/* ── Stat card — glass with hover glow ────── */
+/* ── Stat card — Phase 4: glass + depth + hover glow ─ */
 .card-stat {
   position: relative;
   overflow: hidden;
@@ -169,13 +169,17 @@ body {
   -webkit-backdrop-filter: blur(12px);
   border: 1px solid rgba(255, 255, 255, 0.08);
   border-radius: 20px;
-  box-shadow: 0 2px 12px rgba(0,0,0,0.2);
+  box-shadow:
+    0 10px 30px rgba(0,0,0,0.6),
+    0 0 20px rgba(0, 229, 255, 0.08);
   transition: all 0.3s ease;
 }
 .card-stat:hover {
-  border-color: rgba(0, 212, 240, 0.12);
+  border-color: rgba(0, 229, 255, 0.14);
   transform: translateY(-2px);
-  box-shadow: 0 0 20px rgba(0, 212, 240, 0.10);
+  box-shadow:
+    0 10px 30px rgba(0,0,0,0.6),
+    0 0 30px rgba(0, 229, 255, 0.14);
 }
 
 /* ── Stat number ──────────────────────────── */
@@ -190,14 +194,14 @@ body {
   z-index: 1;
   transition: all 0.3s ease;
   will-change: transform;
-  box-shadow: 0 0 20px rgba(0, 212, 240, 0.15);
+  box-shadow: 0 0 20px rgba(0, 229, 255, 0.15);
 }
 .btn-primary::after {
   content: '';
   position: absolute;
   inset: -2px;
   border-radius: inherit;
-  background: linear-gradient(135deg, #00D4F0, #8B5CF6);
+  background: linear-gradient(135deg, #00E5FF, #8B5CF6);
   z-index: -1;
   opacity: 0;
   filter: blur(28px);
@@ -206,8 +210,8 @@ body {
 .btn-primary:hover {
   transform: translateY(-2px);
   box-shadow:
-    0 0 30px rgba(0, 212, 240, 0.25),
-    0 0 60px rgba(0, 212, 240, 0.15);
+    0 0 30px rgba(0, 229, 255, 0.25),
+    0 0 60px rgba(0, 229, 255, 0.15);
 }
 .btn-primary:hover::after {
   opacity: 0.5;
@@ -230,36 +234,35 @@ body {
   transform: scale(0.98);
 }
 
-/* ── CTA Final button — strongest glow ────── */
+/* ── CTA Final button — Phase 8: strongest glow ── */
 .btn-cta-final {
   position: relative;
   z-index: 1;
   transition: all 0.3s ease;
   will-change: transform;
   box-shadow:
-    0 0 20px rgba(0, 212, 240, 0.15),
-    0 0 40px rgba(0, 212, 240, 0.10),
-    0 0 80px rgba(0, 212, 240, 0.05);
+    0 0 40px rgba(0, 229, 255, 0.25),
+    0 0 80px rgba(0, 229, 255, 0.15);
 }
 .btn-cta-final::after {
   content: '';
   position: absolute;
   inset: -2px;
   border-radius: inherit;
-  background: linear-gradient(135deg, #00D4F0, #8B5CF6);
+  background: linear-gradient(135deg, #00E5FF, #8B5CF6);
   z-index: -1;
-  opacity: 0.15;
+  opacity: 0.2;
   filter: blur(28px);
   transition: opacity 0.3s ease;
 }
 .btn-cta-final:hover {
   transform: translateY(-2px);
   box-shadow:
-    0 0 40px rgba(0, 212, 240, 0.25),
-    0 0 80px rgba(0, 212, 240, 0.15);
+    0 0 40px rgba(0, 229, 255, 0.35),
+    0 0 80px rgba(0, 229, 255, 0.20);
 }
 .btn-cta-final:hover::after {
-  opacity: 0.6;
+  opacity: 0.65;
 }
 .btn-cta-final:active {
   transform: scale(0.98);
@@ -300,7 +303,7 @@ body {
 /* ── Section divider with brand accent ────── */
 .section-divider {
   height: 1px;
-  background: linear-gradient(90deg, transparent, rgba(0, 212, 240, 0.14) 50%, transparent);
+  background: linear-gradient(90deg, transparent, rgba(0, 229, 255, 0.14) 50%, transparent);
 }
 
 /* ── Hero grid background ─────────────────── */
@@ -331,37 +334,37 @@ body {
   background: conic-gradient(
     from 0deg at 50% 50%,
     transparent 0deg,
-    rgba(0, 212, 240, 0.015) 3deg,
+    rgba(0, 229, 255, 0.015) 3deg,
     transparent 6deg,
     transparent 30deg,
     rgba(139, 92, 246, 0.01) 33deg,
     transparent 36deg,
     transparent 60deg,
-    rgba(0, 212, 240, 0.012) 63deg,
+    rgba(0, 229, 255, 0.012) 63deg,
     transparent 66deg,
     transparent 90deg,
     rgba(52, 211, 153, 0.008) 93deg,
     transparent 96deg,
     transparent 120deg,
-    rgba(0, 212, 240, 0.015) 123deg,
+    rgba(0, 229, 255, 0.015) 123deg,
     transparent 126deg,
     transparent 150deg,
     rgba(139, 92, 246, 0.01) 153deg,
     transparent 156deg,
     transparent 180deg,
-    rgba(0, 212, 240, 0.012) 183deg,
+    rgba(0, 229, 255, 0.012) 183deg,
     transparent 186deg,
     transparent 210deg,
     rgba(52, 211, 153, 0.008) 213deg,
     transparent 216deg,
     transparent 240deg,
-    rgba(0, 212, 240, 0.015) 243deg,
+    rgba(0, 229, 255, 0.015) 243deg,
     transparent 246deg,
     transparent 270deg,
     rgba(139, 92, 246, 0.01) 273deg,
     transparent 276deg,
     transparent 300deg,
-    rgba(0, 212, 240, 0.012) 303deg,
+    rgba(0, 229, 255, 0.012) 303deg,
     transparent 306deg,
     transparent 330deg,
     rgba(52, 211, 153, 0.008) 333deg,
@@ -388,10 +391,10 @@ body {
   border-radius: 50%;
   background: conic-gradient(
     from 0deg at 50% 50%,
-    rgba(0, 212, 240, 0.06),
+    rgba(0, 229, 255, 0.06),
     rgba(139, 92, 246, 0.05),
     rgba(52, 211, 153, 0.03),
-    rgba(0, 212, 240, 0.06)
+    rgba(0, 229, 255, 0.06)
   );
   filter: blur(100px);
   animation: aurora-drift 20s ease-in-out infinite;
@@ -412,7 +415,7 @@ body {
   left: -50%;
   width: 50%;
   height: 200%;
-  background: linear-gradient(90deg, transparent, rgba(0,212,240,0.025), transparent);
+  background: linear-gradient(90deg, transparent, rgba(0,229,255,0.025), transparent);
   animation: light-sweep 10s ease-in-out infinite;
   pointer-events: none;
 }
@@ -528,21 +531,21 @@ body {
   z-index: 9999;
 }
 
-/* ── Section background variants ──────────── */
+/* ── Section background variants (Phase 10) ── */
 .section-alt {
   background:
-    radial-gradient(ellipse 70% 50% at 50% 0%, rgba(0,212,240,0.03) 0%, transparent 50%),
+    radial-gradient(ellipse 70% 50% at 50% 0%, rgba(0,229,255,0.04) 0%, transparent 50%),
     var(--color-bg-secondary);
 }
 .section-deep {
   background:
-    radial-gradient(ellipse 80% 50% at 50% 0%, rgba(139,92,246,0.04) 0%, transparent 50%),
+    radial-gradient(ellipse 80% 50% at 50% 0%, rgba(139,92,246,0.05) 0%, transparent 50%),
     var(--color-bg-primary);
 }
 .section-dramatic {
   background:
-    radial-gradient(circle at 50% 50%, rgba(0,212,240,0.06) 0%, transparent 50%),
-    radial-gradient(ellipse 50% 50% at 20% 50%, rgba(139,92,246,0.03) 0%, transparent 50%),
+    radial-gradient(circle at 50% 50%, rgba(0,229,255,0.07) 0%, transparent 50%),
+    radial-gradient(ellipse 50% 50% at 20% 50%, rgba(139,92,246,0.04) 0%, transparent 50%),
     var(--color-bg-primary);
 }
 
@@ -550,15 +553,15 @@ body {
 .hr-gradient {
   height: 1px;
   border: none;
-  background: linear-gradient(90deg, transparent, rgba(160,180,255,0.06) 20%, rgba(0,212,240,0.10) 50%, rgba(160,180,255,0.06) 80%, transparent);
+  background: linear-gradient(90deg, transparent, rgba(160,180,255,0.06) 20%, rgba(0,229,255,0.10) 50%, rgba(160,180,255,0.06) 80%, transparent);
 }
 
-/* ── Glow text (for editorial emphasis) ───── */
+/* ── Glow text (Phase 12: subtle, only for emphasis) ─ */
 .text-glow-cyan {
-  text-shadow: 0 0 20px rgba(0, 212, 240, 0.15);
+  text-shadow: 0 0 20px rgba(0, 229, 255, 0.12);
 }
 .text-glow-purple {
-  text-shadow: 0 0 20px rgba(139, 92, 246, 0.15);
+  text-shadow: 0 0 20px rgba(139, 92, 246, 0.12);
 }
 
 /* ── Mobile responsive overrides ──────────── */
