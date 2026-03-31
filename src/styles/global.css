@@ -547,3 +547,49 @@ body {
 .text-glow-purple {
   text-shadow: 0 0 40px rgba(124, 58, 237, 0.15), 0 0 80px rgba(124, 58, 237, 0.05);
 }
+
+/* ── Mobile responsive overrides ──────────── */
+@media (max-width: 767px) {
+  .aurora-orb {
+    width: 300px;
+    height: 300px;
+    filter: blur(80px);
+    opacity: 0.4;
+  }
+
+  .radial-lines::before {
+    width: 120%;
+    height: 120%;
+  }
+
+  .marquee-item {
+    font-size: 16px;
+  }
+
+  .hero-grid {
+    background-size: 40px 40px;
+  }
+
+  .card-premium:hover,
+  .card-stat:hover,
+  .card-feature:hover {
+    transform: none;
+  }
+}
+
+@media (max-width: 480px) {
+  .headline-display {
+    letter-spacing: -0.025em;
+  }
+
+  .aurora-orb {
+    width: 200px;
+    height: 200px;
+    filter: blur(60px);
+    opacity: 0.3;
+  }
+
+  .marquee-item {
+    font-size: 14px;
+  }
+}

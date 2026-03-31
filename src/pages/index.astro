@@ -13,9 +13,9 @@ import Card from '../components/Card.astro';
     <div class="absolute inset-0 hero-grid"></div>
     <div class="radial-lines"></div>
     <div class="aurora-orb"></div>
-    <div class="ambient-glow w-[900px] h-[600px] top-[-15%] left-1/2 -translate-x-1/2 animate-pulse-glow" style="background: radial-gradient(ellipse at center, rgba(0,229,255,0.07) 0%, transparent 65%);"></div>
-    <div class="ambient-glow w-[600px] h-[400px] top-[10%] left-[15%] animate-pulse-glow" style="background: radial-gradient(ellipse at center, rgba(124,58,237,0.05) 0%, transparent 60%); animation-delay: 3s;"></div>
-    <div class="ambient-glow w-[500px] h-[350px] top-[20%] right-[10%]" style="background: radial-gradient(ellipse at center, rgba(0,255,163,0.03) 0%, transparent 60%);"></div>
+    <div class="ambient-glow w-[400px] md:w-[900px] h-[300px] md:h-[600px] top-[-15%] left-1/2 -translate-x-1/2 animate-pulse-glow" style="background: radial-gradient(ellipse at center, rgba(0,229,255,0.07) 0%, transparent 65%);"></div>
+    <div class="ambient-glow w-[300px] md:w-[600px] h-[200px] md:h-[400px] top-[10%] left-[15%] animate-pulse-glow" style="background: radial-gradient(ellipse at center, rgba(124,58,237,0.05) 0%, transparent 60%); animation-delay: 3s;"></div>
+    <div class="ambient-glow w-[250px] md:w-[500px] h-[180px] md:h-[350px] top-[20%] right-[10%]" style="background: radial-gradient(ellipse at center, rgba(0,255,163,0.03) 0%, transparent 60%);"></div>
     <!-- Light sweep overlay -->
     <div class="absolute inset-0 light-sweep"></div>
     <!-- Bottom gradient fade -->
@@ -59,28 +59,28 @@ import Card from '../components/Card.astro';
   <!-- ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
        2. TRUST BAR — Glassy stat cards with count-up
   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ -->
-  <section class="relative py-32 px-6">
-    <div class="section-divider max-w-[400px] mx-auto mb-28"></div>
+  <section class="relative py-20 md:py-32 px-6">
+    <div class="section-divider max-w-[400px] mx-auto mb-16 md:mb-28"></div>
     <div class="max-w-[1060px] mx-auto reveal">
-      <p class="text-center text-content-secondary text-[clamp(1rem,1.8vw,1.15rem)] max-w-[520px] mx-auto mb-20 leading-[1.85]">
+      <p class="text-center text-content-secondary text-[clamp(1rem,1.8vw,1.15rem)] max-w-[520px] mx-auto mb-12 md:mb-20 leading-[1.85]">
         No somos una facultad de informática con un programa de software. Cada recurso, cada docente y cada decisión existe para formar <span class="text-content font-medium">ingenieros de software de clase mundial.</span>
       </p>
-      <div class="grid grid-cols-2 lg:grid-cols-4 gap-5">
-        <div class="card-stat p-7 md:p-8 text-center">
-          <p class="text-[clamp(2rem,4vw,3rem)] font-extrabold tracking-tight text-content stat-number" data-count="1200" data-prefix="+">+1,200</p>
-          <p class="text-[13px] text-content-muted mt-2.5">Ingenieros en la industria</p>
+      <div class="grid grid-cols-2 lg:grid-cols-4 gap-3 md:gap-5">
+        <div class="card-stat p-5 md:p-8 text-center">
+          <p class="text-[clamp(1.75rem,4vw,3rem)] font-extrabold tracking-tight text-content stat-number" data-count="1200" data-prefix="+">+1,200</p>
+          <p class="text-[12px] md:text-[13px] text-content-muted mt-1.5 md:mt-2.5">Ingenieros en la industria</p>
         </div>
-        <div class="card-stat p-7 md:p-8 text-center">
-          <p class="text-[clamp(2rem,4vw,3rem)] font-extrabold tracking-tight stat-number" data-count="93" data-suffix="%">93<span class="text-brand">%</span></p>
-          <p class="text-[13px] text-content-muted mt-2.5">Colocación laboral en 6 meses</p>
+        <div class="card-stat p-5 md:p-8 text-center">
+          <p class="text-[clamp(1.75rem,4vw,3rem)] font-extrabold tracking-tight stat-number" data-count="93" data-suffix="%">93<span class="text-brand">%</span></p>
+          <p class="text-[12px] md:text-[13px] text-content-muted mt-1.5 md:mt-2.5">Colocación laboral en 6 meses</p>
         </div>
-        <div class="card-stat p-7 md:p-8 text-center">
-          <p class="text-[clamp(2rem,4vw,3rem)] font-extrabold tracking-tight text-content stat-number" data-count="80" data-prefix="" data-suffix="+">80+</p>
-          <p class="text-[13px] text-content-muted mt-2.5">Profesionales tech como docentes</p>
+        <div class="card-stat p-5 md:p-8 text-center">
+          <p class="text-[clamp(1.75rem,4vw,3rem)] font-extrabold tracking-tight text-content stat-number" data-count="80" data-prefix="" data-suffix="+">80+</p>
+          <p class="text-[12px] md:text-[13px] text-content-muted mt-1.5 md:mt-2.5">Profesionales tech como docentes</p>
         </div>
-        <div class="card-stat p-7 md:p-8 text-center">
-          <p class="text-[clamp(2rem,4vw,3rem)] font-extrabold tracking-tight text-brand stat-number">SINAES</p>
-          <p class="text-[13px] text-content-muted mt-2.5">Acreditación nacional</p>
+        <div class="card-stat p-5 md:p-8 text-center">
+          <p class="text-[clamp(1.75rem,4vw,3rem)] font-extrabold tracking-tight text-brand stat-number">SINAES</p>
+          <p class="text-[12px] md:text-[13px] text-content-muted mt-1.5 md:mt-2.5">Acreditación nacional</p>
         </div>
       </div>
     </div>
@@ -90,10 +90,10 @@ import Card from '../components/Card.astro';
   <!-- ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
        EDITORIAL BREAK — Brand statement
   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ -->
-  <section class="relative py-36 md:py-52 px-6 overflow-hidden section-dramatic">
-    <hr class="hr-gradient max-w-[500px] mx-auto mb-28" />
-    <div class="ambient-glow w-[800px] h-[500px] top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2" style="background: radial-gradient(ellipse at center, rgba(124,58,237,0.05) 0%, transparent 55%);"></div>
-    <div class="ambient-glow w-[400px] h-[300px] top-[30%] left-[20%]" style="background: radial-gradient(ellipse at center, rgba(0,229,255,0.03) 0%, transparent 60%);"></div>
+  <section class="relative py-24 md:py-36 lg:py-52 px-6 overflow-hidden section-dramatic">
+    <hr class="hr-gradient max-w-[500px] mx-auto mb-16 md:mb-28" />
+    <div class="ambient-glow w-[350px] md:w-[800px] h-[250px] md:h-[500px] top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2" style="background: radial-gradient(ellipse at center, rgba(124,58,237,0.05) 0%, transparent 55%);"></div>
+    <div class="ambient-glow w-[200px] md:w-[400px] h-[150px] md:h-[300px] top-[30%] left-[20%]" style="background: radial-gradient(ellipse at center, rgba(0,229,255,0.03) 0%, transparent 60%);"></div>
     <div class="relative max-w-[800px] mx-auto text-center reveal">
       <h2 class="headline-display text-[clamp(2.25rem,5.5vw,4rem)] leading-[1.06]">
         Cada línea de código<br />
@@ -109,11 +109,11 @@ import Card from '../components/Card.astro';
   <!-- ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
        3. RUTAS — Premium card grid
   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ -->
-  <section class="relative py-36 md:py-48 px-6 overflow-hidden">
-    <div class="ambient-glow w-[600px] h-[350px] top-[25%] right-[-5%]" style="background: radial-gradient(ellipse at center, rgba(0,229,255,0.03) 0%, transparent 70%);"></div>
+  <section class="relative py-24 md:py-36 lg:py-48 px-6 overflow-hidden">
+    <div class="ambient-glow w-[300px] md:w-[600px] h-[200px] md:h-[350px] top-[25%] right-[-5%]" style="background: radial-gradient(ellipse at center, rgba(0,229,255,0.03) 0%, transparent 70%);"></div>
 
     <div class="relative max-w-[1060px] mx-auto">
-      <div class="text-center max-w-[600px] mx-auto mb-20 reveal">
+      <div class="text-center max-w-[600px] mx-auto mb-14 md:mb-20 reveal">
         <p class="text-[12px] font-bold text-brand tracking-widest uppercase mb-5">Rutas de especialización</p>
         <h2 class="headline-display text-[clamp(1.75rem,4.5vw,3rem)]">
           Tu camino. Tu especialización.
@@ -136,11 +136,11 @@ import Card from '../components/Card.astro';
   <!-- ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
        4. PROGRAMAS — Feature program showcase
   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ -->
-  <section class="relative py-36 md:py-48 px-6">
-    <div class="section-divider max-w-[400px] mx-auto mb-28"></div>
+  <section class="relative py-24 md:py-36 lg:py-48 px-6">
+    <div class="section-divider max-w-[400px] mx-auto mb-16 md:mb-28"></div>
 
     <div class="max-w-[1060px] mx-auto">
-      <div class="text-center max-w-[620px] mx-auto mb-20 reveal">
+      <div class="text-center max-w-[620px] mx-auto mb-14 md:mb-20 reveal">
         <p class="text-[12px] font-bold text-accent2 tracking-widest uppercase mb-5">Programas académicos</p>
         <h2 class="headline-display text-[clamp(1.75rem,4.5vw,3rem)]">
           Diseñados por la industria.
@@ -149,7 +149,7 @@ import Card from '../components/Card.astro';
       </div>
 
       <!-- Hero card: Bachillerato -->
-      <div class="card-feature p-8 md:p-12 mb-6 reveal">
+      <div class="card-feature p-6 md:p-12 mb-6 reveal">
         <div class="grid grid-cols-1 md:grid-cols-2 gap-12 items-center">
           <div>
             <p class="text-[12px] font-bold text-brand tracking-widest uppercase mb-5">Bachillerato &middot; 9 cuatrimestres</p>
@@ -214,8 +214,8 @@ import Card from '../components/Card.astro';
   <!-- ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
        MID CTA — Conversion break
   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ -->
-  <section class="relative py-32 px-6 overflow-hidden">
-    <div class="ambient-glow w-[600px] h-[350px] top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2" style="background: radial-gradient(ellipse at center, rgba(0,229,255,0.04) 0%, transparent 60%);"></div>
+  <section class="relative py-20 md:py-32 px-6 overflow-hidden">
+    <div class="ambient-glow w-[300px] md:w-[600px] h-[200px] md:h-[350px] top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2" style="background: radial-gradient(ellipse at center, rgba(0,229,255,0.04) 0%, transparent 60%);"></div>
     <div class="relative max-w-[620px] mx-auto text-center reveal">
       <h2 class="headline-display text-[clamp(1.5rem,3.5vw,2.5rem)] mb-6">
         ¿Listo para construir el software<br />que el mundo necesita?
@@ -233,12 +233,12 @@ import Card from '../components/Card.astro';
   <!-- ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
        5. DIFERENCIADORES — Full-width accent section
   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ -->
-  <section class="relative py-36 md:py-48 px-6 overflow-hidden section-alt">
+  <section class="relative py-24 md:py-36 lg:py-48 px-6 overflow-hidden section-alt">
     <!-- Subtle ambient glow -->
-    <div class="ambient-glow w-[900px] h-[500px] top-[10%] left-1/2 -translate-x-1/2" style="background: radial-gradient(ellipse at center, rgba(0,229,255,0.03) 0%, transparent 65%);"></div>
+    <div class="ambient-glow w-[400px] md:w-[900px] h-[250px] md:h-[500px] top-[10%] left-1/2 -translate-x-1/2" style="background: radial-gradient(ellipse at center, rgba(0,229,255,0.03) 0%, transparent 65%);"></div>
 
     <div class="relative max-w-[1060px] mx-auto">
-      <div class="text-center max-w-[620px] mx-auto mb-20 reveal">
+      <div class="text-center max-w-[620px] mx-auto mb-14 md:mb-20 reveal">
         <h2 class="headline-display text-[clamp(1.75rem,4.5vw,3rem)]">
           Esto no es una universidad más.
           <span class="text-content-muted">Es un laboratorio de talento tech.</span>
@@ -277,11 +277,11 @@ import Card from '../components/Card.astro';
   <!-- ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
        6. INDUSTRIA — Connection with industry
   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ -->
-  <section class="py-36 md:py-48 px-6">
-    <div class="section-divider max-w-[400px] mx-auto mb-28"></div>
+  <section class="py-24 md:py-36 lg:py-48 px-6">
+    <div class="section-divider max-w-[400px] mx-auto mb-16 md:mb-28"></div>
 
     <div class="max-w-[1060px] mx-auto">
-      <div class="grid grid-cols-1 lg:grid-cols-2 gap-16 lg:gap-24 items-center">
+      <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-24 items-center">
         <div class="reveal">
           <p class="text-[12px] font-bold text-brand tracking-widest uppercase mb-5">Conexión con la industria</p>
           <h2 class="headline-display text-[clamp(1.75rem,3.5vw,2.75rem)] mb-6">
@@ -300,22 +300,22 @@ import Card from '../components/Card.astro';
             </a>
           </div>
         </div>
-        <div class="grid grid-cols-2 gap-5 reveal-stagger">
-          <div class="card-stat p-7 text-center">
-            <p class="text-[2.75rem] font-extrabold text-brand stat-number mb-2">93%</p>
-            <p class="text-[13px] text-content-muted">Empleabilidad comprobada</p>
+        <div class="grid grid-cols-2 gap-3 md:gap-5 reveal-stagger">
+          <div class="card-stat p-5 md:p-7 text-center">
+            <p class="text-[2rem] md:text-[2.75rem] font-extrabold text-brand stat-number mb-1 md:mb-2">93%</p>
+            <p class="text-[12px] md:text-[13px] text-content-muted">Empleabilidad comprobada</p>
           </div>
-          <div class="card-stat p-7 text-center">
-            <p class="text-[2.75rem] font-extrabold stat-number mb-2">6<span class="text-content-muted text-lg ml-1">meses</span></p>
-            <p class="text-[13px] text-content-muted">Inserción laboral promedio</p>
+          <div class="card-stat p-5 md:p-7 text-center">
+            <p class="text-[2rem] md:text-[2.75rem] font-extrabold stat-number mb-1 md:mb-2">6<span class="text-content-muted text-base md:text-lg ml-1">meses</span></p>
+            <p class="text-[12px] md:text-[13px] text-content-muted">Inserción laboral promedio</p>
           </div>
-          <div class="card-stat p-7 text-center">
-            <p class="text-[2.75rem] font-extrabold stat-number mb-2">50+</p>
-            <p class="text-[13px] text-content-muted">Empresas aliadas</p>
+          <div class="card-stat p-5 md:p-7 text-center">
+            <p class="text-[2rem] md:text-[2.75rem] font-extrabold stat-number mb-1 md:mb-2">50+</p>
+            <p class="text-[12px] md:text-[13px] text-content-muted">Empresas aliadas</p>
           </div>
-          <div class="card-stat p-7 text-center">
-            <p class="text-[2.75rem] font-extrabold text-accent2 stat-number mb-2">Global</p>
-            <p class="text-[13px] text-content-muted">Certificaciones reconocidas</p>
+          <div class="card-stat p-5 md:p-7 text-center">
+            <p class="text-[2rem] md:text-[2.75rem] font-extrabold text-accent2 stat-number mb-1 md:mb-2">Global</p>
+            <p class="text-[12px] md:text-[13px] text-content-muted">Certificaciones reconocidas</p>
           </div>
         </div>
       </div>
@@ -326,13 +326,13 @@ import Card from '../components/Card.astro';
   <!-- ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
        7. ALIANZAS — Logo marquee strip
   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ -->
-  <section class="relative py-24 overflow-hidden border-y border-border-subtle">
-    <div class="max-w-[1060px] mx-auto px-6 mb-14 reveal">
+  <section class="relative py-16 md:py-24 overflow-hidden border-y border-border-subtle">
+    <div class="max-w-[1060px] mx-auto px-6 mb-10 md:mb-14 reveal">
       <p class="text-center text-[12px] font-bold text-content-muted tracking-widest uppercase">Empresas donde trabajan nuestros egresados</p>
     </div>
     <div class="relative overflow-hidden" style="mask-image: linear-gradient(90deg, transparent, black 12%, black 88%, transparent); -webkit-mask-image: linear-gradient(90deg, transparent, black 12%, black 88%, transparent);">
       <div class="marquee-track">
-        <div class="flex items-center gap-20 shrink-0">
+        <div class="flex items-center gap-10 md:gap-20 shrink-0">
           <span class="marquee-item">Microsoft</span>
           <span class="marquee-item">Amazon</span>
           <span class="marquee-item">Intel</span>
@@ -344,7 +344,7 @@ import Card from '../components/Card.astro';
           <span class="marquee-item">Encora</span>
           <span class="marquee-item">Publicis Sapient</span>
         </div>
-        <div class="flex items-center gap-20 shrink-0" aria-hidden="true">
+        <div class="flex items-center gap-10 md:gap-20 shrink-0" aria-hidden="true">
           <span class="marquee-item">Microsoft</span>
           <span class="marquee-item">Amazon</span>
           <span class="marquee-item">Intel</span>
@@ -364,11 +364,11 @@ import Card from '../components/Card.astro';
   <!-- ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
        8. CTA FINAL — Full impact premium
   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ -->
-  <section class="relative py-48 md:py-64 px-6 overflow-hidden section-dramatic">
+  <section class="relative py-32 md:py-48 lg:py-64 px-6 overflow-hidden section-dramatic">
     <!-- Decorative layers -->
-    <div class="aurora-orb" style="width: 500px; height: 500px; top: 50%; left: 50%; transform: translate(-50%, -50%); opacity: 0.35;"></div>
-    <div class="ambient-glow w-[900px] h-[600px] top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 animate-pulse-glow" style="background: radial-gradient(ellipse at center, rgba(0,229,255,0.07) 0%, transparent 55%);"></div>
-    <div class="ambient-glow w-[500px] h-[300px] top-[40%] left-[30%] -translate-x-1/2 -translate-y-1/2" style="background: radial-gradient(ellipse at center, rgba(124,58,237,0.05) 0%, transparent 55%);"></div>
+    <div class="aurora-orb hidden md:block" style="width: 500px; height: 500px; top: 50%; left: 50%; transform: translate(-50%, -50%); opacity: 0.35;"></div>
+    <div class="ambient-glow w-[350px] md:w-[900px] h-[300px] md:h-[600px] top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 animate-pulse-glow" style="background: radial-gradient(ellipse at center, rgba(0,229,255,0.07) 0%, transparent 55%);"></div>
+    <div class="ambient-glow w-[250px] md:w-[500px] h-[150px] md:h-[300px] top-[40%] left-[30%] -translate-x-1/2 -translate-y-1/2" style="background: radial-gradient(ellipse at center, rgba(124,58,237,0.05) 0%, transparent 55%);"></div>
 
     <div class="relative max-w-[680px] mx-auto text-center reveal">
       <h2 class="headline-display text-[clamp(2.5rem,6vw,4.5rem)]">
