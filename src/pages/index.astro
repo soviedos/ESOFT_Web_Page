@@ -11,13 +11,15 @@ import Card from '../components/Card.astro';
   <section class="relative min-h-[100dvh] flex flex-col items-center justify-center overflow-hidden -mt-[72px]">
     <!-- Multi-layer background -->
     <div class="absolute inset-0 hero-grid"></div>
+    <div class="radial-lines"></div>
+    <div class="aurora-orb"></div>
     <div class="ambient-glow w-[900px] h-[600px] top-[-15%] left-1/2 -translate-x-1/2 animate-pulse-glow" style="background: radial-gradient(ellipse at center, rgba(0,229,255,0.07) 0%, transparent 65%);"></div>
     <div class="ambient-glow w-[600px] h-[400px] top-[10%] left-[15%] animate-pulse-glow" style="background: radial-gradient(ellipse at center, rgba(124,58,237,0.05) 0%, transparent 60%); animation-delay: 3s;"></div>
     <div class="ambient-glow w-[500px] h-[350px] top-[20%] right-[10%]" style="background: radial-gradient(ellipse at center, rgba(0,255,163,0.03) 0%, transparent 60%);"></div>
     <!-- Light sweep overlay -->
     <div class="absolute inset-0 light-sweep"></div>
     <!-- Bottom gradient fade -->
-    <div class="absolute bottom-0 left-0 right-0 h-[250px]" style="background: linear-gradient(to top, var(--color-bg-primary) 0%, transparent 100%);"></div>
+    <div class="absolute bottom-0 left-0 right-0 h-[300px]" style="background: linear-gradient(to top, var(--color-bg-primary) 0%, transparent 100%);"></div>
 
     <div class="relative max-w-[820px] mx-auto text-center px-6">
       <!-- Tag -->
@@ -26,16 +28,16 @@ import Card from '../components/Card.astro';
         <span class="text-[12px] font-medium text-content-secondary tracking-wide uppercase">Escuela de Ingeniería de Software</span>
       </div>
 
-      <h1 class="headline-display text-[clamp(3rem,7vw,5rem)] animate-fade-up" style="animation-delay: 0.1s">
+      <h1 class="headline-display text-[clamp(3.25rem,7.5vw,5.5rem)] animate-fade-up" style="animation-delay: 0.15s">
         El software del futuro<br />
-        <span class="text-gradient-hero">se construye aquí.</span>
+        <span class="text-gradient-hero text-glow-cyan">se construye aquí.</span>
       </h1>
 
-      <p class="mt-8 text-[clamp(1.05rem,2vw,1.2rem)] text-content-secondary leading-[1.8] max-w-[520px] mx-auto animate-fade-up" style="animation-delay: 0.2s">
+      <p class="mt-8 text-[clamp(1.05rem,2vw,1.2rem)] text-content-secondary leading-[1.8] max-w-[520px] mx-auto animate-fade-up" style="animation-delay: 0.25s">
         La única escuela 100&percnt; enfocada en Ingeniería de Software en Costa Rica. IA, cloud, microservicios y arquitectura moderna.
       </p>
 
-      <div class="mt-12 flex flex-col sm:flex-row gap-4 justify-center animate-fade-up" style="animation-delay: 0.3s">
+      <div class="mt-12 flex flex-col sm:flex-row gap-4 justify-center animate-fade-up" style="animation-delay: 0.35s">
         <a href="/programas" class="btn-primary inline-flex justify-center items-center bg-brand text-bg-primary font-semibold px-8 py-3.5 rounded-full text-[15px]">
           Conocer programas
         </a>
@@ -45,7 +47,7 @@ import Card from '../components/Card.astro';
       </div>
 
       <!-- Logos -->
-      <div class="flex items-center justify-center gap-6 mt-16 animate-fade-up" style="animation-delay: 0.45s">
+      <div class="flex items-center justify-center gap-6 mt-16 animate-fade-up" style="animation-delay: 0.5s">
         <img src="/ESOFT_Software-Engineering-Negro.png" alt="ESOFT" class="w-[80px] md:w-[110px] h-auto invert opacity-40" />
         <div class="w-px h-5 bg-white/8"></div>
         <img src="/UCENFOTEC_LogoHorizontal-Negro.png" alt="Universidad CENFOTEC" class="w-[65px] md:w-[88px] h-auto invert opacity-40" />
@@ -88,12 +90,14 @@ import Card from '../components/Card.astro';
   <!-- ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
        EDITORIAL BREAK — Brand statement
   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ -->
-  <section class="relative py-32 md:py-44 px-6 overflow-hidden section-deep">
-    <div class="ambient-glow w-[700px] h-[400px] top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2" style="background: radial-gradient(ellipse at center, rgba(124,58,237,0.04) 0%, transparent 60%);"></div>
+  <section class="relative py-36 md:py-52 px-6 overflow-hidden section-dramatic">
+    <hr class="hr-gradient max-w-[500px] mx-auto mb-28" />
+    <div class="ambient-glow w-[800px] h-[500px] top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2" style="background: radial-gradient(ellipse at center, rgba(124,58,237,0.05) 0%, transparent 55%);"></div>
+    <div class="ambient-glow w-[400px] h-[300px] top-[30%] left-[20%]" style="background: radial-gradient(ellipse at center, rgba(0,229,255,0.03) 0%, transparent 60%);"></div>
     <div class="relative max-w-[800px] mx-auto text-center reveal">
-      <h2 class="headline-display text-[clamp(2rem,5vw,3.75rem)] leading-[1.08]">
+      <h2 class="headline-display text-[clamp(2.25rem,5.5vw,4rem)] leading-[1.06]">
         Cada línea de código<br />
-        <span class="text-gradient-purple">resuelve un problema real.</span>
+        <span class="text-gradient-purple text-glow-purple">resuelve un problema real.</span>
       </h2>
       <p class="mt-8 text-content-secondary text-[clamp(1rem,1.8vw,1.15rem)] leading-[1.8] max-w-[480px] mx-auto">
         No enseñamos tecnología por moda. Formamos ingenieros que entienden el porqué, el cómo y el para quién.
@@ -322,35 +326,35 @@ import Card from '../components/Card.astro';
   <!-- ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
        7. ALIANZAS — Logo marquee strip
   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ -->
-  <section class="relative py-20 overflow-hidden border-y border-border-subtle">
-    <div class="max-w-[1060px] mx-auto px-6 mb-12 reveal">
+  <section class="relative py-24 overflow-hidden border-y border-border-subtle">
+    <div class="max-w-[1060px] mx-auto px-6 mb-14 reveal">
       <p class="text-center text-[12px] font-bold text-content-muted tracking-widest uppercase">Empresas donde trabajan nuestros egresados</p>
     </div>
-    <div class="relative overflow-hidden" style="mask-image: linear-gradient(90deg, transparent, black 15%, black 85%, transparent); -webkit-mask-image: linear-gradient(90deg, transparent, black 15%, black 85%, transparent);">
+    <div class="relative overflow-hidden" style="mask-image: linear-gradient(90deg, transparent, black 12%, black 88%, transparent); -webkit-mask-image: linear-gradient(90deg, transparent, black 12%, black 88%, transparent);">
       <div class="marquee-track">
-        <div class="flex items-center gap-16 shrink-0 opacity-40 hover:opacity-70 transition-opacity duration-500">
-          <span class="text-[18px] font-bold text-content-muted tracking-tight whitespace-nowrap">Microsoft</span>
-          <span class="text-[18px] font-bold text-content-muted tracking-tight whitespace-nowrap">Amazon</span>
-          <span class="text-[18px] font-bold text-content-muted tracking-tight whitespace-nowrap">Intel</span>
-          <span class="text-[18px] font-bold text-content-muted tracking-tight whitespace-nowrap">Accenture</span>
-          <span class="text-[18px] font-bold text-content-muted tracking-tight whitespace-nowrap">IBM</span>
-          <span class="text-[18px] font-bold text-content-muted tracking-tight whitespace-nowrap">GBM</span>
-          <span class="text-[18px] font-bold text-content-muted tracking-tight whitespace-nowrap">Procter &amp; Gamble</span>
-          <span class="text-[18px] font-bold text-content-muted tracking-tight whitespace-nowrap">Gorilla Logic</span>
-          <span class="text-[18px] font-bold text-content-muted tracking-tight whitespace-nowrap">Encora</span>
-          <span class="text-[18px] font-bold text-content-muted tracking-tight whitespace-nowrap">Publicis Sapient</span>
+        <div class="flex items-center gap-20 shrink-0">
+          <span class="marquee-item">Microsoft</span>
+          <span class="marquee-item">Amazon</span>
+          <span class="marquee-item">Intel</span>
+          <span class="marquee-item">Accenture</span>
+          <span class="marquee-item">IBM</span>
+          <span class="marquee-item">GBM</span>
+          <span class="marquee-item">Procter &amp; Gamble</span>
+          <span class="marquee-item">Gorilla Logic</span>
+          <span class="marquee-item">Encora</span>
+          <span class="marquee-item">Publicis Sapient</span>
         </div>
-        <div class="flex items-center gap-16 shrink-0 opacity-40 hover:opacity-70 transition-opacity duration-500" aria-hidden="true">
-          <span class="text-[18px] font-bold text-content-muted tracking-tight whitespace-nowrap">Microsoft</span>
-          <span class="text-[18px] font-bold text-content-muted tracking-tight whitespace-nowrap">Amazon</span>
-          <span class="text-[18px] font-bold text-content-muted tracking-tight whitespace-nowrap">Intel</span>
-          <span class="text-[18px] font-bold text-content-muted tracking-tight whitespace-nowrap">Accenture</span>
-          <span class="text-[18px] font-bold text-content-muted tracking-tight whitespace-nowrap">IBM</span>
-          <span class="text-[18px] font-bold text-content-muted tracking-tight whitespace-nowrap">GBM</span>
-          <span class="text-[18px] font-bold text-content-muted tracking-tight whitespace-nowrap">Procter &amp; Gamble</span>
-          <span class="text-[18px] font-bold text-content-muted tracking-tight whitespace-nowrap">Gorilla Logic</span>
-          <span class="text-[18px] font-bold text-content-muted tracking-tight whitespace-nowrap">Encora</span>
-          <span class="text-[18px] font-bold text-content-muted tracking-tight whitespace-nowrap">Publicis Sapient</span>
+        <div class="flex items-center gap-20 shrink-0" aria-hidden="true">
+          <span class="marquee-item">Microsoft</span>
+          <span class="marquee-item">Amazon</span>
+          <span class="marquee-item">Intel</span>
+          <span class="marquee-item">Accenture</span>
+          <span class="marquee-item">IBM</span>
+          <span class="marquee-item">GBM</span>
+          <span class="marquee-item">Procter &amp; Gamble</span>
+          <span class="marquee-item">Gorilla Logic</span>
+          <span class="marquee-item">Encora</span>
+          <span class="marquee-item">Publicis Sapient</span>
         </div>
       </div>
     </div>
@@ -360,17 +364,18 @@ import Card from '../components/Card.astro';
   <!-- ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
        8. CTA FINAL — Full impact premium
   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ -->
-  <section class="relative py-44 md:py-60 px-6 overflow-hidden">
-    <!-- Layered glows -->
-    <div class="ambient-glow w-[800px] h-[500px] top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 animate-pulse-glow" style="background: radial-gradient(ellipse at center, rgba(0,229,255,0.06) 0%, transparent 60%);"></div>
-    <div class="ambient-glow w-[500px] h-[300px] top-[40%] left-[30%] -translate-x-1/2 -translate-y-1/2" style="background: radial-gradient(ellipse at center, rgba(124,58,237,0.04) 0%, transparent 60%);"></div>
+  <section class="relative py-48 md:py-64 px-6 overflow-hidden section-dramatic">
+    <!-- Decorative layers -->
+    <div class="aurora-orb" style="width: 500px; height: 500px; top: 50%; left: 50%; transform: translate(-50%, -50%); opacity: 0.35;"></div>
+    <div class="ambient-glow w-[900px] h-[600px] top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 animate-pulse-glow" style="background: radial-gradient(ellipse at center, rgba(0,229,255,0.07) 0%, transparent 55%);"></div>
+    <div class="ambient-glow w-[500px] h-[300px] top-[40%] left-[30%] -translate-x-1/2 -translate-y-1/2" style="background: radial-gradient(ellipse at center, rgba(124,58,237,0.05) 0%, transparent 55%);"></div>
 
-    <div class="relative max-w-[640px] mx-auto text-center reveal">
-      <h2 class="headline-display text-[clamp(2.25rem,5.5vw,4rem)]">
+    <div class="relative max-w-[680px] mx-auto text-center reveal">
+      <h2 class="headline-display text-[clamp(2.5rem,6vw,4.5rem)]">
         La industria tech no espera.<br />
-        <span class="text-gradient-hero">Vos tampoco deberías.</span>
+        <span class="text-gradient-hero text-glow-cyan">Vos tampoco deberías.</span>
       </h2>
-      <p class="text-content-secondary mt-7 text-[clamp(1rem,1.8vw,1.15rem)] leading-[1.8] max-w-[440px] mx-auto">
+      <p class="text-content-secondary mt-8 text-[clamp(1rem,1.8vw,1.15rem)] leading-[1.8] max-w-[460px] mx-auto">
         Solicitá información hoy y empezá a construir tu carrera en Ingeniería de Software.
       </p>
       <div class="mt-12 flex flex-col sm:flex-row gap-4 justify-center">
