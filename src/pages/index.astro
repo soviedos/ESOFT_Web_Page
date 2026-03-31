@@ -13,7 +13,7 @@ import Card from '../components/Card.astro';
     <div class="absolute inset-0 hero-grid"></div>
     <div class="radial-lines"></div>
     <div class="aurora-orb"></div>
-    <div class="ambient-glow w-[400px] md:w-[900px] h-[300px] md:h-[600px] top-[-15%] left-1/2 -translate-x-1/2 animate-pulse-glow" style="background: radial-gradient(ellipse at center, rgba(0,212,240,0.07) 0%, transparent 65%);"></div>
+    <div class="ambient-glow w-[400px] md:w-[900px] h-[300px] md:h-[600px] top-[-15%] left-1/2 -translate-x-1/2 animate-pulse-glow" style="background: radial-gradient(circle at center, rgba(0,212,240,0.15) 0%, transparent 60%);"></div>
     <div class="ambient-glow w-[300px] md:w-[600px] h-[200px] md:h-[400px] top-[10%] left-[15%] animate-pulse-glow" style="background: radial-gradient(ellipse at center, rgba(139,92,246,0.05) 0%, transparent 60%); animation-delay: 3s;"></div>
     <div class="ambient-glow w-[250px] md:w-[500px] h-[180px] md:h-[350px] top-[20%] right-[10%]" style="background: radial-gradient(ellipse at center, rgba(52,211,153,0.03) 0%, transparent 60%);"></div>
     <!-- Light sweep overlay -->
@@ -430,10 +430,12 @@ import Card from '../components/Card.astro';
        8. CTA FINAL — Full impact premium
   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ -->
   <section class="relative py-32 md:py-48 lg:py-64 px-6 overflow-hidden section-dramatic">
+    <!-- CTA radial glow backdrop — strongest glow on the page -->
+    <div class="absolute inset-0 pointer-events-none" style="background: radial-gradient(circle at 50% 50%, rgba(0,212,240,0.15) 0%, transparent 50%);"></div>
     <!-- Decorative layers -->
     <div class="aurora-orb hidden md:block" style="width: 500px; height: 500px; top: 50%; left: 50%; transform: translate(-50%, -50%); opacity: 0.35;"></div>
-    <div class="ambient-glow w-[350px] md:w-[900px] h-[300px] md:h-[600px] top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 animate-pulse-glow" style="background: radial-gradient(ellipse at center, rgba(0,212,240,0.07) 0%, transparent 55%);"></div>
-    <div class="ambient-glow w-[250px] md:w-[500px] h-[150px] md:h-[300px] top-[40%] left-[30%] -translate-x-1/2 -translate-y-1/2" style="background: radial-gradient(ellipse at center, rgba(139,92,246,0.05) 0%, transparent 55%);"></div>
+    <div class="ambient-glow w-[350px] md:w-[900px] h-[300px] md:h-[600px] top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 animate-pulse-glow" style="background: radial-gradient(ellipse at center, rgba(0,212,240,0.10) 0%, transparent 55%);"></div>
+    <div class="ambient-glow w-[250px] md:w-[500px] h-[150px] md:h-[300px] top-[40%] left-[30%] -translate-x-1/2 -translate-y-1/2" style="background: radial-gradient(ellipse at center, rgba(139,92,246,0.07) 0%, transparent 55%);"></div>
 
     <div class="relative max-w-[680px] mx-auto text-center reveal">
       <h2 class="headline-display text-[clamp(2.5rem,6vw,4.5rem)]">
@@ -444,7 +446,7 @@ import Card from '../components/Card.astro';
         Solicitá información hoy y empezá a construir tu carrera en Ingeniería de Software en la Universidad CENFOTEC.
       </p>
       <div class="mt-12 flex flex-col sm:flex-row gap-4 justify-center">
-        <a href="/admision/solicitar-informacion" class="btn-primary inline-flex justify-center items-center bg-brand text-bg-primary font-semibold px-8 py-3.5 rounded-full text-[15px]">
+        <a href="/admision/solicitar-informacion" class="btn-cta-final inline-flex justify-center items-center bg-brand text-bg-primary font-semibold px-8 py-3.5 rounded-full text-[15px]">
           Solicitar información
         </a>
         <a href="/admision" class="btn-ghost inline-flex justify-center items-center border border-border-default text-content-secondary font-medium px-8 py-3.5 rounded-full text-[15px]">
