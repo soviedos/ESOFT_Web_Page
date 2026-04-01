@@ -13,12 +13,10 @@
   --color-brand: #00E5FF;
   --color-brand-hover: #33EDFF;
   --color-brand-soft: rgba(0, 229, 255, 0.15);
-  --color-brand-glow: rgba(0, 229, 255, 0.30);
 
   /* ── Accent 2 — Purple (desaturated ~20 %) ────────── */
   --color-accent2: #8B5CF6;
   --color-accent2-soft: rgba(139, 92, 246, 0.10);
-  --color-accent2-glow: rgba(139, 92, 246, 0.30);
 
   /* ── Accent 3 — Green highlight ──────────────────── */
   --color-accent3: #34D399;
@@ -27,12 +25,10 @@
   --color-content: #FFFFFF;
   --color-content-secondary: #A1A1AA;
   --color-content-muted: #8A8A93;
-  --color-content-disabled: #3A3A48;
 
   /* ── Borders (tinted with accent hue) ────────────── */
   --color-border-subtle: rgba(160, 180, 255, 0.05);
   --color-border-default: rgba(160, 180, 255, 0.08);
-  --color-border-strong: rgba(160, 180, 255, 0.14);
   --color-border-brand: rgba(0, 229, 255, 0.20);
 
   /* ── Fonts ────────────────────────────────────────── */
@@ -72,13 +68,6 @@ body {
 /* ── Gradient text ────────────────────────── */
 .text-gradient-hero {
   background: linear-gradient(180deg, #ffffff 0%, rgba(0, 229, 255, 0.75) 100%);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  background-clip: text;
-}
-
-.text-gradient-cyan {
-  background: linear-gradient(135deg, #00E5FF 0%, #00FFA3 100%);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
@@ -450,11 +439,6 @@ body {
   color: var(--color-content);
 }
 
-/* ── Count-up animation helper ────────────── */
-.count-up {
-  display: inline-block;
-}
-
 /* ── Animations ───────────────────────────── */
 @keyframes fade-up {
   from {
@@ -470,12 +454,9 @@ body {
   animation: fade-up 0.9s cubic-bezier(0.16, 1, 0.3, 1) both;
 }
 
-@keyframes fade-in {
-  from { opacity: 0; }
-  to { opacity: 1; }
-}
-.animate-fade-in {
-  animation: fade-in 1.2s ease both;
+@keyframes pulse {
+  0%, 100% { opacity: 1; transform: scale(1); }
+  50% { opacity: 0.6; transform: scale(1.15); }
 }
 
 @keyframes pulse-glow {
@@ -484,14 +465,6 @@ body {
 }
 .animate-pulse-glow {
   animation: pulse-glow 6s ease-in-out infinite;
-}
-
-@keyframes float {
-  0%, 100% { transform: translateY(0); }
-  50% { transform: translateY(-8px); }
-}
-.animate-float {
-  animation: float 6s ease-in-out infinite;
 }
 
 /* ── Scroll-triggered reveals ─────────────── */
@@ -556,19 +529,6 @@ body {
   height: 1px;
   border: none;
   background: linear-gradient(90deg, transparent, rgba(160,180,255,0.06) 20%, rgba(0,229,255,0.10) 50%, rgba(160,180,255,0.06) 80%, transparent);
-}
-
-/* ── Testimonial card quote mark ──────────── */
-.card-premium blockquote::before {
-  content: '"';
-  position: absolute;
-  top: -4px;
-  left: -4px;
-  font-size: 3rem;
-  font-weight: 800;
-  color: var(--color-brand);
-  opacity: 0.15;
-  line-height: 1;
 }
 
 /* ── Glow text (Phase 12: subtle, only for emphasis) ─ */
@@ -700,9 +660,7 @@ button:focus-visible,
   }
 
   .animate-fade-up,
-  .animate-fade-in,
-  .animate-pulse-glow,
-  .animate-float {
+  .animate-pulse-glow {
     animation: none !important;
     opacity: 1 !important;
     transform: none !important;

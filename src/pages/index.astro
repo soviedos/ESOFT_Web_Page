@@ -19,7 +19,7 @@ import Card from '../components/Card.astro';
     <!-- Light sweep overlay -->
     <div class="absolute inset-0 light-sweep" aria-hidden="true"></div>
     <!-- Bottom gradient fade -->
-    <div class="absolute bottom-0 left-0 right-0 h-[300px]" style="background: linear-gradient(to top, var(--color-bg-primary) 0%, transparent 100%);" aria-hidden="true"></div></div>
+    <div class="absolute bottom-0 left-0 right-0 h-[300px]" style="background: linear-gradient(to top, var(--color-bg-primary) 0%, transparent 100%);" aria-hidden="true"></div>
 
     <div class="relative max-w-[820px] mx-auto text-center px-6">
 
@@ -29,7 +29,7 @@ import Card from '../components/Card.astro';
       </h1>
 
       <div class="mt-8 inline-flex items-center gap-3 rounded-full px-7 py-3 animate-fade-up" style="animation-delay: 0.2s; background: rgba(0,229,255,0.08); border: 1px solid rgba(0,229,255,0.20); box-shadow: 0 0 24px rgba(0,229,255,0.10), 0 4px 16px rgba(0,0,0,0.3);">
-        <span class="w-2 h-2 rounded-full shrink-0" style="background: #34D399; box-shadow: 0 0 6px rgba(52,211,153,0.6), 0 0 12px rgba(52,211,153,0.3); animation: pulse 2s ease-in-out infinite;"></span>
+        <span class="w-2 h-2 rounded-full shrink-0" style="background: #34D399; box-shadow: 0 0 6px rgba(52,211,153,0.6), 0 0 12px rgba(52,211,153,0.3); animation: pulse 2s ease-in-out infinite;" aria-hidden="true"></span>
         <span class="text-[clamp(0.9rem,1.6vw,1.05rem)] font-semibold tracking-wide text-brand">Escuela de Ingeniería de Software (ESOFT) · Universidad CENFOTEC</span>
       </div>
 
@@ -47,10 +47,10 @@ import Card from '../components/Card.astro';
       </div>
 
       <!-- Logos -->
-      <div class="flex items-center justify-center gap-6 mt-16 animate-fade-up" style="animation-delay: 0.5s">
-        <img src="/ESOFT_Software-Engineering-Negro.png" alt="ESOFT" class="w-[80px] md:w-[110px] h-auto invert opacity-40" />
+      <div class="flex items-center justify-center gap-6 mt-16 animate-fade-up" style="animation-delay: 0.5s" aria-hidden="true">
+        <img src="/ESOFT_Software-Engineering-Negro.png" alt="" class="w-[80px] md:w-[110px] h-auto invert opacity-40" />
         <div class="w-px h-5 bg-white/8"></div>
-        <img src="/UCENFOTEC_LogoHorizontal-Negro.png" alt="Universidad CENFOTEC" class="w-[65px] md:w-[88px] h-auto invert opacity-40" />
+        <img src="/UCENFOTEC_LogoHorizontal-Negro.png" alt="" class="w-[65px] md:w-[88px] h-auto invert opacity-40" />
       </div>
     </div>
   </section>
@@ -90,7 +90,7 @@ import Card from '../components/Card.astro';
   <!-- ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
        ¿QUÉ ES ESOFT? — Institutional clarity
   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ -->
-  <section class="relative py-20 md:py-28 px-6" style="background: radial-gradient(ellipse 60% 40% at 50% 0%, rgba(0,229,255,0.03) 0%, transparent 50%), var(--color-bg-primary);">
+  <section class="relative py-20 md:py-28 px-6" style="background: radial-gradient(ellipse 60% 40% at 50% 0%, rgba(0,229,255,0.03) 0%, transparent 50%), var(--color-bg-primary);" aria-label="¿Qué es ESOFT?">
     <div class="max-w-[860px] mx-auto reveal">
       <div class="card-feature p-8 md:p-14">
         <div class="flex flex-col md:flex-row gap-10 md:gap-16 items-center">
@@ -164,7 +164,7 @@ import Card from '../components/Card.astro';
   <!-- ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
        4. PROGRAMAS — Feature program showcase
   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ -->
-  <section class="relative py-24 md:py-36 lg:py-48 px-6" style="background: radial-gradient(ellipse 60% 40% at 30% 0%, rgba(139,92,246,0.04) 0%, transparent 50%), var(--color-bg-secondary);">
+  <section class="relative py-24 md:py-36 lg:py-48 px-6" style="background: radial-gradient(ellipse 60% 40% at 30% 0%, rgba(139,92,246,0.04) 0%, transparent 50%), var(--color-bg-secondary);" aria-label="Programas académicos">
     <div class="section-divider max-w-[400px] mx-auto mb-16 md:mb-28"></div>
 
     <div class="max-w-[1060px] mx-auto">
@@ -322,7 +322,7 @@ import Card from '../components/Card.astro';
   <!-- ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
        TESTIMONIOS — Voces reales de la comunidad
   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ -->
-  <section class="relative py-24 md:py-36 lg:py-48 px-6 overflow-hidden" style="background: radial-gradient(ellipse 60% 40% at 50% 0%, rgba(139,92,246,0.03) 0%, transparent 50%), var(--color-bg-primary);">
+  <section class="relative py-24 md:py-36 lg:py-48 px-6 overflow-hidden" style="background: radial-gradient(ellipse 60% 40% at 50% 0%, rgba(139,92,246,0.03) 0%, transparent 50%), var(--color-bg-primary);" aria-label="Testimonios de la comunidad">
     <div class="section-divider max-w-[400px] mx-auto mb-16 md:mb-28"></div>
 
     <div class="max-w-[1060px] mx-auto">
@@ -402,7 +402,7 @@ import Card from '../components/Card.astro';
   <!-- ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
        6. INDUSTRIA — Connection with industry
   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ -->
-  <section class="py-24 md:py-36 lg:py-48 px-6" style="background: radial-gradient(ellipse 60% 40% at 70% 0%, rgba(0,229,255,0.03) 0%, transparent 50%), var(--color-bg-secondary);">
+  <section class="py-24 md:py-36 lg:py-48 px-6" style="background: radial-gradient(ellipse 60% 40% at 70% 0%, rgba(0,229,255,0.03) 0%, transparent 50%), var(--color-bg-secondary);" aria-label="Conexión con la industria">
     <div class="section-divider max-w-[400px] mx-auto mb-16 md:mb-28"></div>
 
     <div class="max-w-[1060px] mx-auto">
@@ -451,12 +451,12 @@ import Card from '../components/Card.astro';
   <!-- ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
        7. ALIANZAS — Logo marquee strip
   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ -->
-  <section class="relative py-16 md:py-24 overflow-hidden border-y border-border-subtle" style="background: var(--color-bg-tertiary);">
+  <section class="relative py-16 md:py-24 overflow-hidden border-y border-border-subtle" style="background: var(--color-bg-tertiary);" aria-label="Empresas aliadas">
     <div class="max-w-[1060px] mx-auto px-6 mb-10 md:mb-14 reveal">
       <p class="text-center text-[14px] font-bold text-content-secondary tracking-widest uppercase">Empresas donde trabajan egresados de Universidad CENFOTEC</p>
     </div>
-    <div class="relative overflow-hidden" style="mask-image: linear-gradient(90deg, transparent, black 12%, black 88%, transparent); -webkit-mask-image: linear-gradient(90deg, transparent, black 12%, black 88%, transparent);">
-      <div class="marquee-track">
+    <div class="relative overflow-hidden" role="marquee" aria-roledescription="carrusel de empresas" style="mask-image: linear-gradient(90deg, transparent, black 12%, black 88%, transparent); -webkit-mask-image: linear-gradient(90deg, transparent, black 12%, black 88%, transparent);">
+      <div class="marquee-track" aria-label="Microsoft, Amazon, Intel, Accenture, IBM, GBM, Procter & Gamble, Gorilla Logic, Encora, Publicis Sapient">
         <div class="flex items-center gap-10 md:gap-20 shrink-0">
           <span class="marquee-item">Microsoft</span>
           <span class="marquee-item">Amazon</span>
@@ -489,10 +489,10 @@ import Card from '../components/Card.astro';
   <!-- ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
        RESPALDO INSTITUCIONAL — Universidad CENFOTEC
   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ -->
-  <section class="relative py-20 md:py-32 px-6" style="background: radial-gradient(ellipse 50% 40% at 50% 0%, rgba(139,92,246,0.04) 0%, transparent 50%), var(--color-bg-primary);">
+  <section class="relative py-20 md:py-32 px-6" style="background: radial-gradient(ellipse 50% 40% at 50% 0%, rgba(139,92,246,0.04) 0%, transparent 50%), var(--color-bg-primary);" aria-label="Respaldo institucional">
     <div class="section-divider max-w-[400px] mx-auto mb-16 md:mb-24"></div>
     <div class="max-w-[860px] mx-auto text-center reveal">
-      <img src="/UCENFOTEC_LogoHorizontal-Negro.png" alt="Universidad CENFOTEC" class="w-[140px] md:w-[180px] h-auto invert opacity-50 mx-auto mb-8" />
+      <img src="/UCENFOTEC_LogoHorizontal-Negro.png" alt="" class="w-[140px] md:w-[180px] h-auto invert opacity-50 mx-auto mb-8" aria-hidden="true" />
       <p class="text-[14px] font-bold text-accent2 tracking-widest uppercase mb-5">Respaldo institucional</p>
       <h2 class="headline-display text-[clamp(1.75rem,4vw,2.75rem)] mb-6">
         Respaldado por la<br />
