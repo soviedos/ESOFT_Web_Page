@@ -21,72 +21,35 @@ import Card from '../components/Card.astro';
     <!-- Bottom gradient fade -->
     <div class="absolute bottom-0 left-0 right-0 h-[300px]" style="background: linear-gradient(to top, var(--color-bg-primary) 0%, transparent 100%);"></div>
 
-    <div class="relative max-w-[1060px] mx-auto px-6">
-      <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-16 items-center">
-        <!-- Left: text content -->
-        <div class="text-center lg:text-left">
-          <!-- Institutional badge -->
-          <div class="relative inline-block mb-10 animate-fade-up">
-            <div class="absolute inset-0 -m-4 rounded-full pointer-events-none" style="background: radial-gradient(ellipse at center, rgba(0,229,255,0.08) 0%, transparent 70%); filter: blur(20px);"></div>
-            <div class="relative inline-flex items-center gap-3 rounded-full px-6 py-2.5" style="background: rgba(17,19,26,0.72); border: 1px solid rgba(255,255,255,0.10); backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px); box-shadow: 0 4px 24px rgba(0,0,0,0.4), 0 0 16px rgba(0,229,255,0.06);">
-              <span class="w-2 h-2 rounded-full" style="background: #34D399; box-shadow: 0 0 6px rgba(52,211,153,0.6), 0 0 12px rgba(52,211,153,0.3); animation: pulse 2s ease-in-out infinite;"></span>
-              <span class="text-[14px] font-medium tracking-[0.12em] uppercase" style="color: rgba(255,255,255,0.82);">ESOFT · Universidad CENFOTEC</span>
-            </div>
-          </div>
+    <div class="relative max-w-[820px] mx-auto text-center px-6">
 
-          <h1 class="headline-display text-[clamp(2.75rem,6vw,4.5rem)] animate-fade-up" style="animation-delay: 0.15s; text-shadow: 0 0 20px rgba(0,229,255,0.12);">
-            El software del futuro<br />
-            <span class="text-gradient-hero text-glow-cyan">se construye aquí.</span>
-          </h1>
+      <h1 class="headline-display text-[clamp(3.25rem,7.5vw,5.5rem)] animate-fade-up" style="animation-delay: 0.15s; text-shadow: 0 0 20px rgba(0,229,255,0.12);">
+        El software del futuro<br />
+        <span class="text-gradient-hero text-glow-cyan">se construye aquí.</span>
+      </h1>
 
-          <p class="mt-5 text-[clamp(1.05rem,2vw,1.2rem)] text-content-secondary leading-[1.85] max-w-[520px] mx-auto lg:mx-0 animate-fade-up" style="animation-delay: 0.25s">
-            La escuela 100&percnt; especializada en Ingeniería de Software de la Universidad CENFOTEC. IA, cloud, microservicios y arquitectura moderna.
-          </p>
+      <p class="mt-6 text-[clamp(0.95rem,1.6vw,1.05rem)] text-brand/80 font-medium tracking-wide animate-fade-up" style="animation-delay: 0.2s">
+        Escuela de Ingeniería de Software (ESOFT) · Universidad CENFOTEC
+      </p>
 
-          <div class="mt-10 flex flex-col sm:flex-row gap-4 justify-center lg:justify-start animate-fade-up" style="animation-delay: 0.35s">
-            <a href="/programas" class="btn-primary inline-flex justify-center items-center bg-brand text-bg-primary font-semibold px-8 py-3.5 rounded-full text-[15px]">
-              Conocer programas
-            </a>
-            <a href="/admision/solicitar-informacion" class="btn-ghost inline-flex justify-center items-center border border-border-default text-content-secondary font-medium px-8 py-3.5 rounded-full text-[15px]">
-              Solicitar información
-            </a>
-          </div>
+      <p class="mt-5 text-[clamp(1.05rem,2vw,1.2rem)] text-content-secondary leading-[1.85] max-w-[520px] mx-auto animate-fade-up" style="animation-delay: 0.25s">
+        La escuela 100&percnt; especializada en Ingeniería de Software de la Universidad CENFOTEC. IA, cloud, microservicios y arquitectura moderna.
+      </p>
 
-          <!-- Logos -->
-          <div class="flex items-center justify-center lg:justify-start gap-6 mt-12 animate-fade-up" style="animation-delay: 0.5s">
-            <img src="/ESOFT_Software-Engineering-Negro.png" alt="ESOFT" class="w-[80px] md:w-[110px] h-auto invert opacity-40" />
-            <div class="w-px h-5 bg-white/8"></div>
-            <img src="/UCENFOTEC_LogoHorizontal-Negro.png" alt="Universidad CENFOTEC" class="w-[65px] md:w-[88px] h-auto invert opacity-40" />
-          </div>
-        </div>
+      <div class="mt-12 flex flex-col sm:flex-row gap-4 justify-center animate-fade-up" style="animation-delay: 0.35s">
+        <a href="/programas" class="btn-primary inline-flex justify-center items-center bg-brand text-bg-primary font-semibold px-8 py-3.5 rounded-full text-[15px]">
+          Conocer programas
+        </a>
+        <a href="/admision/solicitar-informacion" class="btn-ghost inline-flex justify-center items-center border border-border-default text-content-secondary font-medium px-8 py-3.5 rounded-full text-[15px]">
+          Solicitar información
+        </a>
+      </div>
 
-        <!-- Right: person image + social proof -->
-        <div class="hidden lg:flex flex-col items-center animate-fade-up" style="animation-delay: 0.4s">
-          <div class="relative">
-            <!-- Hero person image — replace src with a real ESOFT student photo -->
-            <div class="relative w-[380px] h-[460px] rounded-3xl overflow-hidden border border-border-default" style="background: linear-gradient(180deg, var(--color-bg-tertiary) 0%, var(--color-bg-secondary) 100%);">
-              <!-- Placeholder: silhouette with brand gradient — swap for real photo -->
-              <div class="absolute inset-0 flex items-end justify-center">
-                <svg class="w-[280px] h-[380px] text-content-muted/10" viewBox="0 0 280 380" fill="currentColor">
-                  <ellipse cx="140" cy="100" rx="65" ry="72" />
-                  <path d="M30 380 C30 280, 70 230, 140 220 C210 230, 250 280, 250 380 Z" />
-                </svg>
-              </div>
-              <!-- Brand accent overlay -->
-              <div class="absolute inset-0" style="background: linear-gradient(180deg, transparent 50%, rgba(0,229,255,0.08) 100%);"></div>
-              <!-- Comment overlay -->
-              <div class="absolute bottom-0 left-0 right-0 p-6" style="background: linear-gradient(to top, rgba(7,7,10,0.9) 0%, transparent 100%);">
-                <p class="text-[15px] text-content font-medium">"ESOFT cambió mi carrera en tech."</p>
-                <p class="text-[14px] text-content-secondary mt-1">— Estudiante de Ingeniería de Software</p>
-              </div>
-            </div>
-            <!-- Floating stat badge -->
-            <div class="absolute -bottom-4 -left-6 rounded-2xl px-5 py-3 border border-border-default" style="background: rgba(17,19,26,0.85); backdrop-filter: blur(16px); -webkit-backdrop-filter: blur(16px);">
-              <p class="text-[1.5rem] font-extrabold text-brand">93%</p>
-              <p class="text-[14px] text-content-secondary">Empleabilidad</p>
-            </div>
-          </div>
-        </div>
+      <!-- Logos -->
+      <div class="flex items-center justify-center gap-6 mt-16 animate-fade-up" style="animation-delay: 0.5s">
+        <img src="/ESOFT_Software-Engineering-Negro.png" alt="ESOFT" class="w-[80px] md:w-[110px] h-auto invert opacity-40" />
+        <div class="w-px h-5 bg-white/8"></div>
+        <img src="/UCENFOTEC_LogoHorizontal-Negro.png" alt="Universidad CENFOTEC" class="w-[65px] md:w-[88px] h-auto invert opacity-40" />
       </div>
     </div>
   </section>
