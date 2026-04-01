@@ -52,6 +52,8 @@ body {
   background: var(--color-bg-primary);
   color: var(--color-content);
   font-family: var(--font-sans);
+  line-height: 1.7;
+  font-size: 16px;
 }
 
 ::selection {
@@ -438,14 +440,14 @@ body {
   font-size: 20px;
   font-weight: 700;
   letter-spacing: -0.02em;
-  color: var(--color-content-muted);
+  color: var(--color-content-secondary);
   white-space: nowrap;
-  opacity: 0.35;
+  opacity: 0.45;
   transition: opacity 0.5s ease, color 0.5s ease;
 }
 .marquee-item:hover {
-  opacity: 0.8;
-  color: var(--color-content-secondary);
+  opacity: 0.9;
+  color: var(--color-content);
 }
 
 /* ── Count-up animation helper ────────────── */
@@ -554,6 +556,19 @@ body {
   height: 1px;
   border: none;
   background: linear-gradient(90deg, transparent, rgba(160,180,255,0.06) 20%, rgba(0,229,255,0.10) 50%, rgba(160,180,255,0.06) 80%, transparent);
+}
+
+/* ── Testimonial card quote mark ──────────── */
+.card-premium blockquote::before {
+  content: '"';
+  position: absolute;
+  top: -4px;
+  left: -4px;
+  font-size: 3rem;
+  font-weight: 800;
+  color: var(--color-brand);
+  opacity: 0.15;
+  line-height: 1;
 }
 
 /* ── Glow text (Phase 12: subtle, only for emphasis) ─ */

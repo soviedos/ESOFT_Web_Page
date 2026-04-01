@@ -21,43 +21,72 @@ import Card from '../components/Card.astro';
     <!-- Bottom gradient fade -->
     <div class="absolute bottom-0 left-0 right-0 h-[300px]" style="background: linear-gradient(to top, var(--color-bg-primary) 0%, transparent 100%);"></div>
 
-    <div class="relative max-w-[820px] mx-auto text-center px-6">
-      <!-- Institutional badge -->
-      <div class="relative inline-block mb-14 animate-fade-up">
-        <div class="absolute inset-0 -m-4 rounded-full pointer-events-none" style="background: radial-gradient(ellipse at center, rgba(0,229,255,0.08) 0%, transparent 70%); filter: blur(20px);"></div>
-        <div class="relative inline-flex items-center gap-3 rounded-full px-6 py-2.5" style="background: rgba(17,19,26,0.72); border: 1px solid rgba(255,255,255,0.10); backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px); box-shadow: 0 4px 24px rgba(0,0,0,0.4), 0 0 16px rgba(0,229,255,0.06);">
-          <span class="w-2 h-2 rounded-full" style="background: #34D399; box-shadow: 0 0 6px rgba(52,211,153,0.6), 0 0 12px rgba(52,211,153,0.3); animation: pulse 2s ease-in-out infinite;"></span>
-          <span class="text-[13px] font-medium tracking-[0.12em] uppercase" style="color: rgba(255,255,255,0.82);">Escuela de Ingeniería del Software · Universidad CENFOTEC</span>
+    <div class="relative max-w-[1060px] mx-auto px-6">
+      <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-16 items-center">
+        <!-- Left: text content -->
+        <div class="text-center lg:text-left">
+          <!-- Institutional badge -->
+          <div class="relative inline-block mb-10 animate-fade-up">
+            <div class="absolute inset-0 -m-4 rounded-full pointer-events-none" style="background: radial-gradient(ellipse at center, rgba(0,229,255,0.08) 0%, transparent 70%); filter: blur(20px);"></div>
+            <div class="relative inline-flex items-center gap-3 rounded-full px-6 py-2.5" style="background: rgba(17,19,26,0.72); border: 1px solid rgba(255,255,255,0.10); backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px); box-shadow: 0 4px 24px rgba(0,0,0,0.4), 0 0 16px rgba(0,229,255,0.06);">
+              <span class="w-2 h-2 rounded-full" style="background: #34D399; box-shadow: 0 0 6px rgba(52,211,153,0.6), 0 0 12px rgba(52,211,153,0.3); animation: pulse 2s ease-in-out infinite;"></span>
+              <span class="text-[14px] font-medium tracking-[0.12em] uppercase" style="color: rgba(255,255,255,0.82);">ESOFT · Universidad CENFOTEC</span>
+            </div>
+          </div>
+
+          <h1 class="headline-display text-[clamp(2.75rem,6vw,4.5rem)] animate-fade-up" style="animation-delay: 0.15s; text-shadow: 0 0 20px rgba(0,229,255,0.12);">
+            El software del futuro<br />
+            <span class="text-gradient-hero text-glow-cyan">se construye aquí.</span>
+          </h1>
+
+          <p class="mt-5 text-[clamp(1.05rem,2vw,1.2rem)] text-content-secondary leading-[1.85] max-w-[520px] mx-auto lg:mx-0 animate-fade-up" style="animation-delay: 0.25s">
+            La escuela 100&percnt; especializada en Ingeniería de Software de la Universidad CENFOTEC. IA, cloud, microservicios y arquitectura moderna.
+          </p>
+
+          <div class="mt-10 flex flex-col sm:flex-row gap-4 justify-center lg:justify-start animate-fade-up" style="animation-delay: 0.35s">
+            <a href="/programas" class="btn-primary inline-flex justify-center items-center bg-brand text-bg-primary font-semibold px-8 py-3.5 rounded-full text-[15px]">
+              Conocer programas
+            </a>
+            <a href="/admision/solicitar-informacion" class="btn-ghost inline-flex justify-center items-center border border-border-default text-content-secondary font-medium px-8 py-3.5 rounded-full text-[15px]">
+              Solicitar información
+            </a>
+          </div>
+
+          <!-- Logos -->
+          <div class="flex items-center justify-center lg:justify-start gap-6 mt-12 animate-fade-up" style="animation-delay: 0.5s">
+            <img src="/ESOFT_Software-Engineering-Negro.png" alt="ESOFT" class="w-[80px] md:w-[110px] h-auto invert opacity-40" />
+            <div class="w-px h-5 bg-white/8"></div>
+            <img src="/UCENFOTEC_LogoHorizontal-Negro.png" alt="Universidad CENFOTEC" class="w-[65px] md:w-[88px] h-auto invert opacity-40" />
+          </div>
         </div>
-      </div>
 
-      <h1 class="headline-display text-[clamp(3.25rem,7.5vw,5.5rem)] animate-fade-up" style="animation-delay: 0.15s; text-shadow: 0 0 20px rgba(0,229,255,0.12);">
-        El software del futuro<br />
-        <span class="text-gradient-hero text-glow-cyan">se construye aquí.</span>
-      </h1>
-
-      <p class="mt-6 text-[clamp(0.95rem,1.6vw,1.05rem)] text-brand/80 font-medium tracking-wide animate-fade-up" style="animation-delay: 0.2s">
-        Escuela de Ingeniería de Software (ESOFT) · Universidad CENFOTEC
-      </p>
-
-      <p class="mt-5 text-[clamp(1.05rem,2vw,1.2rem)] text-content-secondary leading-[1.8] max-w-[520px] mx-auto animate-fade-up" style="animation-delay: 0.25s">
-        La escuela 100&percnt; especializada en Ingeniería de Software de la Universidad CENFOTEC. IA, cloud, microservicios y arquitectura moderna.
-      </p>
-
-      <div class="mt-12 flex flex-col sm:flex-row gap-4 justify-center animate-fade-up" style="animation-delay: 0.35s">
-        <a href="/programas" class="btn-primary inline-flex justify-center items-center bg-brand text-bg-primary font-semibold px-8 py-3.5 rounded-full text-[15px]">
-          Conocer programas
-        </a>
-        <a href="/admision/solicitar-informacion" class="btn-ghost inline-flex justify-center items-center border border-border-default text-content-secondary font-medium px-8 py-3.5 rounded-full text-[15px]">
-          Solicitar información
-        </a>
-      </div>
-
-      <!-- Logos -->
-      <div class="flex items-center justify-center gap-6 mt-16 animate-fade-up" style="animation-delay: 0.5s">
-        <img src="/ESOFT_Software-Engineering-Negro.png" alt="ESOFT" class="w-[80px] md:w-[110px] h-auto invert opacity-40" />
-        <div class="w-px h-5 bg-white/8"></div>
-        <img src="/UCENFOTEC_LogoHorizontal-Negro.png" alt="Universidad CENFOTEC" class="w-[65px] md:w-[88px] h-auto invert opacity-40" />
+        <!-- Right: person image + social proof -->
+        <div class="hidden lg:flex flex-col items-center animate-fade-up" style="animation-delay: 0.4s">
+          <div class="relative">
+            <!-- Hero person image — replace src with a real ESOFT student photo -->
+            <div class="relative w-[380px] h-[460px] rounded-3xl overflow-hidden border border-border-default" style="background: linear-gradient(180deg, var(--color-bg-tertiary) 0%, var(--color-bg-secondary) 100%);">
+              <!-- Placeholder: silhouette with brand gradient — swap for real photo -->
+              <div class="absolute inset-0 flex items-end justify-center">
+                <svg class="w-[280px] h-[380px] text-content-muted/10" viewBox="0 0 280 380" fill="currentColor">
+                  <ellipse cx="140" cy="100" rx="65" ry="72" />
+                  <path d="M30 380 C30 280, 70 230, 140 220 C210 230, 250 280, 250 380 Z" />
+                </svg>
+              </div>
+              <!-- Brand accent overlay -->
+              <div class="absolute inset-0" style="background: linear-gradient(180deg, transparent 50%, rgba(0,229,255,0.08) 100%);"></div>
+              <!-- Comment overlay -->
+              <div class="absolute bottom-0 left-0 right-0 p-6" style="background: linear-gradient(to top, rgba(7,7,10,0.9) 0%, transparent 100%);">
+                <p class="text-[15px] text-content font-medium">"ESOFT cambió mi carrera en tech."</p>
+                <p class="text-[14px] text-content-secondary mt-1">— Estudiante de Ingeniería de Software</p>
+              </div>
+            </div>
+            <!-- Floating stat badge -->
+            <div class="absolute -bottom-4 -left-6 rounded-2xl px-5 py-3 border border-border-default" style="background: rgba(17,19,26,0.85); backdrop-filter: blur(16px); -webkit-backdrop-filter: blur(16px);">
+              <p class="text-[1.5rem] font-extrabold text-brand">93%</p>
+              <p class="text-[14px] text-content-secondary">Empleabilidad</p>
+            </div>
+          </div>
+        </div>
       </div>
     </div>
   </section>
@@ -75,19 +104,19 @@ import Card from '../components/Card.astro';
       <div class="grid grid-cols-2 lg:grid-cols-4 gap-3 md:gap-5">
         <div class="card-stat p-5 md:p-8 text-center">
           <p class="text-[clamp(1.75rem,4vw,3rem)] font-extrabold tracking-tight text-content stat-number" data-count="1200" data-prefix="+">+1,200</p>
-          <p class="text-[12px] md:text-[13px] text-content-muted mt-1.5 md:mt-2.5">Egresados de UCENFOTEC en la industria</p>
+          <p class="text-[14px] md:text-[15px] text-content-secondary mt-1.5 md:mt-2.5">Egresados de UCENFOTEC en la industria</p>
         </div>
         <div class="card-stat p-5 md:p-8 text-center">
           <p class="text-[clamp(1.75rem,4vw,3rem)] font-extrabold tracking-tight stat-number" data-count="93" data-suffix="%">93<span class="text-brand">%</span></p>
-          <p class="text-[12px] md:text-[13px] text-content-muted mt-1.5 md:mt-2.5">Colocación laboral en 6 meses</p>
+          <p class="text-[14px] md:text-[15px] text-content-secondary mt-1.5 md:mt-2.5">Colocación laboral en 6 meses</p>
         </div>
         <div class="card-stat p-5 md:p-8 text-center">
           <p class="text-[clamp(1.75rem,4vw,3rem)] font-extrabold tracking-tight text-content stat-number" data-count="80" data-prefix="" data-suffix="+">80+</p>
-          <p class="text-[12px] md:text-[13px] text-content-muted mt-1.5 md:mt-2.5">Profesionales tech como docentes</p>
+          <p class="text-[14px] md:text-[15px] text-content-secondary mt-1.5 md:mt-2.5">Profesionales tech como docentes</p>
         </div>
         <div class="card-stat p-5 md:p-8 text-center">
           <p class="text-[clamp(1.75rem,4vw,3rem)] font-extrabold tracking-tight text-brand stat-number">SINAES</p>
-          <p class="text-[12px] md:text-[13px] text-content-muted mt-1.5 md:mt-2.5">Universidad acreditada</p>
+          <p class="text-[14px] md:text-[15px] text-content-secondary mt-1.5 md:mt-2.5">Universidad acreditada</p>
         </div>
       </div>
     </div>
@@ -107,12 +136,12 @@ import Card from '../components/Card.astro';
             <img src="/ESOFT_Software-Engineering-Negro.png" alt="ESOFT" class="w-[100px] md:w-[120px] h-auto invert opacity-60" />
           </div>
           <div>
-            <p class="text-[12px] font-bold text-brand tracking-widest uppercase mb-4">¿Qué es ESOFT?</p>
+            <p class="text-[14px] font-bold text-brand tracking-widest uppercase mb-4">¿Qué es ESOFT?</p>
             <h2 class="headline-display text-[clamp(1.5rem,3.5vw,2.25rem)] mb-5">
               La Escuela de Ingeniería de Software<br class="hidden md:block" />
               <span class="text-content-muted">de la Universidad CENFOTEC.</span>
             </h2>
-            <p class="text-content-secondary text-[15px] leading-[1.8] max-w-[480px]">
+            <p class="text-content-secondary text-[15px] leading-[1.85] max-w-[480px]">
               ESOFT no es una institución independiente. Es la escuela especializada que la <span class="text-content font-medium">Universidad CENFOTEC</span> creó para concentrar toda su expertise en una sola disciplina: Ingeniería de Software. Todos los programas, docentes y títulos son de la Universidad CENFOTEC.
             </p>
           </div>
@@ -149,7 +178,7 @@ import Card from '../components/Card.astro';
 
     <div class="relative max-w-[1060px] mx-auto">
       <div class="text-center max-w-[600px] mx-auto mb-14 md:mb-20 reveal">
-        <p class="text-[12px] font-bold text-brand tracking-widest uppercase mb-5">Rutas de especialización</p>
+        <p class="text-[14px] font-bold text-brand tracking-widest uppercase mb-5">Rutas de especialización</p>
         <h2 class="headline-display text-[clamp(1.75rem,4.5vw,3rem)]">
           Tu camino. Tu especialización.
           <span class="text-content-muted">Tu decisión.</span>
@@ -176,7 +205,7 @@ import Card from '../components/Card.astro';
 
     <div class="max-w-[1060px] mx-auto">
       <div class="text-center max-w-[620px] mx-auto mb-14 md:mb-20 reveal">
-        <p class="text-[12px] font-bold text-accent2 tracking-widest uppercase mb-5">Programas académicos · Universidad CENFOTEC</p>
+        <p class="text-[14px] font-bold text-accent2 tracking-widest uppercase mb-5">Programas académicos · Universidad CENFOTEC</p>
         <h2 class="headline-display text-[clamp(1.75rem,4.5vw,3rem)]">
           Diseñados por la industria.
           <span class="text-content-muted">Para la industria.</span>
@@ -187,11 +216,21 @@ import Card from '../components/Card.astro';
       <div class="card-feature p-6 md:p-12 mb-6 reveal">
         <div class="grid grid-cols-1 md:grid-cols-2 gap-12 items-center">
           <div>
-            <p class="text-[12px] font-bold text-brand tracking-widest uppercase mb-5">Bachillerato &middot; 9 cuatrimestres</p>
+            <p class="text-[14px] font-bold text-brand tracking-widest uppercase mb-5">Bachillerato &middot; 9 cuatrimestres</p>
             <h3 class="text-2xl md:text-[2.25rem] font-extrabold tracking-[-0.03em] leading-tight mb-5">Ingeniería de Software</h3>
-            <p class="text-content-secondary text-[15px] leading-[1.75] mb-8">
+            <p class="text-content-secondary text-[15px] leading-[1.85] mb-6">
               4 años para dominar el ciclo completo: desarrollo, testing, IA, arquitectura y gestión de proyectos. Acreditado por SINAES.
             </p>
+            <!-- Avatares de estudiantes del programa -->
+            <div class="flex items-center gap-3 mb-8">
+              <div class="flex -space-x-3">
+                <div class="w-9 h-9 rounded-full border-2 border-bg-card flex items-center justify-center text-[14px] font-bold text-brand" style="background: rgba(0,229,255,0.12);">S</div>
+                <div class="w-9 h-9 rounded-full border-2 border-bg-card flex items-center justify-center text-[14px] font-bold text-accent2" style="background: rgba(139,92,246,0.12);">M</div>
+                <div class="w-9 h-9 rounded-full border-2 border-bg-card flex items-center justify-center text-[14px] font-bold text-accent3" style="background: rgba(52,211,153,0.12);">K</div>
+                <div class="w-9 h-9 rounded-full border-2 border-bg-card flex items-center justify-center text-[14px] font-bold text-brand" style="background: rgba(0,229,255,0.12);">+</div>
+              </div>
+              <p class="text-[14px] text-content-secondary">+200 estudiantes activos</p>
+            </div>
             <a href="/programas/bachillerato-ingenieria-software" class="link-arrow">
               Conocer programa <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7" /></svg>
             </a>
@@ -199,19 +238,19 @@ import Card from '../components/Card.astro';
           <div class="hidden md:grid grid-cols-2 gap-4">
             <div class="rounded-2xl bg-bg-secondary/80 border border-border-subtle p-6 text-center">
               <p class="text-[2rem] font-extrabold stat-number">43</p>
-              <p class="text-[12px] text-content-muted mt-1.5">Cursos</p>
+              <p class="text-[14px] text-content-secondary mt-1.5">Cursos</p>
             </div>
             <div class="rounded-2xl bg-bg-secondary/80 border border-border-subtle p-6 text-center">
               <p class="text-[2rem] font-extrabold stat-number">4</p>
-              <p class="text-[12px] text-content-muted mt-1.5">Años</p>
+              <p class="text-[14px] text-content-secondary mt-1.5">Años</p>
             </div>
             <div class="rounded-2xl bg-bg-secondary/80 border border-border-subtle p-6 text-center">
               <p class="text-[2rem] font-extrabold text-brand">IA</p>
-              <p class="text-[12px] text-content-muted mt-1.5">Integrada</p>
+              <p class="text-[14px] text-content-secondary mt-1.5">Integrada</p>
             </div>
             <div class="rounded-2xl bg-bg-secondary/80 border border-border-subtle p-6 text-center">
               <p class="text-[2rem] font-extrabold stat-number">100%</p>
-              <p class="text-[12px] text-content-muted mt-1.5">Práctico</p>
+              <p class="text-[14px] text-content-secondary mt-1.5">Práctico</p>
             </div>
           </div>
         </div>
@@ -220,17 +259,17 @@ import Card from '../components/Card.astro';
       <!-- Two secondary programs -->
       <div class="grid grid-cols-1 md:grid-cols-2 gap-5 reveal-stagger">
         <div class="card-premium rounded-[20px] p-8 md:p-10 group">
-          <p class="text-[11px] font-bold text-accent2 tracking-widest uppercase mb-5">Maestría &middot; 6 cuatrimestres</p>
+          <p class="text-[14px] font-bold text-accent2 tracking-widest uppercase mb-5">Maestría &middot; 6 cuatrimestres</p>
           <h3 class="text-lg md:text-xl font-bold tracking-tight mb-3">Software e Inteligencia Artificial</h3>
-          <p class="text-content-muted text-[14px] leading-[1.75] mb-8">Pasá de ejecutar a definir la estrategia técnica. IA aplicada, arquitectura avanzada y liderazgo de equipos de ingeniería.</p>
+          <p class="text-content-secondary text-[15px] leading-[1.85] mb-8">Pasá de ejecutar a definir la estrategia técnica. IA aplicada, arquitectura avanzada y liderazgo de equipos de ingeniería.</p>
           <a href="/programas/maestria-ingenieria-software-ia" class="link-arrow text-[15px]">
             Explorar <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7" /></svg>
           </a>
         </div>
         <div class="card-premium rounded-[20px] p-8 md:p-10 group">
-          <p class="text-[11px] font-bold text-accent2 tracking-widest uppercase mb-5">Técnico</p>
+          <p class="text-[14px] font-bold text-accent2 tracking-widest uppercase mb-5">Técnico</p>
           <h3 class="text-lg md:text-xl font-bold tracking-tight mb-3">Testing de Software con IA</h3>
-          <p class="text-content-muted text-[14px] leading-[1.75] mb-8">La ruta más rápida hacia la industria de QA. Testing manual, automatizado y potenciado con sistemas inteligentes.</p>
+          <p class="text-content-secondary text-[15px] leading-[1.85] mb-8">La ruta más rápida hacia la industria de QA. Testing manual, automatizado y potenciado con sistemas inteligentes.</p>
           <a href="/programas/testing-software-ia-sistemas-inteligentes" class="link-arrow text-[15px]">
             Explorar <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7" /></svg>
           </a>
@@ -286,7 +325,7 @@ import Card from '../components/Card.astro';
             <svg class="w-6 h-6 text-brand" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M6.75 7.5l3 2.25-3 2.25m4.5 0h3m-9 8.25h13.5A2.25 2.25 0 0021 18V6a2.25 2.25 0 00-2.25-2.25H5.25A2.25 2.25 0 003 6v12a2.25 2.25 0 002.25 2.25z" /></svg>
           </div>
           <h3 class="text-[18px] font-bold mb-3 tracking-tight">100% Ingeniería de Software</h3>
-          <p class="text-[14px] text-content-secondary leading-[1.75]">La Universidad CENFOTEC dedicó una escuela completa a una sola disciplina. Cada recurso, cada curso y cada docente existe para una sola cosa: software.</p>
+          <p class="text-[15px] text-content-secondary leading-[1.85]">La Universidad CENFOTEC dedicó una escuela completa a una sola disciplina. Cada recurso, cada curso y cada docente existe para una sola cosa: software.</p>
         </div>
 
         <div class="card-premium rounded-[20px] p-8 md:p-10 text-center">
@@ -294,7 +333,7 @@ import Card from '../components/Card.astro';
             <svg class="w-6 h-6 text-accent2" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9.813 15.904L9 18.75l-.813-2.846a4.5 4.5 0 00-3.09-3.09L2.25 12l2.846-.813a4.5 4.5 0 003.09-3.09L9 5.25l.813 2.846a4.5 4.5 0 003.09 3.09L15.75 12l-2.846.813a4.5 4.5 0 00-3.09 3.09zM18.259 8.715L18 9.75l-.259-1.035a3.375 3.375 0 00-2.455-2.456L14.25 6l1.036-.259a3.375 3.375 0 002.455-2.456L18 2.25l.259 1.035a3.375 3.375 0 002.455 2.456L21.75 6l-1.036.259a3.375 3.375 0 00-2.455 2.456z" /></svg>
           </div>
           <h3 class="text-[18px] font-bold mb-3 tracking-tight">IA integrada en todo</h3>
-          <p class="text-[14px] text-content-secondary leading-[1.75]">No es una optativa. La inteligencia artificial está en cada programa, cada proyecto y cada evaluación.</p>
+          <p class="text-[15px] text-content-secondary leading-[1.85]">No es una optativa. La inteligencia artificial está en cada programa, cada proyecto y cada evaluación.</p>
         </div>
 
         <div class="card-premium rounded-[20px] p-8 md:p-10 text-center">
@@ -302,8 +341,95 @@ import Card from '../components/Card.astro';
             <svg class="w-6 h-6 text-brand" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M20.25 14.15v4.25c0 1.094-.787 2.036-1.872 2.18-2.087.277-4.216.42-6.378.42s-4.291-.143-6.378-.42c-1.085-.144-1.872-1.086-1.872-2.18v-4.25m16.5 0a2.18 2.18 0 00.75-1.661V8.706c0-1.081-.768-2.015-1.837-2.175a48.114 48.114 0 00-3.413-.387m4.5 8.006c-.194.165-.42.295-.673.38A23.978 23.978 0 0112 15.75c-2.648 0-5.195-.429-7.577-1.22a2.016 2.016 0 01-.673-.38m0 0A2.18 2.18 0 013 12.489V8.706c0-1.081.768-2.015 1.837-2.175a48.111 48.111 0 013.413-.387m7.5 0V5.25A2.25 2.25 0 0013.5 3h-3a2.25 2.25 0 00-2.25 2.25v.894m7.5 0a48.667 48.667 0 00-7.5 0" /></svg>
           </div>
           <h3 class="text-[18px] font-bold mb-3 tracking-tight">Docentes que hacen deploy</h3>
-          <p class="text-[14px] text-content-secondary leading-[1.75]">Tus profesores construyen software en producción hoy. No enseñan desde la teoría. Enseñan desde el código.</p>
+          <p class="text-[15px] text-content-secondary leading-[1.85]">Tus profesores construyen software en producción hoy. No enseñan desde la teoría. Enseñan desde el código.</p>
+          <!-- Avatares de docentes -->
+          <div class="flex justify-center mt-6 -space-x-2">
+            <div class="w-8 h-8 rounded-full border-2 border-bg-card flex items-center justify-center text-[14px] font-bold text-brand" style="background: rgba(0,229,255,0.12);">J</div>
+            <div class="w-8 h-8 rounded-full border-2 border-bg-card flex items-center justify-center text-[14px] font-bold text-accent2" style="background: rgba(139,92,246,0.12);">R</div>
+            <div class="w-8 h-8 rounded-full border-2 border-bg-card flex items-center justify-center text-[14px] font-bold text-accent3" style="background: rgba(52,211,153,0.12);">A</div>
+          </div>
+          <p class="text-[14px] text-content-muted mt-2 text-center">80+ profesionales activos</p>
         </div>
+      </div>
+    </div>
+  </section>
+
+
+  <!-- ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+       TESTIMONIOS — Voces reales de la comunidad
+  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ -->
+  <section class="relative py-24 md:py-36 lg:py-48 px-6 overflow-hidden" style="background: radial-gradient(ellipse 60% 40% at 50% 0%, rgba(139,92,246,0.03) 0%, transparent 50%), var(--color-bg-primary);">
+    <div class="section-divider max-w-[400px] mx-auto mb-16 md:mb-28"></div>
+
+    <div class="max-w-[1060px] mx-auto">
+      <div class="text-center max-w-[620px] mx-auto mb-14 md:mb-20 reveal">
+        <p class="text-[14px] font-bold text-brand tracking-widest uppercase mb-5">Historias reales</p>
+        <h2 class="headline-display text-[clamp(1.75rem,4.5vw,3rem)]">
+          Lo dicen quienes ya
+          <span class="text-content-muted">lo vivieron.</span>
+        </h2>
+      </div>
+
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-5 reveal-stagger">
+        <!-- Testimonio 1 -->
+        <div class="card-premium rounded-[20px] p-8 md:p-10">
+          <div class="flex items-center gap-4 mb-6">
+            <!-- Avatar — reemplazar con foto real del egresado -->
+            <div class="w-14 h-14 rounded-full border-2 border-brand/20 flex items-center justify-center shrink-0" style="background: linear-gradient(135deg, rgba(0,229,255,0.15) 0%, rgba(139,92,246,0.10) 100%);">
+              <span class="text-[18px] font-bold text-brand">AC</span>
+            </div>
+            <div>
+              <p class="text-[16px] font-bold text-content">Andrés Castillo</p>
+              <p class="text-[14px] text-content-secondary">Software Engineer · Microsoft</p>
+            </div>
+          </div>
+          <p class="text-[15px] text-content-secondary leading-[1.85]">
+            "La formación en ESOFT me preparó para el nivel de exigencia de una empresa global. Desde el primer cuatrimestre trabajé con herramientas reales."
+          </p>
+          <p class="text-[14px] text-content-muted mt-5 font-medium">Egresado · Bachillerato en Ingeniería de Software</p>
+        </div>
+
+        <!-- Testimonio 2 -->
+        <div class="card-premium rounded-[20px] p-8 md:p-10">
+          <div class="flex items-center gap-4 mb-6">
+            <!-- Avatar — reemplazar con foto real de la estudiante -->
+            <div class="w-14 h-14 rounded-full border-2 border-accent2/20 flex items-center justify-center shrink-0" style="background: linear-gradient(135deg, rgba(139,92,246,0.15) 0%, rgba(0,229,255,0.10) 100%);">
+              <span class="text-[18px] font-bold text-accent2">MR</span>
+            </div>
+            <div>
+              <p class="text-[16px] font-bold text-content">María Rodríguez</p>
+              <p class="text-[14px] text-content-secondary">QA Lead · Gorilla Logic</p>
+            </div>
+          </div>
+          <p class="text-[15px] text-content-secondary leading-[1.85]">
+            "El enfoque práctico de testing me dio una ventaja enorme. A los 3 meses de graduarme ya lideraba un equipo de QA completo."
+          </p>
+          <p class="text-[14px] text-content-muted mt-5 font-medium">Egresada · Técnico en Testing de Software</p>
+        </div>
+
+        <!-- Testimonio 3 -->
+        <div class="card-premium rounded-[20px] p-8 md:p-10">
+          <div class="flex items-center gap-4 mb-6">
+            <!-- Avatar — reemplazar con foto real del docente -->
+            <div class="w-14 h-14 rounded-full border-2 border-brand/20 flex items-center justify-center shrink-0" style="background: linear-gradient(135deg, rgba(52,211,153,0.15) 0%, rgba(0,229,255,0.10) 100%);">
+              <span class="text-[18px] font-bold text-accent3">DV</span>
+            </div>
+            <div>
+              <p class="text-[16px] font-bold text-content">Daniel Vargas</p>
+              <p class="text-[14px] text-content-secondary">Docente ESOFT · CTO Startup</p>
+            </div>
+          </div>
+          <p class="text-[15px] text-content-secondary leading-[1.85]">
+            "Enseñar en ESOFT me permite compartir lo que vivo cada día en producción. Los estudiantes salen listos para la industria real, no para un examen."
+          </p>
+          <p class="text-[14px] text-content-muted mt-5 font-medium">Docente · Arquitectura de Software</p>
+        </div>
+      </div>
+
+      <div class="text-center mt-14 reveal">
+        <a href="/historias" class="btn-ghost inline-flex items-center border border-border-default text-content-secondary font-medium px-8 py-3.5 rounded-full text-[14px]">
+          Más historias de la comunidad
+        </a>
       </div>
     </div>
   </section>
@@ -318,7 +444,7 @@ import Card from '../components/Card.astro';
     <div class="max-w-[1060px] mx-auto">
       <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-24 items-center">
         <div class="reveal">
-          <p class="text-[12px] font-bold text-brand tracking-widest uppercase mb-5">Conexión con la industria</p>
+          <p class="text-[14px] font-bold text-brand tracking-widest uppercase mb-5">Conexión con la industria</p>
           <h2 class="headline-display text-[clamp(1.75rem,3.5vw,2.75rem)] mb-6">
             Tu primer empleo en tech
             <span class="text-content-muted">no empieza después de graduarte.</span>
@@ -338,19 +464,19 @@ import Card from '../components/Card.astro';
         <div class="grid grid-cols-2 gap-3 md:gap-5 reveal-stagger">
           <div class="card-stat p-5 md:p-7 text-center">
             <p class="text-[2rem] md:text-[2.75rem] font-extrabold text-brand stat-number mb-1 md:mb-2">93%</p>
-            <p class="text-[12px] md:text-[13px] text-content-muted">Empleabilidad comprobada</p>
+            <p class="text-[14px] md:text-[15px] text-content-secondary">Empleabilidad comprobada</p>
           </div>
           <div class="card-stat p-5 md:p-7 text-center">
             <p class="text-[2rem] md:text-[2.75rem] font-extrabold stat-number mb-1 md:mb-2">6<span class="text-content-muted text-base md:text-lg ml-1">meses</span></p>
-            <p class="text-[12px] md:text-[13px] text-content-muted">Inserción laboral promedio</p>
+            <p class="text-[14px] md:text-[15px] text-content-secondary">Inserción laboral promedio</p>
           </div>
           <div class="card-stat p-5 md:p-7 text-center">
             <p class="text-[2rem] md:text-[2.75rem] font-extrabold stat-number mb-1 md:mb-2">50+</p>
-            <p class="text-[12px] md:text-[13px] text-content-muted">Empresas aliadas</p>
+            <p class="text-[14px] md:text-[15px] text-content-secondary">Empresas aliadas</p>
           </div>
           <div class="card-stat p-5 md:p-7 text-center">
             <p class="text-[2rem] md:text-[2.75rem] font-extrabold text-accent2 stat-number mb-1 md:mb-2">Global</p>
-            <p class="text-[12px] md:text-[13px] text-content-muted">Certificaciones reconocidas</p>
+            <p class="text-[14px] md:text-[15px] text-content-secondary">Certificaciones reconocidas</p>
           </div>
         </div>
       </div>
@@ -363,7 +489,7 @@ import Card from '../components/Card.astro';
   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ -->
   <section class="relative py-16 md:py-24 overflow-hidden border-y border-border-subtle" style="background: var(--color-bg-tertiary);">
     <div class="max-w-[1060px] mx-auto px-6 mb-10 md:mb-14 reveal">
-      <p class="text-center text-[12px] font-bold text-content-muted tracking-widest uppercase">Empresas donde trabajan egresados de Universidad CENFOTEC</p>
+      <p class="text-center text-[14px] font-bold text-content-secondary tracking-widest uppercase">Empresas donde trabajan egresados de Universidad CENFOTEC</p>
     </div>
     <div class="relative overflow-hidden" style="mask-image: linear-gradient(90deg, transparent, black 12%, black 88%, transparent); -webkit-mask-image: linear-gradient(90deg, transparent, black 12%, black 88%, transparent);">
       <div class="marquee-track">
@@ -403,7 +529,7 @@ import Card from '../components/Card.astro';
     <div class="section-divider max-w-[400px] mx-auto mb-16 md:mb-24"></div>
     <div class="max-w-[860px] mx-auto text-center reveal">
       <img src="/UCENFOTEC_LogoHorizontal-Negro.png" alt="Universidad CENFOTEC" class="w-[140px] md:w-[180px] h-auto invert opacity-50 mx-auto mb-8" />
-      <p class="text-[12px] font-bold text-accent2 tracking-widest uppercase mb-5">Respaldo institucional</p>
+      <p class="text-[14px] font-bold text-accent2 tracking-widest uppercase mb-5">Respaldo institucional</p>
       <h2 class="headline-display text-[clamp(1.75rem,4vw,2.75rem)] mb-6">
         Respaldado por la<br />
         <span class="text-gradient-purple">Universidad CENFOTEC.</span>
@@ -414,15 +540,15 @@ import Card from '../components/Card.astro';
       <div class="grid grid-cols-1 sm:grid-cols-3 gap-4 max-w-[640px] mx-auto">
         <div class="card-stat p-5 text-center">
           <p class="text-[1.25rem] font-bold text-content">Títulos universitarios</p>
-          <p class="text-[12px] text-content-muted mt-1">Emitidos por UCENFOTEC</p>
+          <p class="text-[14px] text-content-secondary mt-1">Emitidos por UCENFOTEC</p>
         </div>
         <div class="card-stat p-5 text-center">
           <p class="text-[1.25rem] font-bold text-brand">CONESUP</p>
-          <p class="text-[12px] text-content-muted mt-1">Universidad aprobada</p>
+          <p class="text-[14px] text-content-secondary mt-1">Universidad aprobada</p>
         </div>
         <div class="card-stat p-5 text-center">
           <p class="text-[1.25rem] font-bold text-accent2">SINAES</p>
-          <p class="text-[12px] text-content-muted mt-1">Acreditación nacional</p>
+          <p class="text-[14px] text-content-secondary mt-1">Acreditación nacional</p>
         </div>
       </div>
     </div>
