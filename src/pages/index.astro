@@ -8,18 +8,18 @@ import Card from '../components/Card.astro';
   <!-- ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
        1. HERO — Cinematic, high-impact, premium
   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ -->
-  <section class="relative min-h-[100dvh] flex flex-col items-center justify-center overflow-hidden -mt-[72px] pt-[72px]">
+  <section class="relative min-h-[100dvh] flex flex-col items-center justify-center overflow-hidden -mt-[72px] pt-[72px]" aria-label="Hero — Escuela de Ingeniería de Software">
     <!-- Multi-layer background -->
-    <div class="absolute inset-0 hero-grid"></div>
-    <div class="radial-lines"></div>
-    <div class="aurora-orb"></div>
-    <div class="ambient-glow w-[400px] md:w-[900px] h-[300px] md:h-[600px] top-[-15%] left-1/2 -translate-x-1/2 animate-pulse-glow" style="background: radial-gradient(circle at center, rgba(0,229,255,0.12) 0%, transparent 60%);"></div>
-    <div class="ambient-glow w-[300px] md:w-[600px] h-[200px] md:h-[400px] top-[10%] left-[15%] animate-pulse-glow" style="background: radial-gradient(ellipse at center, rgba(139,92,246,0.05) 0%, transparent 60%); animation-delay: 3s;"></div>
-    <div class="ambient-glow w-[250px] md:w-[500px] h-[180px] md:h-[350px] top-[20%] right-[10%]" style="background: radial-gradient(ellipse at center, rgba(52,211,153,0.03) 0%, transparent 60%);"></div>
+    <div class="absolute inset-0 hero-grid" aria-hidden="true"></div>
+    <div class="radial-lines" aria-hidden="true"></div>
+    <div class="aurora-orb" aria-hidden="true"></div>
+    <div class="ambient-glow w-[400px] md:w-[900px] h-[300px] md:h-[600px] top-[-15%] left-1/2 -translate-x-1/2 animate-pulse-glow" style="background: radial-gradient(circle at center, rgba(0,229,255,0.12) 0%, transparent 60%);" aria-hidden="true"></div>
+    <div class="ambient-glow w-[300px] md:w-[600px] h-[200px] md:h-[400px] top-[10%] left-[15%] animate-pulse-glow" style="background: radial-gradient(ellipse at center, rgba(139,92,246,0.05) 0%, transparent 60%); animation-delay: 3s;" aria-hidden="true"></div>
+    <div class="ambient-glow w-[250px] md:w-[500px] h-[180px] md:h-[350px] top-[20%] right-[10%]" style="background: radial-gradient(ellipse at center, rgba(52,211,153,0.03) 0%, transparent 60%);" aria-hidden="true"></div>
     <!-- Light sweep overlay -->
-    <div class="absolute inset-0 light-sweep"></div>
+    <div class="absolute inset-0 light-sweep" aria-hidden="true"></div>
     <!-- Bottom gradient fade -->
-    <div class="absolute bottom-0 left-0 right-0 h-[300px]" style="background: linear-gradient(to top, var(--color-bg-primary) 0%, transparent 100%);"></div>
+    <div class="absolute bottom-0 left-0 right-0 h-[300px]" style="background: linear-gradient(to top, var(--color-bg-primary) 0%, transparent 100%);" aria-hidden="true"></div></div>
 
     <div class="relative max-w-[820px] mx-auto text-center px-6">
 
@@ -28,9 +28,10 @@ import Card from '../components/Card.astro';
         <span class="text-gradient-hero text-glow-cyan">se construye aquí.</span>
       </h1>
 
-      <p class="mt-6 text-[clamp(0.95rem,1.6vw,1.05rem)] text-brand/80 font-medium tracking-wide animate-fade-up" style="animation-delay: 0.2s">
-        Escuela de Ingeniería de Software (ESOFT) · Universidad CENFOTEC
-      </p>
+      <div class="mt-8 inline-flex items-center gap-3 rounded-full px-7 py-3 animate-fade-up" style="animation-delay: 0.2s; background: rgba(0,229,255,0.08); border: 1px solid rgba(0,229,255,0.20); box-shadow: 0 0 24px rgba(0,229,255,0.10), 0 4px 16px rgba(0,0,0,0.3);">
+        <span class="w-2 h-2 rounded-full shrink-0" style="background: #34D399; box-shadow: 0 0 6px rgba(52,211,153,0.6), 0 0 12px rgba(52,211,153,0.3); animation: pulse 2s ease-in-out infinite;"></span>
+        <span class="text-[clamp(0.9rem,1.6vw,1.05rem)] font-semibold tracking-wide text-brand">Escuela de Ingeniería de Software (ESOFT) · Universidad CENFOTEC</span>
+      </div>
 
       <p class="mt-5 text-[clamp(1.05rem,2vw,1.2rem)] text-content-secondary leading-[1.85] max-w-[520px] mx-auto animate-fade-up" style="animation-delay: 0.25s">
         La escuela 100&percnt; especializada en Ingeniería de Software de la Universidad CENFOTEC. IA, cloud, microservicios y arquitectura moderna.
@@ -58,7 +59,7 @@ import Card from '../components/Card.astro';
   <!-- ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
        2. TRUST BAR — Glassy stat cards with count-up
   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ -->
-  <section class="relative py-20 md:py-32 px-6" style="background: var(--color-bg-secondary);">
+  <section class="relative py-20 md:py-32 px-6" style="background: var(--color-bg-secondary);" aria-label="Estadísticas de ESOFT">
     <div class="section-divider max-w-[400px] mx-auto mb-16 md:mb-28"></div>
     <div class="max-w-[1060px] mx-auto reveal">
       <p class="text-center text-content-secondary text-[clamp(1rem,1.8vw,1.15rem)] max-w-[560px] mx-auto mb-12 md:mb-20 leading-[1.85]">
@@ -117,10 +118,10 @@ import Card from '../components/Card.astro';
   <!-- ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
        EDITORIAL BREAK — Brand statement
   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ -->
-  <section class="relative py-28 md:py-40 lg:py-56 px-6 overflow-hidden section-dramatic">
-    <hr class="hr-gradient max-w-[500px] mx-auto mb-16 md:mb-28" />
-    <div class="ambient-glow w-[350px] md:w-[800px] h-[250px] md:h-[500px] top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2" style="background: radial-gradient(ellipse at center, rgba(139,92,246,0.05) 0%, transparent 55%);"></div>
-    <div class="ambient-glow w-[200px] md:w-[400px] h-[150px] md:h-[300px] top-[30%] left-[20%]" style="background: radial-gradient(ellipse at center, rgba(0,229,255,0.03) 0%, transparent 60%);"></div>
+  <section class="relative py-28 md:py-40 lg:py-56 px-6 overflow-hidden section-dramatic" aria-label="Declaración de marca">
+    <hr class="hr-gradient max-w-[500px] mx-auto mb-16 md:mb-28" role="presentation" />
+    <div class="ambient-glow w-[350px] md:w-[800px] h-[250px] md:h-[500px] top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2" style="background: radial-gradient(ellipse at center, rgba(139,92,246,0.05) 0%, transparent 55%);" aria-hidden="true"></div>
+    <div class="ambient-glow w-[200px] md:w-[400px] h-[150px] md:h-[300px] top-[30%] left-[20%]" style="background: radial-gradient(ellipse at center, rgba(0,229,255,0.03) 0%, transparent 60%);" aria-hidden="true"></div>
     <div class="relative max-w-[800px] mx-auto text-center reveal">
       <h2 class="headline-display text-[clamp(2.25rem,5.5vw,4rem)] leading-[1.06]">
         Cada línea de código<br />
@@ -136,8 +137,8 @@ import Card from '../components/Card.astro';
   <!-- ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
        3. RUTAS — Premium card grid
   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ -->
-  <section class="relative py-24 md:py-36 lg:py-48 px-6 overflow-hidden section-deep">
-    <div class="ambient-glow w-[300px] md:w-[600px] h-[200px] md:h-[350px] top-[25%] right-[-5%]" style="background: radial-gradient(ellipse at center, rgba(0,229,255,0.03) 0%, transparent 70%);"></div>
+  <section class="relative py-24 md:py-36 lg:py-48 px-6 overflow-hidden section-deep" aria-label="Rutas de especialización">
+    <div class="ambient-glow w-[300px] md:w-[600px] h-[200px] md:h-[350px] top-[25%] right-[-5%]" style="background: radial-gradient(ellipse at center, rgba(0,229,255,0.03) 0%, transparent 70%);" aria-hidden="true"></div>
 
     <div class="relative max-w-[1060px] mx-auto">
       <div class="text-center max-w-[600px] mx-auto mb-14 md:mb-20 reveal">
@@ -195,7 +196,7 @@ import Card from '../components/Card.astro';
               <p class="text-[14px] text-content-secondary">+200 estudiantes activos</p>
             </div>
             <a href="/programas/bachillerato-ingenieria-software" class="link-arrow">
-              Conocer programa <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7" /></svg>
+              Conocer programa <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7" /></svg>
             </a>
           </div>
           <div class="hidden md:grid grid-cols-2 gap-4">
@@ -226,7 +227,7 @@ import Card from '../components/Card.astro';
           <h3 class="text-lg md:text-xl font-bold tracking-tight mb-3">Software e Inteligencia Artificial</h3>
           <p class="text-content-secondary text-[15px] leading-[1.85] mb-8">Pasá de ejecutar a definir la estrategia técnica. IA aplicada, arquitectura avanzada y liderazgo de equipos de ingeniería.</p>
           <a href="/programas/maestria-ingenieria-software-ia" class="link-arrow text-[15px]">
-            Explorar <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7" /></svg>
+            Explorar <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7" /></svg>
           </a>
         </div>
         <div class="card-premium rounded-[20px] p-8 md:p-10 group">
@@ -234,7 +235,7 @@ import Card from '../components/Card.astro';
           <h3 class="text-lg md:text-xl font-bold tracking-tight mb-3">Testing de Software con IA</h3>
           <p class="text-content-secondary text-[15px] leading-[1.85] mb-8">La ruta más rápida hacia la industria de QA. Testing manual, automatizado y potenciado con sistemas inteligentes.</p>
           <a href="/programas/testing-software-ia-sistemas-inteligentes" class="link-arrow text-[15px]">
-            Explorar <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7" /></svg>
+            Explorar <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7" /></svg>
           </a>
         </div>
       </div>
@@ -251,8 +252,8 @@ import Card from '../components/Card.astro';
   <!-- ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
        MID CTA — Conversion break
   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ -->
-  <section class="relative py-20 md:py-32 px-6 overflow-hidden" style="background: var(--color-bg-primary);">
-    <div class="ambient-glow w-[300px] md:w-[600px] h-[200px] md:h-[350px] top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2" style="background: radial-gradient(ellipse at center, rgba(0,229,255,0.04) 0%, transparent 60%);"></div>
+  <section class="relative py-20 md:py-32 px-6 overflow-hidden" style="background: var(--color-bg-primary);" aria-label="Solicitar información">
+    <div class="ambient-glow w-[300px] md:w-[600px] h-[200px] md:h-[350px] top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2" style="background: radial-gradient(ellipse at center, rgba(0,229,255,0.04) 0%, transparent 60%);" aria-hidden="true"></div>
     <div class="relative max-w-[620px] mx-auto text-center reveal">
       <h2 class="headline-display text-[clamp(1.5rem,3.5vw,2.5rem)] mb-6">
         ¿Listo para construir el software<br />que el mundo necesita?
@@ -270,9 +271,9 @@ import Card from '../components/Card.astro';
   <!-- ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
        5. DIFERENCIADORES — Full-width accent section
   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ -->
-  <section class="relative py-24 md:py-36 lg:py-48 px-6 overflow-hidden section-alt">
+  <section class="relative py-24 md:py-36 lg:py-48 px-6 overflow-hidden section-alt" aria-label="Diferenciadores de ESOFT">
     <!-- Subtle ambient glow -->
-    <div class="ambient-glow w-[400px] md:w-[900px] h-[250px] md:h-[500px] top-[10%] left-1/2 -translate-x-1/2" style="background: radial-gradient(ellipse at center, rgba(0,229,255,0.03) 0%, transparent 65%);"></div>
+    <div class="ambient-glow w-[400px] md:w-[900px] h-[250px] md:h-[500px] top-[10%] left-1/2 -translate-x-1/2" style="background: radial-gradient(ellipse at center, rgba(0,229,255,0.03) 0%, transparent 65%);" aria-hidden="true"></div>
 
     <div class="relative max-w-[1060px] mx-auto">
       <div class="text-center max-w-[620px] mx-auto mb-14 md:mb-20 reveal">
@@ -285,7 +286,7 @@ import Card from '../components/Card.astro';
       <div class="grid grid-cols-1 md:grid-cols-3 gap-5 reveal-stagger">
         <div class="card-premium rounded-[20px] p-8 md:p-10 text-center">
           <div class="w-14 h-14 rounded-2xl bg-brand-soft border border-border-brand flex items-center justify-center mx-auto mb-7">
-            <svg class="w-6 h-6 text-brand" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M6.75 7.5l3 2.25-3 2.25m4.5 0h3m-9 8.25h13.5A2.25 2.25 0 0021 18V6a2.25 2.25 0 00-2.25-2.25H5.25A2.25 2.25 0 003 6v12a2.25 2.25 0 002.25 2.25z" /></svg>
+            <svg class="w-6 h-6 text-brand" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M6.75 7.5l3 2.25-3 2.25m4.5 0h3m-9 8.25h13.5A2.25 2.25 0 0021 18V6a2.25 2.25 0 00-2.25-2.25H5.25A2.25 2.25 0 003 6v12a2.25 2.25 0 002.25 2.25z" /></svg>
           </div>
           <h3 class="text-[18px] font-bold mb-3 tracking-tight">100% Ingeniería de Software</h3>
           <p class="text-[15px] text-content-secondary leading-[1.85]">La Universidad CENFOTEC dedicó una escuela completa a una sola disciplina. Cada recurso, cada curso y cada docente existe para una sola cosa: software.</p>
@@ -293,7 +294,7 @@ import Card from '../components/Card.astro';
 
         <div class="card-premium rounded-[20px] p-8 md:p-10 text-center">
           <div class="w-14 h-14 rounded-2xl bg-accent2-soft border border-accent2/20 flex items-center justify-center mx-auto mb-7">
-            <svg class="w-6 h-6 text-accent2" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9.813 15.904L9 18.75l-.813-2.846a4.5 4.5 0 00-3.09-3.09L2.25 12l2.846-.813a4.5 4.5 0 003.09-3.09L9 5.25l.813 2.846a4.5 4.5 0 003.09 3.09L15.75 12l-2.846.813a4.5 4.5 0 00-3.09 3.09zM18.259 8.715L18 9.75l-.259-1.035a3.375 3.375 0 00-2.455-2.456L14.25 6l1.036-.259a3.375 3.375 0 002.455-2.456L18 2.25l.259 1.035a3.375 3.375 0 002.455 2.456L21.75 6l-1.036.259a3.375 3.375 0 00-2.455 2.456z" /></svg>
+            <svg class="w-6 h-6 text-accent2" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M9.813 15.904L9 18.75l-.813-2.846a4.5 4.5 0 00-3.09-3.09L2.25 12l2.846-.813a4.5 4.5 0 003.09-3.09L9 5.25l.813 2.846a4.5 4.5 0 003.09 3.09L15.75 12l-2.846.813a4.5 4.5 0 00-3.09 3.09zM18.259 8.715L18 9.75l-.259-1.035a3.375 3.375 0 00-2.455-2.456L14.25 6l1.036-.259a3.375 3.375 0 002.455-2.456L18 2.25l.259 1.035a3.375 3.375 0 002.455 2.456L21.75 6l-1.036.259a3.375 3.375 0 00-2.455 2.456z" /></svg>
           </div>
           <h3 class="text-[18px] font-bold mb-3 tracking-tight">IA integrada en todo</h3>
           <p class="text-[15px] text-content-secondary leading-[1.85]">No es una optativa. La inteligencia artificial está en cada programa, cada proyecto y cada evaluación.</p>
@@ -301,7 +302,7 @@ import Card from '../components/Card.astro';
 
         <div class="card-premium rounded-[20px] p-8 md:p-10 text-center">
           <div class="w-14 h-14 rounded-2xl bg-brand-soft border border-border-brand flex items-center justify-center mx-auto mb-7">
-            <svg class="w-6 h-6 text-brand" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M20.25 14.15v4.25c0 1.094-.787 2.036-1.872 2.18-2.087.277-4.216.42-6.378.42s-4.291-.143-6.378-.42c-1.085-.144-1.872-1.086-1.872-2.18v-4.25m16.5 0a2.18 2.18 0 00.75-1.661V8.706c0-1.081-.768-2.015-1.837-2.175a48.114 48.114 0 00-3.413-.387m4.5 8.006c-.194.165-.42.295-.673.38A23.978 23.978 0 0112 15.75c-2.648 0-5.195-.429-7.577-1.22a2.016 2.016 0 01-.673-.38m0 0A2.18 2.18 0 013 12.489V8.706c0-1.081.768-2.015 1.837-2.175a48.111 48.111 0 013.413-.387m7.5 0V5.25A2.25 2.25 0 0013.5 3h-3a2.25 2.25 0 00-2.25 2.25v.894m7.5 0a48.667 48.667 0 00-7.5 0" /></svg>
+            <svg class="w-6 h-6 text-brand" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M20.25 14.15v4.25c0 1.094-.787 2.036-1.872 2.18-2.087.277-4.216.42-6.378.42s-4.291-.143-6.378-.42c-1.085-.144-1.872-1.086-1.872-2.18v-4.25m16.5 0a2.18 2.18 0 00.75-1.661V8.706c0-1.081-.768-2.015-1.837-2.175a48.114 48.114 0 00-3.413-.387m4.5 8.006c-.194.165-.42.295-.673.38A23.978 23.978 0 0112 15.75c-2.648 0-5.195-.429-7.577-1.22a2.016 2.016 0 01-.673-.38m0 0A2.18 2.18 0 013 12.489V8.706c0-1.081.768-2.015 1.837-2.175a48.111 48.111 0 013.413-.387m7.5 0V5.25A2.25 2.25 0 0013.5 3h-3a2.25 2.25 0 00-2.25 2.25v.894m7.5 0a48.667 48.667 0 00-7.5 0" /></svg>
           </div>
           <h3 class="text-[18px] font-bold mb-3 tracking-tight">Docentes que hacen deploy</h3>
           <p class="text-[15px] text-content-secondary leading-[1.85]">Tus profesores construyen software en producción hoy. No enseñan desde la teoría. Enseñan desde el código.</p>
@@ -420,7 +421,7 @@ import Card from '../components/Card.astro';
               Explorar alianzas
             </a>
             <a href="/industria-empleabilidad/certificaciones" class="link-arrow text-[15px]">
-              Certificaciones <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7" /></svg>
+              Certificaciones <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7" /></svg>
             </a>
           </div>
         </div>
@@ -521,13 +522,13 @@ import Card from '../components/Card.astro';
   <!-- ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
        8. CTA FINAL — Full impact premium
   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ -->
-  <section class="relative py-32 md:py-48 lg:py-64 px-6 overflow-hidden section-dramatic">
+  <section class="relative py-32 md:py-48 lg:py-64 px-6 overflow-hidden section-dramatic" aria-label="Llamada a la acción final">
     <!-- CTA radial glow backdrop — strongest glow on the page -->
-    <div class="absolute inset-0 pointer-events-none" style="background: radial-gradient(circle at 50% 50%, rgba(0,229,255,0.15) 0%, transparent 70%);"></div>
+    <div class="absolute inset-0 pointer-events-none" style="background: radial-gradient(circle at 50% 50%, rgba(0,229,255,0.15) 0%, transparent 70%);" aria-hidden="true"></div>
     <!-- Decorative layers -->
-    <div class="aurora-orb hidden md:block" style="width: 500px; height: 500px; top: 50%; left: 50%; transform: translate(-50%, -50%); opacity: 0.35;"></div>
-    <div class="ambient-glow w-[350px] md:w-[900px] h-[300px] md:h-[600px] top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 animate-pulse-glow" style="background: radial-gradient(ellipse at center, rgba(0,229,255,0.10) 0%, transparent 55%);"></div>
-    <div class="ambient-glow w-[250px] md:w-[500px] h-[150px] md:h-[300px] top-[40%] left-[30%] -translate-x-1/2 -translate-y-1/2" style="background: radial-gradient(ellipse at center, rgba(139,92,246,0.07) 0%, transparent 55%);"></div>
+    <div class="aurora-orb hidden md:block" style="width: 500px; height: 500px; top: 50%; left: 50%; transform: translate(-50%, -50%); opacity: 0.35;" aria-hidden="true"></div>
+    <div class="ambient-glow w-[350px] md:w-[900px] h-[300px] md:h-[600px] top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 animate-pulse-glow" style="background: radial-gradient(ellipse at center, rgba(0,229,255,0.10) 0%, transparent 55%);" aria-hidden="true"></div>
+    <div class="ambient-glow w-[250px] md:w-[500px] h-[150px] md:h-[300px] top-[40%] left-[30%] -translate-x-1/2 -translate-y-1/2" style="background: radial-gradient(ellipse at center, rgba(139,92,246,0.07) 0%, transparent 55%);" aria-hidden="true"></div>
 
     <div class="relative max-w-[680px] mx-auto text-center reveal">
       <h2 class="headline-display text-[clamp(2.5rem,6vw,4.5rem)]">

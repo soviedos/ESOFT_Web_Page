@@ -26,7 +26,7 @@
   /* ── Text ─────────────────────────────────────────── */
   --color-content: #FFFFFF;
   --color-content-secondary: #A1A1AA;
-  --color-content-muted: #71717A;
+  --color-content-muted: #8A8A93;
   --color-content-disabled: #3A3A48;
 
   /* ── Borders (tinted with accent hue) ────────────── */
@@ -623,5 +623,88 @@ body {
 
   .marquee-item {
     font-size: 14px;
+  }
+}
+
+/* ── Accessibility: Focus-visible ─────────── */
+a:focus-visible,
+button:focus-visible,
+[tabindex]:focus-visible {
+  outline: 2px solid var(--color-brand);
+  outline-offset: 3px;
+  border-radius: 4px;
+}
+
+.btn-primary:focus-visible,
+.btn-cta-final:focus-visible {
+  outline: 2px solid var(--color-content);
+  outline-offset: 3px;
+  box-shadow:
+    0 0 0 4px rgba(0, 229, 255, 0.25),
+    0 0 30px rgba(0, 229, 255, 0.20);
+}
+
+.btn-ghost:focus-visible {
+  outline: 2px solid var(--color-brand);
+  outline-offset: 3px;
+  background: rgba(255, 255, 255, 0.04);
+}
+
+.card-premium:focus-visible,
+.card-feature:focus-visible {
+  outline: 2px solid var(--color-brand);
+  outline-offset: 2px;
+  border-color: rgba(0, 229, 255, 0.20);
+}
+
+/* ── Accessibility: Skip navigation link ──── */
+.skip-link {
+  position: absolute;
+  top: -100%;
+  left: 16px;
+  z-index: 9999;
+  padding: 12px 24px;
+  background: var(--color-brand);
+  color: var(--color-bg-primary);
+  font-weight: 600;
+  font-size: 14px;
+  border-radius: 0 0 8px 8px;
+  text-decoration: none;
+  transition: top 0.2s ease;
+}
+.skip-link:focus {
+  top: 0;
+}
+
+/* ── Accessibility: Reduced motion ────────── */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+
+  .aurora-orb,
+  .light-sweep::after,
+  .marquee-track {
+    animation: none !important;
+  }
+
+  .reveal,
+  .reveal-stagger > * {
+    opacity: 1 !important;
+    transform: none !important;
+  }
+
+  .animate-fade-up,
+  .animate-fade-in,
+  .animate-pulse-glow,
+  .animate-float {
+    animation: none !important;
+    opacity: 1 !important;
+    transform: none !important;
   }
 }

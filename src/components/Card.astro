@@ -30,7 +30,7 @@ const svgPath = icon ? iconMap[icon] : null;
 >
   {svgPath && (
     <div class="w-12 h-12 rounded-xl bg-brand-soft border border-border-brand flex items-center justify-center mb-6 group-hover:border-brand/30 transition-colors duration-500">
-      <svg class="w-5 h-5 text-brand" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24">
+      <svg class="w-5 h-5 text-brand" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24" aria-hidden="true">
         <path stroke-linecap="round" stroke-linejoin="round" d={svgPath} />
       </svg>
     </div>
@@ -41,7 +41,7 @@ const svgPath = icon ? iconMap[icon] : null;
   {href && (
     <span class="inline-flex items-center gap-1.5 text-[14px] text-content-secondary group-hover:text-brand mt-6 transition-colors duration-500 font-medium">
       Explorar
-      <svg class="w-3.5 h-3.5 transform group-hover:translate-x-1 transition-transform duration-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+      <svg class="w-3.5 h-3.5 transform group-hover:translate-x-1 transition-transform duration-500" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
       </svg>
     </span>
