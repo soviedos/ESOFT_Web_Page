@@ -1,6 +1,9 @@
 ---
 import Base from '../layouts/Base.astro';
 import Card from '../components/Card.astro';
+import ParticleGrid from '../components/ParticleGrid.astro';
+import CodeCard from '../components/CodeCard.astro';
+import Terminal from '../components/Terminal.astro';
 ---
 
 <Base title="Inicio" description="ESOFT — Escuela de Ingeniería de Software de la Universidad CENFOTEC. IA, cloud, testing, arquitectura y desarrollo real.">
@@ -11,6 +14,7 @@ import Card from '../components/Card.astro';
   <section class="relative min-h-[100dvh] flex flex-col items-center justify-center overflow-hidden -mt-[72px] pt-[72px]" aria-label="Hero — Escuela de Ingeniería de Software">
     <!-- Multi-layer background -->
     <div class="absolute inset-0 hero-grid" aria-hidden="true"></div>
+    <ParticleGrid />
     <div class="aurora-orb" aria-hidden="true"></div>
     <!-- Single unified glow -->
     <div class="ambient-glow w-[500px] md:w-[900px] h-[350px] md:h-[600px] top-[-10%] left-1/2 -translate-x-1/2 animate-pulse-glow" style="background: radial-gradient(ellipse at 50% 30%, rgba(27,58,140,0.08) 0%, rgba(249,115,22,0.04) 50%, transparent 70%);" aria-hidden="true"></div>
@@ -19,7 +23,9 @@ import Card from '../components/Card.astro';
     <!-- Bottom gradient fade -->
     <div class="absolute bottom-0 left-0 right-0 h-[300px]" style="background: linear-gradient(to top, var(--color-bg-primary) 0%, transparent 100%);" aria-hidden="true"></div>
 
-    <div class="relative max-w-[820px] mx-auto text-center px-6">
+    <div class="relative w-full max-w-[1060px] mx-auto px-6 flex items-center justify-center">
+    <CodeCard />
+    <div class="max-w-[820px] w-full text-center">
 
       <h1 class="headline-display text-[clamp(3.25rem,7.5vw,5.5rem)] animate-fade-up" style="animation-delay: 0.15s; text-shadow: 0 0 20px rgba(0,229,255,0.12);">
         El software del futuro<br />
@@ -46,10 +52,11 @@ import Card from '../components/Card.astro';
 
       <!-- Logos -->
       <div class="flex items-center justify-center gap-6 mt-16 animate-fade-up" style="animation-delay: 0.5s" aria-hidden="true">
-        <img src="/ESOFT_Software-Engineering-Negro.png" alt="" class="w-[80px] md:w-[110px] h-auto invert opacity-40" />
-        <div class="w-px h-5 bg-white/8"></div>
-        <img src="/UCENFOTEC_LogoHorizontal-Negro.png" alt="" class="w-[65px] md:w-[88px] h-auto invert opacity-40" />
+        <img src="/ESOFT_Software-Engineering-Negro.png" alt="" class="w-[80px] md:w-[110px] h-auto opacity-30" />
+        <div class="w-px h-5 bg-border-default"></div>
+        <img src="/UCENFOTEC_LogoHorizontal-Negro.png" alt="" class="w-[65px] md:w-[88px] h-auto opacity-30" />
       </div>
+    </div>
     </div>
   </section>
 
@@ -269,8 +276,6 @@ import Card from '../components/Card.astro';
        5. DIFERENCIADORES — Full-width accent section
   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ -->
   <section class="relative py-24 md:py-36 lg:py-48 px-6 overflow-hidden section-alt" aria-label="Diferenciadores de ESOFT">
-    <!-- Subtle ambient glow -->
-    <div class="ambient-glow w-[400px] md:w-[900px] h-[250px] md:h-[500px] top-[10%] left-1/2 -translate-x-1/2" style="background: radial-gradient(ellipse at center, rgba(0,229,255,0.03) 0%, transparent 65%);" aria-hidden="true"></div>
 
     <div class="relative max-w-[1060px] mx-auto">
       <div class="text-center max-w-[620px] mx-auto mb-14 md:mb-20 reveal">
@@ -303,13 +308,29 @@ import Card from '../components/Card.astro';
           </div>
           <h3 class="text-[18px] font-bold mb-3 tracking-tight">Docentes que hacen deploy</h3>
           <p class="text-[15px] text-content-secondary leading-[1.85]">Tus profesores construyen software en producción hoy. No enseñan desde la teoría. Enseñan desde el código.</p>
-          <!-- Avatares de docentes -->
           <div class="flex justify-center mt-6 -space-x-2">
-            <div class="w-8 h-8 rounded-full border-2 border-bg-card flex items-center justify-center text-[14px] font-bold text-brand" style="background: rgba(0,229,255,0.12);">J</div>
-            <div class="w-8 h-8 rounded-full border-2 border-bg-card flex items-center justify-center text-[14px] font-bold text-accent2" style="background: rgba(139,92,246,0.12);">R</div>
-            <div class="w-8 h-8 rounded-full border-2 border-bg-card flex items-center justify-center text-[14px] font-bold text-accent3" style="background: rgba(52,211,153,0.12);">A</div>
+            <div class="w-8 h-8 rounded-full border-2 border-bg-secondary flex items-center justify-center text-[13px] font-bold text-brand bg-brand-soft">J</div>
+            <div class="w-8 h-8 rounded-full border-2 border-bg-secondary flex items-center justify-center text-[13px] font-bold text-accent2 bg-accent2-soft">R</div>
+            <div class="w-8 h-8 rounded-full border-2 border-bg-secondary flex items-center justify-center text-[13px] font-bold text-accent3" style="background:rgba(14,165,233,0.10)">A</div>
           </div>
           <p class="text-[14px] text-content-muted mt-2 text-center">80+ profesionales activos</p>
+        </div>
+      </div>
+
+      <!-- Terminal — "Docentes que hacen deploy" en vivo -->
+      <div class="mt-10 md:mt-14 flex flex-col lg:flex-row items-center gap-8 lg:gap-16 reveal">
+        <div class="flex-1 max-w-[440px]">
+          <p class="text-[14px] font-bold text-brand-label tracking-widest uppercase mb-4">En producción, hoy</p>
+          <h3 class="headline-display text-[clamp(1.4rem,3vw,2rem)] mb-4">
+            Cada clase parte de<br />
+            <span class="text-gradient-hero">código real en ejecución.</span>
+          </h3>
+          <p class="text-content-secondary text-[15px] leading-[1.85]">
+            Tus docentes trabajan en equipos de ingeniería activos. Lo que enseñan el lunes fue a producción el viernes.
+          </p>
+        </div>
+        <div class="flex-1 w-full max-w-[480px]">
+          <Terminal />
         </div>
       </div>
     </div>
