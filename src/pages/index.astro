@@ -2,7 +2,6 @@
 import Base from '../layouts/Base.astro';
 import Card from '../components/Card.astro';
 import ParticleGrid from '../components/ParticleGrid.astro';
-import CodeCard from '../components/CodeCard.astro';
 import Terminal from '../components/Terminal.astro';
 ---
 
@@ -23,9 +22,7 @@ import Terminal from '../components/Terminal.astro';
     <!-- Bottom gradient fade -->
     <div class="absolute bottom-0 left-0 right-0 h-[300px]" style="background: linear-gradient(to top, var(--color-bg-primary) 0%, transparent 100%);" aria-hidden="true"></div>
 
-    <div class="relative w-full max-w-[1060px] mx-auto px-6 flex items-center justify-center">
-    <CodeCard />
-    <div class="max-w-[820px] w-full text-center">
+    <div class="relative max-w-[820px] mx-auto text-center px-6">
 
       <h1 class="headline-display text-[clamp(3.25rem,7.5vw,5.5rem)] animate-fade-up" style="animation-delay: 0.15s; text-shadow: 0 0 20px rgba(0,229,255,0.12);">
         El software del futuro<br />
@@ -56,7 +53,6 @@ import Terminal from '../components/Terminal.astro';
         <div class="w-px h-5 bg-border-default"></div>
         <img src="/UCENFOTEC_LogoHorizontal-Azul.png" alt="" class="w-[65px] md:w-[88px] h-auto" />
       </div>
-    </div>
     </div>
   </section>
 
