@@ -1,0 +1,209 @@
+---
+---
+<div class="terminal" role="img" aria-label="Terminal mostrando flujo de trabajo de un ingeniero de software">
+  <div class="terminal__bar">
+    <span class="terminal__dot" style="background:#FF5F57"></span>
+    <span class="terminal__dot" style="background:#FFBD2E"></span>
+    <span class="terminal__dot" style="background:#28C840"></span>
+    <span class="terminal__title">bash — esoft-project</span>
+  </div>
+  <div class="terminal__body" id="terminal-body">
+    <div class="terminal__line">
+      <span class="terminal__prompt">~/esoft-project</span>
+      <span class="terminal__cmd" id="t-line-0"></span>
+      <span class="terminal__cursor" id="t-cursor-0">▋</span>
+    </div>
+  </div>
+</div>
+
+<script>
+(function () {
+  if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+    // Show static version immediately
+    const body = document.getElementById('terminal-body')!;
+    body.innerHTML = `
+      <div class="terminal__line"><span class="terminal__prompt">~/esoft-project</span> <span class="terminal__out terminal__cmd">git push origin main</span></div>
+      <div class="terminal__line terminal__out">✓ Deploy triggered → production</div>
+      <div class="terminal__line"><span class="terminal__prompt">~/esoft-project</span> <span class="terminal__out terminal__cmd">npm test</span></div>
+      <div class="terminal__line terminal__out t-green">✓ 248 tests passed in 1.2s</div>
+      <div class="terminal__line"><span class="terminal__prompt">~/esoft-project</span> <span class="terminal__out terminal__cmd">docker build .</span></div>
+      <div class="terminal__line terminal__out t-cyan">✓ Image built → registry.esoft.dev</div>
+    `;
+    return;
+  }
+
+  const steps: { cmd: string; output: string; cls?: string }[] = [
+    { cmd: 'git push origin main',     output: '✓ Deploy triggered → production',       cls: '' },
+    { cmd: 'npm test',                  output: '✓ 248 tests passed in 1.2s',             cls: 't-green' },
+    { cmd: 'docker build .',            output: '✓ Image built → registry.esoft.dev',    cls: 't-cyan' },
+    { cmd: 'kubectl rollout status',    output: '✓ Rollout complete — 3/3 pods ready',   cls: 't-green' },
+    { cmd: 'git log --oneline -1',      output: 'a3f9c12 feat: add AI inference layer',  cls: 't-muted' },
+  ];
+
+  const body = document.getElementById('terminal-body')!;
+  let stepIdx = 0;
+
+  function typeCmd(cmdEl: HTMLElement, cursorEl: HTMLElement, text: string, done: () => void) {
+    let i = 0;
+    const iv = setInterval(() => {
+      cmdEl.textContent += text[i++];
+      if (i >= text.length) { clearInterval(iv); done(); }
+    }, 42);
+  }
+
+  function addOutput(text: string, cls: string) {
+    const line = document.createElement('div');
+    line.className = 'terminal__line terminal__out' + (cls ? ` ${cls}` : '');
+    line.textContent = text;
+    body.appendChild(line);
+  }
+
+  function addPromptLine(): { cmdEl: HTMLElement; cursorEl: HTMLElement } {
+    const line = document.createElement('div');
+    line.className = 'terminal__line';
+    const prompt = document.createElement('span');
+    prompt.className = 'terminal__prompt';
+    prompt.textContent = '~/esoft-project';
+    const cmd = document.createElement('span');
+    cmd.className = 'terminal__cmd';
+    const cursor = document.createElement('span');
+    cursor.className = 'terminal__cursor';
+    cursor.textContent = '▋';
+    line.appendChild(prompt);
+    line.appendChild(cmd);
+    line.appendChild(cursor);
+    body.appendChild(line);
+    body.scrollTop = body.scrollHeight;
+    return { cmdEl: cmd, cursorEl: cursor };
+  }
+
+  function runStep() {
+    const s = steps[stepIdx % steps.length];
+    const { cmdEl, cursorEl } = stepIdx === 0
+      ? { cmdEl: document.getElementById('t-line-0')!, cursorEl: document.getElementById('t-cursor-0')! }
+      : addPromptLine();
+
+    typeCmd(cmdEl, cursorEl, s.cmd, () => {
+      cursorEl.remove();
+      setTimeout(() => {
+        addOutput(s.output, s.cls ?? '');
+        body.scrollTop = body.scrollHeight;
+        stepIdx++;
+        // After all steps, pause then restart
+        if (stepIdx >= steps.length) {
+          setTimeout(() => {
+            body.innerHTML = '<div class="terminal__line"><span class="terminal__prompt">~/esoft-project</span><span class="terminal__cmd" id="t-line-0"></span><span class="terminal__cursor" id="t-cursor-0">▋</span></div>';
+            stepIdx = 0;
+            setTimeout(runStep, 600);
+          }, 3500);
+        } else {
+          setTimeout(runStep, 700);
+        }
+      }, 350);
+    });
+  }
+
+  // Start when visible
+  const observer = new IntersectionObserver((entries) => {
+    if (entries[0].isIntersecting) {
+      observer.disconnect();
+      setTimeout(runStep, 600);
+    }
+  }, { threshold: 0.3 });
+
+  const terminal = document.querySelector('.terminal')!;
+  observer.observe(terminal);
+})();
+</script>
+
+<style>
+.terminal {
+  background: #0F172A;
+  border-radius: 14px;
+  overflow: hidden;
+  border: 1px solid rgba(255,255,255,0.08);
+  box-shadow:
+    0 20px 48px rgba(15,23,42,0.18),
+    0 4px 12px rgba(15,23,42,0.10);
+  font-family: 'JetBrains Mono', 'Fira Code', 'Cascadia Code', ui-monospace, monospace;
+  max-width: 480px;
+  width: 100%;
+}
+
+.terminal__bar {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 11px 14px;
+  background: #1E293B;
+  border-bottom: 1px solid rgba(255,255,255,0.06);
+}
+
+.terminal__dot {
+  width: 11px;
+  height: 11px;
+  border-radius: 50%;
+}
+
+.terminal__title {
+  margin-left: 8px;
+  font-size: 11px;
+  color: #64748B;
+  font-family: inherit;
+}
+
+.terminal__body {
+  padding: 16px 18px 18px;
+  min-height: 180px;
+  max-height: 220px;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.terminal__line {
+  display: flex;
+  align-items: baseline;
+  gap: 8px;
+  font-size: 12.5px;
+  line-height: 1.6;
+  white-space: nowrap;
+}
+
+.terminal__prompt {
+  color: #F97316;
+  font-weight: 600;
+  flex-shrink: 0;
+}
+
+.terminal__prompt::after {
+  content: ' $';
+  color: #475569;
+  font-weight: 400;
+}
+
+.terminal__cmd {
+  color: #E2E8F0;
+}
+
+.terminal__cursor {
+  color: #F97316;
+  animation: blink 1s step-end infinite;
+  margin-left: 1px;
+}
+
+@keyframes blink {
+  0%, 100% { opacity: 1; }
+  50%       { opacity: 0; }
+}
+
+.terminal__out {
+  color: #64748B;
+  padding-left: 4px;
+}
+
+.t-green { color: #4ADE80; }
+.t-cyan  { color: #38BDF8; }
+.t-muted { color: #475569; }
+</style>
