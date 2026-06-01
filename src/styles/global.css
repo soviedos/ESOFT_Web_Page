@@ -466,19 +466,6 @@ body {
   }
 }
 
-/* ── Logo color tints ─────────────────────── */
-/* Converts black PNG → brand cobalt #1B3A8C  */
-.logo-cobalt {
-  filter: brightness(0) saturate(100%)
-    invert(17%) sepia(93%) saturate(680%)
-    hue-rotate(213deg) brightness(92%);
-}
-/* Same but at reduced opacity for decorative use */
-.logo-cobalt-muted {
-  filter: brightness(0) saturate(100%)
-    invert(17%) sepia(93%) saturate(680%)
-    hue-rotate(213deg) brightness(92%) opacity(45%);
-}
 
 /* ── Accessibility: Focus-visible ─────────── */
 a:focus-visible,
