@@ -1,4 +1,4 @@
-<canvas id="particle-canvas" class="absolute inset-0 w-full h-full pointer-events-none" aria-hidden="true"></canvas>
+<canvas id="particle-canvas" class="fixed inset-0 w-full h-full pointer-events-none" style="z-index:0;" aria-hidden="true"></canvas>
 
 <script>
 (function () {
@@ -99,9 +99,8 @@
   }
 
   function onMouseMove(e: MouseEvent) {
-    const rect = canvas.getBoundingClientRect();
-    mouse.x = e.clientX - rect.left;
-    mouse.y = e.clientY - rect.top;
+    mouse.x = e.clientX;
+    mouse.y = e.clientY;
   }
 
   function onMouseLeave() {
@@ -109,9 +108,8 @@
     mouse.y = -9999;
   }
 
-  const hero = canvas.parentElement;
-  hero?.addEventListener('mousemove', onMouseMove, { passive: true });
-  hero?.addEventListener('mouseleave', onMouseLeave);
+  document.addEventListener('mousemove', onMouseMove, { passive: true });
+  document.addEventListener('mouseleave', onMouseLeave);
 
   // Reduced motion: skip animation
   if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
