@@ -17,7 +17,7 @@ const isActive = (href: string) =>
   <nav class="max-w-[1200px] mx-auto px-5 md:px-12 flex items-center justify-between h-[72px]" aria-label="Navegación principal">
     <!-- Logo: dominant brand anchor -->
     <a href="/" class="flex items-center shrink-0 hover:opacity-85 transition-opacity duration-300 mr-10" aria-label="ESOFT - Ir al inicio">
-      <img id="nav-logo" src="/ESOFT_Software-Engineering-Negro.png" alt="Logo de ESOFT, Escuela de Ingeniería de Software" class="w-[100px] md:w-[150px] h-auto invert transition-all duration-500" />
+      <img id="nav-logo" src="/ESOFT_Software-Engineering-Negro.png" alt="Logo de ESOFT, Escuela de Ingeniería de Software" class="w-[100px] md:w-[150px] h-auto transition-all duration-500" />
     </a>
 
     <button id="menu-toggle" class="md:hidden p-2 -mr-2 text-content-muted" aria-label="Abrir menú de navegación" aria-expanded="false" aria-controls="mobile-menu">
@@ -53,7 +53,7 @@ const isActive = (href: string) =>
     </ul>
   </nav>
 
-  <div id="mobile-menu" class="hidden md:hidden border-t border-border-subtle px-5 pb-8 pt-5" style="background: rgba(7,7,10,0.97); backdrop-filter: blur(40px) saturate(1.6); -webkit-backdrop-filter: blur(40px) saturate(1.6);">
+  <div id="mobile-menu" class="hidden md:hidden border-t border-border-subtle px-5 pb-8 pt-5" style="background: rgba(248,249,252,0.97); backdrop-filter: blur(20px) saturate(1.4); -webkit-backdrop-filter: blur(20px) saturate(1.4);">
     <ul class="flex flex-col gap-0">
       {links.map(({ href, label }) => (
         <li>
@@ -86,10 +86,10 @@ const isActive = (href: string) =>
 
   const update = () => {
     const s = window.scrollY > 10;
-    header.style.background = s ? 'rgba(7,7,10,0.85)' : 'transparent';
-    header.style.backdropFilter = s ? 'blur(40px) saturate(1.6)' : 'none';
+    header.style.background = s ? 'rgba(248,249,252,0.88)' : 'transparent';
+    header.style.backdropFilter = s ? 'blur(20px) saturate(1.4)' : 'none';
     (header.style as any).webkitBackdropFilter = header.style.backdropFilter;
-    header.style.borderBottom = s ? '1px solid rgba(255,255,255,0.04)' : '1px solid transparent';
+    header.style.borderBottom = s ? '1px solid rgba(15,23,42,0.08)' : '1px solid transparent';
     ticking = false;
   };
 

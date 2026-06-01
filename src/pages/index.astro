@@ -12,8 +12,8 @@ import Card from '../components/Card.astro';
     <!-- Multi-layer background -->
     <div class="absolute inset-0 hero-grid" aria-hidden="true"></div>
     <div class="aurora-orb" aria-hidden="true"></div>
-    <!-- Single unified glow — replaces the 3 stacked ambient divs -->
-    <div class="ambient-glow w-[500px] md:w-[900px] h-[350px] md:h-[600px] top-[-10%] left-1/2 -translate-x-1/2 animate-pulse-glow" style="background: radial-gradient(ellipse at 50% 30%, rgba(0,229,255,0.10) 0%, rgba(139,92,246,0.04) 50%, transparent 70%);" aria-hidden="true"></div>
+    <!-- Single unified glow -->
+    <div class="ambient-glow w-[500px] md:w-[900px] h-[350px] md:h-[600px] top-[-10%] left-1/2 -translate-x-1/2 animate-pulse-glow" style="background: radial-gradient(ellipse at 50% 30%, rgba(27,58,140,0.08) 0%, rgba(249,115,22,0.04) 50%, transparent 70%);" aria-hidden="true"></div>
     <!-- Light sweep overlay -->
     <div class="absolute inset-0 light-sweep" aria-hidden="true"></div>
     <!-- Bottom gradient fade -->
@@ -26,8 +26,8 @@ import Card from '../components/Card.astro';
         <span class="text-gradient-hero text-glow-cyan">se construye aquí.</span>
       </h1>
 
-      <div class="mt-8 inline-flex items-center gap-3 rounded-full px-7 py-3 animate-fade-up" style="animation-delay: 0.2s; background: rgba(0,229,255,0.08); border: 1px solid rgba(0,229,255,0.20); box-shadow: 0 0 24px rgba(0,229,255,0.10), 0 4px 16px rgba(0,0,0,0.3);">
-        <span class="w-2 h-2 rounded-full shrink-0" style="background: #34D399; box-shadow: 0 0 6px rgba(52,211,153,0.6), 0 0 12px rgba(52,211,153,0.3); animation: pulse 2s ease-in-out infinite;" aria-hidden="true"></span>
+      <div class="mt-8 inline-flex items-center gap-3 rounded-full px-7 py-3 animate-fade-up" style="animation-delay: 0.2s; background: rgba(27,58,140,0.07); border: 1px solid rgba(27,58,140,0.18); box-shadow: 0 2px 12px rgba(27,58,140,0.10);">
+        <span class="w-2 h-2 rounded-full shrink-0" style="background: #F97316; box-shadow: 0 0 6px rgba(249,115,22,0.5); animation: pulse 2s ease-in-out infinite;" aria-hidden="true"></span>
         <span class="text-[clamp(0.9rem,1.6vw,1.05rem)] font-semibold tracking-wide text-brand-label">Escuela de Ingeniería de Software (ESOFT) · Universidad CENFOTEC</span>
       </div>
 
@@ -533,7 +533,7 @@ import Card from '../components/Card.astro';
         Solicitá información hoy y empezá a construir tu carrera en Ingeniería de Software en la Universidad CENFOTEC.
       </p>
       <div class="mt-12 flex flex-col sm:flex-row gap-4 justify-center">
-        <a href="/admision/solicitar-informacion" class="btn-cta-final inline-flex justify-center items-center bg-brand text-bg-primary font-semibold px-8 py-3.5 rounded-full text-[15px]">
+        <a href="/admision/solicitar-informacion" class="btn-cta-final inline-flex justify-center items-center bg-accent2 text-white font-semibold px-8 py-3.5 rounded-full text-[15px]">
           Solicitar información
         </a>
         <a href="/admision" class="btn-ghost inline-flex justify-center items-center border border-border-default text-content-secondary font-medium px-8 py-3.5 rounded-full text-[15px]">
