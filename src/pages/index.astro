@@ -574,7 +574,8 @@ import Terminal from '../components/Terminal.astro';
     const countObserver = new IntersectionObserver((entries) => {
       entries.forEach((entry) => {
         if (!entry.isIntersecting) return;
-        const el = entry.target as HTMLElement;
+        const el = entry.target;
+        if (!(el instanceof HTMLElement)) return;
         const countVal = el.dataset.count;
         if (!countVal) return;
 

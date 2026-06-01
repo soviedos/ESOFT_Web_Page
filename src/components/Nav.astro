@@ -81,48 +81,52 @@ const isActive = (href: string) =>
 </header>
 
 <script>
-  const header = document.getElementById('site-header')!;
-  let ticking = false;
+  (() => {
+    const header = document.getElementById('site-header');
+    if (!header) return;
 
-  const update = () => {
-    const s = window.scrollY > 10;
-    header.style.background = s ? 'rgba(248,249,252,0.88)' : 'transparent';
-    header.style.backdropFilter = s ? 'blur(20px) saturate(1.4)' : 'none';
-    (header.style as any).webkitBackdropFilter = header.style.backdropFilter;
-    header.style.borderBottom = s ? '1px solid rgba(15,23,42,0.08)' : '1px solid transparent';
-    ticking = false;
-  };
+    let ticking = false;
 
-  window.addEventListener('scroll', () => {
-    if (!ticking) {
-      requestAnimationFrame(update);
-      ticking = true;
-    }
-  }, { passive: true });
-  update();
+    const update = () => {
+      const s = window.scrollY > 10;
+      header.style.background = s ? 'rgba(248,249,252,0.88)' : 'transparent';
+      header.style.backdropFilter = s ? 'blur(20px) saturate(1.4)' : 'none';
+      header.style.setProperty('-webkit-backdrop-filter', header.style.backdropFilter);
+      header.style.borderBottom = s ? '1px solid rgba(15,23,42,0.08)' : '1px solid transparent';
+      ticking = false;
+    };
 
-  document.getElementById('menu-toggle')?.addEventListener('click', () => {
-    const menu = document.getElementById('mobile-menu');
-    const toggle = document.getElementById('menu-toggle');
-    if (menu && toggle) {
-      const isOpen = !menu.classList.contains('hidden');
-      menu.classList.toggle('hidden');
-      toggle.setAttribute('aria-expanded', String(!isOpen));
-      toggle.setAttribute('aria-label', !isOpen ? 'Cerrar menú de navegación' : 'Abrir menú de navegación');
-    }
-  });
+    window.addEventListener('scroll', () => {
+      if (!ticking) {
+        requestAnimationFrame(update);
+        ticking = true;
+      }
+    }, { passive: true });
+    update();
 
-  // Close mobile menu on Escape key
-  document.addEventListener('keydown', (e) => {
-    if (e.key === 'Escape') {
+    document.getElementById('menu-toggle')?.addEventListener('click', () => {
       const menu = document.getElementById('mobile-menu');
       const toggle = document.getElementById('menu-toggle');
-      if (menu && toggle && !menu.classList.contains('hidden')) {
-        menu.classList.add('hidden');
-        toggle.setAttribute('aria-expanded', 'false');
-        toggle.setAttribute('aria-label', 'Abrir menú de navegación');
-        toggle.focus();
+      if (menu && toggle) {
+        const isOpen = !menu.classList.contains('hidden');
+        menu.classList.toggle('hidden');
+        toggle.setAttribute('aria-expanded', String(!isOpen));
+        toggle.setAttribute('aria-label', !isOpen ? 'Cerrar menú de navegación' : 'Abrir menú de navegación');
       }
-    }
-  });
+    });
+
+    // Close mobile menu on Escape key
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape') {
+        const menu = document.getElementById('mobile-menu');
+        const toggle = document.getElementById('menu-toggle');
+        if (menu && toggle && !menu.classList.contains('hidden')) {
+          menu.classList.add('hidden');
+          toggle.setAttribute('aria-expanded', 'false');
+          toggle.setAttribute('aria-label', 'Abrir menú de navegación');
+          toggle.focus();
+        }
+      }
+    });
+  })();
 </script>

@@ -28,6 +28,8 @@ const { title, description = 'ESOFT — Escuela de Software' } = Astro.props;
   <body class="min-h-screen flex flex-col bg-bg-primary text-content overflow-x-hidden">
     <!-- Global background layers — fixed, behind all content -->
     <div class="fixed inset-0 hero-grid pointer-events-none" style="z-index:0;" aria-hidden="true"></div>
+    <!-- Subtle ambient glow — top-center, very low opacity for inner pages -->
+    <div class="fixed top-0 left-1/2 -translate-x-1/2 w-[600px] h-[400px] pointer-events-none" style="z-index:0; background: radial-gradient(ellipse at 50% 0%, rgba(27,58,140,0.06) 0%, rgba(249,115,22,0.025) 45%, transparent 70%); filter: blur(40px);" aria-hidden="true"></div>
     <ParticleGrid />
     <a href="#main-content" class="skip-link">Saltar al contenido principal</a>
     <Nav />

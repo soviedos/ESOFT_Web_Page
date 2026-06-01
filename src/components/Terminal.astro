@@ -20,7 +20,8 @@
 (function () {
   if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
     // Show static version immediately
-    const body = document.getElementById('terminal-body')!;
+    const body = document.getElementById('terminal-body');
+    if (!body) return;
     body.innerHTML = `
       <div class="terminal__line"><span class="terminal__prompt">~/esoft-project</span> <span class="terminal__out terminal__cmd">git push origin main</span></div>
       <div class="terminal__line terminal__out">✓ Deploy triggered → production</div>
@@ -32,7 +33,7 @@
     return;
   }
 
-  const steps: { cmd: string; output: string; cls?: string }[] = [
+  const steps = [
     { cmd: 'git push origin main',     output: '✓ Deploy triggered → production',       cls: '' },
     { cmd: 'npm test',                  output: '✓ 248 tests passed in 1.2s',             cls: 't-green' },
     { cmd: 'docker build .',            output: '✓ Image built → registry.esoft.dev',    cls: 't-cyan' },
@@ -40,25 +41,26 @@
     { cmd: 'git log --oneline -1',      output: 'a3f9c12 feat: add AI inference layer',  cls: 't-muted' },
   ];
 
-  const body = document.getElementById('terminal-body')!;
+  const body = document.getElementById('terminal-body');
+  if (!body) return;
   let stepIdx = 0;
 
-  function typeCmd(cmdEl: HTMLElement, cursorEl: HTMLElement, text: string, done: () => void) {
+  const typeCmd = (cmdEl: HTMLElement, text: string, done: () => void) => {
     let i = 0;
     const iv = setInterval(() => {
       cmdEl.textContent += text[i++];
       if (i >= text.length) { clearInterval(iv); done(); }
     }, 42);
-  }
+  };
 
-  function addOutput(text: string, cls: string) {
+  const addOutput = (text: string, cls: string) => {
     const line = document.createElement('div');
     line.className = 'terminal__line terminal__out' + (cls ? ` ${cls}` : '');
     line.textContent = text;
     body.appendChild(line);
-  }
+  };
 
-  function addPromptLine(): { cmdEl: HTMLElement; cursorEl: HTMLElement } {
+  const addPromptLine = (): { cmdEl: HTMLElement; cursorEl: HTMLElement } => {
     const line = document.createElement('div');
     line.className = 'terminal__line';
     const prompt = document.createElement('span');
@@ -75,15 +77,17 @@
     body.appendChild(line);
     body.scrollTop = body.scrollHeight;
     return { cmdEl: cmd, cursorEl: cursor };
-  }
+  };
 
-  function runStep() {
+  const runStep = () => {
     const s = steps[stepIdx % steps.length];
-    const { cmdEl, cursorEl } = stepIdx === 0
-      ? { cmdEl: document.getElementById('t-line-0')!, cursorEl: document.getElementById('t-cursor-0')! }
+    const firstCmdEl = document.getElementById('t-line-0');
+    const firstCursorEl = document.getElementById('t-cursor-0');
+    const { cmdEl, cursorEl } = stepIdx === 0 && firstCmdEl && firstCursorEl
+      ? { cmdEl: firstCmdEl, cursorEl: firstCursorEl }
       : addPromptLine();
 
-    typeCmd(cmdEl, cursorEl, s.cmd, () => {
+    typeCmd(cmdEl, s.cmd, () => {
       cursorEl.remove();
       setTimeout(() => {
         addOutput(s.output, s.cls ?? '');
@@ -101,7 +105,7 @@
         }
       }, 350);
     });
-  }
+  };
 
   // Start when visible
   const observer = new IntersectionObserver((entries) => {
@@ -111,7 +115,8 @@
     }
   }, { threshold: 0.3 });
 
-  const terminal = document.querySelector('.terminal')!;
+  const terminal = document.querySelector('.terminal');
+  if (!terminal) return;
   observer.observe(terminal);
 })();
 </script>
