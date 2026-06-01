@@ -18,31 +18,35 @@
 
 <script>
 (function () {
+  const body = document.getElementById('terminal-body');
+  if (!body) return;
+
   if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
-    // Show static version immediately
-    const body = document.getElementById('terminal-body');
-    if (!body) return;
     body.innerHTML = `
-      <div class="terminal__line"><span class="terminal__prompt">~/esoft-project</span> <span class="terminal__out terminal__cmd">git push origin main</span></div>
-      <div class="terminal__line terminal__out">✓ Deploy triggered → production</div>
-      <div class="terminal__line"><span class="terminal__prompt">~/esoft-project</span> <span class="terminal__out terminal__cmd">npm test</span></div>
-      <div class="terminal__line terminal__out t-green">✓ 248 tests passed in 1.2s</div>
-      <div class="terminal__line"><span class="terminal__prompt">~/esoft-project</span> <span class="terminal__out terminal__cmd">docker build .</span></div>
-      <div class="terminal__line terminal__out t-cyan">✓ Image built → registry.esoft.dev</div>
+      <div class="terminal__line"><span class="terminal__prompt">~/esoft-project</span><span class="terminal__out terminal__cmd">git pull origin main</span></div>
+      <div class="terminal__line terminal__out t-muted">Already up to date.</div>
+      <div class="terminal__line"><span class="terminal__prompt">~/esoft-project</span><span class="terminal__out terminal__cmd">npm test</span></div>
+      <div class="terminal__line terminal__out t-green">✓ 312 tests passed in 1.4s</div>
+      <div class="terminal__line"><span class="terminal__prompt">~/esoft-project</span><span class="terminal__out terminal__cmd">kubectl rollout status deploy/api</span></div>
+      <div class="terminal__line terminal__out t-green">✓ 3/3 pods ready — deploy successful</div>
     `;
     return;
   }
 
   const steps = [
-    { cmd: 'git push origin main',     output: '✓ Deploy triggered → production',       cls: '' },
-    { cmd: 'npm test',                  output: '✓ 248 tests passed in 1.2s',             cls: 't-green' },
-    { cmd: 'docker build .',            output: '✓ Image built → registry.esoft.dev',    cls: 't-cyan' },
-    { cmd: 'kubectl rollout status',    output: '✓ Rollout complete — 3/3 pods ready',   cls: 't-green' },
-    { cmd: 'git log --oneline -1',      output: 'a3f9c12 feat: add AI inference layer',  cls: 't-muted' },
+    { cmd: 'git pull origin main',             output: 'Already up to date.',                         cls: 't-muted'  },
+    { cmd: 'git checkout -b feat/ai-endpoint', output: 'Switched to branch "feat/ai-endpoint"',       cls: 't-muted'  },
+    { cmd: 'npm install',                       output: '✓ 847 packages — 0 vulnerabilities',          cls: 't-green'  },
+    { cmd: 'npm run lint',                      output: '✓ ESLint: 0 errors, 0 warnings',              cls: 't-green'  },
+    { cmd: 'npm test',                          output: '✓ 312 tests passed in 1.4s',                  cls: 't-green'  },
+    { cmd: 'git add -p',                        output: '✓ Staged 6 files',                            cls: 't-muted'  },
+    { cmd: 'git commit -m "feat: AI endpoint"', output: '[feat/ai-endpoint c9f2a11] feat: AI endpoint',cls: 't-muted'  },
+    { cmd: 'git push origin feat/ai-endpoint',  output: '✓ PR #84 opened → review requested',         cls: 't-cyan'   },
+    { cmd: 'docker build -t app:2.5.0 .',       output: '✓ Image built → registry.esoft.dev',         cls: 't-cyan'   },
+    { cmd: 'kubectl rollout status deploy/api', output: '✓ 3/3 pods ready — deploy successful',       cls: 't-green'  },
+    { cmd: 'curl /api/health | jq .status',     output: '"ok"  ← live in production ✓',               cls: 't-green'  },
   ];
 
-  const body = document.getElementById('terminal-body');
-  if (!body) return;
   let stepIdx = 0;
 
   const typeCmd = (cmdEl: HTMLElement, text: string, done: () => void) => {
@@ -50,7 +54,7 @@
     const iv = setInterval(() => {
       cmdEl.textContent += text[i++];
       if (i >= text.length) { clearInterval(iv); done(); }
-    }, 42);
+    }, 38);
   };
 
   const addOutput = (text: string, cls: string) => {
@@ -58,6 +62,7 @@
     line.className = 'terminal__line terminal__out' + (cls ? ` ${cls}` : '');
     line.textContent = text;
     body.appendChild(line);
+    body.scrollTop = body.scrollHeight;
   };
 
   const addPromptLine = (): { cmdEl: HTMLElement; cursorEl: HTMLElement } => {
@@ -80,34 +85,43 @@
   };
 
   const runStep = () => {
-    const s = steps[stepIdx % steps.length];
-    const firstCmdEl = document.getElementById('t-line-0');
-    const firstCursorEl = document.getElementById('t-cursor-0');
-    const { cmdEl, cursorEl } = stepIdx === 0 && firstCmdEl && firstCursorEl
-      ? { cmdEl: firstCmdEl, cursorEl: firstCursorEl }
+    const s = steps[stepIdx];
+    const existingCmd    = document.getElementById('t-line-0') as HTMLElement | null;
+    const existingCursor = document.getElementById('t-cursor-0') as HTMLElement | null;
+
+    const { cmdEl, cursorEl } = (stepIdx === 0 && existingCmd && existingCursor)
+      ? { cmdEl: existingCmd, cursorEl: existingCursor }
       : addPromptLine();
 
     typeCmd(cmdEl, s.cmd, () => {
       cursorEl.remove();
       setTimeout(() => {
         addOutput(s.output, s.cls ?? '');
-        body.scrollTop = body.scrollHeight;
         stepIdx++;
-        // After all steps, pause then restart
         if (stepIdx >= steps.length) {
-          setTimeout(() => {
-            body.innerHTML = '<div class="terminal__line"><span class="terminal__prompt">~/esoft-project</span><span class="terminal__cmd" id="t-line-0"></span><span class="terminal__cursor" id="t-cursor-0">▋</span></div>';
-            stepIdx = 0;
-            setTimeout(runStep, 600);
-          }, 3500);
+          setTimeout(reset, 3000);
         } else {
-          setTimeout(runStep, 700);
+          setTimeout(runStep, 600);
         }
-      }, 350);
+      }, 300);
     });
   };
 
-  // Start when visible
+  const reset = () => {
+    body.style.transition = 'opacity 0.5s ease';
+    body.style.opacity = '0';
+    setTimeout(() => {
+      body.innerHTML = '<div class="terminal__line"><span class="terminal__prompt">~/esoft-project</span><span class="terminal__cmd" id="t-line-0"></span><span class="terminal__cursor" id="t-cursor-0">▋</span></div>';
+      stepIdx = 0;
+      body.style.transition = 'none';
+      body.style.opacity = '0';
+      void body.offsetHeight; // force reflow so fade-in works
+      body.style.transition = 'opacity 0.5s ease';
+      body.style.opacity = '1';
+      setTimeout(runStep, 600);
+    }, 550);
+  };
+
   const observer = new IntersectionObserver((entries) => {
     if (entries[0].isIntersecting) {
       observer.disconnect();
@@ -159,12 +173,13 @@
 
 .terminal__body {
   padding: 16px 18px 18px;
-  min-height: 180px;
-  max-height: 220px;
+  min-height: 200px;
+  max-height: 260px;
   overflow: hidden;
   display: flex;
   flex-direction: column;
   gap: 4px;
+  opacity: 1;
 }
 
 .terminal__line {
