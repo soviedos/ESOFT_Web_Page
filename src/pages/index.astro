@@ -11,11 +11,9 @@ import Card from '../components/Card.astro';
   <section class="relative min-h-[100dvh] flex flex-col items-center justify-center overflow-hidden -mt-[72px] pt-[72px]" aria-label="Hero — Escuela de Ingeniería de Software">
     <!-- Multi-layer background -->
     <div class="absolute inset-0 hero-grid" aria-hidden="true"></div>
-    <div class="radial-lines" aria-hidden="true"></div>
     <div class="aurora-orb" aria-hidden="true"></div>
-    <div class="ambient-glow w-[400px] md:w-[900px] h-[300px] md:h-[600px] top-[-15%] left-1/2 -translate-x-1/2 animate-pulse-glow" style="background: radial-gradient(circle at center, rgba(0,229,255,0.12) 0%, transparent 60%);" aria-hidden="true"></div>
-    <div class="ambient-glow w-[300px] md:w-[600px] h-[200px] md:h-[400px] top-[10%] left-[15%] animate-pulse-glow" style="background: radial-gradient(ellipse at center, rgba(139,92,246,0.05) 0%, transparent 60%); animation-delay: 3s;" aria-hidden="true"></div>
-    <div class="ambient-glow w-[250px] md:w-[500px] h-[180px] md:h-[350px] top-[20%] right-[10%]" style="background: radial-gradient(ellipse at center, rgba(52,211,153,0.03) 0%, transparent 60%);" aria-hidden="true"></div>
+    <!-- Single unified glow — replaces the 3 stacked ambient divs -->
+    <div class="ambient-glow w-[500px] md:w-[900px] h-[350px] md:h-[600px] top-[-10%] left-1/2 -translate-x-1/2 animate-pulse-glow" style="background: radial-gradient(ellipse at 50% 30%, rgba(0,229,255,0.10) 0%, rgba(139,92,246,0.04) 50%, transparent 70%);" aria-hidden="true"></div>
     <!-- Light sweep overlay -->
     <div class="absolute inset-0 light-sweep" aria-hidden="true"></div>
     <!-- Bottom gradient fade -->
@@ -30,7 +28,7 @@ import Card from '../components/Card.astro';
 
       <div class="mt-8 inline-flex items-center gap-3 rounded-full px-7 py-3 animate-fade-up" style="animation-delay: 0.2s; background: rgba(0,229,255,0.08); border: 1px solid rgba(0,229,255,0.20); box-shadow: 0 0 24px rgba(0,229,255,0.10), 0 4px 16px rgba(0,0,0,0.3);">
         <span class="w-2 h-2 rounded-full shrink-0" style="background: #34D399; box-shadow: 0 0 6px rgba(52,211,153,0.6), 0 0 12px rgba(52,211,153,0.3); animation: pulse 2s ease-in-out infinite;" aria-hidden="true"></span>
-        <span class="text-[clamp(0.9rem,1.6vw,1.05rem)] font-semibold tracking-wide text-brand">Escuela de Ingeniería de Software (ESOFT) · Universidad CENFOTEC</span>
+        <span class="text-[clamp(0.9rem,1.6vw,1.05rem)] font-semibold tracking-wide text-brand-label">Escuela de Ingeniería de Software (ESOFT) · Universidad CENFOTEC</span>
       </div>
 
       <p class="mt-5 text-[clamp(1.05rem,2vw,1.2rem)] text-content-secondary leading-[1.85] max-w-[520px] mx-auto animate-fade-up" style="animation-delay: 0.25s">
@@ -100,7 +98,7 @@ import Card from '../components/Card.astro';
             <img src="/ESOFT_Software-Engineering-Negro.png" alt="ESOFT" class="w-[100px] md:w-[120px] h-auto invert opacity-60" />
           </div>
           <div>
-            <p class="text-[14px] font-bold text-brand tracking-widest uppercase mb-4">¿Qué es ESOFT?</p>
+            <p class="text-[14px] font-bold text-brand-label tracking-widest uppercase mb-4">¿Qué es ESOFT?</p>
             <h2 class="headline-display text-[clamp(1.5rem,3.5vw,2.25rem)] mb-5">
               La Escuela de Ingeniería de Software<br class="hidden md:block" />
               <span class="text-content-muted">de la Universidad CENFOTEC.</span>
@@ -118,10 +116,9 @@ import Card from '../components/Card.astro';
   <!-- ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
        EDITORIAL BREAK — Brand statement
   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ -->
-  <section class="relative py-28 md:py-40 lg:py-56 px-6 overflow-hidden section-dramatic" aria-label="Declaración de marca">
-    <hr class="hr-gradient max-w-[500px] mx-auto mb-16 md:mb-28" role="presentation" />
-    <div class="ambient-glow w-[350px] md:w-[800px] h-[250px] md:h-[500px] top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2" style="background: radial-gradient(ellipse at center, rgba(139,92,246,0.05) 0%, transparent 55%);" aria-hidden="true"></div>
-    <div class="ambient-glow w-[200px] md:w-[400px] h-[150px] md:h-[300px] top-[30%] left-[20%]" style="background: radial-gradient(ellipse at center, rgba(0,229,255,0.03) 0%, transparent 60%);" aria-hidden="true"></div>
+  <section class="relative py-24 md:py-36 px-6 overflow-hidden section-dramatic" aria-label="Declaración de marca">
+    <hr class="hr-gradient max-w-[500px] mx-auto mb-16 md:mb-24" role="presentation" />
+    <div class="ambient-glow w-[400px] md:w-[700px] h-[280px] md:h-[450px] top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2" style="background: radial-gradient(ellipse at center, rgba(139,92,246,0.06) 0%, rgba(0,229,255,0.03) 50%, transparent 70%);" aria-hidden="true"></div>
     <div class="relative max-w-[800px] mx-auto text-center reveal">
       <h2 class="headline-display text-[clamp(2.25rem,5.5vw,4rem)] leading-[1.06]">
         Cada línea de código<br />
@@ -142,7 +139,7 @@ import Card from '../components/Card.astro';
 
     <div class="relative max-w-[1060px] mx-auto">
       <div class="text-center max-w-[600px] mx-auto mb-14 md:mb-20 reveal">
-        <p class="text-[14px] font-bold text-brand tracking-widest uppercase mb-5">Rutas de especialización</p>
+        <p class="text-[14px] font-bold text-brand-label tracking-widest uppercase mb-5">Rutas de especialización</p>
         <h2 class="headline-display text-[clamp(1.75rem,4.5vw,3rem)]">
           Tu camino. Tu especialización.
           <span class="text-content-muted">Tu decisión.</span>
@@ -180,7 +177,7 @@ import Card from '../components/Card.astro';
       <div class="card-feature p-6 md:p-12 mb-6 reveal">
         <div class="grid grid-cols-1 md:grid-cols-2 gap-12 items-center">
           <div>
-            <p class="text-[14px] font-bold text-brand tracking-widest uppercase mb-5">Bachillerato &middot; 9 cuatrimestres</p>
+            <p class="text-[14px] font-bold text-brand-label tracking-widest uppercase mb-5">Bachillerato &middot; 9 cuatrimestres</p>
             <h3 class="text-2xl md:text-[2.25rem] font-extrabold tracking-[-0.03em] leading-tight mb-5">Ingeniería de Software</h3>
             <p class="text-content-secondary text-[15px] leading-[1.85] mb-6">
               4 años para dominar el ciclo completo: desarrollo, testing, IA, arquitectura y gestión de proyectos. Acreditado por SINAES.
@@ -327,7 +324,7 @@ import Card from '../components/Card.astro';
 
     <div class="max-w-[1060px] mx-auto">
       <div class="text-center max-w-[620px] mx-auto mb-14 md:mb-20 reveal">
-        <p class="text-[14px] font-bold text-brand tracking-widest uppercase mb-5">Historias reales</p>
+        <p class="text-[14px] font-bold text-brand-label tracking-widest uppercase mb-5">Historias reales</p>
         <h2 class="headline-display text-[clamp(1.75rem,4.5vw,3rem)]">
           Lo dicen quienes ya
           <span class="text-content-muted">lo vivieron.</span>
@@ -408,7 +405,7 @@ import Card from '../components/Card.astro';
     <div class="max-w-[1060px] mx-auto">
       <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-24 items-center">
         <div class="reveal">
-          <p class="text-[14px] font-bold text-brand tracking-widest uppercase mb-5">Conexión con la industria</p>
+          <p class="text-[14px] font-bold text-brand-label tracking-widest uppercase mb-5">Conexión con la industria</p>
           <h2 class="headline-display text-[clamp(1.75rem,3.5vw,2.75rem)] mb-6">
             Tu primer empleo en tech
             <span class="text-content-muted">no empieza después de graduarte.</span>
@@ -523,12 +520,9 @@ import Card from '../components/Card.astro';
        8. CTA FINAL — Full impact premium
   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ -->
   <section class="relative py-32 md:py-48 lg:py-64 px-6 overflow-hidden section-dramatic" aria-label="Llamada a la acción final">
-    <!-- CTA radial glow backdrop — strongest glow on the page -->
-    <div class="absolute inset-0 pointer-events-none" style="background: radial-gradient(circle at 50% 50%, rgba(0,229,255,0.15) 0%, transparent 70%);" aria-hidden="true"></div>
-    <!-- Decorative layers -->
-    <div class="aurora-orb hidden md:block" style="width: 500px; height: 500px; top: 50%; left: 50%; transform: translate(-50%, -50%); opacity: 0.35;" aria-hidden="true"></div>
-    <div class="ambient-glow w-[350px] md:w-[900px] h-[300px] md:h-[600px] top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 animate-pulse-glow" style="background: radial-gradient(ellipse at center, rgba(0,229,255,0.10) 0%, transparent 55%);" aria-hidden="true"></div>
-    <div class="ambient-glow w-[250px] md:w-[500px] h-[150px] md:h-[300px] top-[40%] left-[30%] -translate-x-1/2 -translate-y-1/2" style="background: radial-gradient(ellipse at center, rgba(139,92,246,0.07) 0%, transparent 55%);" aria-hidden="true"></div>
+    <!-- Single unified glow for the CTA -->
+    <div class="aurora-orb hidden md:block" style="width: 500px; height: 500px; top: 50%; left: 50%; transform: translate(-50%, -50%); opacity: 0.4;" aria-hidden="true"></div>
+    <div class="ambient-glow w-[400px] md:w-[800px] h-[300px] md:h-[550px] top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 animate-pulse-glow" style="background: radial-gradient(ellipse at center, rgba(0,229,255,0.12) 0%, rgba(139,92,246,0.05) 50%, transparent 70%);" aria-hidden="true"></div>
 
     <div class="relative max-w-[680px] mx-auto text-center reveal">
       <h2 class="headline-display text-[clamp(2.5rem,6vw,4.5rem)]">

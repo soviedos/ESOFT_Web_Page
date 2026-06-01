@@ -82,6 +82,7 @@ const isActive = (href: string) =>
 
 <script>
   const header = document.getElementById('site-header')!;
+  let ticking = false;
 
   const update = () => {
     const s = window.scrollY > 10;
@@ -89,9 +90,15 @@ const isActive = (href: string) =>
     header.style.backdropFilter = s ? 'blur(40px) saturate(1.6)' : 'none';
     (header.style as any).webkitBackdropFilter = header.style.backdropFilter;
     header.style.borderBottom = s ? '1px solid rgba(255,255,255,0.04)' : '1px solid transparent';
+    ticking = false;
   };
 
-  window.addEventListener('scroll', update, { passive: true });
+  window.addEventListener('scroll', () => {
+    if (!ticking) {
+      requestAnimationFrame(update);
+      ticking = true;
+    }
+  }, { passive: true });
   update();
 
   document.getElementById('menu-toggle')?.addEventListener('click', () => {
