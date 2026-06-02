@@ -2,31 +2,220 @@
 import Base from '../../layouts/Base.astro';
 ---
 
-<Base title="Técnico en Ingeniería de Software" description="Programa técnico cuatrimestral en ingeniería de software.">
-  <section class="max-w-6xl mx-auto px-6 py-12 md:py-20">
-    <nav class="text-sm text-content-muted mb-6">
-      <a href="/programas" class="hover:text-content">Programas</a> / <span class="text-content">Técnico en Ingeniería de Software</span>
-    </nav>
-    <div class="max-w-3xl">
-      <span class="text-sm font-medium text-brand mb-2 block">Técnico cuatrimestral</span>
-      <h1 class="text-3xl md:text-5xl font-bold tracking-tight mb-6">Técnico en Ingeniería de Software</h1>
-      <p class="text-content-muted mb-6 md:mb-8 text-base md:text-lg">
-        Fundamentos sólidos en desarrollo de software, bases de datos, testing y metodologías ágiles para insertarte rápidamente en la industria.
+<Base title="Técnico en Ingeniería del Software — SOFTN5" description="Técnico Nivel 5 en Ingeniería del Software. 7 cuatrimestres, 17 materias, 62 créditos. Virtual en vivo. Universidad CENFOTEC.">
+
+  <!-- Hero -->
+  <section class="relative py-16 md:py-24 px-6" style="background: radial-gradient(ellipse 60% 40% at 50% 0%, rgba(27,58,140,0.05) 0%, transparent 60%), var(--color-bg-secondary);">
+    <div class="max-w-[1060px] mx-auto">
+      <nav class="text-[13px] text-content-muted mb-8">
+        <a href="/programas" class="hover:text-content transition-colors">Programas</a>
+        <span class="mx-2">·</span>
+        <span class="text-content">Técnico en Ingeniería del Software</span>
+      </nav>
+      <div class="grid grid-cols-1 lg:grid-cols-2 gap-14 items-center">
+        <div>
+          <p class="text-[13px] font-bold text-brand-label tracking-widest uppercase mb-4">Técnico Nivel 5 · SOFTN5 · 7 cuatrimestres</p>
+          <h1 class="headline-display text-[clamp(2rem,4.5vw,3rem)] mb-6">
+            Técnico en<br />
+            <span class="text-gradient-hero">Ingeniería del Software</span>
+          </h1>
+          <p class="text-content-secondary text-[16px] leading-[1.85] mb-6 max-w-[480px]">
+            La Ingeniería del Software es una de las diez carreras de mayor demanda en Costa Rica. Con este técnico desarrollarás competencias digitales, socioemocionales y conocimiento técnico para analizar problemas y diseñar soluciones creativas que los resuelvan.
+          </p>
+          <div class="card-premium rounded-[14px] p-4 mb-8 flex gap-3 items-start">
+            <span class="text-accent2 text-[18px] shrink-0">ℹ</span>
+            <p class="text-[13px] text-content-secondary leading-snug">
+              Este programa incluye todos los cursos del <strong>Técnico en Desarrollo de Software (SOFTN2)</strong>. Al completar los primeros 4 cuatrimestres podés solicitar una salida lateral y obtener ese título adicional.
+            </p>
+          </div>
+          <div class="flex flex-wrap gap-4">
+            <a href="/admision/solicitar-informacion" class="btn-primary inline-flex items-center bg-accent2 text-white font-semibold px-7 py-3.5 rounded-full text-[15px] hover:bg-orange-600 transition-colors duration-300">
+              Solicitar información
+            </a>
+            <a href="/admision" class="btn-ghost inline-flex items-center border border-border-default text-content-secondary font-medium px-7 py-3.5 rounded-full text-[15px]">
+              Proceso de admisión
+            </a>
+          </div>
+        </div>
+        <div class="grid grid-cols-2 gap-4">
+          <div class="card-stat p-6 text-center">
+            <p class="text-[2.25rem] font-extrabold text-content">17</p>
+            <p class="text-[14px] text-content-secondary mt-1">Materias</p>
+          </div>
+          <div class="card-stat p-6 text-center">
+            <p class="text-[2.25rem] font-extrabold text-content">62</p>
+            <p class="text-[14px] text-content-secondary mt-1">Créditos</p>
+          </div>
+          <div class="card-stat p-6 text-center">
+            <p class="text-[2rem] font-extrabold text-brand leading-tight">2 años<br/><span class="text-[1.1rem]">4 meses</span></p>
+            <p class="text-[14px] text-content-secondary mt-1">7 cuatrimestres</p>
+          </div>
+          <div class="card-stat p-6 text-center">
+            <p class="text-[1.25rem] font-extrabold text-accent2 leading-tight">Virtual<br/>en vivo</p>
+            <p class="text-[14px] text-content-secondary mt-1">Modalidad</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Perfil de entrada, salida y fortalezas -->
+  <section class="py-16 md:py-24 px-6" style="background: var(--color-bg-primary);">
+    <div class="max-w-[1060px] mx-auto grid grid-cols-1 lg:grid-cols-3 gap-10">
+      <div>
+        <p class="text-[13px] font-bold text-brand-label tracking-widest uppercase mb-4">Perfil de entrada</p>
+        <p class="text-content-secondary text-[15px] leading-[1.85]">
+          Bachillerato en Educación Media. Si no lo tenés, podés iniciar con el <strong>Técnico en Desarrollo de Software (SOFTN2)</strong> y al graduarte ingresar a este programa.
+        </p>
+      </div>
+      <div>
+        <p class="text-[13px] font-bold text-brand-label tracking-widest uppercase mb-4">Perfil de salida</p>
+        <p class="text-content-secondary text-[14px] mb-3">Alineado con niveles 1, 2 y 3 del marco SFIA. Podrás aplicar a:</p>
+        <ul class="space-y-1.5">
+          {['Desarrollador de Software','Analista de Software y Sistemas','Desarrollador Web'].map(r => (
+            <li class="flex gap-2 text-[14px] text-content-secondary"><span class="text-accent2 shrink-0">◆</span>{r}</li>
+          ))}
+        </ul>
+      </div>
+      <div>
+        <p class="text-[13px] font-bold text-brand-label tracking-widest uppercase mb-4">Certificaciones opcionales</p>
+        <ul class="space-y-1.5">
+          {['Scrum Foundation Level','People Cert Software Development Skills Essentials','Intro to Web Programming','People Cert Scrum Developer','DevOps Foundation','People Cert Scrum Master 1'].map(c => (
+            <li class="flex gap-2 text-[13px] text-content-secondary"><span class="text-brand shrink-0">·</span>{c}</li>
+          ))}
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <!-- Malla curricular -->
+  <section class="py-16 md:py-24 px-6" style="background: var(--color-bg-secondary);">
+    <div class="max-w-[1060px] mx-auto">
+      <div class="text-center mb-12">
+        <p class="text-[13px] font-bold text-brand-label tracking-widest uppercase mb-3">Plan de estudios</p>
+        <h2 class="headline-display text-[clamp(1.5rem,3vw,2.25rem)] mb-4">Malla Curricular · SOFTN5</h2>
+        <p class="text-content-secondary text-[15px]">17 materias · 62 créditos · 2790 horas · 7 cuatrimestres</p>
+      </div>
+
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5 mb-8">
+        {[
+          {
+            num: 'I', creditos: 9,
+            cursos: [
+              { name: 'Introducción a las Tecnologías de Información', cr: 3, req: '' },
+              { name: 'Expresión Oral y Escrita', cr: 3, req: '' },
+              { name: 'Introducción a la Ing. del Software', cr: 3, req: '' },
+            ]
+          },
+          {
+            num: 'II', creditos: 8,
+            cursos: [
+              { name: 'Desarrollo de Habilidades Blandas', cr: 3, req: 'Expresión Oral y Escrita' },
+              { name: 'Principios de Programación 1', cr: 5, req: '' },
+            ]
+          },
+          {
+            num: 'III', creditos: 11,
+            cursos: [
+              { name: 'Inglés Conversacional 1', cr: 2, req: '' },
+              { name: 'Principios de Programación 2', cr: 5, req: 'PP1' },
+              { name: 'Diseño y Programación Web', cr: 4, req: 'PP1' },
+            ]
+          },
+          {
+            num: 'IV', creditos: 8,
+            cursos: [
+              { name: 'Pensamiento Crítico', cr: 3, req: 'Habilidades Blandas' },
+              { name: 'Proyecto Integrador 1', cr: 5, req: 'Ing. Software + PP2 + Hab. Blandas + DPW' },
+            ]
+          },
+          {
+            num: 'V', creditos: 12,
+            cursos: [
+              { name: 'Fundamentos de Bases de Datos', cr: 4, req: 'PP1 + Intro TI' },
+              { name: 'Programación Orientada a Objetos', cr: 5, req: 'PP2' },
+              { name: 'Estructuras de Datos', cr: 3, req: 'PP2' },
+            ]
+          },
+          {
+            num: 'VI', creditos: 9,
+            cursos: [
+              { name: 'Inglés Conversacional 2', cr: 2, req: 'IC1' },
+              { name: 'Programación Web Avanzada', cr: 4, req: 'POO + DPW' },
+              { name: 'Arquitectura de Software', cr: 3, req: 'ED + FBD + POO' },
+            ]
+          },
+          {
+            num: 'VII', creditos: 5,
+            cursos: [
+              { name: 'Proyecto Integrador 2', cr: 5, req: 'PI1 + PWA + Arq. Software + Pens. Crítico' },
+            ]
+          },
+        ].map(q => (
+          <div class="card-premium rounded-[18px] overflow-hidden">
+            <div class="flex items-center justify-between px-5 py-3 border-b border-border-subtle" style="background: var(--color-bg-primary);">
+              <p class="text-[13px] font-bold text-content uppercase tracking-wide">Cuatrimestre {q.num}</p>
+              <span class="text-[12px] font-semibold text-brand bg-brand-soft px-2 py-0.5 rounded-full">{q.creditos} cr</span>
+            </div>
+            <div class="p-4 space-y-3">
+              {q.cursos.map(c => (
+                <div>
+                  <div class="flex items-start justify-between gap-2">
+                    <span class="text-[13px] text-content-secondary leading-snug">{c.name}</span>
+                    <span class="text-[12px] font-semibold text-content-muted shrink-0">{c.cr}cr</span>
+                  </div>
+                  {c.req && <p class="text-[11px] text-content-muted mt-0.5">Req: {c.req}</p>}
+                </div>
+              ))}
+            </div>
+          </div>
+        ))}
+      </div>
+
+      <!-- SOFTN2 lateral exit note -->
+      <div class="card-premium rounded-[18px] p-6 border-l-4 border-accent2">
+        <p class="text-[13px] font-bold text-accent2 tracking-widest uppercase mb-2">Salida lateral — Técnico en Desarrollo de Software (SOFTN2)</p>
+        <p class="text-[14px] text-content-secondary leading-[1.8]">
+          Al completar los cuatrimestres I a IV (10 materias, 36 créditos) podés solicitar el título de <strong>Técnico en Desarrollo de Software</strong> como certificación adicional, sin detener tu avance en el SOFTN5.
+          <br/><span class="text-content-muted">Puestos: Programador de Aplicaciones · Programador Web</span>
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Fortalezas del programa -->
+  <section class="py-16 md:py-20 px-6" style="background: var(--color-bg-primary);">
+    <div class="max-w-[1060px] mx-auto">
+      <p class="text-[13px] font-bold text-brand-label tracking-widest uppercase mb-6">Fortalezas del programa</p>
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-5">
+        {[
+          { title: 'Formación práctica', desc: 'Metodología XperiencEd™: 20% teoría, 60% práctica y 20% reflexión. Proyectos reales desde el primer cuatrimestre.' },
+          { title: 'Actualización constante', desc: 'Tecnologías y tendencias actualizadas constantemente para garantizarte los conocimientos necesarios ante los retos profesionales.' },
+          { title: 'Base sólida en Ing. del Software', desc: 'Conceptos fundamentales que sustentan el desarrollo de software y comprensión del rol de la tecnología en la sociedad actual.' },
+        ].map(f => (
+          <div class="card-premium rounded-[18px] p-6">
+            <p class="text-[15px] font-bold text-content mb-2">{f.title}</p>
+            <p class="text-[14px] text-content-secondary leading-[1.8]">{f.desc}</p>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- CTA -->
+  <section class="py-16 md:py-24 px-6 text-center" style="background: var(--color-bg-secondary);">
+    <div class="max-w-[560px] mx-auto">
+      <h2 class="headline-display text-[clamp(1.5rem,3.5vw,2.5rem)] mb-5">
+        Empezá tu carrera en<br />
+        <span class="text-gradient-hero">Ingeniería del Software.</span>
+      </h2>
+      <p class="text-content-secondary text-[15px] leading-[1.8] mb-8">
+        7 cuatrimestres · 17 materias · 62 créditos · Virtual en vivo · Universidad CENFOTEC
       </p>
-
-      <h2 class="text-xl md:text-2xl font-semibold mb-4">¿Qué aprenderás?</h2>
-      <ul class="space-y-2 text-content-muted mb-8">
-        <li>• Programación orientada a objetos</li>
-        <li>• Desarrollo web front-end y back-end</li>
-        <li>• Bases de datos relacionales y NoSQL</li>
-        <li>• Testing funcional de software</li>
-        <li>• Scrum y metodologías ágiles</li>
-        <li>• Control de versiones y colaboración</li>
-      </ul>
-
-      <a href="/admision/solicitar-informacion" class="btn-primary inline-block rounded-full bg-accent2 text-white px-6 py-3 text-sm font-semibold hover:bg-orange-600 transition-all duration-300">
+      <a href="/admision/solicitar-informacion" class="btn-primary inline-flex items-center bg-accent2 text-white font-semibold px-8 py-3.5 rounded-full text-[15px] hover:bg-orange-600 transition-colors duration-300">
         Solicitar información
       </a>
     </div>
   </section>
+
 </Base>
