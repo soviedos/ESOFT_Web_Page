@@ -1,5 +1,125 @@
 ---
 import Base from '../../layouts/Base.astro';
+
+const microciclos = [
+  {
+    num: 1, name: 'Fundamentos de IA generativa y recuperación de información', hours: 24,
+    temas: [
+      { t: 'IA generativa aplicada a datos', s: 'Modelos de lenguaje, generación de texto, limitaciones y alucinaciones.' },
+      { t: 'Necesidad de datos externos', s: 'Corte de conocimiento; contexto organizacional; fuentes internas de la empresa.' },
+      { t: 'Recuperación de información', s: 'Búsqueda por palabras clave, full-text y búsqueda semántica.' },
+      { t: 'Casos de uso RAG', s: 'Asistentes internos, buscadores inteligentes, soporte, manuales y políticas.' },
+    ]
+  },
+  {
+    num: 2, name: 'Fuentes documentales, metadatos y calidad de conocimiento', hours: 24,
+    temas: [
+      { t: 'Fuentes documentales', s: 'PDF, Word, HTML, Markdown, bases de conocimiento y tickets.' },
+      { t: 'Confiabilidad de fuentes', s: 'Vigencia, autoridad, duplicidad y contradicciones entre documentos.' },
+      { t: 'Metadatos', s: 'Fuente, fecha, autor, versión, categoría y confidencialidad.' },
+      { t: 'Calidad documental', s: 'Ruido, documentos obsoletos, contenido incompleto y versiones múltiples.' },
+    ]
+  },
+  {
+    num: 3, name: 'Procesamiento documental y chunking', hours: 24,
+    temas: [
+      { t: 'Extracción y limpieza', s: 'Texto, secciones, encabezados, pies de página y eliminación de ruido.' },
+      { t: 'Normalización documental', s: 'Estructura, formato, contenido útil y exclusión de material irrelevante.' },
+      { t: 'Chunking', s: 'Tamaño de chunk, overlap, segmentación por párrafos o secciones.' },
+      { t: 'Estrategias de segmentación', s: 'Chunking fijo, contextual y semántico; impacto en la recuperación.' },
+    ]
+  },
+  {
+    num: 4, name: 'Embeddings y representación vectorial', hours: 24,
+    temas: [
+      { t: 'Concepto de embedding', s: 'Representación numérica del texto; significado; dimensionalidad.' },
+      { t: 'Modelos de embeddings', s: 'Selección, uso, límites, costo y latencia de distintos modelos.' },
+      { t: 'Generación de embeddings', s: 'Texto, chunks, consultas y actualización de vectores.' },
+      { t: 'Similitud vectorial', s: 'Coseno, distancia euclidiana, producto interno y top-k.' },
+    ]
+  },
+  {
+    num: 5, name: 'Bases de datos vectoriales', hours: 24,
+    temas: [
+      { t: 'Vector stores', s: 'Colecciones, índices, vectores, texto original y metadatos.' },
+      { t: 'Operaciones vectoriales', s: 'Inserción, actualización, eliminación y consulta de vectores.' },
+      { t: 'Indexación vectorial', s: 'Búsqueda exacta y aproximada; latencia; tamaño de índice.' },
+      { t: 'Herramientas vectoriales', s: 'pgvector, Chroma, Qdrant, Weaviate, Pinecone, Milvus u opciones equivalentes.' },
+    ]
+  },
+  {
+    num: 6, name: 'Búsqueda semántica', hours: 24,
+    temas: [
+      { t: 'Consulta en lenguaje natural', s: 'Transformación de la consulta en embedding para búsqueda.' },
+      { t: 'Recuperación por similitud', s: 'Top-k, ranking, umbrales y resultados relevantes.' },
+      { t: 'Presentación de resultados', s: 'Texto recuperado, metadatos, fuente y fragmento.' },
+      { t: 'Fallos frecuentes', s: 'Resultados irrelevantes, ruido y chunks mal segmentados.' },
+    ]
+  },
+  {
+    num: 7, name: 'Búsqueda híbrida y recuperación contextual', hours: 24,
+    temas: [
+      { t: 'Búsqueda híbrida', s: 'Búsqueda vectorial + textual + filtros combinados.' },
+      { t: 'Filtros por metadatos', s: 'Fecha, fuente, categoría, tipo de documento y permisos.' },
+      { t: 'Re-ranking básico', s: 'Priorización, reducción de ruido y comparación de resultados.' },
+      { t: 'Recuperación contextual', s: 'Selección de fragmentos útiles para la generación de respuesta.' },
+    ]
+  },
+  {
+    num: 8, name: 'Arquitectura RAG', hours: 24,
+    temas: [
+      { t: 'Componentes RAG', s: 'Ingesta, chunking, embeddings, vector store, recuperación y generación.' },
+      { t: 'Flujo de consulta', s: 'Pregunta → recuperación de contexto → armado de prompt → respuesta.' },
+      { t: 'RAG vs fine-tuning', s: 'Diferencias, usos, límites y selección del enfoque apropiado.' },
+      { t: 'Actualización de conocimiento', s: 'Reindexación, nuevas fuentes y eliminación de documentos obsoletos.' },
+    ]
+  },
+  {
+    num: 9, name: 'Prompting para RAG', hours: 24,
+    temas: [
+      { t: 'Plantillas de prompt RAG', s: 'Sistema, contexto, pregunta y formato de salida.' },
+      { t: 'Uso controlado del contexto', s: 'Responder con evidencia, citar fuentes y evitar invención.' },
+      { t: 'Manejo de ambigüedad', s: 'Preguntas incompletas, fuera de alcance o sin evidencia suficiente.' },
+      { t: 'Control de respuesta', s: 'Tono, estructura, límites y cuándo responder "no sé".' },
+    ]
+  },
+  {
+    num: 10, name: 'Integración con modelos de lenguaje y APIs', hours: 24,
+    temas: [
+      { t: 'Consumo de APIs de modelos', s: 'Parámetros básicos, claves y manejo de respuestas.' },
+      { t: 'Control de tokens y latencia', s: 'Tamaño de contexto, costos y límites operativos.' },
+      { t: 'Manejo de errores', s: 'Reintentos, fallos de API y validaciones.' },
+      { t: 'Separación de componentes', s: 'Recuperación, generación, respuesta y configuración.' },
+    ]
+  },
+  {
+    num: 11, name: 'Desarrollo de aplicaciones o servicios RAG', hours: 24,
+    temas: [
+      { t: 'Estructura de aplicación RAG', s: 'Componentes, carpetas, configuración y separación lógica.' },
+      { t: 'API o endpoint de consulta', s: 'Entrada de usuario, validación y respuesta estructurada.' },
+      { t: 'Presentación de fuentes', s: 'Evidencia recuperada, metadatos y fragmentos de origen.' },
+      { t: 'Logs y manejo operativo', s: 'Registro de consultas, errores, respuestas y fuentes utilizadas.' },
+    ]
+  },
+  {
+    num: 12, name: 'Evaluación de recuperación y respuestas generadas', hours: 24,
+    temas: [
+      { t: 'Evaluación de recuperación', s: 'Relevancia, precisión, recall/cobertura y top-k.' },
+      { t: 'Casos de prueba', s: 'Preguntas esperadas, fuera de alcance y ambiguas.' },
+      { t: 'Evaluación de respuesta', s: 'Fidelidad al contexto, exactitud, completitud y claridad.' },
+      { t: 'Detección de fallos', s: 'Alucinaciones, fuentes incorrectas y respuestas incompletas.' },
+    ]
+  },
+  {
+    num: 13, name: 'Seguridad, trazabilidad y mantenimiento de soluciones RAG', hours: 24,
+    temas: [
+      { t: 'Seguridad y privacidad', s: 'Datos sensibles, permisos, credenciales, prompt injection y data leakage.' },
+      { t: 'Trazabilidad', s: 'Fuentes, chunks, metadatos, evidencia recuperada y auditoría básica.' },
+      { t: 'Mantenimiento', s: 'Reindexación, actualización documental, versiones y eliminación de obsoletos.' },
+      { t: 'Documentación técnica', s: 'Arquitectura, fuentes, chunking, embeddings, límites, decisiones y riesgos.' },
+    ]
+  },
+];
 ---
 
 <Base title="Path: Bases de Datos Vectoriales, IA Generativa y RAG" description="Path técnico especializado en bases de datos vectoriales, embeddings, búsqueda semántica y RAG. 14 microciclos, 328 horas. Universidad CENFOTEC.">
@@ -37,35 +157,20 @@ import Base from '../../layouts/Base.astro';
           </div>
         </div>
         <div class="grid grid-cols-2 gap-4">
-          <div class="card-stat p-6 text-center">
-            <p class="text-[2.25rem] font-extrabold text-content">14</p>
-            <p class="text-[14px] text-content-secondary mt-1">Microciclos</p>
-          </div>
-          <div class="card-stat p-6 text-center">
-            <p class="text-[2.25rem] font-extrabold text-content">328</p>
-            <p class="text-[14px] text-content-secondary mt-1">Horas totales</p>
-          </div>
-          <div class="card-stat p-6 text-center">
-            <p class="text-[1.5rem] font-extrabold leading-tight" style="color:#712c86;">RAG<br/><span class="text-[0.9rem]">Empresarial</span></p>
-            <p class="text-[14px] text-content-secondary mt-1">Enfoque</p>
-          </div>
-          <div class="card-stat p-6 text-center">
-            <p class="text-[1.25rem] font-extrabold text-accent2 leading-tight">Virtual<br/>en vivo</p>
-            <p class="text-[14px] text-content-secondary mt-1">Modalidad</p>
-          </div>
+          <div class="card-stat p-6 text-center"><p class="text-[2.25rem] font-extrabold text-content">14</p><p class="text-[14px] text-content-secondary mt-1">Microciclos</p></div>
+          <div class="card-stat p-6 text-center"><p class="text-[2.25rem] font-extrabold text-content">328</p><p class="text-[14px] text-content-secondary mt-1">Horas totales</p></div>
+          <div class="card-stat p-6 text-center"><p class="text-[1.5rem] font-extrabold leading-tight" style="color:#712c86;">RAG<br/><span class="text-[0.9rem]">Empresarial</span></p><p class="text-[14px] text-content-secondary mt-1">Enfoque</p></div>
+          <div class="card-stat p-6 text-center"><p class="text-[1.25rem] font-extrabold text-accent2 leading-tight">Virtual<br/>en vivo</p><p class="text-[14px] text-content-secondary mt-1">Modalidad</p></div>
         </div>
       </div>
     </div>
   </section>
 
-  <!-- Roles -->
-  <section class="py-16 md:py-20 px-6" style="background: var(--color-bg-primary);">
+  <section class="py-12 md:py-16 px-6" style="background: var(--color-bg-primary);">
     <div class="max-w-[1060px] mx-auto grid grid-cols-1 lg:grid-cols-2 gap-10">
       <div>
         <p class="text-[13px] font-bold text-brand-label tracking-widest uppercase mb-4">Perfil de salida</p>
-        <p class="text-content-secondary text-[15px] leading-[1.85]">
-          Diseñar, implementar e integrar soluciones de recuperación semántica y RAG usando embeddings, bases vectoriales, búsqueda híbrida, APIs de modelos de lenguaje, trazabilidad y criterios de seguridad, privacidad y evaluación de respuestas.
-        </p>
+        <p class="text-content-secondary text-[15px] leading-[1.85]">Diseñar, implementar e integrar soluciones de recuperación semántica y RAG usando embeddings, bases vectoriales, búsqueda híbrida, APIs de LLMs, trazabilidad y criterios de seguridad, privacidad y evaluación de respuestas generadas.</p>
       </div>
       <div>
         <p class="text-[13px] font-bold text-brand-label tracking-widest uppercase mb-4">Roles laborales</p>
@@ -87,7 +192,6 @@ import Base from '../../layouts/Base.astro';
     </div>
   </section>
 
-  <!-- Malla -->
   <section class="py-16 md:py-24 px-6" style="background: var(--color-bg-secondary);">
     <div class="max-w-[1060px] mx-auto">
       <div class="text-center mb-12">
@@ -96,33 +200,41 @@ import Base from '../../layouts/Base.astro';
         <p class="text-content-secondary text-[15px]">13 microciclos formativos de 24h + 1 microciclo final integrador de 16h</p>
       </div>
 
-      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 mb-6">
-        {[
-          { num: 1, name: 'Fundamentos de IA generativa y recuperación de información' },
-          { num: 2, name: 'Fuentes documentales, metadatos y calidad de conocimiento' },
-          { num: 3, name: 'Procesamiento documental y chunking' },
-          { num: 4, name: 'Embeddings y representación vectorial' },
-          { num: 5, name: 'Bases de datos vectoriales' },
-          { num: 6, name: 'Búsqueda semántica' },
-          { num: 7, name: 'Búsqueda híbrida y recuperación contextual' },
-          { num: 8, name: 'Arquitectura RAG' },
-          { num: 9, name: 'Prompting para RAG' },
-          { num: 10, name: 'Integración con modelos de lenguaje y APIs' },
-          { num: 11, name: 'Desarrollo de aplicaciones o servicios RAG' },
-          { num: 12, name: 'Evaluación de recuperación y respuestas generadas' },
-          { num: 13, name: 'Seguridad, trazabilidad y mantenimiento de soluciones RAG' },
-        ].map(m => (
-          <div class="flex items-center gap-3 rounded-[14px] border border-border-subtle p-3 bg-bg-primary">
-            <span class="w-8 h-8 rounded-full flex items-center justify-center text-[12px] font-bold text-white shrink-0" style="background: #712c86;">{m.num}</span>
-            <p class="text-[12px] text-content-secondary leading-snug">{m.name} <span class="text-content-muted">· 24h</span></p>
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
+        {microciclos.map(m => (
+          <div class="card-premium rounded-[18px] overflow-hidden">
+            <div class="flex items-center gap-3 px-5 py-3 border-b border-border-subtle" style="background: var(--color-bg-primary);">
+              <span class="w-8 h-8 rounded-full flex items-center justify-center text-[12px] font-bold text-white shrink-0" style="background: #712c86;">{m.num}</span>
+              <div class="flex-1">
+                <p class="text-[13px] font-bold text-content leading-snug">{m.name}</p>
+                <p class="text-[11px] text-content-muted">{m.hours} horas · 4 semanas</p>
+              </div>
+            </div>
+            <div class="p-4 space-y-3">
+              {m.temas.map(tema => (
+                <div class="border-l-2 pl-3" style="border-color: rgba(113,44,134,0.4);">
+                  <p class="text-[12px] font-bold text-content mb-0.5">{tema.t}</p>
+                  <p class="text-[11px] text-content-secondary leading-snug">{tema.s}</p>
+                </div>
+              ))}
+            </div>
           </div>
         ))}
       </div>
 
       <div class="rounded-[18px] p-6 text-white" style="background: linear-gradient(135deg, #712c86, #a855f7);">
-        <p class="text-[12px] font-bold tracking-widest uppercase mb-2 opacity-80">Microciclo 14 · Proyecto final integrador · 16 horas</p>
-        <p class="text-[15px] font-bold mb-1">Proyecto final integrador RAG empresarial</p>
-        <p class="text-[13px] opacity-90">Solución RAG funcional con fuentes documentales, chunking, embeddings, base vectorial, búsqueda semántica e híbrida, integración con LLM, evaluación, trazabilidad, seguridad y defensa técnica.</p>
+        <div class="flex items-center gap-3 mb-3">
+          <span class="w-8 h-8 rounded-full flex items-center justify-center text-[12px] font-bold bg-white/20 shrink-0">14</span>
+          <div>
+            <p class="text-[12px] font-bold tracking-widest uppercase opacity-80">Microciclo 14 · Proyecto final integrador · 16 horas</p>
+            <p class="text-[15px] font-bold">Proyecto final integrador RAG empresarial</p>
+          </div>
+        </div>
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-3 mt-3">
+          {['Caso de uso definido con fuentes documentales seleccionadas.','Chunking, embeddings e implementación de base vectorial.','Búsqueda semántica e híbrida; integración con modelo de lenguaje.','Evaluación, trazabilidad, seguridad, documentación y defensa técnica.'].map(t => (
+            <div class="flex gap-2 text-[13px] opacity-90"><span class="shrink-0">·</span>{t}</div>
+          ))}
+        </div>
       </div>
 
       <div class="mt-8 card-premium rounded-[18px] p-6 text-center">
@@ -138,9 +250,7 @@ import Base from '../../layouts/Base.astro';
         Convertí datos en<br />
         <span class="text-gradient-hero">conocimiento inteligente.</span>
       </h2>
-      <p class="text-content-secondary text-[15px] leading-[1.8] mb-8">
-        14 microciclos · 328 horas · Virtual en vivo · Universidad CENFOTEC
-      </p>
+      <p class="text-content-secondary text-[15px] leading-[1.8] mb-8">14 microciclos · 328 horas · Virtual en vivo · Universidad CENFOTEC</p>
       <a href="/admision/solicitar-informacion" class="btn-primary inline-flex items-center bg-accent2 text-white font-semibold px-8 py-3.5 rounded-full text-[15px] hover:bg-orange-600 transition-colors duration-300">
         Solicitar información
       </a>
