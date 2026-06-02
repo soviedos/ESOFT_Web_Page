@@ -225,8 +225,200 @@ import Base from '../../layouts/Base.astro';
     </div>
   </section>
 
+  <!-- Malla Curricular -->
+  <section class="py-16 md:py-24 px-6" style="background: var(--color-bg-primary);">
+    <div class="max-w-[1060px] mx-auto">
+      <div class="text-center mb-12">
+        <p class="text-[13px] font-bold text-brand-label tracking-widest uppercase mb-3">Plan de estudios 2025</p>
+        <h2 class="headline-display text-[clamp(1.5rem,3vw,2.25rem)] mb-4">Malla Curricular</h2>
+        <p class="text-content-secondary text-[15px]">43 cursos · 141 créditos · 9 cuatrimestres · Entre 12 y 18 créditos por cuatrimestre</p>
+      </div>
+
+      <!-- Cuatrimestres -->
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5 mb-14">
+        {[
+          {
+            num: 'I', creditos: 17,
+            cursos: [
+              { code: 'SOFT-09', name: 'Introducción a la Ingeniería del Software', cr: 3 },
+              { code: 'FUN-02',  name: 'Lógica y Matemática Básica', cr: 3 },
+              { code: 'SOFT-01', name: 'Principios de Programación I', cr: 5 },
+              { code: 'FUN-01',  name: 'Introducción a las Tecnologías de Información', cr: 3 },
+              { code: 'FUN-08',  name: 'Expresión Oral y Escrita', cr: 3 },
+            ]
+          },
+          {
+            num: 'II', creditos: 18,
+            cursos: [
+              { code: 'FUN-05',    name: 'Cálculo Diferencial e Integral', cr: 3 },
+              { code: 'FUN-03',    name: 'Matemática Discreta 1', cr: 3 },
+              { code: 'SOFT-02',   name: 'Principios de Programación 2', cr: 5 },
+              { code: 'SOFT-06C2', name: 'Diseño y Programación Web', cr: 4 },
+              { code: 'FUN-09',    name: 'Desarrollo de Habilidades Blandas', cr: 3 },
+            ]
+          },
+          {
+            num: 'III', creditos: 16,
+            cursos: [
+              { code: 'FUN-18',    name: 'Física 1', cr: 3 },
+              { code: 'FUN-17',    name: 'Matemática Discreta 2', cr: 3 },
+              { code: 'SOFT-11C1', name: 'Proyecto Integrador 1', cr: 5 },
+              { code: 'SOFT-10',   name: 'Estructuras de Datos', cr: 3 },
+              { code: 'FUN-14',    name: 'Inglés Conversacional 1', cr: 2 },
+            ]
+          },
+          {
+            num: 'IV', creditos: 18,
+            cursos: [
+              { code: 'FUN-19',  name: 'Física 2', cr: 3 },
+              { code: 'FUN-06',  name: 'Álgebra Lineal', cr: 3 },
+              { code: 'SOFT-04', name: 'Programación Orientada a Objetos', cr: 5 },
+              { code: 'SOFT-03', name: 'Fundamentos de Bases de Datos', cr: 4 },
+              { code: 'FUN-10',  name: 'Pensamiento Crítico', cr: 3 },
+            ]
+          },
+          {
+            num: 'V', creditos: 15,
+            cursos: [
+              { code: 'SOFT-13C1', name: 'Arquitectura de Software 1', cr: 3 },
+              { code: 'FUN-04',    name: 'Probabilidad y Estadística 1', cr: 3 },
+              { code: 'SOFT-12C1', name: 'Programación Web Avanzada', cr: 4 },
+              { code: 'SOFT-14',   name: 'Procesos de Ingeniería del Software', cr: 3 },
+              { code: 'FUN-15',    name: 'Inglés Conversacional 2', cr: 2 },
+            ]
+          },
+          {
+            num: 'VI', creditos: 17,
+            cursos: [
+              { code: 'FUN-20',    name: 'Física 3', cr: 3 },
+              { code: 'FUN-07',    name: 'Probabilidad y Estadística 2', cr: 3 },
+              { code: 'SOFT-18C1', name: 'Proyecto Integrador 2', cr: 5 },
+              { code: 'SOFT-17',   name: 'Calidad, Verificación y Validación del Software', cr: 3 },
+              { code: 'FUN-11',    name: 'Liderazgo y Trabajo Colaborativo', cr: 3 },
+            ]
+          },
+          {
+            num: 'VII', creditos: 14,
+            cursos: [
+              { code: 'SINT-04', name: 'Principios de Inteligencia Artificial', cr: 3 },
+              { code: 'SOFT-15', name: 'Diseño de Interacción Humano-Computador', cr: 3 },
+              { code: 'SOFT-16', name: 'Arquitectura de Software 2', cr: 3 },
+              { code: 'TI-03',   name: 'Arquitectura de Computadoras', cr: 3 },
+              { code: 'FUN-16',  name: 'Inglés Conversacional 3', cr: 2 },
+            ]
+          },
+          {
+            num: 'VIII', creditos: 12,
+            cursos: [
+              { code: 'Electiva 1', name: 'Curso electivo (ver opciones abajo)', cr: 3 },
+              { code: 'SOFT-22',   name: 'Programación Móvil', cr: 3 },
+              { code: 'TI-01',     name: 'Fundamentos de Redes', cr: 3 },
+              { code: 'FUN-12',    name: 'Ética y Sostenibilidad en Tecnología', cr: 3 },
+            ]
+          },
+          {
+            num: 'IX', creditos: 14,
+            cursos: [
+              { code: 'Electiva 2', name: 'Curso electivo (ver opciones abajo)', cr: 3 },
+              { code: 'SOFT-23',   name: 'Proyecto Integrador 3', cr: 5 },
+              { code: 'CIB-06',    name: 'Desarrollo Seguro del Software', cr: 3 },
+              { code: 'FUN-13',    name: 'Investigación y Emprendimiento', cr: 3 },
+            ]
+          },
+        ].map(q => (
+          <div class="card-premium rounded-[18px] overflow-hidden">
+            <div class="flex items-center justify-between px-5 py-3 border-b border-border-subtle" style="background: var(--color-bg-secondary);">
+              <p class="text-[13px] font-bold text-content uppercase tracking-wide">Cuatrimestre {q.num}</p>
+              <span class="text-[12px] font-semibold text-brand bg-brand-soft px-2 py-0.5 rounded-full">{q.creditos} créditos</span>
+            </div>
+            <div class="p-4 space-y-2">
+              {q.cursos.map(c => (
+                <div class="flex items-start gap-3">
+                  <span class="text-[11px] font-mono font-bold text-brand-label bg-brand-soft px-1.5 py-0.5 rounded shrink-0 mt-0.5">{c.code}</span>
+                  <div class="flex-1 flex items-start justify-between gap-2">
+                    <span class="text-[13px] text-content-secondary leading-snug">{c.name}</span>
+                    <span class="text-[12px] font-semibold text-content-muted shrink-0">{c.cr}cr</span>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
+        ))}
+      </div>
+
+      <!-- Electivas -->
+      <div class="mb-14">
+        <p class="text-[13px] font-bold text-brand-label tracking-widest uppercase mb-6">Cursos electivos</p>
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+          <div class="card-premium rounded-[18px] overflow-hidden">
+            <div class="px-5 py-3 border-b border-border-subtle" style="background: var(--color-bg-secondary);">
+              <p class="text-[13px] font-bold text-content">Electiva 1</p>
+            </div>
+            <div class="p-4 space-y-2">
+              {[
+                { code: 'SOFT-24', name: 'Automatización de Pruebas' },
+                { code: 'SINT-06', name: 'Fundamentos de Aprendizaje Automático' },
+                { code: 'SOFT-25', name: 'Arquitectura de Software Distribuido' },
+              ].map(c => (
+                <div class="flex items-center gap-3">
+                  <span class="text-[11px] font-mono font-bold text-brand-label bg-brand-soft px-1.5 py-0.5 rounded shrink-0">{c.code}</span>
+                  <span class="text-[13px] text-content-secondary">{c.name}</span>
+                </div>
+              ))}
+            </div>
+          </div>
+          <div class="card-premium rounded-[18px] overflow-hidden">
+            <div class="px-5 py-3 border-b border-border-subtle" style="background: var(--color-bg-secondary);">
+              <p class="text-[13px] font-bold text-content">Electiva 2</p>
+            </div>
+            <div class="p-4 space-y-2">
+              {[
+                { code: 'SOFT-26', name: 'Estándares y Métricas de Calidad del Software' },
+                { code: 'SINT-05', name: 'Modelado y Arquitectura en Inteligencia Artificial' },
+                { code: 'SOFT-27', name: 'Desarrollo de Software en Cadena de Bloques' },
+              ].map(c => (
+                <div class="flex items-center gap-3">
+                  <span class="text-[11px] font-mono font-bold text-brand-label bg-brand-soft px-1.5 py-0.5 rounded shrink-0">{c.code}</span>
+                  <span class="text-[13px] text-content-secondary">{c.name}</span>
+                </div>
+              ))}
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Ejes y áreas -->
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+        <div class="card-premium rounded-[18px] p-6">
+          <p class="text-[13px] font-bold text-brand-label tracking-widest uppercase mb-4">Ejes curriculares</p>
+          <ul class="space-y-2">
+            {['Gestión de Proyectos de Software','Integración y Despliegue del Software','Aseguramiento del Software','Gestión de la Calidad'].map(e => (
+              <li class="flex gap-2 text-[13px] text-content-secondary"><span class="text-brand shrink-0">◆</span>{e}</li>
+            ))}
+          </ul>
+        </div>
+        <div class="card-premium rounded-[18px] p-6">
+          <p class="text-[13px] font-bold text-brand-label tracking-widest uppercase mb-4">Ejes transversales</p>
+          <ul class="space-y-2">
+            {['Universalidad de los Derechos Humanos','Conciencia Ambiental y Cultura de Paz','Ética y Sociedad','Investigación e Innovación','Excelencia Académica y Profesional'].map(e => (
+              <li class="flex gap-2 text-[13px] text-content-secondary"><span class="text-accent2 shrink-0">◆</span>{e}</li>
+            ))}
+          </ul>
+        </div>
+        <div class="card-premium rounded-[18px] p-6">
+          <p class="text-[13px] font-bold text-brand-label tracking-widest uppercase mb-4">Áreas disciplinares</p>
+          <ul class="space-y-2">
+            {['Desarrollo Profesional','Matemáticas y Ciencias Básicas','Fundamentos de Informática','Análisis y Especificación de Requerimientos','Diseño y Modelado de Software','Calidad, Verificación y Validación','Seguridad del Software','Procesos de Software'].map(e => (
+              <li class="flex gap-2 text-[13px] text-content-secondary"><span class="text-content-muted shrink-0">◆</span>{e}</li>
+            ))}
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
   <!-- CTA -->
-  <section class="py-16 md:py-24 px-6 text-center" style="background: var(--color-bg-primary);">
+  <section class="py-16 md:py-24 px-6 text-center" style="background: var(--color-bg-secondary);">
     <div class="max-w-[560px] mx-auto">
       <h2 class="headline-display text-[clamp(1.5rem,3.5vw,2.5rem)] mb-5">
         Aprendé a diseñar, gobernar y validar software<br />
