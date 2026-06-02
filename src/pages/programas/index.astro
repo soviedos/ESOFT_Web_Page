@@ -50,12 +50,37 @@ import Card from '../../components/Card.astro';
     </div>
   </section>
 
-  <!-- Técnicos ágiles -->
+  <!-- Técnicos ágiles / Paths de microciclos -->
   <section class="py-12 md:py-20 px-6 border-t border-border-subtle">
     <div class="relative max-w-6xl mx-auto">
-      <h2 class="text-xl md:text-2xl font-bold mb-6">Técnicos ágiles</h2>
-      <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-        <Card title="Diseño Gráfico Web y UX" description="Diseño de interfaces, experiencia de usuario, prototipado y diseño visual para productos digitales." href="/programas/tecnico-diseno-grafico-web-ux" />
+      <h2 class="text-xl md:text-2xl font-bold mb-2">Técnicos ágiles · Paths de microciclos</h2>
+      <p class="text-content-secondary text-[14px] mb-8">Cada path se compone de microciclos de 4 semanas. Python Foundations es la base habilitadora para los paths de bases de datos y testing.</p>
+
+      <!-- Base habilitadora -->
+      <div class="mb-8 rounded-[20px] border-2 border-amber-300 bg-amber-50 p-6">
+        <p class="text-[12px] font-bold tracking-widest uppercase mb-3" style="color: #7a5600;">Curso base habilitador — requerido para paths de BD y Testing</p>
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+          <Card title="Python Foundations: Programación desde Cero" description="6 microciclos · 144 horas. Base de programación en Python para ingresar a cualquier path técnico ágil." href="/programas/python-foundations" />
+        </div>
+      </div>
+
+      <!-- Path Diseño -->
+      <p class="text-[13px] font-bold text-brand-label tracking-widest uppercase mb-4">Path: Diseño Web y Experiencia de Usuario</p>
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
+        <Card title="Técnico en Diseño Gráfico Web y UX (EXUTEC)" description="12 microciclos de 4 semanas. Diseñador web, gráfico, multimedia y UX. Req: 9° año." href="/programas/tecnico-diseno-grafico-web-ux" />
+      </div>
+
+      <!-- Paths Bases de Datos -->
+      <p class="text-[13px] font-bold text-brand-label tracking-widest uppercase mb-4">Paths: Bases de Datos · Req: Python Foundations</p>
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
+        <Card title="Path SQL y Bases de Datos Relacionales" description="13 microciclos · 304 horas. Modelado relacional, SQL básico/avanzado, transacciones e integración." href="/programas/path-sql-bases-datos-relacionales" />
+        <Card title="Path Bases de Datos NoSQL y Distribuidas" description="12 microciclos · 280 horas. Modelos documentales, key-value, datos distribuidos y servicios administrados." href="/programas/path-nosql-distribuidas" />
+        <Card title="Path Vectoriales, IA Generativa y RAG" description="14 microciclos · 328 horas. Embeddings, búsqueda semántica, arquitectura RAG y modelos de lenguaje." href="/programas/path-vectoriales-ia-rag" />
+      </div>
+
+      <!-- Path Testing -->
+      <p class="text-[13px] font-bold text-brand-label tracking-widest uppercase mb-4">Paths: Testing de Software · Req: Python Foundations</p>
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
         <Card title="Testing Manual de Software" description="Fundamentos del testing, diseño de casos de prueba, gestión de defectos y herramientas de QA." href="/programas/testing-manual-software" />
         <Card title="Automatización de Pruebas" description="Frameworks de automatización, CI/CD, scripting y estrategias de testing automatizado." href="/programas/automatizacion-pruebas-software" />
         <Card title="Testing de Software con IA" description="Testing potenciado con inteligencia artificial, análisis predictivo de defectos y generación automática de pruebas." href="/programas/testing-software-ia-sistemas-inteligentes" />

@@ -1,0 +1,151 @@
+---
+import Base from '../../layouts/Base.astro';
+---
+
+<Base title="Path: Bases de Datos NoSQL y Distribuidas" description="Path técnico especializado en bases de datos NoSQL y distribuidas. 12 microciclos, 280 horas. Universidad CENFOTEC.">
+
+  <section class="relative py-16 md:py-24 px-6" style="background: radial-gradient(ellipse 60% 40% at 50% 0%, rgba(31,143,95,0.06) 0%, transparent 60%), var(--color-bg-secondary);">
+    <div class="max-w-[1060px] mx-auto">
+      <nav class="text-[13px] text-content-muted mb-8">
+        <a href="/programas" class="hover:text-content transition-colors">Programas</a>
+        <span class="mx-2">·</span>
+        <span class="text-content">Path: Bases de Datos NoSQL y Distribuidas</span>
+      </nav>
+      <div class="grid grid-cols-1 lg:grid-cols-2 gap-14 items-center">
+        <div>
+          <p class="text-[13px] font-bold text-brand-label tracking-widest uppercase mb-4">Path técnico especializado · 12 microciclos</p>
+          <h1 class="headline-display text-[clamp(2rem,4.5vw,3rem)] mb-6">
+            Bases de Datos<br />
+            <span class="text-gradient-hero">NoSQL y Distribuidas</span>
+          </h1>
+          <p class="text-content-secondary text-[16px] leading-[1.85] mb-6 max-w-[480px]">
+            Seleccioná, modelá, implementá, consultá, integrá y documentá soluciones NoSQL y distribuidas: bases documentales, key-value, datos distribuidos y servicios administrados para aplicaciones modernas.
+          </p>
+          <div class="card-premium rounded-[14px] p-4 mb-8 flex gap-3 items-start">
+            <span class="text-brand text-[18px] shrink-0">→</span>
+            <p class="text-[13px] text-content-secondary leading-snug">
+              <strong>Requisito:</strong> Haber aprobado <a href="/programas/python-foundations" class="text-brand underline">Python Foundations</a> o demostrar suficiencia en lógica, funciones, JSON, APIs, conexión a BD y Git.
+            </p>
+          </div>
+          <div class="flex flex-wrap gap-4">
+            <a href="/admision/solicitar-informacion" class="btn-primary inline-flex items-center bg-accent2 text-white font-semibold px-7 py-3.5 rounded-full text-[15px] hover:bg-orange-600 transition-colors duration-300">
+              Solicitar información
+            </a>
+            <a href="/admision" class="btn-ghost inline-flex items-center border border-border-default text-content-secondary font-medium px-7 py-3.5 rounded-full text-[15px]">
+              Proceso de admisión
+            </a>
+          </div>
+        </div>
+        <div class="grid grid-cols-2 gap-4">
+          <div class="card-stat p-6 text-center">
+            <p class="text-[2.25rem] font-extrabold text-content">12</p>
+            <p class="text-[14px] text-content-secondary mt-1">Microciclos</p>
+          </div>
+          <div class="card-stat p-6 text-center">
+            <p class="text-[2.25rem] font-extrabold text-content">280</p>
+            <p class="text-[14px] text-content-secondary mt-1">Horas totales</p>
+          </div>
+          <div class="card-stat p-6 text-center">
+            <p class="text-[1.75rem] font-extrabold leading-tight" style="color:#1f8f5f;">SFIA<br/><span class="text-[1rem]">Nivel 2–3</span></p>
+            <p class="text-[14px] text-content-secondary mt-1">Alineación</p>
+          </div>
+          <div class="card-stat p-6 text-center">
+            <p class="text-[1.25rem] font-extrabold text-accent2 leading-tight">Virtual<br/>en vivo</p>
+            <p class="text-[14px] text-content-secondary mt-1">Modalidad</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Roles -->
+  <section class="py-16 md:py-20 px-6" style="background: var(--color-bg-primary);">
+    <div class="max-w-[1060px] mx-auto grid grid-cols-1 lg:grid-cols-2 gap-10">
+      <div>
+        <p class="text-[13px] font-bold text-brand-label tracking-widest uppercase mb-4">Perfil de salida</p>
+        <p class="text-content-secondary text-[15px] leading-[1.85]">
+          Seleccionar, modelar, implementar e integrar soluciones de datos no relacionales y distribuidas usando modelos documentales, key-value, replicación, particionamiento, escalabilidad y criterios de consistencia. Podrá usar servicios administrados como entorno de implementación.
+        </p>
+      </div>
+      <div>
+        <p class="text-[13px] font-bold text-brand-label tracking-widest uppercase mb-4">Roles laborales</p>
+        <ul class="space-y-2">
+          {[
+            { role: 'Desarrollador NoSQL junior', nivel: 'Junior' },
+            { role: 'Backend Developer con énfasis en NoSQL', nivel: 'Junior' },
+            { role: 'Junior Data Engineer', nivel: 'Junior' },
+            { role: 'Data Platform Assistant', nivel: 'Técnico' },
+            { role: 'Implementador junior de persistencia moderna', nivel: 'Junior' },
+          ].map(r => (
+            <li class="flex items-center justify-between rounded-xl border border-border-subtle px-4 py-2.5 bg-bg-secondary">
+              <span class="text-[14px] text-content-secondary">{r.role}</span>
+              <span class="text-[11px] font-bold px-2 py-0.5 rounded-full shrink-0 ml-2" style="background: rgba(31,143,95,0.1); color: #1f8f5f;">{r.nivel}</span>
+            </li>
+          ))}
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <!-- Malla -->
+  <section class="py-16 md:py-24 px-6" style="background: var(--color-bg-secondary);">
+    <div class="max-w-[1060px] mx-auto">
+      <div class="text-center mb-12">
+        <p class="text-[13px] font-bold text-brand-label tracking-widest uppercase mb-3">Plan de estudios</p>
+        <h2 class="headline-display text-[clamp(1.5rem,3vw,2.25rem)] mb-4">12 Microciclos · 280 horas</h2>
+        <p class="text-content-secondary text-[15px]">11 microciclos formativos de 24h + 1 microciclo final integrador de 16h</p>
+      </div>
+
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 mb-6">
+        {[
+          { num: 1, name: 'Fundamentos de bases de datos NoSQL', hours: 24 },
+          { num: 2, name: 'Modelos de datos NoSQL y selección tecnológica', hours: 24 },
+          { num: 3, name: 'Modelado documental y datos JSON', hours: 24 },
+          { num: 4, name: 'Operaciones documentales y CRUD', hours: 24 },
+          { num: 5, name: 'Consultas avanzadas, agregaciones e índices documentales', hours: 24 },
+          { num: 6, name: 'Bases key-value y patrones de acceso rápido', hours: 24 },
+          { num: 7, name: 'Fundamentos de datos distribuidos', hours: 24 },
+          { num: 8, name: 'Consistencia, escalabilidad y rendimiento inicial', hours: 24 },
+          { num: 9, name: 'Integración de NoSQL con aplicaciones y APIs', hours: 24 },
+          { num: 10, name: 'Servicios administrados como entorno de implementación', hours: 24 },
+          { num: 11, name: 'Seguridad básica, documentación y toma de decisiones', hours: 24 },
+        ].map(m => (
+          <div class="flex items-center gap-3 rounded-[14px] border border-border-subtle p-3 bg-bg-primary">
+            <span class="w-8 h-8 rounded-full flex items-center justify-center text-[12px] font-bold text-white shrink-0" style="background: #1f8f5f;">{m.num}</span>
+            <div>
+              <p class="text-[12px] text-content-secondary leading-snug">{m.name}</p>
+              <p class="text-[11px] text-content-muted">{m.hours}h</p>
+            </div>
+          </div>
+        ))}
+      </div>
+
+      <div class="rounded-[18px] p-6 text-white" style="background: linear-gradient(135deg, #1f8f5f, #38b26f);">
+        <p class="text-[12px] font-bold tracking-widest uppercase mb-2 opacity-80">Microciclo 12 · Proyecto final aplicado · 16 horas</p>
+        <p class="text-[15px] font-bold mb-1">Proyecto final aplicado NoSQL y distribuido</p>
+        <p class="text-[13px] opacity-90">Solución NoSQL funcional: modelo documental o key-value, operaciones CRUD, consultas, índices básicos, integración con aplicación/API, seguridad básica, documentación y defensa técnica.</p>
+      </div>
+
+      <div class="mt-8 card-premium rounded-[18px] p-6 text-center">
+        <p class="text-[13px] font-bold text-brand-label tracking-widest uppercase mb-2">Credencial al completar</p>
+        <p class="text-[15px] font-bold text-content">CENFOTEC Certified NoSQL & Distributed Databases Developer – Junior</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="py-16 md:py-24 px-6 text-center" style="background: var(--color-bg-primary);">
+    <div class="max-w-[560px] mx-auto">
+      <h2 class="headline-display text-[clamp(1.5rem,3.5vw,2.5rem)] mb-5">
+        Persistencia moderna.<br />
+        <span class="text-gradient-hero">Más allá del modelo relacional.</span>
+      </h2>
+      <p class="text-content-secondary text-[15px] leading-[1.8] mb-8">
+        12 microciclos · 280 horas · Virtual en vivo · Universidad CENFOTEC
+      </p>
+      <a href="/admision/solicitar-informacion" class="btn-primary inline-flex items-center bg-accent2 text-white font-semibold px-8 py-3.5 rounded-full text-[15px] hover:bg-orange-600 transition-colors duration-300">
+        Solicitar información
+      </a>
+    </div>
+  </section>
+
+</Base>

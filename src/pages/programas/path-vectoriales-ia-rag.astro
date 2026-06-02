@@ -1,0 +1,150 @@
+---
+import Base from '../../layouts/Base.astro';
+---
+
+<Base title="Path: Bases de Datos Vectoriales, IA Generativa y RAG" description="Path técnico especializado en bases de datos vectoriales, embeddings, búsqueda semántica y RAG. 14 microciclos, 328 horas. Universidad CENFOTEC.">
+
+  <section class="relative py-16 md:py-24 px-6" style="background: radial-gradient(ellipse 60% 40% at 50% 0%, rgba(113,44,134,0.06) 0%, transparent 60%), var(--color-bg-secondary);">
+    <div class="max-w-[1060px] mx-auto">
+      <nav class="text-[13px] text-content-muted mb-8">
+        <a href="/programas" class="hover:text-content transition-colors">Programas</a>
+        <span class="mx-2">·</span>
+        <span class="text-content">Path: Bases de Datos Vectoriales, IA Generativa y RAG</span>
+      </nav>
+      <div class="grid grid-cols-1 lg:grid-cols-2 gap-14 items-center">
+        <div>
+          <p class="text-[13px] font-bold text-brand-label tracking-widest uppercase mb-4">Path técnico especializado · 14 microciclos</p>
+          <h1 class="headline-display text-[clamp(2rem,4.5vw,3rem)] mb-6">
+            Bases de Datos Vectoriales,<br />
+            <span class="text-gradient-hero">IA Generativa y RAG</span>
+          </h1>
+          <p class="text-content-secondary text-[16px] leading-[1.85] mb-6 max-w-[480px]">
+            Diseñá, implementá y documentá soluciones de recuperación semántica y RAG: embeddings, bases vectoriales, búsqueda híbrida, modelos de lenguaje y trazabilidad para convertir datos empresariales en conocimiento recuperable.
+          </p>
+          <div class="card-premium rounded-[14px] p-4 mb-8 flex gap-3 items-start">
+            <span class="text-brand text-[18px] shrink-0">→</span>
+            <p class="text-[13px] text-content-secondary leading-snug">
+              <strong>Requisito:</strong> Haber aprobado <a href="/programas/python-foundations" class="text-brand underline">Python Foundations</a> o demostrar suficiencia en Python, JSON, APIs, BD básica y Git. Se recomienda conocimiento básico de SQL y estructuras documentales.
+            </p>
+          </div>
+          <div class="flex flex-wrap gap-4">
+            <a href="/admision/solicitar-informacion" class="btn-primary inline-flex items-center bg-accent2 text-white font-semibold px-7 py-3.5 rounded-full text-[15px] hover:bg-orange-600 transition-colors duration-300">
+              Solicitar información
+            </a>
+            <a href="/admision" class="btn-ghost inline-flex items-center border border-border-default text-content-secondary font-medium px-7 py-3.5 rounded-full text-[15px]">
+              Proceso de admisión
+            </a>
+          </div>
+        </div>
+        <div class="grid grid-cols-2 gap-4">
+          <div class="card-stat p-6 text-center">
+            <p class="text-[2.25rem] font-extrabold text-content">14</p>
+            <p class="text-[14px] text-content-secondary mt-1">Microciclos</p>
+          </div>
+          <div class="card-stat p-6 text-center">
+            <p class="text-[2.25rem] font-extrabold text-content">328</p>
+            <p class="text-[14px] text-content-secondary mt-1">Horas totales</p>
+          </div>
+          <div class="card-stat p-6 text-center">
+            <p class="text-[1.5rem] font-extrabold leading-tight" style="color:#712c86;">RAG<br/><span class="text-[0.9rem]">Empresarial</span></p>
+            <p class="text-[14px] text-content-secondary mt-1">Enfoque</p>
+          </div>
+          <div class="card-stat p-6 text-center">
+            <p class="text-[1.25rem] font-extrabold text-accent2 leading-tight">Virtual<br/>en vivo</p>
+            <p class="text-[14px] text-content-secondary mt-1">Modalidad</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Roles -->
+  <section class="py-16 md:py-20 px-6" style="background: var(--color-bg-primary);">
+    <div class="max-w-[1060px] mx-auto grid grid-cols-1 lg:grid-cols-2 gap-10">
+      <div>
+        <p class="text-[13px] font-bold text-brand-label tracking-widest uppercase mb-4">Perfil de salida</p>
+        <p class="text-content-secondary text-[15px] leading-[1.85]">
+          Diseñar, implementar e integrar soluciones de recuperación semántica y RAG usando embeddings, bases vectoriales, búsqueda híbrida, APIs de modelos de lenguaje, trazabilidad y criterios de seguridad, privacidad y evaluación de respuestas.
+        </p>
+      </div>
+      <div>
+        <p class="text-[13px] font-bold text-brand-label tracking-widest uppercase mb-4">Roles laborales</p>
+        <ul class="space-y-2">
+          {[
+            { role: 'Implementador junior de soluciones RAG', nivel: 'Junior' },
+            { role: 'AI Data Technician', nivel: 'Técnico/junior' },
+            { role: 'Desarrollador junior de aplicaciones con IA', nivel: 'Junior' },
+            { role: 'Junior AI Application Developer', nivel: 'Junior' },
+            { role: 'Técnico en búsqueda semántica empresarial', nivel: 'Técnico/junior' },
+          ].map(r => (
+            <li class="flex items-center justify-between rounded-xl border border-border-subtle px-4 py-2.5 bg-bg-secondary">
+              <span class="text-[14px] text-content-secondary">{r.role}</span>
+              <span class="text-[11px] font-bold px-2 py-0.5 rounded-full shrink-0 ml-2" style="background: rgba(113,44,134,0.1); color: #712c86;">{r.nivel}</span>
+            </li>
+          ))}
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <!-- Malla -->
+  <section class="py-16 md:py-24 px-6" style="background: var(--color-bg-secondary);">
+    <div class="max-w-[1060px] mx-auto">
+      <div class="text-center mb-12">
+        <p class="text-[13px] font-bold text-brand-label tracking-widest uppercase mb-3">Plan de estudios</p>
+        <h2 class="headline-display text-[clamp(1.5rem,3vw,2.25rem)] mb-4">14 Microciclos · 328 horas</h2>
+        <p class="text-content-secondary text-[15px]">13 microciclos formativos de 24h + 1 microciclo final integrador de 16h</p>
+      </div>
+
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 mb-6">
+        {[
+          { num: 1, name: 'Fundamentos de IA generativa y recuperación de información' },
+          { num: 2, name: 'Fuentes documentales, metadatos y calidad de conocimiento' },
+          { num: 3, name: 'Procesamiento documental y chunking' },
+          { num: 4, name: 'Embeddings y representación vectorial' },
+          { num: 5, name: 'Bases de datos vectoriales' },
+          { num: 6, name: 'Búsqueda semántica' },
+          { num: 7, name: 'Búsqueda híbrida y recuperación contextual' },
+          { num: 8, name: 'Arquitectura RAG' },
+          { num: 9, name: 'Prompting para RAG' },
+          { num: 10, name: 'Integración con modelos de lenguaje y APIs' },
+          { num: 11, name: 'Desarrollo de aplicaciones o servicios RAG' },
+          { num: 12, name: 'Evaluación de recuperación y respuestas generadas' },
+          { num: 13, name: 'Seguridad, trazabilidad y mantenimiento de soluciones RAG' },
+        ].map(m => (
+          <div class="flex items-center gap-3 rounded-[14px] border border-border-subtle p-3 bg-bg-primary">
+            <span class="w-8 h-8 rounded-full flex items-center justify-center text-[12px] font-bold text-white shrink-0" style="background: #712c86;">{m.num}</span>
+            <p class="text-[12px] text-content-secondary leading-snug">{m.name} <span class="text-content-muted">· 24h</span></p>
+          </div>
+        ))}
+      </div>
+
+      <div class="rounded-[18px] p-6 text-white" style="background: linear-gradient(135deg, #712c86, #a855f7);">
+        <p class="text-[12px] font-bold tracking-widest uppercase mb-2 opacity-80">Microciclo 14 · Proyecto final integrador · 16 horas</p>
+        <p class="text-[15px] font-bold mb-1">Proyecto final integrador RAG empresarial</p>
+        <p class="text-[13px] opacity-90">Solución RAG funcional con fuentes documentales, chunking, embeddings, base vectorial, búsqueda semántica e híbrida, integración con LLM, evaluación, trazabilidad, seguridad y defensa técnica.</p>
+      </div>
+
+      <div class="mt-8 card-premium rounded-[18px] p-6 text-center">
+        <p class="text-[13px] font-bold text-brand-label tracking-widest uppercase mb-2">Credencial al completar</p>
+        <p class="text-[15px] font-bold text-content">CENFOTEC Certified Vector Databases & RAG Developer – Junior</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="py-16 md:py-24 px-6 text-center" style="background: var(--color-bg-primary);">
+    <div class="max-w-[560px] mx-auto">
+      <h2 class="headline-display text-[clamp(1.5rem,3.5vw,2.5rem)] mb-5">
+        Convertí datos en<br />
+        <span class="text-gradient-hero">conocimiento inteligente.</span>
+      </h2>
+      <p class="text-content-secondary text-[15px] leading-[1.8] mb-8">
+        14 microciclos · 328 horas · Virtual en vivo · Universidad CENFOTEC
+      </p>
+      <a href="/admision/solicitar-informacion" class="btn-primary inline-flex items-center bg-accent2 text-white font-semibold px-8 py-3.5 rounded-full text-[15px] hover:bg-orange-600 transition-colors duration-300">
+        Solicitar información
+      </a>
+    </div>
+  </section>
+
+</Base>
