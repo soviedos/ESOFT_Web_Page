@@ -75,7 +75,7 @@
         ctx.beginPath();
         ctx.moveTo(d.x, d.y);
         ctx.lineTo(mouse.x, mouse.y);
-        ctx.strokeStyle = `rgba(249,115,22,${alpha})`;
+        ctx.strokeStyle = `rgba(200,31,102,${alpha})`;
         ctx.lineWidth = 0.9;
         ctx.stroke();
       }
@@ -88,7 +88,7 @@
       const near = Math.sqrt(dx * dx + dy * dy) < MOUSE_RADIUS;
       ctx.beginPath();
       ctx.arc(d.x, d.y, near ? d.r * 1.8 : d.r, 0, Math.PI * 2);
-      ctx.fillStyle = near ? 'rgba(249,115,22,0.7)' : 'rgba(27,58,140,0.35)';
+      ctx.fillStyle = near ? 'rgba(200,31,102,0.7)' : 'rgba(22,74,152,0.35)';
       ctx.fill();
     }
 
