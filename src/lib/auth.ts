@@ -1,8 +1,10 @@
 import * as jose from 'jose'
 
-const SECRET = new TextEncoder().encode(
-  process.env.SESSION_SECRET ?? 'dev-secret'
-)
+if (!process.env.SESSION_SECRET) {
+  throw new Error('SESSION_SECRET no está definida. Revisa tu .env')
+}
+
+const SECRET = new TextEncoder().encode(process.env.SESSION_SECRET)
 
 export interface SessionUser {
   id: string; email: string; rol: 'admin' | 'docente'

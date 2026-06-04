@@ -5,6 +5,9 @@ import { eq } from 'drizzle-orm'
 import { requireAuth } from '../../lib/auth'
 import { slugify } from '../../lib/utils'
 
+const TIPOS_VALIDOS = ['bachillerato', 'maestria', 'tecnico', 'ruta_corporativa'] as const
+const NIVELES_VALIDOS = ['tecnico', 'bachillerato', 'maestria'] as const
+
 async function syncRutasForPrograma(programaId: string, tipo: string) {
   const todasLasRutas = await db.select().from(rutas)
   for (const ruta of todasLasRutas) {
@@ -43,21 +46,35 @@ export const POST: APIRoute = async ({ request }) => {
     return new Response('Campos requeridos faltantes', { status: 422 })
   }
 
+  if (!TIPOS_VALIDOS.includes(tipo)) {
+    return new Response(`tipo inválido. Valores aceptados: ${TIPOS_VALIDOS.join(', ')}`, { status: 422 })
+  }
+  if (!NIVELES_VALIDOS.includes(nivel)) {
+    return new Response(`nivel inválido. Valores aceptados: ${NIVELES_VALIDOS.join(', ')}`, { status: 422 })
+  }
+
   const slug = slugify(titulo)
-  const [nuevo] = await db.insert(programas).values({
-    slug,
-    titulo,
-    tipo,
-    nivel,
-    descripcion,
-    duracionCuatrimestres,
-    estadisticas: body.estadisticas ?? [],
-    tecnologias:  body.tecnologias  ?? [],
-    objetivo:     body.objetivo     ?? null,
-    perfil_egresado: body.perfil_egresado ?? null,
-  }).returning()
 
-  await syncRutasForPrograma(nuevo.id, nuevo.tipo)
+  try {
+    const [nuevo] = await db.insert(programas).values({
+      slug,
+      titulo,
+      tipo,
+      nivel,
+      descripcion,
+      duracionCuatrimestres,
+      estadisticas: body.estadisticas ?? [],
+      tecnologias:  body.tecnologias  ?? [],
+      objetivo:       body.objetivo        ?? null,
+      perfilEgresado: body.perfilEgresado  ?? null,
+    }).returning()
 
-  return Response.json(nuevo, { status: 201 })
+    await syncRutasForPrograma(nuevo.id, nuevo.tipo)
+    return Response.json(nuevo, { status: 201 })
+  } catch (err: any) {
+    if (err?.code === '23505') {
+      return new Response(`El slug "${slug}" ya existe. Cambia el título.`, { status: 409 })
+    }
+    throw err
+  }
 }

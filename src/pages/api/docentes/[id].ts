@@ -4,13 +4,17 @@ import { docentes } from '../../../db/schema'
 import { eq } from 'drizzle-orm'
 import { requireAuth } from '../../../lib/auth'
 
-export const GET: APIRoute = async ({ params }) => {
+export const GET: APIRoute = async ({ request, params }) => {
   const { id } = params
   if (!id) return new Response('ID requerido', { status: 400 })
 
+  const autenticado = await requireAuth(request)
+
   const docente = await db.query.docentes.findFirst({
     where: eq(docentes.id, id),
-    with: { user: { columns: { email: true, rol: true } } },
+    ...(autenticado
+      ? { with: { user: { columns: { email: true, rol: true } } } }
+      : {}),
   })
 
   if (!docente) return new Response('No encontrado', { status: 404 })

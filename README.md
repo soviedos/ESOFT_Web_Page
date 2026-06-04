@@ -2,11 +2,12 @@
 
 > Sitio web institucional de la **Escuela de Ingeniería de Software (ESOFT)** de la **Universidad CENFOTEC**, Costa Rica.
 
-![Astro](https://img.shields.io/badge/Astro-6.1-FF5D01?logo=astro&logoColor=white)
+![Astro](https://img.shields.io/badge/Astro-6.x_SSR-FF5D01?logo=astro&logoColor=white)
 ![Tailwind CSS](https://img.shields.io/badge/Tailwind_CSS-4.2-06B6D4?logo=tailwindcss&logoColor=white)
 ![TypeScript](https://img.shields.io/badge/TypeScript-5.9-3178C6?logo=typescript&logoColor=white)
 ![Node.js](https://img.shields.io/badge/Node.js-22-339933?logo=nodedotjs&logoColor=white)
-![AWS Amplify](https://img.shields.io/badge/Deploy-AWS_Amplify-FF9900?logo=amazonaws&logoColor=white)
+![Docker](https://img.shields.io/badge/Deploy-Docker-2496ED?logo=docker&logoColor=white)
+![PostgreSQL](https://img.shields.io/badge/DB-PostgreSQL_16-4169E1?logo=postgresql&logoColor=white)
 
 ---
 
@@ -26,17 +27,17 @@
 
 ## Descripción general
 
-Sitio estático de alto rendimiento construido con **Astro 6**, orientado a cero JavaScript en el cliente salvo donde es estrictamente necesario. Presenta la oferta académica completa de ESOFT: maestrías, bachillerato, técnicos cuatrimestrales (N5 y N2) y paths de microciclos, con información curricular detallada extraída de los documentos oficiales de la Universidad CENFOTEC.
+Aplicación web institucional construida con **Astro 6 en modo SSR**, con base de datos PostgreSQL, autenticación JWT y despliegue mediante Docker. Presenta la oferta académica completa de ESOFT: maestrías, bachillerato, técnicos cuatrimestrales (N5 y N2) y paths de microciclos, con información curricular detallada extraída de los documentos oficiales de la Universidad CENFOTEC.
 
 **Características principales:**
 
-- Light mode institucional con paleta cobalt + naranja sobre fondo off-white
+- Light mode institucional con paleta cobalt + magenta (`#c81f66`) sobre fondo off-white
 - Sistema de partículas interactivas (canvas, 72 nodos, reactividad al cursor)
 - Terminal animada con loop de 11 pasos que simula el flujo de un ingeniero de software
 - Animaciones de scroll con `IntersectionObserver` (fade-up individual y escalonado)
-- 50 páginas estáticas con contenido académico oficial
+- Páginas dinámicas de programas y rutas servidas desde PostgreSQL vía Drizzle ORM
 - 100% accesible: skip links, `aria-label` en secciones, roles correctos
-- Todos los botones "Solicitar información" en naranja institucional (`#F97316`)
+- API REST para gestión de programas (admin) y perfiles de docentes
 
 ---
 
@@ -44,10 +45,13 @@ Sitio estático de alto rendimiento construido con **Astro 6**, orientado a cero
 
 | Tecnología | Versión | Propósito |
 |:-----------|:--------|:----------|
-| [Astro](https://astro.build) | 6.1 | Generador de sitios estáticos (SSG) |
+| [Astro](https://astro.build) | 6.x | Framework SSR con adapter Node.js standalone |
 | [Tailwind CSS](https://tailwindcss.com) | 4.2 | Utility-first CSS con `@theme` design tokens |
-| [TypeScript](https://www.typescriptlang.org) | 5.9 | Tipado estático en scripts de componentes |
-| [@astrojs/check](https://www.npmjs.com/package/@astrojs/check) | 0.9 | Verificación de tipos en build |
+| [TypeScript](https://www.typescriptlang.org) | 5.9 | Tipado estático strict |
+| [Drizzle ORM](https://orm.drizzle.team) | 0.45 | ORM para PostgreSQL con migraciones |
+| [PostgreSQL](https://www.postgresql.org) | 16 | Base de datos relacional |
+| [jose](https://github.com/panva/jose) | 6.x | JWT para autenticación (cookie `esoft_session`) |
+| [Docker](https://www.docker.com) | — | Contenedores: app, postgres, pgadmin |
 | Inter (Google Fonts) | — | Tipografía principal, pesos 400–900 |
 | Node.js | ≥ 22.12 | Entorno de ejecución |
 
