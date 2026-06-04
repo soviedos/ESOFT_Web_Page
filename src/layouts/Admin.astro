@@ -1,0 +1,99 @@
+---
+import '../styles/global.css'
+import type { SessionUser } from '../lib/auth'
+
+interface Props {
+  title: string
+  user: SessionUser
+}
+
+const { title, user } = Astro.props
+const path = Astro.url.pathname
+
+function active(prefix: string) {
+  return path === prefix || path.startsWith(prefix + '/')
+    ? 'bg-brand-soft text-brand font-semibold'
+    : 'text-content-secondary hover:bg-bg-tertiary hover:text-content'
+}
+---
+
+<!doctype html>
+<html lang="es">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <meta name="robots" content="noindex, nofollow" />
+    <title>{title} — Admin ESOFT</title>
+  </head>
+  <body class="min-h-screen flex bg-bg-tertiary text-content" style="font-family: var(--font-sans);">
+
+    <!-- ── Sidebar ─────────────────────────────── -->
+    <aside class="w-56 shrink-0 bg-bg-secondary border-r border-border-subtle flex flex-col min-h-screen sticky top-0">
+
+      <!-- Logo -->
+      <div class="px-5 py-5 border-b border-border-subtle">
+        <img src="/ESOFT_Software-Engineering-Azul.png" alt="ESOFT" class="h-7 w-auto" />
+        <p class="text-[10px] text-content-muted mt-1.5 font-semibold tracking-widest uppercase">
+          Administración
+        </p>
+      </div>
+
+      <!-- Nav -->
+      <nav class="flex-1 px-3 py-4 space-y-0.5">
+        <a href="/admin" class={`flex items-center gap-2.5 px-3 py-2.5 rounded-xl text-[13px] transition-colors ${active('/admin') && !active('/admin/programas') ? 'bg-brand-soft text-brand font-semibold' : 'text-content-secondary hover:bg-bg-tertiary hover:text-content'}`}>
+          <svg width="15" height="15" viewBox="0 0 15 15" fill="none"><rect x="1" y="1" width="5.5" height="5.5" rx="1" fill="currentColor"/><rect x="1" y="8.5" width="5.5" height="5.5" rx="1" fill="currentColor"/><rect x="8.5" y="1" width="5.5" height="5.5" rx="1" fill="currentColor"/><rect x="8.5" y="8.5" width="5.5" height="5.5" rx="1" fill="currentColor"/></svg>
+          Dashboard
+        </a>
+        <a href="/admin/programas" class={`flex items-center gap-2.5 px-3 py-2.5 rounded-xl text-[13px] transition-colors ${active('/admin/programas')}`}>
+          <svg width="15" height="15" viewBox="0 0 15 15" fill="none"><path d="M2 3.5A1.5 1.5 0 0 1 3.5 2h8A1.5 1.5 0 0 1 13 3.5v8A1.5 1.5 0 0 1 11.5 13h-8A1.5 1.5 0 0 1 2 11.5v-8Z" stroke="currentColor" stroke-width="1.2"/><path d="M5 7.5h5M5 5h5M5 10h3" stroke="currentColor" stroke-width="1.2" stroke-linecap="round"/></svg>
+          Programas
+        </a>
+        <div class="flex items-center gap-2.5 px-3 py-2.5 rounded-xl text-[13px] text-content-muted opacity-40 cursor-not-allowed select-none">
+          <svg width="15" height="15" viewBox="0 0 15 15" fill="none"><circle cx="7.5" cy="5" r="2.5" stroke="currentColor" stroke-width="1.2"/><path d="M2.5 13c0-2.76 2.24-5 5-5s5 2.24 5 5" stroke="currentColor" stroke-width="1.2" stroke-linecap="round"/></svg>
+          Docentes
+          <span class="ml-auto text-[10px] bg-bg-elevated px-1.5 py-0.5 rounded-md">pronto</span>
+        </div>
+        <div class="flex items-center gap-2.5 px-3 py-2.5 rounded-xl text-[13px] text-content-muted opacity-40 cursor-not-allowed select-none">
+          <svg width="15" height="15" viewBox="0 0 15 15" fill="none"><path d="M1 7.5C1 4 4 1 7.5 1S14 4 14 7.5 11 14 7.5 14" stroke="currentColor" stroke-width="1.2" stroke-linecap="round"/><path d="M7.5 9v.5M7.5 4.5v3" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/></svg>
+          Solicitudes
+          <span class="ml-auto text-[10px] bg-bg-elevated px-1.5 py-0.5 rounded-md">pronto</span>
+        </div>
+      </nav>
+
+      <!-- Divisor -->
+      <div class="mx-4 h-px bg-border-subtle"></div>
+
+      <!-- Usuario + logout -->
+      <div class="px-4 py-4">
+        <p class="text-[11px] text-content-muted truncate mb-1">{user.email}</p>
+        <p class="text-[10px] font-semibold uppercase tracking-widest text-brand mb-3">{user.rol}</p>
+        <form method="POST" action="/api/auth/logout">
+          <button type="submit" class="w-full text-left flex items-center gap-2 px-3 py-2 rounded-xl text-[13px] text-content-secondary hover:bg-bg-tertiary hover:text-content transition-colors">
+            <svg width="14" height="14" viewBox="0 0 15 15" fill="none"><path d="M6 2H3a1 1 0 0 0-1 1v9a1 1 0 0 0 1 1h3M10 10l3-2.5L10 5M13 7.5H6" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            Cerrar sesión
+          </button>
+        </form>
+      </div>
+
+    </aside>
+
+    <!-- ── Contenido principal ─────────────────── -->
+    <div class="flex-1 flex flex-col min-h-screen">
+
+      <!-- Top bar -->
+      <header class="sticky top-0 z-10 bg-bg-secondary border-b border-border-subtle px-8 py-3.5 flex items-center justify-between">
+        <h1 class="text-[14px] font-semibold text-content">{title}</h1>
+        <a href="/" target="_blank" rel="noopener" class="text-[12px] text-content-muted hover:text-brand transition-colors flex items-center gap-1">
+          Ver sitio
+          <svg width="11" height="11" viewBox="0 0 11 11" fill="none"><path d="M1.5 9.5l8-8M9.5 1.5H3M9.5 1.5v6.5" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </a>
+      </header>
+
+      <main class="flex-1 p-8 max-w-5xl">
+        <slot />
+      </main>
+    </div>
+
+  </body>
+</html>

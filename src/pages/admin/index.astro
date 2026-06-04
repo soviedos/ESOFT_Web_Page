@@ -1,0 +1,61 @@
+---
+import Admin from '../../layouts/Admin.astro'
+import { requireAuth } from '../../lib/auth'
+import { db } from '../../db/client'
+import { programas, docentes, solicitudes } from '../../db/schema'
+import { count, eq } from 'drizzle-orm'
+
+const user = await requireAuth(Astro.request, 'admin')
+if (!user) return Astro.redirect(`/login?next=/admin`)
+
+const [[{ total: totalProgramas }], [{ total: activos }], [{ total: totalDocentes }], [{ total: totalSolicitudes }]] =
+  await Promise.all([
+    db.select({ total: count() }).from(programas),
+    db.select({ total: count() }).from(programas).where(eq(programas.activo, true)),
+    db.select({ total: count() }).from(docentes),
+    db.select({ total: count() }).from(solicitudes),
+  ])
+---
+
+<Admin user={user} title="Dashboard">
+
+  <!-- Stats -->
+  <div class="grid grid-cols-2 lg:grid-cols-4 gap-4 mb-8">
+    {[
+      { label: 'Programas activos',     valor: activos,          color: 'text-brand'   },
+      { label: 'Programas en total',    valor: totalProgramas,   color: 'text-content' },
+      { label: 'Docentes registrados',  valor: totalDocentes,    color: 'text-content' },
+      { label: 'Solicitudes recibidas', valor: totalSolicitudes, color: 'text-accent2' },
+    ].map(s => (
+      <div class="bg-bg-secondary rounded-2xl border border-border-subtle p-6">
+        <p class={`text-[2rem] font-extrabold leading-none ${s.color}`}>{s.valor}</p>
+        <p class="text-[13px] text-content-secondary mt-2">{s.label}</p>
+      </div>
+    ))}
+  </div>
+
+  <!-- Acciones rápidas -->
+  <div class="bg-bg-secondary rounded-2xl border border-border-subtle p-6">
+    <h2 class="text-[13px] font-semibold text-content mb-4">Acciones rápidas</h2>
+    <div class="flex flex-wrap gap-3">
+      <a href="/admin/programas/nuevo"
+         class="btn-primary inline-flex items-center gap-2 bg-brand text-white text-[13px] font-medium px-4 py-2.5 rounded-xl">
+        + Nuevo programa
+      </a>
+      <a href="/admin/programas"
+         class="btn-ghost inline-flex items-center gap-2 border border-border-default text-content-secondary text-[13px] font-medium px-4 py-2.5 rounded-xl">
+        Ver todos los programas
+      </a>
+    </div>
+  </div>
+
+  <!-- Aviso BD vacía -->
+  {totalProgramas === 0 && (
+    <div class="mt-6 px-5 py-4 rounded-2xl text-[13px] leading-[1.7]"
+         style="background: rgba(22,74,152,0.05); border: 1px solid rgba(22,74,152,0.15); color: var(--color-brand);">
+      <strong>La base de datos está vacía.</strong> Podés crear programas desde el panel o correr el script
+      de seed (<code class="text-[12px] bg-brand-soft px-1.5 py-0.5 rounded">npm run db:seed</code>) cuando esté disponible.
+    </div>
+  )}
+
+</Admin>

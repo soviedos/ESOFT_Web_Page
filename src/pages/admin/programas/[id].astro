@@ -1,0 +1,246 @@
+---
+import Admin from '../../../layouts/Admin.astro'
+import { requireAuth } from '../../../lib/auth'
+import { db } from '../../../db/client'
+import { programas } from '../../../db/schema'
+import { eq } from 'drizzle-orm'
+
+const user = await requireAuth(Astro.request, 'admin')
+if (!user) return Astro.redirect(`/login?next=/admin/programas`)
+
+const { id } = Astro.params
+if (!id) return Astro.redirect('/admin/programas')
+
+const programa = await db.query.programas.findFirst({ where: eq(programas.id, id) })
+if (!programa) return new Response(null, { status: 404 })
+
+let error = ''
+
+if (Astro.request.method === 'POST') {
+  const form   = await Astro.request.formData()
+  const action = form.get('_action') as string
+
+  if (action === 'toggle') {
+    await db.update(programas)
+      .set({ activo: !programa.activo, updatedAt: new Date() })
+      .where(eq(programas.id, id))
+    return Astro.redirect(`/admin/programas/${id}?updated=1`)
+  }
+
+  if (action === 'update') {
+    const titulo               = (form.get('titulo')      as string).trim()
+    const tipo                 = form.get('tipo')          as string
+    const nivel                = form.get('nivel')         as string
+    const descripcion          = (form.get('descripcion') as string).trim()
+    const duracionCuatrimestres = parseInt(form.get('duracion') as string, 10)
+    const objetivo             = (form.get('objetivo')    as string)?.trim() || null
+    const perfilEgresado       = (form.get('perfil')      as string)?.trim() || null
+    const tecnologias          = (form.get('tecnologias') as string)
+      ?.split(',').map(t => t.trim()).filter(Boolean) ?? []
+
+    if (!titulo || !tipo || !nivel || !descripcion || !duracionCuatrimestres) {
+      error = 'Completá todos los campos obligatorios.'
+    } else {
+      try {
+        await db.update(programas)
+          .set({
+            titulo, descripcion, duracionCuatrimestres,
+            tipo:  tipo  as any,
+            nivel: nivel as any,
+            objetivo, perfilEgresado, tecnologias,
+            updatedAt: new Date(),
+          })
+          .where(eq(programas.id, id))
+        return Astro.redirect('/admin/programas?updated=1')
+      } catch {
+        error = 'Error al guardar. Intentá de nuevo.'
+      }
+    }
+  }
+}
+
+const updated = Astro.url.searchParams.get('updated')
+const tec = (programa.tecnologias as string[] ?? []).join(', ')
+---
+
+<Admin user={user} title={`Editar: ${programa.titulo}`}>
+
+  <div class="mb-6 flex items-center justify-between">
+    <a href="/admin/programas" class="text-[13px] text-content-muted hover:text-brand transition-colors">
+      ← Volver a programas
+    </a>
+    <a href={`/programas/${programa.slug}`} target="_blank" rel="noopener"
+       class="text-[13px] text-content-muted hover:text-brand transition-colors">
+      Ver página pública →
+    </a>
+  </div>
+
+  {updated && (
+    <div role="status"
+         class="mb-6 flex items-center gap-3 px-5 py-3.5 rounded-2xl text-[13px]"
+         style="background: rgba(22,74,152,0.06); border: 1px solid rgba(22,74,152,0.18); color: var(--color-brand);">
+      ✓ Cambios guardados correctamente.
+    </div>
+  )}
+
+  {error && (
+    <div role="alert"
+         class="mb-6 flex items-start gap-3 px-5 py-3.5 rounded-2xl text-[13px]"
+         style="background: rgba(200,31,102,0.06); border: 1px solid rgba(200,31,102,0.20); color: #9b1153;">
+      <span class="shrink-0">⚠</span> {error}
+    </div>
+  )}
+
+  <!-- Formulario de edición -->
+  <form method="POST" class="bg-bg-secondary rounded-2xl border border-border-subtle p-8 space-y-6 mb-6">
+    <input type="hidden" name="_action" value="update" />
+
+    <!-- Slug (solo lectura) -->
+    <div>
+      <p class="text-[12px] font-medium text-content-muted mb-1">Slug (generado automáticamente, no editable)</p>
+      <p class="text-[13px] font-mono text-content-secondary bg-bg-tertiary px-4 py-2.5 rounded-xl border border-border-subtle">
+        /programas/{programa.slug}
+      </p>
+    </div>
+
+    <!-- Título -->
+    <div>
+      <label for="titulo" class="block text-[13px] font-medium text-content-secondary mb-1.5">
+        Título <span class="text-accent2">*</span>
+      </label>
+      <input type="text" id="titulo" name="titulo" required maxlength="300"
+             value={programa.titulo}
+             class="w-full rounded-xl border border-border-default bg-bg-tertiary text-content px-4 py-2.5 text-[14px] focus:outline-none focus:ring-2 focus:ring-brand transition-colors" />
+    </div>
+
+    <!-- Tipo + Nivel -->
+    <div class="grid grid-cols-1 sm:grid-cols-2 gap-5">
+      <div>
+        <label for="tipo" class="block text-[13px] font-medium text-content-secondary mb-1.5">
+          Tipo <span class="text-accent2">*</span>
+        </label>
+        <select id="tipo" name="tipo" required
+                class="w-full rounded-xl border border-border-default bg-bg-tertiary text-content px-4 py-2.5 text-[14px] focus:outline-none focus:ring-2 focus:ring-brand transition-colors">
+          {[
+            ['bachillerato',     'Bachillerato'],
+            ['maestria',         'Maestría'],
+            ['tecnico',          'Técnico'],
+            ['ruta_corporativa', 'Ruta corporativa'],
+          ].map(([val, lbl]) => (
+            <option value={val} selected={programa.tipo === val}>{lbl}</option>
+          ))}
+        </select>
+      </div>
+      <div>
+        <label for="nivel" class="block text-[13px] font-medium text-content-secondary mb-1.5">
+          Nivel <span class="text-accent2">*</span>
+        </label>
+        <select id="nivel" name="nivel" required
+                class="w-full rounded-xl border border-border-default bg-bg-tertiary text-content px-4 py-2.5 text-[14px] focus:outline-none focus:ring-2 focus:ring-brand transition-colors">
+          {[
+            ['tecnico',      'Técnico'],
+            ['bachillerato', 'Bachillerato'],
+            ['maestria',     'Maestría'],
+          ].map(([val, lbl]) => (
+            <option value={val} selected={programa.nivel === val}>{lbl}</option>
+          ))}
+        </select>
+      </div>
+    </div>
+
+    <!-- Duración -->
+    <div class="w-48">
+      <label for="duracion" class="block text-[13px] font-medium text-content-secondary mb-1.5">
+        Duración (cuatrimestres) <span class="text-accent2">*</span>
+      </label>
+      <input type="number" id="duracion" name="duracion" required min="1" max="20"
+             value={programa.duracionCuatrimestres}
+             class="w-full rounded-xl border border-border-default bg-bg-tertiary text-content px-4 py-2.5 text-[14px] focus:outline-none focus:ring-2 focus:ring-brand transition-colors" />
+    </div>
+
+    <!-- Descripción -->
+    <div>
+      <label for="descripcion" class="block text-[13px] font-medium text-content-secondary mb-1.5">
+        Descripción <span class="text-accent2">*</span>
+      </label>
+      <textarea id="descripcion" name="descripcion" required rows="3"
+                class="w-full rounded-xl border border-border-default bg-bg-tertiary text-content px-4 py-2.5 text-[14px] focus:outline-none focus:ring-2 focus:ring-brand transition-colors resize-y"
+      >{programa.descripcion}</textarea>
+    </div>
+
+    <!-- Objetivo -->
+    <div>
+      <label for="objetivo" class="block text-[13px] font-medium text-content-secondary mb-1.5">
+        Objetivo general <span class="text-content-muted text-[12px]">(opcional)</span>
+      </label>
+      <textarea id="objetivo" name="objetivo" rows="3"
+                class="w-full rounded-xl border border-border-default bg-bg-tertiary text-content px-4 py-2.5 text-[14px] focus:outline-none focus:ring-2 focus:ring-brand transition-colors resize-y"
+      >{programa.objetivo ?? ''}</textarea>
+    </div>
+
+    <!-- Perfil del egresado -->
+    <div>
+      <label for="perfil" class="block text-[13px] font-medium text-content-secondary mb-1.5">
+        Perfil del egresado <span class="text-content-muted text-[12px]">(opcional)</span>
+      </label>
+      <textarea id="perfil" name="perfil" rows="3"
+                class="w-full rounded-xl border border-border-default bg-bg-tertiary text-content px-4 py-2.5 text-[14px] focus:outline-none focus:ring-2 focus:ring-brand transition-colors resize-y"
+      >{programa.perfilEgresado ?? ''}</textarea>
+    </div>
+
+    <!-- Tecnologías -->
+    <div>
+      <label for="tecnologias" class="block text-[13px] font-medium text-content-secondary mb-1.5">
+        Tecnologías <span class="text-content-muted text-[12px]">(separadas por coma)</span>
+      </label>
+      <input type="text" id="tecnologias" name="tecnologias"
+             value={tec}
+             placeholder="ej. Python, Docker, PostgreSQL, React"
+             class="w-full rounded-xl border border-border-default bg-bg-tertiary text-content px-4 py-2.5 text-[14px] focus:outline-none focus:ring-2 focus:ring-brand transition-colors" />
+    </div>
+
+    <div class="h-px bg-border-subtle"></div>
+
+    <div class="flex items-center gap-4">
+      <button type="submit"
+              class="btn-primary bg-brand text-white font-semibold px-6 py-2.5 rounded-xl text-[14px]">
+        Guardar cambios
+      </button>
+      <a href="/admin/programas"
+         class="text-[13px] text-content-secondary hover:text-content transition-colors">
+        Cancelar
+      </a>
+    </div>
+  </form>
+
+  <!-- Toggle activo/inactivo -->
+  <div class="bg-bg-secondary rounded-2xl border border-border-subtle p-6 flex items-center justify-between">
+    <div>
+      <p class="text-[13px] font-medium text-content">
+        Estado actual:
+        {programa.activo
+          ? <span style="color: #166534;"> ● Activo</span>
+          : <span class="text-content-muted"> ○ Inactivo</span>
+        }
+      </p>
+      <p class="text-[12px] text-content-muted mt-0.5">
+        {programa.activo
+          ? 'El programa es visible en el sitio público.'
+          : 'El programa está oculto del sitio público.'
+        }
+      </p>
+    </div>
+    <form method="POST">
+      <input type="hidden" name="_action" value="toggle" />
+      <button type="submit"
+              class={`text-[13px] font-medium px-4 py-2.5 rounded-xl border transition-colors ${
+                programa.activo
+                  ? 'border-border-default text-content-secondary hover:bg-bg-tertiary'
+                  : 'bg-brand text-white border-brand hover:bg-brand-hover'
+              }`}>
+        {programa.activo ? 'Desactivar programa' : 'Activar programa'}
+      </button>
+    </form>
+  </div>
+
+</Admin>

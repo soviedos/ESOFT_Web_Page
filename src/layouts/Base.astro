@@ -7,9 +7,17 @@ import ParticleGrid from '../components/ParticleGrid.astro';
 interface Props {
   title: string;
   description?: string;
+  ogImage?: string;
 }
 
-const { title, description = 'ESOFT — Escuela de Software' } = Astro.props;
+const {
+  title,
+  description = 'ESOFT — Escuela de Ingeniería del Software de la Universidad CENFOTEC.',
+  ogImage = '/ESOFT_Software-Engineering-Azul.png',
+} = Astro.props;
+
+const canonicalURL = new URL(Astro.url.pathname, Astro.site ?? 'https://esoft.ucenfotec.ac.cr')
+const fullTitle = `${title} | ESOFT`
 ---
 
 <!doctype html>
@@ -20,10 +28,26 @@ const { title, description = 'ESOFT — Escuela de Software' } = Astro.props;
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="description" content={description} />
     <meta name="generator" content={Astro.generator} />
+    <link rel="canonical" href={canonicalURL} />
+
+    <!-- Open Graph -->
+    <meta property="og:type"        content="website" />
+    <meta property="og:site_name"   content="ESOFT — Universidad CENFOTEC" />
+    <meta property="og:title"       content={fullTitle} />
+    <meta property="og:description" content={description} />
+    <meta property="og:url"         content={canonicalURL} />
+    <meta property="og:image"       content={new URL(ogImage, canonicalURL)} />
+
+    <!-- Twitter / X -->
+    <meta name="twitter:card"        content="summary_large_image" />
+    <meta name="twitter:title"       content={fullTitle} />
+    <meta name="twitter:description" content={description} />
+    <meta name="twitter:image"       content={new URL(ogImage, canonicalURL)} />
+
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet" />
-    <title>{title} | ESOFT</title>
+    <title>{fullTitle}</title>
   </head>
   <body class="min-h-screen flex flex-col bg-bg-primary text-content overflow-x-hidden">
     <!-- Global background layers — fixed, behind all content -->

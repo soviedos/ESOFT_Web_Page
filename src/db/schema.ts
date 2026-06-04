@@ -63,9 +63,9 @@ export const programas = pgTable('programas', {
   duracionCuatrimestres: integer('duracion_cuatrimestres').notNull(),
   estadisticas:        jsonb('estadisticas').$type<{ label: string; valor: string }[]>().default([]),
   tecnologias:         jsonb('tecnologias').$type<string[]>().default([]),
-  objetivo:            text('objetivo'),
-  perfil_egresado:     text('perfil_egresado'),
-  activo:              boolean('activo').notNull().default(true),
+  objetivo:        text('objetivo'),
+  perfilEgresado:  text('perfil_egresado'),
+  activo:          boolean('activo').notNull().default(true),
   createdAt:           timestamp('created_at').defaultNow().notNull(),
   updatedAt:           timestamp('updated_at').defaultNow().notNull(),
 }, (t) => ({
