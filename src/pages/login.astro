@@ -1,0 +1,94 @@
+---
+import Base from '../layouts/Base.astro'
+import { requireAuth } from '../lib/auth'
+
+const user = await requireAuth(Astro.request)
+if (user) return Astro.redirect('/')
+
+const error = Astro.url.searchParams.get('error')
+const next  = Astro.url.searchParams.get('next') ?? '/'
+---
+
+<Base
+  title="Acceso institucional"
+  description="Panel de acceso para personal académico y administrativo de ESOFT."
+>
+  <section class="min-h-[calc(100dvh-var(--nav-height))] flex items-center justify-center px-6 py-16">
+    <div class="w-full max-w-[420px]">
+
+      <!-- Encabezado -->
+      <div class="text-center mb-8">
+        <img
+          src="/ESOFT_Software-Engineering-Azul.png"
+          alt="ESOFT"
+          class="h-9 w-auto mx-auto mb-6"
+        />
+        <h1 class="headline-display text-[1.75rem]">Acceso institucional</h1>
+        <p class="text-content-muted text-[13px] mt-2">
+          Panel de gestión · Universidad CENFOTEC
+        </p>
+      </div>
+
+      <!-- Card -->
+      <div class="card-premium p-8">
+
+        {error === 'invalid' && (
+          <div
+            role="alert"
+            class="mb-6 flex items-start gap-3 px-4 py-3 rounded-xl text-[13px]"
+            style="background: rgba(200,31,102,0.06); border: 1px solid rgba(200,31,102,0.20); color: #9b1153;"
+          >
+            <span class="shrink-0 mt-px">⚠</span>
+            <span>Correo o contraseña incorrectos. Verificá tus credenciales.</span>
+          </div>
+        )}
+
+        <form method="POST" action="/api/auth/login" class="space-y-5" novalidate>
+          <input type="hidden" name="next" value={next} />
+
+          <div>
+            <label for="email" class="block text-[13px] font-medium text-content-secondary mb-1.5">
+              Correo institucional
+            </label>
+            <input
+              type="email"
+              id="email"
+              name="email"
+              required
+              autocomplete="email"
+              placeholder="usuario@ucenfotec.ac.cr"
+              class="w-full rounded-xl border border-border-default bg-bg-tertiary text-content px-4 py-2.5 text-[14px] placeholder:text-content-muted focus:outline-none focus:ring-2 focus:ring-brand focus:border-transparent transition-colors"
+            />
+          </div>
+
+          <div>
+            <label for="password" class="block text-[13px] font-medium text-content-secondary mb-1.5">
+              Contraseña
+            </label>
+            <input
+              type="password"
+              id="password"
+              name="password"
+              required
+              autocomplete="current-password"
+              class="w-full rounded-xl border border-border-default bg-bg-tertiary text-content px-4 py-2.5 text-[14px] focus:outline-none focus:ring-2 focus:ring-brand focus:border-transparent transition-colors"
+            />
+          </div>
+
+          <button
+            type="submit"
+            class="btn-primary w-full bg-brand text-white font-semibold px-4 py-3 rounded-xl text-[14px] mt-1"
+          >
+            Ingresar
+          </button>
+        </form>
+      </div>
+
+      <p class="text-center text-[12px] text-content-muted mt-5 leading-[1.7]">
+        Solo para personal académico y administrativo de ESOFT.<br />
+        ¿Problemas para acceder? Contactá al administrador del sistema.
+      </p>
+
+    </div>
+  </section>
+</Base>

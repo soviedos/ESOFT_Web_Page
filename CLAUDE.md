@@ -52,6 +52,36 @@ src/components/
   programa/     — ProgramaLayout (motor) + 4 variantes: Bachillerato, Maestria, Tecnico, Corporativo
 ```
 
+## Crear el primer usuario admin (onboarding inicial)
+
+No hay UI de registro. El primer admin se crea directamente en la BD con un script de Node:
+
+```javascript
+// Ejecutar una sola vez desde el host:
+// node -e "$(cat <<'JS'
+import { Pool } from 'pg'
+import { scrypt, randomBytes } from 'crypto'
+import { promisify } from 'util'
+
+const scryptAsync = promisify(scrypt)
+const pool = new Pool({ connectionString: process.env.DATABASE_URL })
+
+const salt = randomBytes(16).toString('hex')
+const hash = await scryptAsync('LA_CONTRASEÑA_AQUI', salt, 64)
+const passwordHash = `${salt}:${hash.toString('hex')}`
+
+await pool.query(
+  `INSERT INTO users (email, password_hash, rol) VALUES ($1, $2, 'admin')`,
+  ['correo@ucenfotec.ac.cr', passwordHash]
+)
+await pool.end()
+console.log('✓ Usuario admin creado')
+// JS
+// )"
+```
+
+O con Drizzle Studio (`npm run db:studio`) — insertar directamente en la tabla `users` con el hash generado por `hashPassword()` de `src/lib/password.ts`.
+
 ## Comandos frecuentes
 ```bash
 npm run dev          # servidor de desarrollo
