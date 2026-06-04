@@ -13,6 +13,7 @@
     "astro": "astro",
     "db:generate": "drizzle-kit generate",
     "db:migrate":  "drizzle-kit migrate",
+    "db:seed":     "tsx src/db/seed.ts",
     "db:studio":   "drizzle-kit studio"
   },
   "dependencies": {
@@ -29,6 +30,7 @@
     "@astrojs/sitemap": "^3.7.3",
     "@types/pg": "^8.20.0",
     "drizzle-kit": "^0.31.10",
+    "tsx": "^4.19.3",
     "typescript": "^5.9.3"
   }
 }

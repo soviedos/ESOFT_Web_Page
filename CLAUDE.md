@@ -52,35 +52,34 @@ src/components/
   programa/     — ProgramaLayout (motor) + 4 variantes: Bachillerato, Maestria, Tecnico, Corporativo
 ```
 
-## Crear el primer usuario admin (onboarding inicial)
+## Seed de la base de datos
 
-No hay UI de registro. El primer admin se crea directamente en la BD con un script de Node:
+Poblar todos los programas, cursos y rutas de aprendizaje desde cero:
 
-```javascript
-// Ejecutar una sola vez desde el host:
-// node -e "$(cat <<'JS'
-import { Pool } from 'pg'
-import { scrypt, randomBytes } from 'crypto'
-import { promisify } from 'util'
-
-const scryptAsync = promisify(scrypt)
-const pool = new Pool({ connectionString: process.env.DATABASE_URL })
-
-const salt = randomBytes(16).toString('hex')
-const hash = await scryptAsync('LA_CONTRASEÑA_AQUI', salt, 64)
-const passwordHash = `${salt}:${hash.toString('hex')}`
-
-await pool.query(
-  `INSERT INTO users (email, password_hash, rol) VALUES ($1, $2, 'admin')`,
-  ['correo@ucenfotec.ac.cr', passwordHash]
-)
-await pool.end()
-console.log('✓ Usuario admin creado')
-// JS
-// )"
+```bash
+# Desde el host (no desde el contenedor Docker):
+DATABASE_URL=postgresql://esoft:PASS@localhost:5433/esoft_db npm run db:seed
 ```
 
-O con Drizzle Studio (`npm run db:studio`) — insertar directamente en la tabla `users` con el hash generado por `hashPassword()` de `src/lib/password.ts`.
+El seed (`src/db/seed.ts`) incluye:
+- 15 programas (bachillerato, 2 maestrías, 7 técnicos, 3 paths, python foundations)
+- ~130 cursos para los programas que tienen plan de estudios
+- 5 rutas de aprendizaje vinculadas a los programas
+
+**ADVERTENCIA:** el seed borra y reinserta programas, cursos y rutas. No toca users, docentes, noticias ni solicitudes.
+
+## Crear el primer usuario admin
+
+No hay UI de registro. El primer admin se crea directamente en la BD:
+
+```bash
+# Opción 1 — Drizzle Studio (recomendado para no-técnicos)
+DATABASE_URL=postgresql://esoft:PASS@localhost:5433/esoft_db npm run db:studio
+# → Abrir http://localhost:4983, tabla users, insertar fila manualmente
+
+# Opción 2 — Script Node (requiere calcular el hash con src/lib/password.ts)
+# Usar hashPassword('contraseña') e insertar en la tabla users con rol='admin'
+```
 
 ## Comandos frecuentes
 ```bash
