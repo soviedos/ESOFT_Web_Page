@@ -1,0 +1,108 @@
+---
+import Admin from '../../../layouts/Admin.astro'
+import { requireAuth } from '../../../lib/auth'
+import { db } from '../../../db/client'
+import { programas } from '../../../db/schema'
+import { desc } from 'drizzle-orm'
+
+const user = await requireAuth(Astro.request, 'admin')
+if (!user) return Astro.redirect(`/login?next=/admin/programas`)
+
+const lista = await db.select().from(programas).orderBy(desc(programas.createdAt))
+
+const creado   = Astro.url.searchParams.get('created')
+const editado  = Astro.url.searchParams.get('updated')
+
+const TIPO_LABEL: Record<string, string> = {
+  bachillerato:     'Bachillerato',
+  maestria:         'Maestría',
+  tecnico:          'Técnico',
+  ruta_corporativa: 'Ruta Corp.',
+}
+
+const NIVEL_LABEL: Record<string, string> = {
+  tecnico:      'Técnico',
+  bachillerato: 'Bachillerato',
+  maestria:     'Maestría',
+}
+---
+
+<Admin user={user} title="Programas">
+
+  <!-- Notificaciones de éxito -->
+  {(creado || editado) && (
+    <div role="status"
+         class="mb-6 flex items-center gap-3 px-5 py-3.5 rounded-2xl text-[13px]"
+         style="background: rgba(22,74,152,0.06); border: 1px solid rgba(22,74,152,0.18); color: var(--color-brand);">
+      <span>✓</span>
+      {creado  ? 'Programa creado correctamente.' : 'Programa actualizado correctamente.'}
+    </div>
+  )}
+
+  <!-- Encabezado de sección -->
+  <div class="flex items-center justify-between mb-5">
+    <p class="text-[13px] text-content-muted">
+      {lista.length} {lista.length === 1 ? 'programa' : 'programas'} en total
+    </p>
+    <a href="/admin/programas/nuevo"
+       class="btn-primary inline-flex items-center gap-2 bg-brand text-white text-[13px] font-medium px-4 py-2.5 rounded-xl">
+      + Nuevo programa
+    </a>
+  </div>
+
+  <!-- Tabla -->
+  <div class="bg-bg-secondary rounded-2xl border border-border-subtle overflow-hidden">
+    <table class="w-full text-[13px]">
+      <thead>
+        <tr class="border-b border-border-subtle bg-bg-tertiary text-content-muted">
+          <th class="text-left px-5 py-3 font-medium">Título</th>
+          <th class="text-left px-5 py-3 font-medium">Tipo</th>
+          <th class="text-left px-5 py-3 font-medium">Nivel</th>
+          <th class="text-center px-5 py-3 font-medium">Cuatrimestres</th>
+          <th class="text-center px-5 py-3 font-medium">Estado</th>
+          <th class="px-5 py-3"></th>
+        </tr>
+      </thead>
+      <tbody>
+        {lista.map(p => (
+          <tr class="border-b border-border-subtle last:border-0 hover:bg-bg-tertiary transition-colors">
+            <td class="px-5 py-3.5 font-medium text-content max-w-[260px] truncate">{p.titulo}</td>
+            <td class="px-5 py-3.5 text-content-secondary">{TIPO_LABEL[p.tipo] ?? p.tipo}</td>
+            <td class="px-5 py-3.5 text-content-secondary">{NIVEL_LABEL[p.nivel] ?? p.nivel}</td>
+            <td class="px-5 py-3.5 text-center text-content-secondary">{p.duracionCuatrimestres}</td>
+            <td class="px-5 py-3.5 text-center">
+              {p.activo
+                ? <span class="inline-flex items-center gap-1 text-[11px] font-medium px-2.5 py-1 rounded-full"
+                         style="background: rgba(22,163,74,0.08); border: 1px solid rgba(22,163,74,0.20); color: #166534;">
+                    ● Activo
+                  </span>
+                : <span class="inline-flex items-center gap-1 text-[11px] font-medium px-2.5 py-1 rounded-full"
+                         style="background: rgba(15,23,42,0.04); border: 1px solid rgba(15,23,42,0.10); color: var(--color-content-muted);">
+                    ○ Inactivo
+                  </span>
+              }
+            </td>
+            <td class="px-5 py-3.5 text-right">
+              <a href={`/admin/programas/${p.id}`}
+                 class="text-brand hover:underline font-medium text-[13px]">
+                Editar
+              </a>
+            </td>
+          </tr>
+        ))}
+
+        {lista.length === 0 && (
+          <tr>
+            <td colspan="6" class="px-5 py-14 text-center text-content-muted">
+              No hay programas todavía.{' '}
+              <a href="/admin/programas/nuevo" class="text-brand hover:underline">
+                Crear el primero →
+              </a>
+            </td>
+          </tr>
+        )}
+      </tbody>
+    </table>
+  </div>
+
+</Admin>
