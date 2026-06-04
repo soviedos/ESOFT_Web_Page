@@ -20,6 +20,8 @@ type Curso = {
   creditos?: number
 }
 
+type Estadistica = { valor: string; label: string }
+
 type ProgramaDef = {
   slug: string
   titulo: string
@@ -30,6 +32,7 @@ type ProgramaDef = {
   tecnologias: string[]
   objetivo?: string
   perfilEgresado?: string
+  estadisticas?: Estadistica[]
   cursos: Curso[]
 }
 
@@ -54,6 +57,12 @@ const PROGRAMAS: ProgramaDef[] = [
     tecnologias: ['Java', 'Python', 'JavaScript', 'TypeScript', 'React', 'Node.js', 'PostgreSQL', 'Docker', 'Git', 'AWS'],
     objetivo: 'Formar profesionales capaces de diseñar, desarrollar, validar y liderar soluciones de software con criterio ingenieril y dominio de herramientas de inteligencia artificial.',
     perfilEgresado: 'Ingenieros de software que pueden diseñar, desarrollar y liderar soluciones tecnológicas, trabajar en equipos ágiles y adaptarse a entornos donde la IA acelera el desarrollo.',
+    estadisticas: [
+      { valor: '43',           label: 'Cursos'                  },
+      { valor: '141',          label: 'Créditos'                },
+      { valor: '9',            label: 'Cuatrimestres · 3 años'  },
+      { valor: 'Virtual/vivo', label: 'Modalidad'               },
+    ],
     cursos: [
       // Q1
       { code: 'SOFT-09',  nombre: 'Introducción a la Ingeniería del Software',    cuatrimestre: 1, orden: 1, creditos: 3 },
@@ -119,6 +128,12 @@ const PROGRAMAS: ProgramaDef[] = [
     duracionCuatrimestres: 6,
     tecnologias: ['Python', 'TensorFlow', 'PyTorch', 'scikit-learn', 'MLflow', 'Docker', 'UML', 'Java'],
     objetivo: 'Formar ingenieros de software de alto nivel capaces de liderar proyectos de software que incorporen inteligencia artificial con criterio técnico, ético y estratégico.',
+    estadisticas: [
+      { valor: '15',           label: 'Cursos'                  },
+      { valor: '64',           label: 'Créditos'                },
+      { valor: '6',            label: 'Cuatrimestres · 2 años'  },
+      { valor: 'Virtual/vivo', label: 'Modalidad'               },
+    ],
     cursos: [
       { code: 'PSWE-01', nombre: 'Tendencias en Ingeniería del Software',       cuatrimestre: 1, orden: 1, creditos: 4 },
       { code: 'PSWE-02', nombre: 'Requerimientos de Software y Sistemas',        cuatrimestre: 1, orden: 2, creditos: 5 },
@@ -145,6 +160,12 @@ const PROGRAMAS: ProgramaDef[] = [
     duracionCuatrimestres: 6,
     tecnologias: ['UML', 'Microservicios', 'Docker', 'Kubernetes', 'AWS', 'Kafka', 'GraphQL', 'Terraform'],
     objetivo: 'Formar especialistas en arquitectura de software capaces de diseñar y liderar sistemas de gran escala con dominio de patrones arquitectónicos y decisiones técnicas estratégicas.',
+    estadisticas: [
+      { valor: '15',           label: 'Cursos'                  },
+      { valor: '64',           label: 'Créditos'                },
+      { valor: '6',            label: 'Cuatrimestres · 2 años'  },
+      { valor: 'Virtual/vivo', label: 'Modalidad'               },
+    ],
     cursos: [
       { code: 'PSWE-01', nombre: 'Tendencias en Ingeniería del Software',       cuatrimestre: 1, orden: 1, creditos: 4 },
       { code: 'PSWE-02', nombre: 'Requerimientos de Software y Sistemas',        cuatrimestre: 1, orden: 2, creditos: 5 },
@@ -173,6 +194,12 @@ const PROGRAMAS: ProgramaDef[] = [
     duracionCuatrimestres: 7,
     tecnologias: ['JavaScript', 'Java', 'Python', 'SQL', 'HTML/CSS', 'Git'],
     objetivo: 'Formar técnicos en desarrollo de software capaces de construir aplicaciones, trabajar en equipos ágiles y adaptarse a los cambios de la industria tecnológica.',
+    estadisticas: [
+      { valor: '17',           label: 'Materias'               },
+      { valor: '62',           label: 'Créditos'               },
+      { valor: '7',            label: 'Cuatrimestres · 2 años' },
+      { valor: 'Virtual/vivo', label: 'Modalidad'              },
+    ],
     cursos: [
       { nombre: 'Introducción a las Tecnologías de Información',  cuatrimestre: 1, orden: 1, creditos: 3 },
       { nombre: 'Expresión Oral y Escrita',                       cuatrimestre: 1, orden: 2, creditos: 3 },
@@ -201,6 +228,12 @@ const PROGRAMAS: ProgramaDef[] = [
     duracionCuatrimestres: 7,
     tecnologias: ['JavaScript', 'TypeScript', 'React', 'Node.js', 'HTML/CSS', 'SQL', 'Figma', 'Git'],
     objetivo: 'Formar desarrolladores web full-stack capaces de crear aplicaciones modernas, accesibles y centradas en la experiencia del usuario.',
+    estadisticas: [
+      { valor: '15',           label: 'Materias'               },
+      { valor: '61',           label: 'Créditos'               },
+      { valor: '7',            label: 'Cuatrimestres · 2 años' },
+      { valor: 'Virtual/vivo', label: 'Modalidad'              },
+    ],
     cursos: [
       { code: 'FUN-01',  nombre: 'Introducción a las Tecnologías de Información',   cuatrimestre: 1, orden: 1, creditos: 3 },
       { code: 'FUN-08',  nombre: 'Expresión Oral y Escrita',                         cuatrimestre: 1, orden: 2, creditos: 3 },
@@ -229,6 +262,12 @@ const PROGRAMAS: ProgramaDef[] = [
     duracionCuatrimestres: 4,
     tecnologias: ['JavaScript', 'Python', 'HTML/CSS', 'SQL', 'Git'],
     objetivo: 'Proporcionar las bases prácticas del desarrollo de software para que el estudiante pueda incorporarse a la industria como programador junior.',
+    estadisticas: [
+      { valor: '10',           label: 'Materias'       },
+      { valor: '36',           label: 'Créditos'       },
+      { valor: '4',            label: 'Cuatrimestres'  },
+      { valor: 'Virtual/vivo', label: 'Modalidad'      },
+    ],
     cursos: [
       { nombre: 'Introducción a las Tecnologías de Información', cuatrimestre: 1, orden: 1, creditos: 3 },
       { nombre: 'Expresión Oral y Escrita',                      cuatrimestre: 1, orden: 2, creditos: 3 },
@@ -250,6 +289,12 @@ const PROGRAMAS: ProgramaDef[] = [
     duracionCuatrimestres: 4,
     tecnologias: ['HTML5', 'CSS3', 'JavaScript', 'Figma', 'UX/UI', 'Responsive Design'],
     objetivo: 'Formar desarrolladores web Front-End capaces de crear interfaces digitales modernas y centradas en la experiencia del usuario.',
+    estadisticas: [
+      { valor: '9',            label: 'Materias'      },
+      { valor: '35',           label: 'Créditos'      },
+      { valor: '4',            label: 'Cuatrimestres' },
+      { valor: 'Virtual/vivo', label: 'Modalidad'     },
+    ],
     cursos: [
       { code: 'FUN-01',  nombre: 'Introducción a las Tecnologías de Información', cuatrimestre: 1, orden: 1, creditos: 3 },
       { code: 'FUN-08',  nombre: 'Expresión Oral y Escrita',                       cuatrimestre: 1, orden: 2, creditos: 3 },
@@ -272,6 +317,12 @@ const PROGRAMAS: ProgramaDef[] = [
     duracionCuatrimestres: 12,
     tecnologias: ['Figma', 'Adobe XD', 'HTML/CSS', 'Design Thinking', 'UX Research', 'Prototyping'],
     objetivo: 'Formar diseñadores capaces de crear experiencias digitales centradas en el usuario, desde la investigación hasta el prototipado de alta fidelidad.',
+    estadisticas: [
+      { valor: '13',           label: 'Cursos'         },
+      { valor: '12',           label: 'Microciclos'    },
+      { valor: '4 sem',        label: 'Por microciclo' },
+      { valor: 'Virtual/vivo', label: 'Modalidad'      },
+    ],
     cursos: [
       { code: 'SOFT-329', nombre: 'Diseño Gráfico 1',                      cuatrimestre: 1,  orden: 1, creditos: 3 },
       { code: 'SOFT-330', nombre: 'Diseño Gráfico 2',                      cuatrimestre: 1,  orden: 2, creditos: 3 },
@@ -443,6 +494,7 @@ async function seed() {
       descripcion:            data.descripcion,
       duracionCuatrimestres:  data.duracionCuatrimestres,
       tecnologias:            data.tecnologias,
+      estadisticas:           data.estadisticas ?? [],
       objetivo:               data.objetivo ?? null,
       perfilEgresado:         data.perfilEgresado ?? null,
       activo:                 true,
