@@ -1,35 +1,117 @@
 ---
-import Base from '../../layouts/Base.astro';
+import Base from '../../layouts/Base.astro'
+import { db } from '../../db/client'
+import { docentes } from '../../db/schema'
+import { eq } from 'drizzle-orm'
+
+const lista = await db.select({
+  id:             docentes.id,
+  nombre:         docentes.nombre,
+  titulo:         docentes.titulo,
+  bio:            docentes.bio,
+  fotoUrl:        docentes.fotoUrl,
+  especialidades: docentes.especialidades,
+  linkedin:       docentes.linkedin,
+}).from(docentes).where(eq(docentes.activo, true))
 ---
 
-<Base title="Docentes" description="Conocé al equipo docente de ESOFT: profesionales activos en la industria.">
+<Base
+  title="Equipo docente"
+  description="Conocé al equipo docente de ESOFT: profesionales activos en la industria tecnológica."
+>
   <section class="max-w-6xl mx-auto px-6 py-12 md:py-20">
-    <nav class="text-sm text-content-muted mb-6">
-      <a href="/escuela" class="hover:text-content">Escuela</a> / <span class="text-content">Docentes</span>
+
+    <nav class="text-[13px] text-content-muted mb-8">
+      <a href="/escuela" class="hover:text-brand transition-colors">Escuela</a>
+      <span class="mx-2">/</span>
+      <span class="text-content">Equipo docente</span>
     </nav>
-    <h1 class="text-3xl md:text-5xl font-bold tracking-tight mb-6">Equipo docente</h1>
-    <p class="text-content-muted mb-10 max-w-3xl">
-      Nuestros docentes son profesionales activos en la industria tecnológica. Combinan experiencia real con formación académica para ofrecer un aprendizaje relevante y actualizado.
+
+    <h1 class="headline-display text-[clamp(2rem,5vw,3rem)] mb-4">Equipo docente</h1>
+    <p class="text-content-secondary text-[17px] leading-[1.8] max-w-2xl mb-14">
+      Profesionales activos en la industria tecnológica que combinan experiencia real
+      con formación académica para ofrecer un aprendizaje relevante y actualizado.
     </p>
 
-    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-      <div class="bg-bg-secondary rounded-lg p-6">
-        <div class="w-16 h-16 bg-bg-elevated rounded-full mb-4 flex items-center justify-center text-brand font-bold text-xl">E</div>
-        <h3 class="text-lg font-semibold">Equipo de Software</h3>
-        <p class="text-sm text-content-muted mt-2">Especialistas en desarrollo full-stack, arquitectura y DevOps.</p>
-      </div>
-      <div class="bg-bg-secondary rounded-lg p-6">
-        <div class="w-16 h-16 bg-bg-elevated rounded-full mb-4 flex items-center justify-center text-brand font-bold text-xl">T</div>
-        <h3 class="text-lg font-semibold">Equipo de Testing</h3>
-        <p class="text-sm text-content-muted mt-2">QA engineers con experiencia en automatización e IA aplicada al testing.</p>
-      </div>
-      <div class="bg-bg-secondary rounded-lg p-6">
-        <div class="w-16 h-16 bg-bg-elevated rounded-full mb-4 flex items-center justify-center text-brand font-bold text-xl">D</div>
-        <h3 class="text-lg font-semibold">Equipo de Diseño</h3>
-        <p class="text-sm text-content-muted mt-2">Diseñadores UX/UI con enfoque en investigación de usuarios y diseño de producto.</p>
-      </div>
-    </div>
+    {lista.length > 0 ? (
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+        {lista.map(d => (
+          <div class="card-premium rounded-[20px] p-6 flex flex-col gap-4">
 
-    <p class="text-sm text-content-muted mt-10">— Perfiles individuales pendientes de publicar.</p>
+            <!-- Avatar + nombre -->
+            <div class="flex items-center gap-4">
+              <div class="shrink-0 w-14 h-14 rounded-full overflow-hidden"
+                   style="background: var(--color-bg-elevated);">
+                {d.fotoUrl
+                  ? <img src={d.fotoUrl} alt={d.nombre}
+                         class="w-full h-full object-cover"
+                         loading="lazy"
+                         onerror="this.parentElement.innerHTML='<div class=w-full h-full flex items-center justify-center text-brand font-bold text-xl>' + this.alt.charAt(0).toUpperCase() + '</div>'" />
+                  : <div class="w-full h-full flex items-center justify-center text-brand font-bold text-xl">
+                      {d.nombre.charAt(0).toUpperCase()}
+                    </div>
+                }
+              </div>
+              <div class="min-w-0">
+                <p class="text-[15px] font-bold text-content leading-snug truncate">{d.nombre}</p>
+                <p class="text-[12px] text-content-muted leading-snug mt-0.5 truncate">{d.titulo}</p>
+              </div>
+            </div>
+
+            <!-- Bio -->
+            {d.bio && (
+              <p class="text-[13px] text-content-secondary leading-[1.75] line-clamp-3 flex-1">
+                {d.bio}
+              </p>
+            )}
+
+            <!-- Especialidades -->
+            {(d.especialidades as string[]).length > 0 && (
+              <div class="flex flex-wrap gap-1.5">
+                {(d.especialidades as string[]).slice(0, 4).map(e => (
+                  <span class="text-[11px] font-medium px-2 py-0.5 rounded-full"
+                        style="background: var(--color-brand-soft); color: var(--color-brand);">
+                    {e}
+                  </span>
+                ))}
+              </div>
+            )}
+
+            <!-- LinkedIn -->
+            {d.linkedin && (
+              <a href={d.linkedin} target="_blank" rel="noopener noreferrer"
+                 class="link-arrow text-[13px] mt-auto">
+                LinkedIn
+                <svg viewBox="0 0 14 14" fill="none">
+                  <path d="M1 7h12M8 2l5 5-5 5" stroke="currentColor" stroke-width="1.5"
+                        stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
+              </a>
+            )}
+
+          </div>
+        ))}
+      </div>
+    ) : (
+      <!-- Sin docentes en BD todavía -->
+      <div class="py-12 text-center">
+        <div class="max-w-md mx-auto">
+          <div class="w-16 h-16 rounded-2xl flex items-center justify-center mx-auto mb-6"
+               style="background: var(--color-brand-soft);">
+            <svg width="28" height="28" viewBox="0 0 28 28" fill="none">
+              <circle cx="14" cy="10" r="5" stroke="var(--color-brand)" stroke-width="1.8"/>
+              <path d="M4 24c0-5.52 4.48-10 10-10s10 4.48 10 10"
+                    stroke="var(--color-brand)" stroke-width="1.8" stroke-linecap="round"/>
+            </svg>
+          </div>
+          <h2 class="text-[17px] font-bold text-content mb-2">Perfiles en preparación</h2>
+          <p class="text-[14px] text-content-secondary leading-[1.75]">
+            Nuestros docentes están completando sus perfiles.
+            Volvé pronto para conocer al equipo.
+          </p>
+        </div>
+      </div>
+    )}
+
   </section>
 </Base>
