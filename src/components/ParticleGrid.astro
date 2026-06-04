@@ -108,6 +108,15 @@
   document.addEventListener('mousemove', onMouseMove, { passive: true });
   document.addEventListener('mouseleave', onMouseLeave);
 
+  let ro: ResizeObserver | null = null
+
+  // Cleanup para View Transitions — evita acumulación de listeners y loops rAF
+  document.addEventListener('astro:before-swap', () => {
+    document.removeEventListener('mousemove', onMouseMove)
+    document.removeEventListener('mouseleave', onMouseLeave)
+    ro?.disconnect()
+  }, { once: true })
+
   // Reduced motion: skip animation
   if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
 
@@ -115,7 +124,7 @@
   init();
   draw();
 
-  const ro = new ResizeObserver(() => { resize(); init(); });
+  ro = new ResizeObserver(() => { resize(); init(); });
   ro.observe(canvas);
 })();
 </script>

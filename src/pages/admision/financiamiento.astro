@@ -1,5 +1,6 @@
 ---
 import Base from '../../layouts/Base.astro';
+import CTAButton from '../../components/ui/CTAButton.astro';
 ---
 
 <Base title="Financiamiento" description="Opciones de financiamiento, becas y planes de pago en ESOFT.">
@@ -31,9 +32,7 @@ import Base from '../../layouts/Base.astro';
       </div>
 
       <div class="mt-10">
-        <a href="/admision/solicitar-informacion" class="btn-primary inline-block rounded-full bg-accent2 text-white px-6 py-3 text-sm font-semibold hover:bg-accent2-hover transition-all duration-300">
-          Consultar opciones
-        </a>
+        <CTAButton href="/admision/solicitar-informacion" texto="Consultar opciones" />
       </div>
     </div>
   </section>

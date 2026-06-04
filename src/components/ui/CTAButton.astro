@@ -2,30 +2,19 @@
 interface Props {
   href: string
   texto: string
-  variante?: 'primary' | 'secondary'
+  variante?: 'primary' | 'brand' | 'ghost'
   clase?: string
 }
 const { href, texto, variante = 'primary', clase = '' } = Astro.props
+
+const BASE = 'inline-flex items-center justify-center rounded-full font-semibold px-7 py-3.5 text-[15px] transition-colors duration-300'
+const ESTILOS: Record<string, string> = {
+  primary: 'btn-primary bg-accent2 text-white hover:bg-accent2-hover',
+  brand:   'btn-primary bg-brand   text-white hover:bg-brand-hover',
+  ghost:   'btn-ghost  border border-border-default text-content-secondary',
+}
 ---
 
-{variante === 'primary' ? (
-  <a
-    href={href}
-    class:list={[
-      'btn-primary inline-flex items-center bg-accent2 text-white font-semibold px-7 py-3.5 rounded-full text-[15px] hover:bg-accent2-hover transition-colors duration-300',
-      clase,
-    ]}
-  >
-    {texto}
-  </a>
-) : (
-  <a
-    href={href}
-    class:list={[
-      'btn-ghost inline-flex items-center border border-border-default text-content-secondary font-medium px-7 py-3.5 rounded-full text-[15px]',
-      clase,
-    ]}
-  >
-    {texto}
-  </a>
-)}
+<a href={href} class:list={[BASE, ESTILOS[variante], clase]}>
+  {texto}
+</a>

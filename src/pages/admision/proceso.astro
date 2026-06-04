@@ -1,5 +1,6 @@
 ---
 import Base from '../../layouts/Base.astro';
+import CTAButton from '../../components/ui/CTAButton.astro';
 ---
 
 <Base title="Proceso de admisión" description="Pasos del proceso de admisión a ESOFT.">
@@ -52,9 +53,7 @@ import Base from '../../layouts/Base.astro';
       </ol>
 
       <div class="mt-10">
-        <a href="/admision/solicitar-informacion" class="btn-primary inline-block rounded-full bg-accent2 text-white px-6 py-3 text-sm font-semibold hover:bg-accent2-hover transition-all duration-300">
-          Comenzar el proceso
-        </a>
+        <CTAButton href="/admision/solicitar-informacion" texto="Comenzar el proceso" />
       </div>
     </div>
   </section>
