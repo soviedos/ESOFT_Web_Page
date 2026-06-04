@@ -17,8 +17,9 @@
   --color-brand-soft: rgba(22, 74, 152, 0.08);
 
   /* ── Accent 2 — magenta ESOFT (CTA / identidad escuela) ── */
-  --color-accent2: #c81f66;
-  --color-accent2-soft: rgba(200, 31, 102, 0.10);
+  --color-accent2:       #c81f66;
+  --color-accent2-hover: #a01855;
+  --color-accent2-soft:  rgba(200, 31, 102, 0.10);
 
   /* ── Accent 3 — sky blue (datos / stats) ─────────── */
   --color-accent3: #0EA5E9;
@@ -46,6 +47,9 @@
 
   /* ── Fonts ────────────────────────────────────────── */
   --font-sans: 'Inter', 'SF Pro Display', -apple-system, system-ui, sans-serif;
+
+  /* ── Layout tokens ────────────────────────────────── */
+  --nav-height: 72px;
 }
 
 /* ── Base ─────────────────────────────────── */
@@ -80,13 +84,6 @@ body {
 
 /* ── Gradient text ────────────────────────── */
 .text-gradient-hero {
-  background: linear-gradient(135deg, #164a98 0%, #006AEA 100%);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  background-clip: text;
-}
-
-.text-gradient-purple {
   background: linear-gradient(135deg, #164a98 0%, #006AEA 100%);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
@@ -418,14 +415,6 @@ body {
   height: 1px;
   border: none;
   background: linear-gradient(90deg, transparent, rgba(27,58,140,0.10) 20%, rgba(27,58,140,0.18) 50%, rgba(27,58,140,0.10) 80%, transparent);
-}
-
-/* ── Subtle text shadow for emphasis ─────── */
-.text-glow-cyan {
-  text-shadow: none;
-}
-.text-glow-purple {
-  text-shadow: none;
 }
 
 /* ── Mobile responsive overrides ──────────── */

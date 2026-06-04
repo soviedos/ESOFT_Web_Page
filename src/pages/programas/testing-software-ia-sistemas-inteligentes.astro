@@ -1,32 +1,31 @@
 ---
-import Base from '../../layouts/Base.astro';
----
+import Base from '../../layouts/Base.astro'
+import Breadcrumb from '../../components/ui/Breadcrumb.astro'
+import CTAButton from '../../components/ui/CTAButton.astro'
 
+const items = [
+  'Fundamentos de IA aplicada al testing',
+  'Generación automática de casos de prueba',
+  'Análisis predictivo de defectos',
+  'Testing de sistemas de IA y ML',
+  'Herramientas de testing con IA',
+  'Optimización de suites de pruebas',
+]
+---
 <Base title="Testing de Software con IA" description="Técnico ágil en testing de software con inteligencia artificial y sistemas inteligentes.">
   <section class="max-w-6xl mx-auto px-6 py-12 md:py-20">
-    <nav class="text-sm text-content-muted mb-6">
-      <a href="/programas" class="hover:text-content">Programas</a> / <span class="text-content">Testing con IA</span>
-    </nav>
+    <Breadcrumb items={[{ label: 'Programas', href: '/programas' }, { label: 'Testing con IA' }]} />
     <div class="max-w-3xl">
       <span class="text-sm font-medium text-brand mb-2 block">Técnico ágil</span>
       <h1 class="text-3xl md:text-5xl font-bold tracking-tight mb-6">Testing de Software con IA y Sistemas Inteligentes</h1>
       <p class="text-content-muted mb-6 md:mb-8 text-base md:text-lg">
         Testing potenciado con inteligencia artificial: análisis predictivo de defectos, generación automática de pruebas y optimización de cobertura.
       </p>
-
       <h2 class="text-xl md:text-2xl font-semibold mb-4">¿Qué aprenderás?</h2>
       <ul class="space-y-2 text-content-muted mb-8">
-        <li>• Fundamentos de IA aplicada al testing</li>
-        <li>• Generación automática de casos de prueba</li>
-        <li>• Análisis predictivo de defectos</li>
-        <li>• Testing de sistemas de IA y ML</li>
-        <li>• Herramientas de testing con IA</li>
-        <li>• Optimización de suites de pruebas</li>
+        {items.map(i => <li>• {i}</li>)}
       </ul>
-
-      <a href="/admision/solicitar-informacion" class="btn-primary inline-block rounded-full bg-accent2 text-white px-6 py-3 text-sm font-semibold hover:bg-[#a01855] transition-all duration-300">
-        Solicitar información
-      </a>
+      <CTAButton href="/admision/solicitar-informacion" texto="Solicitar información" />
     </div>
   </section>
 </Base>

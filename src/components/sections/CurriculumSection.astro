@@ -1,0 +1,72 @@
+---
+interface Curso {
+  code: string
+  name: string
+  cr: number
+}
+
+interface Cuatrimestre {
+  num: string
+  creditos: number
+  cursos: Curso[]
+}
+
+interface Props {
+  cuatrimestres: Cuatrimestre[]
+  badge?: string
+  titulo?: string
+  subtitulo?: string
+}
+
+const {
+  cuatrimestres,
+  badge = 'Plan de estudios 2025',
+  titulo = 'Malla Curricular',
+  subtitulo,
+} = Astro.props
+---
+
+<section class="py-16 md:py-24 px-6" style="background: var(--color-bg-primary);">
+  <div class="max-w-[1060px] mx-auto">
+    <div class="text-center mb-12">
+      <p class="text-[13px] font-bold text-brand-label tracking-widest uppercase mb-3">{badge}</p>
+      <h2 class="headline-display text-[clamp(1.5rem,3vw,2.25rem)] mb-4">{titulo}</h2>
+      {subtitulo && (
+        <p class="text-content-secondary text-[15px]">{subtitulo}</p>
+      )}
+    </div>
+
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
+      {cuatrimestres.map(q => (
+        <div class="card-premium rounded-[18px] overflow-hidden">
+          <div
+            class="flex items-center justify-between px-5 py-3 border-b border-border-subtle"
+            style="background: var(--color-bg-secondary);"
+          >
+            <p class="text-[13px] font-bold text-content uppercase tracking-wide">
+              Cuatrimestre {q.num}
+            </p>
+            <span class="text-[12px] font-semibold text-brand bg-brand-soft px-2 py-0.5 rounded-full">
+              {q.creditos} créditos
+            </span>
+          </div>
+          <div class="p-4 space-y-2">
+            {q.cursos.map(c => (
+              <div class="flex items-start gap-3">
+                <span class="text-[11px] font-mono font-bold text-brand-label bg-brand-soft px-1.5 py-0.5 rounded shrink-0 mt-0.5">
+                  {c.code}
+                </span>
+                <div class="flex-1 flex items-start justify-between gap-2">
+                  <span class="text-[13px] text-content-secondary leading-snug">{c.name}</span>
+                  <span class="text-[12px] font-semibold text-content-muted shrink-0">{c.cr}cr</span>
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+      ))}
+    </div>
+
+    <slot />
+  </div>
+</section>

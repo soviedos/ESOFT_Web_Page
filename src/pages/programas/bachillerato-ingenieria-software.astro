@@ -1,436 +1,183 @@
 ---
-import Base from '../../layouts/Base.astro';
+import ProgramaLayout from '../../components/programa/ProgramaLayout.astro'
+import SectionBadge from '../../components/ui/SectionBadge.astro'
+
+const unicoProg = ['Formación ingenieril orientada a trabajar con IA como herramienta de productividad, manteniendo control técnico, validación y toma de decisiones humanas.','Enfoque ingenieril que estructura todo el proceso formativo desde la teoría hasta la implementación de soluciones reales.','Enfoque pedagógico basado en competencias técnicas, blandas y profesionales.','Formación integral en fundamentos de programación, arquitectura, calidad, seguridad y experiencia de usuario.','Inclusión de tecnologías emergentes y herramientas de última generación.','Posibilidad de elegir cursos electivos estratégicos como IA aplicada, blockchain y automatización de pruebas.','Articulación directa con la industria mediante pasantías, retos empresariales y proyectos colaborativos.']
+const porQueElegir = ['Metodología XperiencEd™, propia de UCENFOTEC: activa, experiencial y práctica.','Proyectos integradores que sustituyen exámenes tradicionales, desde el primer año.','Plan de estudios actualizado con énfasis en desarrollo móvil, cloud, IA y blockchain.','Docentes activos en la industria con amplia experiencia en el campo.','Desarrollo transversal de habilidades blandas (Power Skills): liderazgo, ética, comunicación e innovación.','Universidad especializada en tecnología, conectada con el sector productivo nacional e internacional.','Acreditado por SINAES y alineado con estándares internacionales.']
+const habilidades = [
+  { title: 'Criterio ingenieril',        desc: 'Diseño y desarrollo de software con enfoque ingenieril, pensamiento crítico y orientación al usuario.' },
+  { title: 'IA como herramienta',        desc: 'Capacidad para definir problemas, estructurar soluciones y orquestar herramientas de IA para el desarrollo, prueba y mejora del software.' },
+  { title: 'Calidad y validación',       desc: 'Conocimientos en validación, pruebas automatizadas y control de calidad.' },
+  { title: 'Equipos ágiles',             desc: 'Capacidad para integrarte a equipos ágiles, multidisciplinarios y colaborativos.' },
+  { title: 'Liderazgo técnico',          desc: 'Liderazgo técnico, responsabilidad profesional y comunicación efectiva.' },
+  { title: 'Tecnologías emergentes',     desc: 'Adaptabilidad a tecnologías emergentes como IA, blockchain, cloud, computación cuántica y desarrollo seguro.' },
+]
+const roles = ['Desarrollador de software','Director o gestor de proyectos de ingeniería de software','Especialista en pruebas y aseguramiento de la calidad (QA)','Auditor informático','Diseñador y desarrollador de sistemas de información','Líder de equipos remotos o multidisciplinarios','Desarrollador de videojuegos','Encargado de mantenimiento de software','Especialista en seguridad o forense digital','Consultor en tecnología y software']
+const areas = [
+  { area: 'Matemáticas y Ciencias Básicas',                  cursos: 10, pct: 23 },
+  { area: 'Desarrollo Profesional',                          cursos: 9,  pct: 21 },
+  { area: 'Diseño y Modelado de Software',                   cursos: 8,  pct: 19 },
+  { area: 'Fundamentos de Informática',                      cursos: 7,  pct: 16 },
+  { area: 'Procesos de Software',                            cursos: 3,  pct: 7  },
+  { area: 'Análisis y Especificación de Requerimientos',     cursos: 2,  pct: 5  },
+  { area: 'Calidad, Verificación y Validación del Software', cursos: 2,  pct: 5  },
+  { area: 'Seguridad del Software',                          cursos: 2,  pct: 5  },
+]
+const electivas1 = [{ code: 'SOFT-24', name: 'Automatización de Pruebas' },{ code: 'SINT-06', name: 'Fundamentos de Aprendizaje Automático' },{ code: 'SOFT-25', name: 'Arquitectura de Software Distribuido' }]
+const electivas2 = [{ code: 'SOFT-26', name: 'Estándares y Métricas de Calidad del Software' },{ code: 'SINT-05', name: 'Modelado y Arquitectura en Inteligencia Artificial' },{ code: 'SOFT-27', name: 'Desarrollo de Software en Cadena de Bloques' }]
+const ejesCurr   = ['Gestión de Proyectos de Software','Integración y Despliegue del Software','Aseguramiento del Software','Gestión de la Calidad']
+const ejesTransv = ['Universalidad de los Derechos Humanos','Conciencia Ambiental y Cultura de Paz','Ética y Sociedad','Investigación e Innovación','Excelencia Académica y Profesional']
+const areasDis   = ['Desarrollo Profesional','Matemáticas y Ciencias Básicas','Fundamentos de Informática','Análisis y Especificación de Requerimientos','Diseño y Modelado de Software','Calidad, Verificación y Validación','Seguridad del Software','Procesos de Software']
+
+const programa = {
+  titulo:               'Bachillerato en Ingeniería del Software',
+  tituloAcento:         'en la era de la IA.',
+  descripcion:          'El Bachillerato en Ingeniería del Software de la Universidad CENFOTEC forma ingenieros capaces de diseñar, validar y liderar soluciones de software en un entorno donde la inteligencia artificial es parte del proceso de desarrollo.',
+  tipo:                 'bachillerato',
+  duracionCuatrimestres: 9,
+  badgeOverride:        'Bachillerato · BISOFT · 9 cuatrimestres',
+  estadisticas: [
+    { valor: '43',          label: 'Cursos' },
+    { valor: '141',         label: 'Créditos' },
+    { valor: '3',           label: 'Años · 9 cuatrimestres', colorValor: 'brand' as const },
+    { valor: 'Virtual\nen vivo', label: 'Modalidad',         colorValor: 'accent2' as const, size: 'lg' as const },
+  ],
+  ctaTitulo:       'Aprendé a diseñar, gobernar y validar software',
+  ctaTituloAcento: 'en un mundo donde la IA ya escribe código.',
+  ctaDescripcion:  '3 años · 43 cursos · 141 créditos · Modalidad virtual en vivo · Acreditado SINAES',
+  cursos: [
+    { code: 'SOFT-09', nombre: 'Introducción a la Ingeniería del Software', cuatrimestre: 1, orden: 1, creditos: 3 },
+    { code: 'FUN-02',  nombre: 'Lógica y Matemática Básica',                cuatrimestre: 1, orden: 2, creditos: 3 },
+    { code: 'SOFT-01', nombre: 'Principios de Programación I',               cuatrimestre: 1, orden: 3, creditos: 5 },
+    { code: 'FUN-01',  nombre: 'Introducción a las Tecnologías de Información', cuatrimestre: 1, orden: 4, creditos: 3 },
+    { code: 'FUN-08',  nombre: 'Expresión Oral y Escrita',                   cuatrimestre: 1, orden: 5, creditos: 3 },
+    { code: 'FUN-05',    nombre: 'Cálculo Diferencial e Integral',           cuatrimestre: 2, orden: 1, creditos: 3 },
+    { code: 'FUN-03',    nombre: 'Matemática Discreta 1',                    cuatrimestre: 2, orden: 2, creditos: 3 },
+    { code: 'SOFT-02',   nombre: 'Principios de Programación 2',             cuatrimestre: 2, orden: 3, creditos: 5 },
+    { code: 'SOFT-06C2', nombre: 'Diseño y Programación Web',                cuatrimestre: 2, orden: 4, creditos: 4 },
+    { code: 'FUN-09',    nombre: 'Desarrollo de Habilidades Blandas',        cuatrimestre: 2, orden: 5, creditos: 3 },
+    { code: 'FUN-18',    nombre: 'Física 1',                                 cuatrimestre: 3, orden: 1, creditos: 3 },
+    { code: 'FUN-17',    nombre: 'Matemática Discreta 2',                    cuatrimestre: 3, orden: 2, creditos: 3 },
+    { code: 'SOFT-11C1', nombre: 'Proyecto Integrador 1',                    cuatrimestre: 3, orden: 3, creditos: 5 },
+    { code: 'SOFT-10',   nombre: 'Estructuras de Datos',                     cuatrimestre: 3, orden: 4, creditos: 3 },
+    { code: 'FUN-14',    nombre: 'Inglés Conversacional 1',                  cuatrimestre: 3, orden: 5, creditos: 2 },
+    { code: 'FUN-19',  nombre: 'Física 2',                                   cuatrimestre: 4, orden: 1, creditos: 3 },
+    { code: 'FUN-06',  nombre: 'Álgebra Lineal',                             cuatrimestre: 4, orden: 2, creditos: 3 },
+    { code: 'SOFT-04', nombre: 'Programación Orientada a Objetos',           cuatrimestre: 4, orden: 3, creditos: 5 },
+    { code: 'SOFT-03', nombre: 'Fundamentos de Bases de Datos',              cuatrimestre: 4, orden: 4, creditos: 4 },
+    { code: 'FUN-10',  nombre: 'Pensamiento Crítico',                        cuatrimestre: 4, orden: 5, creditos: 3 },
+    { code: 'SOFT-13C1', nombre: 'Arquitectura de Software 1',               cuatrimestre: 5, orden: 1, creditos: 3 },
+    { code: 'FUN-04',    nombre: 'Probabilidad y Estadística 1',             cuatrimestre: 5, orden: 2, creditos: 3 },
+    { code: 'SOFT-12C1', nombre: 'Programación Web Avanzada',                cuatrimestre: 5, orden: 3, creditos: 4 },
+    { code: 'SOFT-14',   nombre: 'Procesos de Ingeniería del Software',      cuatrimestre: 5, orden: 4, creditos: 3 },
+    { code: 'FUN-15',    nombre: 'Inglés Conversacional 2',                  cuatrimestre: 5, orden: 5, creditos: 2 },
+    { code: 'FUN-20',    nombre: 'Física 3',                                 cuatrimestre: 6, orden: 1, creditos: 3 },
+    { code: 'FUN-07',    nombre: 'Probabilidad y Estadística 2',             cuatrimestre: 6, orden: 2, creditos: 3 },
+    { code: 'SOFT-18C1', nombre: 'Proyecto Integrador 2',                    cuatrimestre: 6, orden: 3, creditos: 5 },
+    { code: 'SOFT-17',   nombre: 'Calidad, Verificación y Validación del Software', cuatrimestre: 6, orden: 4, creditos: 3 },
+    { code: 'FUN-11',    nombre: 'Liderazgo y Trabajo Colaborativo',         cuatrimestre: 6, orden: 5, creditos: 3 },
+    { code: 'SINT-04', nombre: 'Principios de Inteligencia Artificial',      cuatrimestre: 7, orden: 1, creditos: 3 },
+    { code: 'SOFT-15', nombre: 'Diseño de Interacción Humano-Computador',    cuatrimestre: 7, orden: 2, creditos: 3 },
+    { code: 'SOFT-16', nombre: 'Arquitectura de Software 2',                 cuatrimestre: 7, orden: 3, creditos: 3 },
+    { code: 'TI-03',   nombre: 'Arquitectura de Computadoras',               cuatrimestre: 7, orden: 4, creditos: 3 },
+    { code: 'FUN-16',  nombre: 'Inglés Conversacional 3',                    cuatrimestre: 7, orden: 5, creditos: 2 },
+    { code: 'Electiva 1', nombre: 'Curso electivo 1 (ver opciones)',         cuatrimestre: 8, orden: 1, creditos: 3 },
+    { code: 'SOFT-22',   nombre: 'Programación Móvil',                       cuatrimestre: 8, orden: 2, creditos: 3 },
+    { code: 'TI-01',     nombre: 'Fundamentos de Redes',                     cuatrimestre: 8, orden: 3, creditos: 3 },
+    { code: 'FUN-12',    nombre: 'Ética y Sostenibilidad en Tecnología',     cuatrimestre: 8, orden: 4, creditos: 3 },
+    { code: 'Electiva 2', nombre: 'Curso electivo 2 (ver opciones)',         cuatrimestre: 9, orden: 1, creditos: 3 },
+    { code: 'SOFT-23',   nombre: 'Proyecto Integrador 3',                    cuatrimestre: 9, orden: 2, creditos: 5 },
+    { code: 'CIB-06',    nombre: 'Desarrollo Seguro del Software',           cuatrimestre: 9, orden: 3, creditos: 3 },
+    { code: 'FUN-13',    nombre: 'Investigación y Emprendimiento',            cuatrimestre: 9, orden: 4, creditos: 3 },
+  ],
+}
 ---
-
-<Base title="Bachillerato en Ingeniería del Software — BISOFT" description="Diseñá y liderá software en la era de la IA. Bachillerato en Ingeniería del Software de la Universidad CENFOTEC. 3 años, 9 cuatrimestres, modalidad virtual en vivo.">
-
-  <!-- Hero -->
-  <section class="relative py-16 md:py-24 px-6" style="background: radial-gradient(ellipse 60% 40% at 50% 0%, rgba(27,58,140,0.05) 0%, transparent 60%), var(--color-bg-secondary);">
-    <div class="max-w-[1060px] mx-auto">
-      <nav class="text-[13px] text-content-muted mb-8">
-        <a href="/programas" class="hover:text-content transition-colors">Programas</a>
-        <span class="mx-2">·</span>
-        <span class="text-content">Bachillerato en Ingeniería del Software</span>
-      </nav>
-
-      <div class="grid grid-cols-1 lg:grid-cols-2 gap-14 items-center">
-        <div>
-          <p class="text-[13px] font-bold text-brand-label tracking-widest uppercase mb-4">Bachillerato · BISOFT · 9 cuatrimestres</p>
-          <h1 class="headline-display text-[clamp(2rem,4.5vw,3.25rem)] mb-6">
-            Diseñá y liderá software<br />
-            <span class="text-gradient-hero">en la era de la IA.</span>
-          </h1>
-          <p class="text-content-secondary text-[16px] leading-[1.85] mb-8 max-w-[480px]">
-            El Bachillerato en Ingeniería del Software de la Universidad CENFOTEC forma ingenieros capaces de diseñar, validar y liderar soluciones de software en un entorno donde la inteligencia artificial es parte del proceso de desarrollo.
-          </p>
-          <div class="flex flex-wrap gap-4">
-            <a href="/admision/solicitar-informacion" class="btn-primary inline-flex items-center bg-accent2 text-white font-semibold px-7 py-3.5 rounded-full text-[15px] hover:bg-[#a01855] transition-colors duration-300">
-              Solicitar información
-            </a>
-            <a href="/admision" class="btn-ghost inline-flex items-center border border-border-default text-content-secondary font-medium px-7 py-3.5 rounded-full text-[15px]">
-              Proceso de admisión
-            </a>
-          </div>
-        </div>
-
-        <!-- Datos del programa -->
-        <div class="grid grid-cols-2 gap-4">
-          <div class="card-stat p-6 text-center">
-            <p class="text-[2.25rem] font-extrabold text-content">43</p>
-            <p class="text-[14px] text-content-secondary mt-1">Cursos</p>
-          </div>
-          <div class="card-stat p-6 text-center">
-            <p class="text-[2.25rem] font-extrabold text-content">141</p>
-            <p class="text-[14px] text-content-secondary mt-1">Créditos</p>
-          </div>
-          <div class="card-stat p-6 text-center">
-            <p class="text-[2.25rem] font-extrabold text-brand">3</p>
-            <p class="text-[14px] text-content-secondary mt-1">Años · 9 cuatrimestres</p>
-          </div>
-          <div class="card-stat p-6 text-center">
-            <p class="text-[1.25rem] font-extrabold text-accent2 leading-tight">Virtual<br/>en vivo</p>
-            <p class="text-[14px] text-content-secondary mt-1">Modalidad</p>
-          </div>
-        </div>
-      </div>
-    </div>
-  </section>
-
+<ProgramaLayout programa={programa}>
   <!-- Perspectiva laboral -->
-  <section class="py-16 md:py-24 px-6" style="background: var(--color-bg-primary);">
+  <section slot="before-curriculum" class="py-16 md:py-24 px-6" style="background: var(--color-bg-primary);">
     <div class="max-w-[1060px] mx-auto">
       <div class="text-center mb-12">
-        <p class="text-[13px] font-bold text-brand-label tracking-widest uppercase mb-3">Perspectiva laboral y empleabilidad</p>
-        <h2 class="headline-display text-[clamp(1.5rem,3vw,2.25rem)]">
-          Nuestros egresados no son usuarios de la tecnología:
-          <span class="text-content-muted"> la crean, la transforman y lideran su evolución.</span>
-        </h2>
+        <SectionBadge texto="Perspectiva laboral y empleabilidad" mb="mb-3" />
+        <h2 class="headline-display text-[clamp(1.5rem,3vw,2.25rem)]">Nuestros egresados no son usuarios de la tecnología:<span class="text-content-muted"> la crean, la transforman y lideran su evolución.</span></h2>
       </div>
-
       <div class="grid grid-cols-2 md:grid-cols-4 gap-4 mb-10">
-        <div class="card-stat p-6 text-center">
-          <p class="text-[2.5rem] font-extrabold text-brand">97%</p>
-          <p class="text-[14px] text-content-secondary mt-1">Tasa de empleo</p>
-        </div>
-        <div class="card-stat p-6 text-center">
-          <p class="text-[2.5rem] font-extrabold text-accent2">2</p>
-          <p class="text-[14px] text-content-secondary mt-1">Meses promedio para emplearse</p>
-        </div>
-        <div class="card-stat p-6 text-center">
-          <p class="text-[1.6rem] font-extrabold text-content">¢987,524</p>
-          <p class="text-[14px] text-content-secondary mt-1">Ingreso mensual promedio</p>
-        </div>
-        <div class="card-stat p-6 text-center">
-          <p class="text-[2.5rem] font-extrabold text-accent2">4.47<span class="text-[1.2rem] text-content-muted">/5</span></p>
-          <p class="text-[14px] text-content-secondary mt-1">Satisfacción laboral</p>
-        </div>
+        <div class="card-stat p-6 text-center"><p class="text-[2.5rem] font-extrabold text-brand">97%</p><p class="text-[14px] text-content-secondary mt-1">Tasa de empleo</p></div>
+        <div class="card-stat p-6 text-center"><p class="text-[2.5rem] font-extrabold text-accent2">2</p><p class="text-[14px] text-content-secondary mt-1">Meses promedio para emplearse</p></div>
+        <div class="card-stat p-6 text-center"><p class="text-[1.6rem] font-extrabold text-content">¢987,524</p><p class="text-[14px] text-content-secondary mt-1">Ingreso mensual promedio</p></div>
+        <div class="card-stat p-6 text-center"><p class="text-[2.5rem] font-extrabold text-accent2">4.47<span class="text-[1.2rem] text-content-muted">/5</span></p><p class="text-[14px] text-content-secondary mt-1">Satisfacción laboral</p></div>
       </div>
       <p class="text-center text-[12px] text-content-muted">Fuente: Observatorio Laboral de Profesiones · olap.conare.ac.cr</p>
     </div>
   </section>
 
-  <!-- Qué hace único el programa -->
+  <!-- Qué hace único + Por qué elegir -->
   <section class="py-16 md:py-24 px-6" style="background: var(--color-bg-secondary);">
-    <div class="max-w-[1060px] mx-auto">
-      <div class="grid grid-cols-1 lg:grid-cols-2 gap-12">
-
-        <div>
-          <p class="text-[13px] font-bold text-brand-label tracking-widest uppercase mb-4">¿Qué hace único nuestro programa?</p>
-          <ul class="space-y-4">
-            {[
-              'Formación ingenieril orientada a trabajar con IA como herramienta de productividad, manteniendo control técnico, validación y toma de decisiones humanas.',
-              'Enfoque ingenieril que estructura todo el proceso formativo desde la teoría hasta la implementación de soluciones reales.',
-              'Enfoque pedagógico basado en competencias técnicas, blandas y profesionales.',
-              'Formación integral en fundamentos de programación, arquitectura, calidad, seguridad y experiencia de usuario.',
-              'Inclusión de tecnologías emergentes y herramientas de última generación.',
-              'Posibilidad de elegir cursos electivos estratégicos como IA aplicada, blockchain y automatización de pruebas.',
-              'Articulación directa con la industria mediante pasantías, retos empresariales y proyectos colaborativos.',
-            ].map(item => (
-              <li class="flex gap-3">
-                <span class="text-brand shrink-0 mt-1">◆</span>
-                <span class="text-content-secondary text-[15px] leading-[1.8]">{item}</span>
-              </li>
-            ))}
-          </ul>
-        </div>
-
-        <div>
-          <p class="text-[13px] font-bold text-brand-label tracking-widest uppercase mb-4">¿Por qué elegir este bachillerato?</p>
-          <ul class="space-y-4">
-            {[
-              'Metodología XperiencEd™, propia de UCENFOTEC: activa, experiencial y práctica.',
-              'Proyectos integradores que sustituyen exámenes tradicionales, desde el primer año.',
-              'Plan de estudios actualizado con énfasis en desarrollo móvil, cloud, IA y blockchain.',
-              'Docentes activos en la industria con amplia experiencia en el campo.',
-              'Desarrollo transversal de habilidades blandas (Power Skills): liderazgo, ética, comunicación e innovación.',
-              'Universidad especializada en tecnología, conectada con el sector productivo nacional e internacional.',
-              'Acreditado por SINAES y alineado con estándares internacionales.',
-            ].map(item => (
-              <li class="flex gap-3">
-                <span class="text-accent2 shrink-0 mt-1">◆</span>
-                <span class="text-content-secondary text-[15px] leading-[1.8]">{item}</span>
-              </li>
-            ))}
-          </ul>
-        </div>
-
+    <div class="max-w-[1060px] mx-auto grid grid-cols-1 lg:grid-cols-2 gap-12">
+      <div>
+        <SectionBadge texto="¿Qué hace único nuestro programa?" />
+        <ul class="space-y-4">{unicoProg.map(i => <li class="flex gap-3"><span class="text-brand shrink-0 mt-1">◆</span><span class="text-content-secondary text-[15px] leading-[1.8]">{i}</span></li>)}</ul>
+      </div>
+      <div>
+        <SectionBadge texto="¿Por qué elegir este bachillerato?" />
+        <ul class="space-y-4">{porQueElegir.map(i => <li class="flex gap-3"><span class="text-accent2 shrink-0 mt-1">◆</span><span class="text-content-secondary text-[15px] leading-[1.8]">{i}</span></li>)}</ul>
       </div>
     </div>
   </section>
 
-  <!-- Habilidades que te diferenciarán -->
+  <!-- Habilidades -->
   <section class="py-16 md:py-24 px-6" style="background: var(--color-bg-primary);">
     <div class="max-w-[1060px] mx-auto">
       <div class="text-center max-w-[600px] mx-auto mb-12">
-        <p class="text-[13px] font-bold text-brand-label tracking-widest uppercase mb-3">Las habilidades que te diferenciarán en el mercado laboral</p>
-        <h2 class="headline-display text-[clamp(1.5rem,3vw,2.25rem)]">
-          Ingeniería real.<span class="text-content-muted"> No solo programación.</span>
-        </h2>
+        <SectionBadge texto="Las habilidades que te diferenciarán en el mercado laboral" mb="mb-3" />
+        <h2 class="headline-display text-[clamp(1.5rem,3vw,2.25rem)]">Ingeniería real.<span class="text-content-muted"> No solo programación.</span></h2>
       </div>
       <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
-        {[
-          { title: 'Criterio ingenieril', desc: 'Diseño y desarrollo de software con enfoque ingenieril, pensamiento crítico y orientación al usuario.' },
-          { title: 'IA como herramienta', desc: 'Capacidad para definir problemas, estructurar soluciones y orquestar herramientas de IA para el desarrollo, prueba y mejora del software.' },
-          { title: 'Calidad y validación', desc: 'Conocimientos en validación, pruebas automatizadas y control de calidad.' },
-          { title: 'Equipos ágiles', desc: 'Capacidad para integrarte a equipos ágiles, multidisciplinarios y colaborativos.' },
-          { title: 'Liderazgo técnico', desc: 'Liderazgo técnico, responsabilidad profesional y comunicación efectiva.' },
-          { title: 'Tecnologías emergentes', desc: 'Adaptabilidad a tecnologías emergentes como IA, blockchain, cloud, computación cuántica y desarrollo seguro.' },
-        ].map(item => (
-          <div class="card-premium rounded-[18px] p-7">
-            <p class="text-[15px] font-bold text-content mb-2">{item.title}</p>
-            <p class="text-[14px] text-content-secondary leading-[1.8]">{item.desc}</p>
-          </div>
-        ))}
+        {habilidades.map(h => <div class="card-premium rounded-[18px] p-7"><p class="text-[15px] font-bold text-content mb-2">{h.title}</p><p class="text-[14px] text-content-secondary leading-[1.8]">{h.desc}</p></div>)}
       </div>
     </div>
   </section>
 
-  <!-- Roles laborales -->
+  <!-- Roles + Áreas -->
   <section class="py-16 md:py-24 px-6" style="background: var(--color-bg-secondary);">
-    <div class="max-w-[1060px] mx-auto">
-      <div class="grid grid-cols-1 lg:grid-cols-2 gap-14 items-start">
-        <div>
-          <p class="text-[13px] font-bold text-brand-label tracking-widest uppercase mb-4">¿Dónde podés trabajar y en qué roles?</p>
-          <p class="text-content-secondary text-[15px] leading-[1.85] mb-8">
-            En un mercado donde la IA acelera el desarrollo, estos roles requieren ingenieros capaces de validar, supervisar y liderar soluciones tecnológicas complejas.
-          </p>
-          <div class="grid grid-cols-1 gap-2">
-            {[
-              'Desarrollador de software',
-              'Director o gestor de proyectos de ingeniería de software',
-              'Especialista en pruebas y aseguramiento de la calidad (QA)',
-              'Auditor informático',
-              'Diseñador y desarrollador de sistemas de información',
-              'Líder de equipos remotos o multidisciplinarios',
-              'Desarrollador de videojuegos',
-              'Encargado de mantenimiento de software',
-              'Especialista en seguridad o forense digital',
-              'Consultor en tecnología y software',
-            ].map(role => (
-              <div class="flex items-center gap-3 rounded-xl border border-border-subtle px-4 py-3 bg-bg-primary">
-                <span class="w-2 h-2 rounded-full bg-accent2 shrink-0"></span>
-                <span class="text-[14px] text-content-secondary">{role}</span>
-              </div>
-            ))}
-          </div>
+    <div class="max-w-[1060px] mx-auto grid grid-cols-1 lg:grid-cols-2 gap-14 items-start">
+      <div>
+        <SectionBadge texto="¿Dónde podés trabajar y en qué roles?" />
+        <p class="text-content-secondary text-[15px] leading-[1.85] mb-8">En un mercado donde la IA acelera el desarrollo, estos roles requieren ingenieros capaces de validar, supervisar y liderar soluciones tecnológicas complejas.</p>
+        <div class="grid grid-cols-1 gap-2">
+          {roles.map(r => <div class="flex items-center gap-3 rounded-xl border border-border-subtle px-4 py-3 bg-bg-primary"><span class="w-2 h-2 rounded-full bg-accent2 shrink-0"></span><span class="text-[14px] text-content-secondary">{r}</span></div>)}
         </div>
-
-        <!-- Áreas disciplinares -->
-        <div>
-          <p class="text-[13px] font-bold text-brand-label tracking-widest uppercase mb-4">¿Qué vas a aprender y desarrollar?</p>
-          <div class="space-y-3">
-            {[
-              { area: 'Matemáticas y Ciencias Básicas', cursos: 10, pct: 23 },
-              { area: 'Desarrollo Profesional', cursos: 9, pct: 21 },
-              { area: 'Diseño y Modelado de Software', cursos: 8, pct: 19 },
-              { area: 'Fundamentos de Informática', cursos: 7, pct: 16 },
-              { area: 'Procesos de Software', cursos: 3, pct: 7 },
-              { area: 'Análisis y Especificación de Requerimientos', cursos: 2, pct: 5 },
-              { area: 'Calidad, Verificación y Validación del Software', cursos: 2, pct: 5 },
-              { area: 'Seguridad del Software', cursos: 2, pct: 5 },
-            ].map(item => (
-              <div>
-                <div class="flex justify-between text-[13px] mb-1">
-                  <span class="text-content-secondary">{item.area} <span class="text-content-muted">({item.cursos} cursos)</span></span>
-                  <span class="font-bold text-brand">{item.pct}%</span>
-                </div>
-                <div class="h-2 rounded-full bg-bg-elevated overflow-hidden">
-                  <div class="h-full rounded-full bg-brand" style={`width: ${item.pct}%`}></div>
-                </div>
-              </div>
-            ))}
-          </div>
+      </div>
+      <div>
+        <SectionBadge texto="¿Qué vas a aprender y desarrollar?" />
+        <div class="space-y-3">
+          {areas.map(a => <div><div class="flex justify-between text-[13px] mb-1"><span class="text-content-secondary">{a.area} <span class="text-content-muted">({a.cursos} cursos)</span></span><span class="font-bold text-brand">{a.pct}%</span></div><div class="h-2 rounded-full bg-bg-elevated overflow-hidden"><div class="h-full rounded-full bg-brand" style={`width: ${a.pct}%`}></div></div></div>)}
         </div>
       </div>
     </div>
   </section>
 
-  <!-- Malla Curricular -->
-  <section class="py-16 md:py-24 px-6" style="background: var(--color-bg-primary);">
-    <div class="max-w-[1060px] mx-auto">
-      <div class="text-center mb-12">
-        <p class="text-[13px] font-bold text-brand-label tracking-widest uppercase mb-3">Plan de estudios 2025</p>
-        <h2 class="headline-display text-[clamp(1.5rem,3vw,2.25rem)] mb-4">Malla Curricular</h2>
-        <p class="text-content-secondary text-[15px]">43 cursos · 141 créditos · 9 cuatrimestres · Entre 12 y 18 créditos por cuatrimestre</p>
-      </div>
-
-      <!-- Cuatrimestres -->
-      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5 mb-14">
-        {[
-          {
-            num: 'I', creditos: 17,
-            cursos: [
-              { code: 'SOFT-09', name: 'Introducción a la Ingeniería del Software', cr: 3 },
-              { code: 'FUN-02',  name: 'Lógica y Matemática Básica', cr: 3 },
-              { code: 'SOFT-01', name: 'Principios de Programación I', cr: 5 },
-              { code: 'FUN-01',  name: 'Introducción a las Tecnologías de Información', cr: 3 },
-              { code: 'FUN-08',  name: 'Expresión Oral y Escrita', cr: 3 },
-            ]
-          },
-          {
-            num: 'II', creditos: 18,
-            cursos: [
-              { code: 'FUN-05',    name: 'Cálculo Diferencial e Integral', cr: 3 },
-              { code: 'FUN-03',    name: 'Matemática Discreta 1', cr: 3 },
-              { code: 'SOFT-02',   name: 'Principios de Programación 2', cr: 5 },
-              { code: 'SOFT-06C2', name: 'Diseño y Programación Web', cr: 4 },
-              { code: 'FUN-09',    name: 'Desarrollo de Habilidades Blandas', cr: 3 },
-            ]
-          },
-          {
-            num: 'III', creditos: 16,
-            cursos: [
-              { code: 'FUN-18',    name: 'Física 1', cr: 3 },
-              { code: 'FUN-17',    name: 'Matemática Discreta 2', cr: 3 },
-              { code: 'SOFT-11C1', name: 'Proyecto Integrador 1', cr: 5 },
-              { code: 'SOFT-10',   name: 'Estructuras de Datos', cr: 3 },
-              { code: 'FUN-14',    name: 'Inglés Conversacional 1', cr: 2 },
-            ]
-          },
-          {
-            num: 'IV', creditos: 18,
-            cursos: [
-              { code: 'FUN-19',  name: 'Física 2', cr: 3 },
-              { code: 'FUN-06',  name: 'Álgebra Lineal', cr: 3 },
-              { code: 'SOFT-04', name: 'Programación Orientada a Objetos', cr: 5 },
-              { code: 'SOFT-03', name: 'Fundamentos de Bases de Datos', cr: 4 },
-              { code: 'FUN-10',  name: 'Pensamiento Crítico', cr: 3 },
-            ]
-          },
-          {
-            num: 'V', creditos: 15,
-            cursos: [
-              { code: 'SOFT-13C1', name: 'Arquitectura de Software 1', cr: 3 },
-              { code: 'FUN-04',    name: 'Probabilidad y Estadística 1', cr: 3 },
-              { code: 'SOFT-12C1', name: 'Programación Web Avanzada', cr: 4 },
-              { code: 'SOFT-14',   name: 'Procesos de Ingeniería del Software', cr: 3 },
-              { code: 'FUN-15',    name: 'Inglés Conversacional 2', cr: 2 },
-            ]
-          },
-          {
-            num: 'VI', creditos: 17,
-            cursos: [
-              { code: 'FUN-20',    name: 'Física 3', cr: 3 },
-              { code: 'FUN-07',    name: 'Probabilidad y Estadística 2', cr: 3 },
-              { code: 'SOFT-18C1', name: 'Proyecto Integrador 2', cr: 5 },
-              { code: 'SOFT-17',   name: 'Calidad, Verificación y Validación del Software', cr: 3 },
-              { code: 'FUN-11',    name: 'Liderazgo y Trabajo Colaborativo', cr: 3 },
-            ]
-          },
-          {
-            num: 'VII', creditos: 14,
-            cursos: [
-              { code: 'SINT-04', name: 'Principios de Inteligencia Artificial', cr: 3 },
-              { code: 'SOFT-15', name: 'Diseño de Interacción Humano-Computador', cr: 3 },
-              { code: 'SOFT-16', name: 'Arquitectura de Software 2', cr: 3 },
-              { code: 'TI-03',   name: 'Arquitectura de Computadoras', cr: 3 },
-              { code: 'FUN-16',  name: 'Inglés Conversacional 3', cr: 2 },
-            ]
-          },
-          {
-            num: 'VIII', creditos: 12,
-            cursos: [
-              { code: 'Electiva 1', name: 'Curso electivo (ver opciones abajo)', cr: 3 },
-              { code: 'SOFT-22',   name: 'Programación Móvil', cr: 3 },
-              { code: 'TI-01',     name: 'Fundamentos de Redes', cr: 3 },
-              { code: 'FUN-12',    name: 'Ética y Sostenibilidad en Tecnología', cr: 3 },
-            ]
-          },
-          {
-            num: 'IX', creditos: 14,
-            cursos: [
-              { code: 'Electiva 2', name: 'Curso electivo (ver opciones abajo)', cr: 3 },
-              { code: 'SOFT-23',   name: 'Proyecto Integrador 3', cr: 5 },
-              { code: 'CIB-06',    name: 'Desarrollo Seguro del Software', cr: 3 },
-              { code: 'FUN-13',    name: 'Investigación y Emprendimiento', cr: 3 },
-            ]
-          },
-        ].map(q => (
+  <!-- Electivas + Ejes (curriculum-extra, aparece dentro de CurriculumSection) -->
+  <div slot="curriculum-extra" class="mt-14 space-y-10">
+    <div>
+      <SectionBadge texto="Cursos electivos" mb="mb-6" />
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+        {[{ label: 'Electiva 1', items: electivas1 }, { label: 'Electiva 2', items: electivas2 }].map(g => (
           <div class="card-premium rounded-[18px] overflow-hidden">
-            <div class="flex items-center justify-between px-5 py-3 border-b border-border-subtle" style="background: var(--color-bg-secondary);">
-              <p class="text-[13px] font-bold text-content uppercase tracking-wide">Cuatrimestre {q.num}</p>
-              <span class="text-[12px] font-semibold text-brand bg-brand-soft px-2 py-0.5 rounded-full">{q.creditos} créditos</span>
-            </div>
+            <div class="px-5 py-3 border-b border-border-subtle" style="background: var(--color-bg-secondary);"><p class="text-[13px] font-bold text-content">{g.label}</p></div>
             <div class="p-4 space-y-2">
-              {q.cursos.map(c => (
-                <div class="flex items-start gap-3">
-                  <span class="text-[11px] font-mono font-bold text-brand-label bg-brand-soft px-1.5 py-0.5 rounded shrink-0 mt-0.5">{c.code}</span>
-                  <div class="flex-1 flex items-start justify-between gap-2">
-                    <span class="text-[13px] text-content-secondary leading-snug">{c.name}</span>
-                    <span class="text-[12px] font-semibold text-content-muted shrink-0">{c.cr}cr</span>
-                  </div>
-                </div>
-              ))}
+              {g.items.map(c => <div class="flex items-center gap-3"><span class="text-[11px] font-mono font-bold text-brand-label bg-brand-soft px-1.5 py-0.5 rounded shrink-0">{c.code}</span><span class="text-[13px] text-content-secondary">{c.name}</span></div>)}
             </div>
           </div>
         ))}
       </div>
-
-      <!-- Electivas -->
-      <div class="mb-14">
-        <p class="text-[13px] font-bold text-brand-label tracking-widest uppercase mb-6">Cursos electivos</p>
-        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-          <div class="card-premium rounded-[18px] overflow-hidden">
-            <div class="px-5 py-3 border-b border-border-subtle" style="background: var(--color-bg-secondary);">
-              <p class="text-[13px] font-bold text-content">Electiva 1</p>
-            </div>
-            <div class="p-4 space-y-2">
-              {[
-                { code: 'SOFT-24', name: 'Automatización de Pruebas' },
-                { code: 'SINT-06', name: 'Fundamentos de Aprendizaje Automático' },
-                { code: 'SOFT-25', name: 'Arquitectura de Software Distribuido' },
-              ].map(c => (
-                <div class="flex items-center gap-3">
-                  <span class="text-[11px] font-mono font-bold text-brand-label bg-brand-soft px-1.5 py-0.5 rounded shrink-0">{c.code}</span>
-                  <span class="text-[13px] text-content-secondary">{c.name}</span>
-                </div>
-              ))}
-            </div>
-          </div>
-          <div class="card-premium rounded-[18px] overflow-hidden">
-            <div class="px-5 py-3 border-b border-border-subtle" style="background: var(--color-bg-secondary);">
-              <p class="text-[13px] font-bold text-content">Electiva 2</p>
-            </div>
-            <div class="p-4 space-y-2">
-              {[
-                { code: 'SOFT-26', name: 'Estándares y Métricas de Calidad del Software' },
-                { code: 'SINT-05', name: 'Modelado y Arquitectura en Inteligencia Artificial' },
-                { code: 'SOFT-27', name: 'Desarrollo de Software en Cadena de Bloques' },
-              ].map(c => (
-                <div class="flex items-center gap-3">
-                  <span class="text-[11px] font-mono font-bold text-brand-label bg-brand-soft px-1.5 py-0.5 rounded shrink-0">{c.code}</span>
-                  <span class="text-[13px] text-content-secondary">{c.name}</span>
-                </div>
-              ))}
-            </div>
-          </div>
-        </div>
-      </div>
-
-      <!-- Ejes y áreas -->
-      <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
-        <div class="card-premium rounded-[18px] p-6">
-          <p class="text-[13px] font-bold text-brand-label tracking-widest uppercase mb-4">Ejes curriculares</p>
-          <ul class="space-y-2">
-            {['Gestión de Proyectos de Software','Integración y Despliegue del Software','Aseguramiento del Software','Gestión de la Calidad'].map(e => (
-              <li class="flex gap-2 text-[13px] text-content-secondary"><span class="text-brand shrink-0">◆</span>{e}</li>
-            ))}
-          </ul>
-        </div>
-        <div class="card-premium rounded-[18px] p-6">
-          <p class="text-[13px] font-bold text-brand-label tracking-widest uppercase mb-4">Ejes transversales</p>
-          <ul class="space-y-2">
-            {['Universalidad de los Derechos Humanos','Conciencia Ambiental y Cultura de Paz','Ética y Sociedad','Investigación e Innovación','Excelencia Académica y Profesional'].map(e => (
-              <li class="flex gap-2 text-[13px] text-content-secondary"><span class="text-accent2 shrink-0">◆</span>{e}</li>
-            ))}
-          </ul>
-        </div>
-        <div class="card-premium rounded-[18px] p-6">
-          <p class="text-[13px] font-bold text-brand-label tracking-widest uppercase mb-4">Áreas disciplinares</p>
-          <ul class="space-y-2">
-            {['Desarrollo Profesional','Matemáticas y Ciencias Básicas','Fundamentos de Informática','Análisis y Especificación de Requerimientos','Diseño y Modelado de Software','Calidad, Verificación y Validación','Seguridad del Software','Procesos de Software'].map(e => (
-              <li class="flex gap-2 text-[13px] text-content-secondary"><span class="text-content-muted shrink-0">◆</span>{e}</li>
-            ))}
-          </ul>
-        </div>
-      </div>
     </div>
-  </section>
-
-  <!-- CTA -->
-  <section class="py-16 md:py-24 px-6 text-center" style="background: var(--color-bg-secondary);">
-    <div class="max-w-[560px] mx-auto">
-      <h2 class="headline-display text-[clamp(1.5rem,3.5vw,2.5rem)] mb-5">
-        Aprendé a diseñar, gobernar y validar software<br />
-        <span class="text-gradient-hero">en un mundo donde la IA ya escribe código.</span>
-      </h2>
-      <p class="text-content-secondary text-[15px] leading-[1.8] mb-8">
-        3 años · 43 cursos · 141 créditos · Modalidad virtual en vivo · Acreditado SINAES
-      </p>
-      <a href="/admision/solicitar-informacion" class="btn-primary inline-flex items-center bg-accent2 text-white font-semibold px-8 py-3.5 rounded-full text-[15px] hover:bg-[#a01855] transition-colors duration-300">
-        Solicitar información
-      </a>
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+      {[{ titulo: 'Ejes curriculares', items: ejesCurr, color: 'text-brand' }, { titulo: 'Ejes transversales', items: ejesTransv, color: 'text-accent2' }, { titulo: 'Áreas disciplinares', items: areasDis, color: 'text-content-muted' }].map(sec => (
+        <div class="card-premium rounded-[18px] p-6">
+          <SectionBadge texto={sec.titulo} mb="mb-4" />
+          <ul class="space-y-2">{sec.items.map(e => <li class="flex gap-2 text-[13px] text-content-secondary"><span class={`${sec.color} shrink-0`}>◆</span>{e}</li>)}</ul>
+        </div>
+      ))}
     </div>
-  </section>
-
-</Base>
+  </div>
+</ProgramaLayout>

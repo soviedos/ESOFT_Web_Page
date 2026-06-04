@@ -1,71 +1,41 @@
 ---
-import Base from '../../layouts/Base.astro';
+import ProgramaLayout from '../../components/programa/ProgramaLayout.astro'
+import SectionBadge from '../../components/ui/SectionBadge.astro'
+
+const microciclos = [
+  { num: 1, name: 'Pensamiento computacional y lógica de programación', desc: 'Variables, tipos de datos, operadores, algoritmos, pseudocódigo y primeros programas en Python.' },
+  { num: 2, name: 'Control de flujo, validaciones y solución de problemas', desc: 'Condicionales, ciclos for/while, menús interactivos, validación de entradas y manejo de excepciones.' },
+  { num: 3, name: 'Funciones, modularidad y buenas prácticas', desc: 'Declaración de funciones, parámetros, retorno de valores, modularidad, documentación y código limpio.' },
+  { num: 4, name: 'Colecciones, archivos y datos estructurados', desc: 'Listas, diccionarios, tuplas, archivos CSV, JSON, filtros, transformaciones y generación de reportes.' },
+  { num: 5, name: 'Python aplicado a bases de datos, APIs y automatización', desc: 'Conexión a SQLite/PostgreSQL, operaciones CRUD, consumo de APIs REST y automatización de tareas.' },
+  { num: 6, name: 'Pruebas, Git y proyecto integrador', desc: 'Pruebas unitarias con pytest, control de versiones con Git, documentación técnica y presentación del proyecto final.' },
+]
+
+const paths = ['Desarrollo SQL y Bases de Datos Relacionales','Bases de Datos NoSQL y Distribuidas','Bases de Datos Vectoriales, IA Generativa y RAG','Testing de Software (Manual, Automatización e IA)']
+
+const programa = {
+  titulo:               'Python Foundations: Programación Aplicada desde Cero',
+  descripcion:          'Programa base, nivelatorio y propedéutico para aprender a programar desde cero con Python. Puerta de entrada a todos los paths técnicos especializados: bases de datos, testing, IA y automatización.',
+  tipo:                 'tecnico',
+  duracionCuatrimestres: 6,
+  badgeOverride:        'Curso base habilitador · 6 microciclos',
+  estadisticas: [
+    { valor: '6',    label: 'Microciclos' },
+    { valor: '144',  label: 'Horas totales' },
+    { valor: '4 sem',label: '24 semanas total', size: 'lg' as const },
+    { valor: 'Virtual\nen vivo', label: 'Modalidad', colorValor: 'accent2' as const, size: 'lg' as const },
+  ],
+  ctaTitulo:       'Empezá a programar.',
+  ctaTituloAcento: 'Sin experiencia previa.',
+  ctaDescripcion:  '6 microciclos · 144 horas · 24 semanas · Virtual en vivo · Universidad CENFOTEC',
+  cursos: [],
+}
 ---
-
-<Base title="Python Foundations: Programación Aplicada desde Cero" description="Curso base habilitador de programación en Python. 6 microciclos, 144 horas. Puerta de entrada a todos los paths técnicos ágiles de ESOFT.">
-
-  <!-- Hero -->
-  <section class="relative py-16 md:py-24 px-6" style="background: radial-gradient(ellipse 60% 40% at 50% 0%, rgba(244,180,0,0.08) 0%, transparent 60%), var(--color-bg-secondary);">
-    <div class="max-w-[1060px] mx-auto">
-      <nav class="text-[13px] text-content-muted mb-8">
-        <a href="/programas" class="hover:text-content transition-colors">Programas</a>
-        <span class="mx-2">·</span>
-        <span class="text-content">Python Foundations</span>
-      </nav>
-      <div class="grid grid-cols-1 lg:grid-cols-2 gap-14 items-center">
-        <div>
-          <div class="inline-flex items-center gap-2 rounded-full px-4 py-1.5 mb-5 text-[12px] font-bold tracking-widest uppercase" style="background: rgba(244,180,0,0.12); color: #7a5600; border: 1px solid rgba(244,180,0,0.3);">
-            Curso base habilitador · 6 microciclos
-          </div>
-          <h1 class="headline-display text-[clamp(2rem,4.5vw,3rem)] mb-6">
-            Python Foundations:<br />
-            <span style="color: #9a6a00;">Programación Aplicada desde Cero</span>
-          </h1>
-          <p class="text-content-secondary text-[16px] leading-[1.85] mb-6 max-w-[480px]">
-            Programa base, nivelatorio y propedéutico para aprender a programar desde cero con Python. Puerta de entrada a todos los paths técnicos especializados: bases de datos, testing, IA y automatización.
-          </p>
-          <div class="card-premium rounded-[14px] p-4 mb-8 flex gap-3 items-start border-l-4" style="border-left-color: #f4b400;">
-            <span class="text-[18px] shrink-0" style="color: #9a6a00;">★</span>
-            <p class="text-[13px] text-content-secondary leading-snug">
-              No se requiere experiencia previa en programación. Quienes ya programan pueden ingresar directamente a los paths especializados mediante <strong>prueba de suficiencia</strong>.
-            </p>
-          </div>
-          <div class="flex flex-wrap gap-4">
-            <a href="/admision/solicitar-informacion" class="btn-primary inline-flex items-center bg-accent2 text-white font-semibold px-7 py-3.5 rounded-full text-[15px] hover:bg-[#a01855] transition-colors duration-300">
-              Solicitar información
-            </a>
-            <a href="/admision" class="btn-ghost inline-flex items-center border border-border-default text-content-secondary font-medium px-7 py-3.5 rounded-full text-[15px]">
-              Proceso de admisión
-            </a>
-          </div>
-        </div>
-        <div class="grid grid-cols-2 gap-4">
-          <div class="card-stat p-6 text-center">
-            <p class="text-[2.25rem] font-extrabold text-content">6</p>
-            <p class="text-[14px] text-content-secondary mt-1">Microciclos</p>
-          </div>
-          <div class="card-stat p-6 text-center">
-            <p class="text-[2.25rem] font-extrabold text-content">144</p>
-            <p class="text-[14px] text-content-secondary mt-1">Horas totales</p>
-          </div>
-          <div class="card-stat p-6 text-center">
-            <p class="text-[2rem] font-extrabold leading-tight" style="color: #9a6a00;">4 sem<br/><span class="text-[1rem]">por ciclo</span></p>
-            <p class="text-[14px] text-content-secondary mt-1">24 semanas total</p>
-          </div>
-          <div class="card-stat p-6 text-center">
-            <p class="text-[1.25rem] font-extrabold text-accent2 leading-tight">Virtual<br/>en vivo</p>
-            <p class="text-[14px] text-content-secondary mt-1">Modalidad</p>
-          </div>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- Propósito -->
-  <section class="py-16 md:py-20 px-6" style="background: var(--color-bg-primary);">
+<ProgramaLayout programa={programa} heroGradient="rgba(244,180,0,0.08)">
+  <section slot="before-curriculum" class="py-16 md:py-20 px-6" style="background: var(--color-bg-primary);">
     <div class="max-w-[1060px] mx-auto grid grid-cols-1 lg:grid-cols-3 gap-10">
       <div>
-        <p class="text-[13px] font-bold text-brand-label tracking-widest uppercase mb-4">Perfil de entrada</p>
+        <SectionBadge texto="Perfil de entrada" />
         <ul class="space-y-2">
           {['Manejo básico de computadora.','Uso básico de internet, navegador y archivos.','Capacidad para seguir instrucciones técnicas.','No se requiere experiencia previa en programación.'].map(r => (
             <li class="flex gap-2 text-[14px] text-content-secondary"><span class="text-brand shrink-0">·</span>{r}</li>
@@ -73,53 +43,36 @@ import Base from '../../layouts/Base.astro';
         </ul>
       </div>
       <div>
-        <p class="text-[13px] font-bold text-brand-label tracking-widest uppercase mb-4">Perfil de salida</p>
-        <p class="text-content-secondary text-[14px] leading-[1.85]">
-          Al finalizar, la persona será capaz de desarrollar programas básicos en Python, procesar datos desde archivos, consumir APIs simples, conectarse a una base de datos, aplicar pruebas unitarias iniciales, usar Git y documentar soluciones técnicas.
-        </p>
+        <SectionBadge texto="Perfil de salida" />
+        <p class="text-content-secondary text-[14px] leading-[1.85]">Al finalizar, la persona será capaz de desarrollar programas básicos en Python, procesar datos desde archivos, consumir APIs simples, conectarse a una base de datos, aplicar pruebas unitarias iniciales, usar Git y documentar soluciones técnicas.</p>
       </div>
       <div>
-        <p class="text-[13px] font-bold text-brand-label tracking-widest uppercase mb-4">Paths habilitados</p>
+        <SectionBadge texto="Paths habilitados" />
         <ul class="space-y-2">
-          {['Desarrollo SQL y Bases de Datos Relacionales','Bases de Datos NoSQL y Distribuidas','Bases de Datos Vectoriales, IA Generativa y RAG','Testing de Software (Manual, Automatización e IA)'].map(p => (
-            <li class="flex gap-2 text-[13px] text-content-secondary"><span class="shrink-0" style="color: #9a6a00;">◆</span>{p}</li>
-          ))}
+          {paths.map(p => <li class="flex gap-2 text-[13px] text-content-secondary"><span class="text-brand shrink-0">◆</span>{p}</li>)}
         </ul>
       </div>
     </div>
   </section>
 
-  <!-- Malla de microciclos -->
-  <section class="py-16 md:py-24 px-6" style="background: var(--color-bg-secondary);">
+  <section slot="after-curriculum" class="py-16 md:py-24 px-6" style="background: var(--color-bg-secondary);">
     <div class="max-w-[1060px] mx-auto">
       <div class="text-center mb-12">
-        <p class="text-[13px] font-bold text-brand-label tracking-widest uppercase mb-3">Estructura curricular</p>
+        <SectionBadge texto="Estructura curricular" mb="mb-3" />
         <h2 class="headline-display text-[clamp(1.5rem,3vw,2.25rem)] mb-4">6 Microciclos · 144 horas</h2>
         <p class="text-content-secondary text-[15px]">Cada microciclo: 24 horas · 4 semanas · 2 días/semana · 3 horas/sesión · 8 sesiones</p>
       </div>
-
       <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
-        {[
-          { num: 1, name: 'Pensamiento computacional y lógica de programación', desc: 'Variables, tipos de datos, operadores, algoritmos, pseudocódigo y primeros programas en Python.' },
-          { num: 2, name: 'Control de flujo, validaciones y solución de problemas', desc: 'Condicionales, ciclos for/while, menús interactivos, validación de entradas y manejo de excepciones.' },
-          { num: 3, name: 'Funciones, modularidad y buenas prácticas', desc: 'Declaración de funciones, parámetros, retorno de valores, modularidad, documentación y código limpio.' },
-          { num: 4, name: 'Colecciones, archivos y datos estructurados', desc: 'Listas, diccionarios, tuplas, archivos CSV, JSON, filtros, transformaciones y generación de reportes.' },
-          { num: 5, name: 'Python aplicado a bases de datos, APIs y automatización', desc: 'Conexión a SQLite/PostgreSQL, operaciones CRUD, consumo de APIs REST y automatización de tareas.' },
-          { num: 6, name: 'Pruebas, Git y proyecto integrador', desc: 'Pruebas unitarias con pytest, control de versiones con Git, documentación técnica y presentación del proyecto final.' },
-        ].map(m => (
+        {microciclos.map(m => (
           <div class="card-premium rounded-[18px] overflow-hidden">
             <div class="px-5 py-3 border-b border-border-subtle flex items-center gap-3" style="background: var(--color-bg-primary);">
-              <span class="w-8 h-8 rounded-full flex items-center justify-center text-[13px] font-bold text-white shrink-0" style="background: #9a6a00;">{m.num}</span>
+              <span class="w-8 h-8 rounded-full flex items-center justify-center text-[13px] font-bold text-white shrink-0 bg-brand">{m.num}</span>
               <p class="text-[13px] font-bold text-content leading-snug">{m.name}</p>
             </div>
-            <div class="p-4">
-              <p class="text-[13px] text-content-secondary leading-[1.7]">{m.desc}</p>
-            </div>
+            <div class="p-4"><p class="text-[13px] text-content-secondary leading-[1.7]">{m.desc}</p></div>
           </div>
         ))}
       </div>
-
-      <!-- Proyecto integrador -->
       <div class="mt-8 rounded-[18px] p-6 text-white text-center" style="background: linear-gradient(135deg, #7a5600, #9a6a00);">
         <p class="text-[13px] font-bold tracking-widest uppercase mb-2 opacity-80">Evidencia final</p>
         <p class="text-[16px] font-bold mb-2">Sistema básico de procesamiento y gestión de datos con Python</p>
@@ -127,21 +80,4 @@ import Base from '../../layouts/Base.astro';
       </div>
     </div>
   </section>
-
-  <!-- CTA -->
-  <section class="py-16 md:py-24 px-6 text-center" style="background: var(--color-bg-primary);">
-    <div class="max-w-[560px] mx-auto">
-      <h2 class="headline-display text-[clamp(1.5rem,3.5vw,2.5rem)] mb-5">
-        Empezá a programar.<br />
-        <span class="text-gradient-hero">Sin experiencia previa.</span>
-      </h2>
-      <p class="text-content-secondary text-[15px] leading-[1.8] mb-8">
-        6 microciclos · 144 horas · 24 semanas · Virtual en vivo · Universidad CENFOTEC
-      </p>
-      <a href="/admision/solicitar-informacion" class="btn-primary inline-flex items-center bg-accent2 text-white font-semibold px-8 py-3.5 rounded-full text-[15px] hover:bg-[#a01855] transition-colors duration-300">
-        Solicitar información
-      </a>
-    </div>
-  </section>
-
-</Base>
+</ProgramaLayout>

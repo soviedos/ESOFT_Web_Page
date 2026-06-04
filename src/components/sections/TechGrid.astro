@@ -1,0 +1,17 @@
+---
+import TechBadge from '../ui/TechBadge.astro'
+
+interface Props {
+  tecnologias: string[]
+  titulo?: string
+}
+
+const { tecnologias, titulo = 'Tecnologías' } = Astro.props
+---
+
+<div>
+  <h2 class="text-xl md:text-2xl font-semibold mb-4">{titulo}</h2>
+  <div class="flex flex-wrap gap-2 mb-8">
+    {tecnologias.map(t => <TechBadge nombre={t} />)}
+  </div>
+</div>

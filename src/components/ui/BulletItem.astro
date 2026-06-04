@@ -1,0 +1,18 @@
+---
+interface Props {
+  texto: string
+  color?: 'brand' | 'accent2' | 'muted'
+}
+const { texto, color = 'brand' } = Astro.props
+
+const colorClass = {
+  brand:   'text-brand',
+  accent2: 'text-accent2',
+  muted:   'text-content-muted',
+}[color]
+---
+
+<li class="flex gap-3">
+  <span class:list={[colorClass, 'shrink-0 mt-1']}>◆</span>
+  <span class="text-content-secondary text-[15px] leading-[1.8]">{texto}</span>
+</li>

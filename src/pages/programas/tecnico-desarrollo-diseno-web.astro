@@ -1,190 +1,66 @@
 ---
-import Base from '../../layouts/Base.astro';
+import ProgramaLayout from '../../components/programa/ProgramaLayout.astro'
+import SectionBadge from '../../components/ui/SectionBadge.astro'
+
+const roles = [
+  { role: 'Web Developer Junior',        desc: 'Desarrollo y optimización de sitios web modernos.' },
+  { role: 'Asistente de Programación Web', desc: 'Implementación y mantenimiento de aplicaciones web.' },
+  { role: 'Asistente de Diseñador Web',  desc: 'Creación y mejora de interfaces visuales atractivas.' },
+]
+
+const razones = [
+  { title: 'Alta demanda en la industria digital',    desc: 'El desarrollo web Front-End es una de las áreas de mayor crecimiento. Las empresas buscan profesionales que creen interfaces innovadoras centradas en el usuario.' },
+  { title: 'Enfoque en experiencia del usuario (UX/UI)', desc: 'Creás interfaces intuitivas, accesibles y atractivas con las mejores prácticas de usabilidad y diseño centrado en el usuario.' },
+  { title: 'Proyectos reales desde el inicio',         desc: 'Construís un portafolio sólido que demostrará tus habilidades ante empleadores.' },
+  { title: 'Puerta de entrada al Full Stack',          desc: 'Al completarlo podés continuar con WEBN5 para dominar también el Back-End.' },
+]
+
+const programa = {
+  titulo:               'Técnico en Desarrollo y Diseño Web',
+  tituloAcento:         'y Diseño Web',
+  descripcion:          'Programa especializado en la creación y optimización de interfaces digitales, con un enfoque sólido en Front-End. Diseñás y desarrollás sitios web modernos, garantizando experiencias de usuario intuitivas, funcionales y centradas en el usuario.',
+  tipo:                 'tecnico',
+  duracionCuatrimestres: 4,
+  badgeOverride:        'Técnico · WEBTEC · 4 cuatrimestres',
+  estadisticas: [
+    { valor: '9',  label: 'Materias' },
+    { valor: '35', label: 'Créditos' },
+    { valor: '4',  label: 'Cuatrimestres', colorValor: 'brand' as const },
+    { valor: 'Virtual\nen vivo', label: 'Modalidad', colorValor: 'accent2' as const, size: 'lg' as const },
+  ],
+  ctaTitulo:       'Diseñá y construí',
+  ctaTituloAcento: 'experiencias web modernas.',
+  ctaDescripcion:  '4 cuatrimestres · 9 materias · 35 créditos · Virtual en vivo · Universidad CENFOTEC',
+  cursos: [
+    { code: 'FUN-01',   nombre: 'Introducción a las Tecnologías de Información', cuatrimestre: 1, orden: 1, creditos: 3 },
+    { code: 'FUN-08',   nombre: 'Expresión Oral y Escrita',                       cuatrimestre: 1, orden: 2, creditos: 3 },
+    { code: 'SOFT-28',  nombre: 'Introducción al Diseño y Desarrollo Web',         cuatrimestre: 1, orden: 3, creditos: 3 },
+    { code: 'SOFT-01',  nombre: 'Principios de Programación 1',                    cuatrimestre: 2, orden: 1, creditos: 5 },
+    { code: 'SOFT-29',  nombre: 'Diseño Web 1',                                    cuatrimestre: 2, orden: 2, creditos: 4 },
+    { code: 'SOFT-30',  nombre: 'Programación Web 1',                              cuatrimestre: 3, orden: 1, creditos: 5 },
+    { code: 'SOFT-39',  nombre: 'Experiencia-Interfaz de Usuario UX-UI',           cuatrimestre: 3, orden: 2, creditos: 4 },
+    { code: 'FUN-09',   nombre: 'Desarrollo de Habilidades Blandas',               cuatrimestre: 4, orden: 1, creditos: 3 },
+    { code: 'SOFT-31',  nombre: 'Proyecto Integrador Web 1',                       cuatrimestre: 4, orden: 2, creditos: 5 },
+  ],
+}
 ---
-
-<Base title="Técnico en Desarrollo y Diseño Web — WEBTEC" description="Técnico en Desarrollo y Diseño Web. 4 cuatrimestres, 9 materias, 35 créditos. Virtual en vivo. Universidad CENFOTEC.">
-
-  <!-- Hero -->
-  <section class="relative py-16 md:py-24 px-6" style="background: radial-gradient(ellipse 60% 40% at 50% 0%, rgba(14,165,233,0.05) 0%, transparent 60%), var(--color-bg-secondary);">
-    <div class="max-w-[1060px] mx-auto">
-      <nav class="text-[13px] text-content-muted mb-8">
-        <a href="/programas" class="hover:text-content transition-colors">Programas</a>
-        <span class="mx-2">·</span>
-        <span class="text-content">Técnico en Desarrollo y Diseño Web</span>
-      </nav>
-      <div class="grid grid-cols-1 lg:grid-cols-2 gap-14 items-center">
-        <div>
-          <p class="text-[13px] font-bold text-brand-label tracking-widest uppercase mb-4">Técnico · WEBTEC · 4 cuatrimestres</p>
-          <h1 class="headline-display text-[clamp(2rem,4.5vw,3rem)] mb-6">
-            Técnico en Desarrollo<br />
-            <span class="text-gradient-hero">y Diseño Web</span>
-          </h1>
-          <p class="text-content-secondary text-[16px] leading-[1.85] mb-6 max-w-[480px]">
-            Programa especializado en la creación y optimización de interfaces digitales, con un enfoque sólido en Front-End. Diseñás y desarrollás sitios web modernos, garantizando experiencias de usuario intuitivas, funcionales y centradas en el usuario.
-          </p>
-          <div class="card-premium rounded-[14px] p-4 mb-8 flex gap-3 items-start">
-            <span class="text-accent2 text-[18px] shrink-0">↑</span>
-            <p class="text-[13px] text-content-secondary leading-snug">
-              Al finalizar podés continuar con el <strong>Técnico en Desarrollo y Diseño Web Avanzado (WEBN5)</strong> para ampliar tu perfil hacia un enfoque Full Stack.
-            </p>
-          </div>
-          <div class="flex flex-wrap gap-4">
-            <a href="/admision/solicitar-informacion" class="btn-primary inline-flex items-center bg-accent2 text-white font-semibold px-7 py-3.5 rounded-full text-[15px] hover:bg-[#a01855] transition-colors duration-300">
-              Solicitar información
-            </a>
-            <a href="/admision" class="btn-ghost inline-flex items-center border border-border-default text-content-secondary font-medium px-7 py-3.5 rounded-full text-[15px]">
-              Proceso de admisión
-            </a>
-          </div>
-        </div>
-        <div class="grid grid-cols-2 gap-4">
-          <div class="card-stat p-6 text-center">
-            <p class="text-[2.25rem] font-extrabold text-content">9</p>
-            <p class="text-[14px] text-content-secondary mt-1">Materias</p>
-          </div>
-          <div class="card-stat p-6 text-center">
-            <p class="text-[2.25rem] font-extrabold text-content">35</p>
-            <p class="text-[14px] text-content-secondary mt-1">Créditos</p>
-          </div>
-          <div class="card-stat p-6 text-center">
-            <p class="text-[2.25rem] font-extrabold text-brand">4</p>
-            <p class="text-[14px] text-content-secondary mt-1">Cuatrimestres</p>
-          </div>
-          <div class="card-stat p-6 text-center">
-            <p class="text-[1.25rem] font-extrabold text-accent2 leading-tight">Virtual<br/>en vivo</p>
-            <p class="text-[14px] text-content-secondary mt-1">Modalidad</p>
-          </div>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- Perfil de entrada, salida y razones -->
-  <section class="py-16 md:py-24 px-6" style="background: var(--color-bg-primary);">
+<ProgramaLayout programa={programa} heroGradient="rgba(14,165,233,0.05)">
+  <section slot="before-curriculum" class="py-16 md:py-24 px-6" style="background: var(--color-bg-primary);">
     <div class="max-w-[1060px] mx-auto grid grid-cols-1 lg:grid-cols-2 gap-12">
       <div>
-        <p class="text-[13px] font-bold text-brand-label tracking-widest uppercase mb-4">Perfil de entrada</p>
+        <SectionBadge texto="Perfil de entrada" />
         <p class="text-content-secondary text-[15px] leading-[1.85] mb-6">Bachillerato en Educación Media, interés en diseño y desarrollo web.</p>
-
-        <p class="text-[13px] font-bold text-brand-label tracking-widest uppercase mb-4">Perfil de salida — roles</p>
-        <ul class="space-y-2">
-          {[
-            { role: 'Web Developer Junior', desc: 'Desarrollo y optimización de sitios web modernos.' },
-            { role: 'Asistente de Programación Web', desc: 'Implementación y mantenimiento de aplicaciones web.' },
-            { role: 'Asistente de Diseñador Web', desc: 'Creación y mejora de interfaces visuales atractivas.' },
-          ].map(r => (
-            <div class="flex gap-3">
-              <span class="text-accent2 shrink-0 mt-1">◆</span>
-              <div>
-                <p class="text-[14px] font-semibold text-content">{r.role}</p>
-                <p class="text-[13px] text-content-secondary">{r.desc}</p>
-              </div>
-            </div>
-          ))}
+        <SectionBadge texto="Perfil de salida — roles" />
+        <ul class="space-y-3">
+          {roles.map(r => <div class="flex gap-3"><span class="text-accent2 shrink-0 mt-1">◆</span><div><p class="text-[14px] font-semibold text-content">{r.role}</p><p class="text-[13px] text-content-secondary">{r.desc}</p></div></div>)}
         </ul>
       </div>
       <div>
-        <p class="text-[13px] font-bold text-brand-label tracking-widest uppercase mb-4">Razones para llevar este programa</p>
+        <SectionBadge texto="Razones para llevar este programa" />
         <ul class="space-y-4">
-          {[
-            { title: 'Alta demanda en la industria digital', desc: 'El desarrollo web Front-End es una de las áreas de mayor crecimiento. Las empresas buscan profesionales que creen interfaces innovadoras centradas en el usuario.' },
-            { title: 'Enfoque en experiencia del usuario (UX/UI)', desc: 'Creás interfaces intuitivas, accesibles y atractivas con las mejores prácticas de usabilidad y diseño centrado en el usuario.' },
-            { title: 'Proyectos reales desde el inicio', desc: 'Construís un portafolio sólido que demostrará tus habilidades ante empleadores.' },
-            { title: 'Puerta de entrada al Full Stack', desc: 'Al completarlo podés continuar con WEBN5 para dominar también el Back-End.' },
-          ].map(r => (
-            <div class="flex gap-3">
-              <span class="text-brand shrink-0 mt-1">◆</span>
-              <div>
-                <p class="text-[14px] font-semibold text-content">{r.title}</p>
-                <p class="text-[13px] text-content-secondary leading-[1.7]">{r.desc}</p>
-              </div>
-            </div>
-          ))}
+          {razones.map(r => <div class="flex gap-3"><span class="text-brand shrink-0 mt-1">◆</span><div><p class="text-[14px] font-semibold text-content">{r.title}</p><p class="text-[13px] text-content-secondary leading-[1.7]">{r.desc}</p></div></div>)}
         </ul>
       </div>
     </div>
   </section>
-
-  <!-- Malla curricular -->
-  <section class="py-16 md:py-24 px-6" style="background: var(--color-bg-secondary);">
-    <div class="max-w-[1060px] mx-auto">
-      <div class="text-center mb-12">
-        <p class="text-[13px] font-bold text-brand-label tracking-widest uppercase mb-3">Plan de estudios</p>
-        <h2 class="headline-display text-[clamp(1.5rem,3vw,2.25rem)] mb-4">Malla Curricular · WEBTEC</h2>
-        <p class="text-content-secondary text-[15px]">9 materias · 35 créditos · 1638 horas · 4 cuatrimestres</p>
-      </div>
-
-      <div class="grid grid-cols-1 md:grid-cols-2 gap-5">
-        {[
-          {
-            num: '1', creditos: 9,
-            cursos: [
-              { code: 'FUN-01', name: 'Introducción a las Tecnologías de Información', cr: 3, req: '' },
-              { code: 'FUN-08', name: 'Expresión Oral y Escrita', cr: 3, req: '' },
-              { code: 'SOFT-28', name: 'Introducción al Diseño y Desarrollo Web', cr: 3, req: '' },
-            ]
-          },
-          {
-            num: '2', creditos: 9,
-            cursos: [
-              { code: 'SOFT-01', name: 'Principios de Programación 1', cr: 5, req: '' },
-              { code: 'SOFT-29', name: 'Diseño Web 1', cr: 4, req: 'SOFT-28' },
-            ]
-          },
-          {
-            num: '3', creditos: 9,
-            cursos: [
-              { code: 'SOFT-30', name: 'Programación Web 1', cr: 5, req: 'SOFT-01 + SOFT-29' },
-              { code: 'SOFT-39', name: 'Experiencia-Interfaz de Usuario UX-UI', cr: 4, req: 'SOFT-29' },
-            ]
-          },
-          {
-            num: '4', creditos: 8,
-            cursos: [
-              { code: 'FUN-09', name: 'Desarrollo de Habilidades Blandas', cr: 3, req: 'FUN-08' },
-              { code: 'SOFT-31', name: 'Proyecto Integrador Web 1', cr: 5, req: 'SOFT-30 + SOFT-39' },
-            ]
-          },
-        ].map(q => (
-          <div class="card-premium rounded-[18px] overflow-hidden">
-            <div class="flex items-center justify-between px-5 py-3 border-b border-border-subtle" style="background: var(--color-bg-primary);">
-              <p class="text-[13px] font-bold text-content uppercase tracking-wide">Cuatrimestre {q.num}</p>
-              <span class="text-[12px] font-semibold text-brand bg-brand-soft px-2 py-0.5 rounded-full">{q.creditos} cr</span>
-            </div>
-            <div class="p-4 space-y-3">
-              {q.cursos.map(c => (
-                <div>
-                  <div class="flex items-start gap-2">
-                    <span class="text-[11px] font-mono font-bold text-brand-label bg-brand-soft px-1.5 py-0.5 rounded shrink-0 mt-0.5">{c.code}</span>
-                    <div class="flex-1 flex items-start justify-between gap-2">
-                      <span class="text-[13px] text-content-secondary leading-snug">{c.name}</span>
-                      <span class="text-[12px] font-semibold text-content-muted shrink-0">{c.cr}cr</span>
-                    </div>
-                  </div>
-                  {c.req && <p class="text-[11px] text-content-muted mt-0.5 pl-1">Req: {c.req}</p>}
-                </div>
-              ))}
-            </div>
-          </div>
-        ))}
-      </div>
-    </div>
-  </section>
-
-  <!-- CTA -->
-  <section class="py-16 md:py-24 px-6 text-center" style="background: var(--color-bg-primary);">
-    <div class="max-w-[560px] mx-auto">
-      <h2 class="headline-display text-[clamp(1.5rem,3.5vw,2.5rem)] mb-5">
-        Diseñá y construí<br />
-        <span class="text-gradient-hero">experiencias web modernas.</span>
-      </h2>
-      <p class="text-content-secondary text-[15px] leading-[1.8] mb-8">
-        4 cuatrimestres · 9 materias · 35 créditos · Virtual en vivo · Universidad CENFOTEC
-      </p>
-      <a href="/admision/solicitar-informacion" class="btn-primary inline-flex items-center bg-accent2 text-white font-semibold px-8 py-3.5 rounded-full text-[15px] hover:bg-[#a01855] transition-colors duration-300">
-        Solicitar información
-      </a>
-    </div>
-  </section>
-
-</Base>
+</ProgramaLayout>

@@ -1,0 +1,11 @@
+---
+interface Props {
+  texto: string
+  mb?: 'mb-3' | 'mb-4'
+}
+const { texto, mb = 'mb-4' } = Astro.props
+---
+
+<p class:list={['text-[13px] font-bold text-brand-label tracking-widest uppercase', mb]}>
+  {texto}
+</p>

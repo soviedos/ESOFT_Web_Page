@@ -1,5 +1,23 @@
 ---
-import Base from '../../layouts/Base.astro';
+import ProgramaLayout from '../../components/programa/ProgramaLayout.astro'
+import SectionBadge from '../../components/ui/SectionBadge.astro'
+
+const ACCENT = '#164a98'
+const ACCENT_LIGHT = 'rgba(22,74,152,0.3)'
+const GRADIENT = `linear-gradient(135deg, #164a98, #006AEA)`
+
+const roles = [
+  { role: 'Desarrollador SQL junior',                nivel: 'Junior' },
+  { role: 'Analista técnico de datos',               nivel: 'Junior' },
+  { role: 'Asistente de bases de datos',             nivel: 'Entrada/técnico' },
+  { role: 'Soporte de aplicaciones con BD',          nivel: 'Técnico' },
+  { role: 'Desarrollador backend con énfasis en datos', nivel: 'Junior' },
+]
+
+const proyectoFinal = {
+  num: 13, nombre: 'Proyecto final integrador SQL relacional',
+  tareas: ['Análisis del caso empresarial y requerimientos de datos.','Diseño e implementación de la base de datos (modelo conceptual, lógico y físico).','Consultas SQL, vistas, funciones, procedimientos o triggers.','Documentación técnica, integración básica y defensa del proyecto.'],
+}
 
 const microciclos = [
   {
@@ -110,85 +128,38 @@ const microciclos = [
       { t: 'Documentación técnica', s: 'Diccionario de datos; documentación de tablas, relaciones y restricciones; convenciones de nombres.' },
     ]
   },
-];
+]
+
+const programa = {
+  titulo:               'Path: Desarrollo SQL y Bases de Datos Relacionales',
+  tituloAcento:         'Bases de Datos Relacionales',
+  descripcion:          'Formá competencias aplicadas en diseño, construcción, consulta, integración y documentación de bases de datos relacionales para aplicaciones empresariales y procesos organizacionales.',
+  tipo:                 'tecnico',
+  duracionCuatrimestres: 13,
+  badgeOverride:        'Path técnico especializado · 13 microciclos',
+  estadisticas: [
+    { valor: '13',     label: 'Microciclos' },
+    { valor: '304',    label: 'Horas totales' },
+    { valor: 'SFIA',   label: 'Nivel 2–3', colorValor: 'brand' as const, size: 'lg' as const },
+    { valor: 'Virtual\nen vivo', label: 'Modalidad', colorValor: 'accent2' as const, size: 'lg' as const },
+  ],
+  ctaTitulo:       'Dominá SQL.',
+  ctaTituloAcento: 'Construí soluciones con datos reales.',
+  ctaDescripcion:  '13 microciclos · 304 horas · Virtual en vivo · Universidad CENFOTEC',
+  cursos: [],
+}
 ---
-
-<Base title="Path: Desarrollo SQL y Bases de Datos Relacionales" description="Path técnico especializado en SQL y bases de datos relacionales. 13 microciclos, 304 horas. Universidad CENFOTEC.">
-
-  <!-- Hero -->
-  <section class="relative py-16 md:py-24 px-6" style="background: radial-gradient(ellipse 60% 40% at 50% 0%, rgba(22,74,152,0.06) 0%, transparent 60%), var(--color-bg-secondary);">
-    <div class="max-w-[1060px] mx-auto">
-      <nav class="text-[13px] text-content-muted mb-8">
-        <a href="/programas" class="hover:text-content transition-colors">Programas</a>
-        <span class="mx-2">·</span>
-        <span class="text-content">Path: Desarrollo SQL y Bases de Datos Relacionales</span>
-      </nav>
-      <div class="grid grid-cols-1 lg:grid-cols-2 gap-14 items-center">
-        <div>
-          <p class="text-[13px] font-bold text-brand-label tracking-widest uppercase mb-4">Path técnico especializado · 13 microciclos</p>
-          <h1 class="headline-display text-[clamp(2rem,4.5vw,3rem)] mb-6">
-            Desarrollo SQL y<br />
-            <span class="text-gradient-hero">Bases de Datos Relacionales</span>
-          </h1>
-          <p class="text-content-secondary text-[16px] leading-[1.85] mb-6 max-w-[480px]">
-            Formá competencias aplicadas en diseño, construcción, consulta, integración y documentación de bases de datos relacionales para aplicaciones empresariales y procesos organizacionales.
-          </p>
-          <div class="card-premium rounded-[14px] p-4 mb-8 flex gap-3 items-start">
-            <span class="text-brand text-[18px] shrink-0">→</span>
-            <p class="text-[13px] text-content-secondary leading-snug">
-              <strong>Requisito:</strong> Haber aprobado <a href="/programas/python-foundations" class="text-brand underline">Python Foundations</a> o demostrar suficiencia equivalente en lógica, funciones, archivos, conexión básica a BD y Git.
-            </p>
-          </div>
-          <div class="flex flex-wrap gap-4">
-            <a href="/admision/solicitar-informacion" class="btn-primary inline-flex items-center bg-accent2 text-white font-semibold px-7 py-3.5 rounded-full text-[15px] hover:bg-[#a01855] transition-colors duration-300">
-              Solicitar información
-            </a>
-            <a href="/admision" class="btn-ghost inline-flex items-center border border-border-default text-content-secondary font-medium px-7 py-3.5 rounded-full text-[15px]">
-              Proceso de admisión
-            </a>
-          </div>
-        </div>
-        <div class="grid grid-cols-2 gap-4">
-          <div class="card-stat p-6 text-center">
-            <p class="text-[2.25rem] font-extrabold text-content">13</p>
-            <p class="text-[14px] text-content-secondary mt-1">Microciclos</p>
-          </div>
-          <div class="card-stat p-6 text-center">
-            <p class="text-[2.25rem] font-extrabold text-content">304</p>
-            <p class="text-[14px] text-content-secondary mt-1">Horas totales</p>
-          </div>
-          <div class="card-stat p-6 text-center">
-            <p class="text-[1.75rem] font-extrabold text-brand leading-tight">SFIA<br/><span class="text-[1rem]">Nivel 2–3</span></p>
-            <p class="text-[14px] text-content-secondary mt-1">Alineación</p>
-          </div>
-          <div class="card-stat p-6 text-center">
-            <p class="text-[1.25rem] font-extrabold text-accent2 leading-tight">Virtual<br/>en vivo</p>
-            <p class="text-[14px] text-content-secondary mt-1">Modalidad</p>
-          </div>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- Roles -->
-  <section class="py-12 md:py-16 px-6" style="background: var(--color-bg-primary);">
+<ProgramaLayout programa={programa} heroGradient="rgba(22,74,152,0.06)">
+  <section slot="before-curriculum" class="py-12 md:py-16 px-6" style="background: var(--color-bg-primary);">
     <div class="max-w-[1060px] mx-auto grid grid-cols-1 lg:grid-cols-2 gap-10">
       <div>
-        <p class="text-[13px] font-bold text-brand-label tracking-widest uppercase mb-4">Perfil de salida</p>
-        <p class="text-content-secondary text-[15px] leading-[1.85]">
-          Diseñar, construir, consultar e integrar bases de datos relacionales aplicando modelado de datos, SQL, restricciones de integridad, transacciones, vistas, procedimientos almacenados, funciones, triggers, documentación técnica y buenas prácticas de seguridad y calidad.
-        </p>
+        <SectionBadge texto="Perfil de salida" />
+        <p class="text-content-secondary text-[15px] leading-[1.85]">Diseñar, construir, consultar e integrar bases de datos relacionales aplicando modelado de datos, SQL, restricciones de integridad, transacciones, vistas, procedimientos almacenados, funciones, triggers, documentación técnica y buenas prácticas de seguridad y calidad.</p>
       </div>
       <div>
-        <p class="text-[13px] font-bold text-brand-label tracking-widest uppercase mb-4">Roles laborales</p>
+        <SectionBadge texto="Roles laborales" />
         <ul class="space-y-2">
-          {[
-            { role: 'Desarrollador SQL junior', nivel: 'Junior' },
-            { role: 'Analista técnico de datos', nivel: 'Junior' },
-            { role: 'Asistente de bases de datos', nivel: 'Entrada/técnico' },
-            { role: 'Soporte de aplicaciones con BD', nivel: 'Técnico' },
-            { role: 'Desarrollador backend con énfasis en datos', nivel: 'Junior' },
-          ].map(r => (
+          {roles.map(r => (
             <li class="flex items-center justify-between rounded-xl border border-border-subtle px-4 py-2.5 bg-bg-secondary">
               <span class="text-[14px] text-content-secondary">{r.role}</span>
               <span class="text-[11px] font-bold text-brand bg-brand-soft px-2 py-0.5 rounded-full shrink-0 ml-2">{r.nivel}</span>
@@ -199,20 +170,18 @@ const microciclos = [
     </div>
   </section>
 
-  <!-- Malla con contenidos -->
-  <section class="py-16 md:py-24 px-6" style="background: var(--color-bg-secondary);">
+  <section slot="after-curriculum" class="py-16 md:py-24 px-6" style="background: var(--color-bg-secondary);">
     <div class="max-w-[1060px] mx-auto">
       <div class="text-center mb-12">
-        <p class="text-[13px] font-bold text-brand-label tracking-widest uppercase mb-3">Plan de estudios</p>
+        <SectionBadge texto="Plan de estudios" mb="mb-3" />
         <h2 class="headline-display text-[clamp(1.5rem,3vw,2.25rem)] mb-4">13 Microciclos · 304 horas</h2>
         <p class="text-content-secondary text-[15px]">12 microciclos formativos de 24h + 1 microciclo final integrador de 16h</p>
       </div>
-
       <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
         {microciclos.map(m => (
           <div class="card-premium rounded-[18px] overflow-hidden">
             <div class="flex items-center gap-3 px-5 py-3 border-b border-border-subtle" style="background: var(--color-bg-primary);">
-              <span class="w-8 h-8 rounded-full flex items-center justify-center text-[12px] font-bold text-white shrink-0" style="background: #164a98;">{m.num}</span>
+              <span class="w-8 h-8 rounded-full flex items-center justify-center text-[12px] font-bold text-white shrink-0" style={`background: ${ACCENT};`}>{m.num}</span>
               <div class="flex-1">
                 <p class="text-[13px] font-bold text-content leading-snug">{m.name}</p>
                 <p class="text-[11px] text-content-muted">{m.hours} horas · 4 semanas</p>
@@ -220,7 +189,7 @@ const microciclos = [
             </div>
             <div class="p-4 space-y-3">
               {m.temas.map(tema => (
-                <div class="border-l-2 border-brand/30 pl-3">
+                <div class="border-l-2 pl-3" style={`border-color: ${ACCENT_LIGHT};`}>
                   <p class="text-[12px] font-bold text-content mb-0.5">{tema.t}</p>
                   <p class="text-[11px] text-content-secondary leading-snug">{tema.s}</p>
                 </div>
@@ -229,43 +198,22 @@ const microciclos = [
           </div>
         ))}
       </div>
-
-      <!-- Proyecto final -->
-      <div class="rounded-[18px] p-6 text-white" style="background: linear-gradient(135deg, #164a98, #006AEA);">
+      <div class="rounded-[18px] p-6 text-white mb-6" style={`background: ${GRADIENT};`}>
         <div class="flex items-center gap-3 mb-3">
-          <span class="w-8 h-8 rounded-full flex items-center justify-center text-[12px] font-bold bg-white/20 shrink-0">13</span>
+          <span class="w-8 h-8 rounded-full flex items-center justify-center text-[12px] font-bold bg-white/20 shrink-0">{proyectoFinal.num}</span>
           <div>
-            <p class="text-[12px] font-bold tracking-widest uppercase opacity-80">Microciclo 13 · Proyecto final integrador · 16 horas</p>
-            <p class="text-[15px] font-bold">Proyecto final integrador SQL relacional</p>
+            <p class="text-[12px] font-bold tracking-widest uppercase opacity-80">Microciclo {proyectoFinal.num} · Proyecto final integrador · 16 horas</p>
+            <p class="text-[15px] font-bold">{proyectoFinal.nombre}</p>
           </div>
         </div>
         <div class="grid grid-cols-1 md:grid-cols-2 gap-3 mt-3">
-          {['Análisis del caso empresarial y requerimientos de datos.','Diseño e implementación de la base de datos (modelo conceptual, lógico y físico).','Consultas SQL, vistas, funciones, procedimientos o triggers.','Documentación técnica, integración básica y defensa del proyecto.'].map(t => (
-            <div class="flex gap-2 text-[13px] opacity-90"><span class="shrink-0">·</span>{t}</div>
-          ))}
+          {proyectoFinal.tareas.map(t => <div class="flex gap-2 text-[13px] opacity-90"><span class="shrink-0">·</span>{t}</div>)}
         </div>
       </div>
-
-      <div class="mt-8 card-premium rounded-[18px] p-6 text-center">
+      <div class="card-premium rounded-[18px] p-6 text-center">
         <p class="text-[13px] font-bold text-brand-label tracking-widest uppercase mb-2">Credencial al completar</p>
         <p class="text-[15px] font-bold text-content">CENFOTEC Certified SQL & Relational Database Developer – Junior</p>
       </div>
     </div>
   </section>
-
-  <section class="py-16 md:py-24 px-6 text-center" style="background: var(--color-bg-primary);">
-    <div class="max-w-[560px] mx-auto">
-      <h2 class="headline-display text-[clamp(1.5rem,3.5vw,2.5rem)] mb-5">
-        Dominá SQL.<br />
-        <span class="text-gradient-hero">Construí soluciones con datos reales.</span>
-      </h2>
-      <p class="text-content-secondary text-[15px] leading-[1.8] mb-8">
-        13 microciclos · 304 horas · Virtual en vivo · Universidad CENFOTEC
-      </p>
-      <a href="/admision/solicitar-informacion" class="btn-primary inline-flex items-center bg-accent2 text-white font-semibold px-8 py-3.5 rounded-full text-[15px] hover:bg-[#a01855] transition-colors duration-300">
-        Solicitar información
-      </a>
-    </div>
-  </section>
-
-</Base>
+</ProgramaLayout>

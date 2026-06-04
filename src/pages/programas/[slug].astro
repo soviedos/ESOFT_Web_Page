@@ -1,0 +1,43 @@
+---
+import { db } from '../../db/client'
+import { programas } from '../../db/schema'
+import { eq } from 'drizzle-orm'
+import type { ProgramaData } from '../../lib/types'
+
+const { slug } = Astro.params
+if (!slug) return Astro.redirect('/programas')
+
+const row = await db.query.programas.findFirst({
+  where: eq(programas.slug, slug),
+  with: { cursos: { orderBy: (c, { asc }) => [asc(c.cuatrimestre), asc(c.orden)] } }
+})
+
+if (!row || !row.activo) {
+  return new Response(null, { status: 404 })
+}
+
+const programa: ProgramaData = {
+  titulo:               row.titulo,
+  descripcion:          row.descripcion,
+  tipo:                 row.tipo,
+  duracionCuatrimestres: row.duracionCuatrimestres,
+  estadisticas:         (row.estadisticas ?? []) as ProgramaData['estadisticas'],
+  tecnologias:          (row.tecnologias  ?? []) as string[],
+  objetivo:             row.objetivo,
+  cursos:               (row.cursos ?? []).map(c => ({
+    nombre:       c.nombre,
+    cuatrimestre: c.cuatrimestre,
+    orden:        c.orden,
+    creditos:     c.creditos,
+  })),
+}
+
+const layouts: Record<string, any> = {
+  bachillerato:     (await import('../../components/programa/ProgramaBachillerato.astro')).default,
+  maestria:         (await import('../../components/programa/ProgramaMaestria.astro')).default,
+  tecnico:          (await import('../../components/programa/ProgramaTecnico.astro')).default,
+  ruta_corporativa: (await import('../../components/programa/ProgramaCorporativo.astro')).default,
+}
+const LayoutPrograma = layouts[programa.tipo]
+---
+<LayoutPrograma programa={programa} />

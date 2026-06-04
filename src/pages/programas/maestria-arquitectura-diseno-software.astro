@@ -1,67 +1,65 @@
 ---
-import Base from '../../layouts/Base.astro';
+import ProgramaLayout from '../../components/programa/ProgramaLayout.astro'
+import SectionBadge from '../../components/ui/SectionBadge.astro'
+
+const rolesGeneral = ['Ingeniero de requerimientos','Desarrollador de software de alto nivel de complejidad','Diseñador de sistemas de software','Experto en calidad y pruebas de software','Gerente de procesos y administración de software']
+const rolesEnfasis = ['Arquitecto de sistemas de software','Diseñador de experiencias interactivas','Especialista en rendimiento en software intenso en transacciones','Especialista en modelado y componentes']
+
+const nivelatoria = [
+  { code: 'NIV-01', name: 'Programación' }, { code: 'NIV-02', name: 'Bases de Datos' },
+  { code: 'NIV-05', name: 'Estructuras Formales y Analíticas' }, { code: 'NIV-06', name: 'Infraestructura Informática' },
+  { code: 'NIV-07', name: 'Proyecto de Desarrollo Web (*)' },
+]
+const electivos = [
+  { code: 'PSWE-13', name: 'Diseño de Experiencias Interactivas', req: 'PSWE-02, PSWE-04' },
+  { code: 'PSWE-14', name: 'Ingeniería de Rendimiento de Sistemas y Software', req: 'PSWE-03, PSWE-04' },
+  { code: 'PSWE-15', name: 'Ingeniería de Software Basada en Modelos', req: 'PSWE-02, PSWE-04' },
+  { code: 'PSWE-16', name: 'Arquitecturas de Servicios', req: 'PSWE-12' },
+  { code: 'PSWE-17', name: 'Arquitectura Empresarial y Tecnologías de Información', req: 'PSWE-01, PSWE-02, PSWE-12' },
+]
+
+const programa = {
+  titulo:               'Maestría en Ingeniería del Software — MISAD',
+  tituloAcento:         'Énfasis en Arquitectura y Diseño',
+  descripcion:          'Diseñá y especificá sistemas de gran tamaño o complejidad. Seleccioná estándares, métodos y herramientas apropiados para equilibrar requerimientos funcionales, de calidad, seguridad y gestión en sistemas intensivos en software.',
+  tipo:                 'maestria',
+  duracionCuatrimestres: 6,
+  badgeOverride:        'Maestría · MISAD · 6 cuatrimestres',
+  estadisticas: [
+    { valor: '15',          label: 'Cursos' },
+    { valor: '64',          label: 'Créditos' },
+    { valor: '2',           label: 'Años · 6 cuatrimestres', colorValor: 'brand' as const },
+    { valor: 'Virtual\nen vivo', label: 'Modalidad',         colorValor: 'accent2' as const, size: 'lg' as const },
+  ],
+  ctaTitulo:       'Diseñá los sistemas',
+  ctaTituloAcento: 'que soportan el mundo digital.',
+  ctaDescripcion:  '2 años · 15 cursos · 64 créditos · Modalidad presencial · Universidad CENFOTEC',
+  cursos: [
+    { code: 'PSWE-01', nombre: 'Tendencias en Ingeniería del Software',    cuatrimestre: 1, orden: 1, creditos: 4 },
+    { code: 'PSWE-02', nombre: 'Requerimientos de Software y Sistemas',     cuatrimestre: 1, orden: 2, creditos: 5 },
+    { code: 'PSWE-03', nombre: 'Construcción y Mantenimiento de Software',  cuatrimestre: 2, orden: 1, creditos: 5 },
+    { code: 'PSWE-04', nombre: 'Diseño de Sistemas de Software',            cuatrimestre: 2, orden: 2, creditos: 5 },
+    { code: 'PSWE-05', nombre: 'Taller de Innovación en Software 1',        cuatrimestre: 2, orden: 3, creditos: 3 },
+    { code: 'PSWE-06', nombre: 'Calidad y Pruebas de Software',             cuatrimestre: 3, orden: 1, creditos: 4 },
+    { code: 'PSWE-07', nombre: 'Procesos y Administración de Software',     cuatrimestre: 3, orden: 2, creditos: 4 },
+    { code: 'PSWE-08', nombre: 'Taller de Innovación en Software 2',        cuatrimestre: 3, orden: 3, creditos: 3 },
+    { code: 'PSWE-12', nombre: 'Arquitectura de Sistemas de Software',      cuatrimestre: 4, orden: 1, creditos: 4 },
+    { code: 'PSWE-09', nombre: 'Metodología de Investigación en Informática', cuatrimestre: 4, orden: 2, creditos: 4 },
+    { code: 'Electivo',nombre: 'Electivo del Énfasis',                     cuatrimestre: 4, orden: 3, creditos: 4 },
+    { code: 'PSWE-10', nombre: 'Proyecto de Investigación Aplicada 1 (*)', cuatrimestre: 5, orden: 1, creditos: 5 },
+    { code: 'Electivo',nombre: 'Electivo del Énfasis',                     cuatrimestre: 5, orden: 2, creditos: 4 },
+    { code: 'PSWE-11', nombre: 'Proyecto de Investigación Aplicada 2',     cuatrimestre: 6, orden: 1, creditos: 6 },
+    { code: 'Electivo',nombre: 'Electivo del Énfasis',                     cuatrimestre: 6, orden: 2, creditos: 4 },
+  ],
+}
 ---
-
-<Base title="Maestría en Ingeniería del Software — Énfasis Arquitectura y Diseño (MISAD)" description="Maestría Profesional en Ingeniería del Software con énfasis en Arquitectura y Diseño. 2 años, 15 cursos, 64 créditos. Universidad CENFOTEC.">
-
-  <!-- Hero -->
-  <section class="relative py-16 md:py-24 px-6" style="background: radial-gradient(ellipse 60% 40% at 50% 0%, rgba(27,58,140,0.06) 0%, transparent 60%), var(--color-bg-secondary);">
-    <div class="max-w-[1060px] mx-auto">
-      <nav class="text-[13px] text-content-muted mb-8">
-        <a href="/programas" class="hover:text-content transition-colors">Programas</a>
-        <span class="mx-2">·</span>
-        <span class="text-content">Maestría en Ingeniería del Software — MISAD</span>
-      </nav>
-      <div class="grid grid-cols-1 lg:grid-cols-2 gap-14 items-center">
-        <div>
-          <p class="text-[13px] font-bold text-brand-label tracking-widest uppercase mb-4">Maestría · MISAD · 6 cuatrimestres</p>
-          <h1 class="headline-display text-[clamp(2rem,4.5vw,3rem)] mb-6">
-            Maestría en Ingeniería del Software<br />
-            <span class="text-gradient-hero">Énfasis en Arquitectura y Diseño</span>
-          </h1>
-          <p class="text-content-secondary text-[16px] leading-[1.85] mb-8 max-w-[480px]">
-            Diseñá y especificá sistemas de gran tamaño o complejidad. Seleccioná estándares, métodos y herramientas apropiados para equilibrar requerimientos funcionales, de calidad, seguridad y gestión en sistemas intensivos en software.
-          </p>
-          <div class="flex flex-wrap gap-4">
-            <a href="/admision/solicitar-informacion" class="btn-primary inline-flex items-center bg-accent2 text-white font-semibold px-7 py-3.5 rounded-full text-[15px] hover:bg-[#a01855] transition-colors duration-300">
-              Solicitar información
-            </a>
-            <a href="/admision" class="btn-ghost inline-flex items-center border border-border-default text-content-secondary font-medium px-7 py-3.5 rounded-full text-[15px]">
-              Proceso de admisión
-            </a>
-          </div>
-        </div>
-        <div class="grid grid-cols-2 gap-4">
-          <div class="card-stat p-6 text-center">
-            <p class="text-[2.25rem] font-extrabold text-content">15</p>
-            <p class="text-[14px] text-content-secondary mt-1">Cursos</p>
-          </div>
-          <div class="card-stat p-6 text-center">
-            <p class="text-[2.25rem] font-extrabold text-content">64</p>
-            <p class="text-[14px] text-content-secondary mt-1">Créditos</p>
-          </div>
-          <div class="card-stat p-6 text-center">
-            <p class="text-[2.25rem] font-extrabold text-brand">2</p>
-            <p class="text-[14px] text-content-secondary mt-1">Años · 6 cuatrimestres</p>
-          </div>
-          <div class="card-stat p-6 text-center">
-            <p class="text-[1.25rem] font-extrabold text-accent2 leading-tight">Virtual en vivo</p>
-            <p class="text-[14px] text-content-secondary mt-1">Modalidad</p>
-          </div>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- Descripción y perfiles -->
-  <section class="py-16 md:py-24 px-6" style="background: var(--color-bg-primary);">
+<ProgramaLayout programa={programa}>
+  <section slot="before-curriculum" class="py-16 md:py-24 px-6" style="background: var(--color-bg-primary);">
     <div class="max-w-[1060px] mx-auto grid grid-cols-1 lg:grid-cols-2 gap-12">
       <div>
-        <p class="text-[13px] font-bold text-brand-label tracking-widest uppercase mb-4">Perfil de ingreso</p>
-        <p class="text-content-secondary text-[15px] leading-[1.85] mb-6">
-          Bachillerato universitario en Ingeniería Informática o afín. Se requiere presentar atestados académicos y de experiencia profesional, además de demostrar dominio instrumental del idioma inglés.
-        </p>
-        <p class="text-[13px] font-bold text-brand-label tracking-widest uppercase mb-4">Requisitos de graduación</p>
+        <SectionBadge texto="Perfil de ingreso" />
+        <p class="text-content-secondary text-[15px] leading-[1.85] mb-6">Bachillerato universitario en Ingeniería Informática o afín. Se requiere presentar atestados académicos y de experiencia profesional, además de demostrar dominio instrumental del idioma inglés.</p>
+        <SectionBadge texto="Requisitos de graduación" />
         <ul class="space-y-2">
           {['Haber aprobado los 15 cursos del programa de estudios.','Haber defendido exitosamente el Proyecto de Investigación Aplicada 1 y 2 ante un Tribunal Examinador.'].map(r => (
             <li class="flex gap-3 text-[15px] text-content-secondary"><span class="text-brand shrink-0 mt-1">◆</span>{r}</li>
@@ -69,181 +67,40 @@ import Base from '../../layouts/Base.astro';
         </ul>
       </div>
       <div>
-        <p class="text-[13px] font-bold text-brand-label tracking-widest uppercase mb-4">Perfil de salida</p>
+        <SectionBadge texto="Perfil de salida" />
         <p class="text-content-secondary text-[14px] mb-3">Como graduado general podés desempeñarte como:</p>
-        <ul class="space-y-1.5 mb-5">
-          {['Ingeniero de requerimientos','Desarrollador de software de alto nivel de complejidad','Diseñador de sistemas de software','Experto en calidad y pruebas de software','Gerente de procesos y administración de software'].map(r => (
-            <li class="flex gap-2 text-[14px] text-content-secondary"><span class="text-brand shrink-0">·</span>{r}</li>
-          ))}
-        </ul>
+        <ul class="space-y-1.5 mb-5">{rolesGeneral.map(r => <li class="flex gap-2 text-[14px] text-content-secondary"><span class="text-brand shrink-0">·</span>{r}</li>)}</ul>
         <p class="text-content-secondary text-[14px] mb-3">El énfasis en Arquitectura y Diseño te permite desempeñarte específicamente como:</p>
-        <ul class="space-y-1.5">
-          {['Arquitecto de sistemas de software','Diseñador de experiencias interactivas','Especialista en rendimiento en software intenso en transacciones','Especialista en modelado y componentes'].map(r => (
-            <li class="flex gap-2 text-[14px] text-content-secondary"><span class="text-accent2 shrink-0">·</span>{r}</li>
-          ))}
-        </ul>
+        <ul class="space-y-1.5">{rolesEnfasis.map(r => <li class="flex gap-2 text-[14px] text-content-secondary"><span class="text-accent2 shrink-0">·</span>{r}</li>)}</ul>
       </div>
     </div>
   </section>
 
-  <!-- Malla curricular -->
-  <section class="py-16 md:py-24 px-6" style="background: var(--color-bg-secondary);">
-    <div class="max-w-[1060px] mx-auto">
-      <div class="text-center mb-12">
-        <p class="text-[13px] font-bold text-brand-label tracking-widest uppercase mb-3">Plan de estudios</p>
-        <h2 class="headline-display text-[clamp(1.5rem,3vw,2.25rem)] mb-4">Malla Curricular · MISAD</h2>
-        <p class="text-content-secondary text-[15px]">15 cursos · 64 créditos · 6 cuatrimestres</p>
-      </div>
-
-      <!-- Ciclo nivelatorio -->
-      <div class="mb-8 card-premium rounded-[18px] p-6">
-        <p class="text-[13px] font-bold text-content-muted tracking-widest uppercase mb-4">Ciclo Nivelatorio (0 créditos — según necesidad del estudiante)</p>
-        <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-3">
-          {[
-            { code: 'NIV-01', name: 'Programación' },
-            { code: 'NIV-02', name: 'Bases de Datos' },
-            { code: 'NIV-05', name: 'Estructuras Formales y Analíticas' },
-            { code: 'NIV-06', name: 'Infraestructura Informática' },
-            { code: 'NIV-07', name: 'Proyecto de Desarrollo Web (*)' },
-          ].map(c => (
-            <div class="flex flex-col gap-1 bg-bg-elevated rounded-xl p-3">
-              <span class="text-[11px] font-mono font-bold text-content-muted">{c.code}</span>
-              <span class="text-[12px] text-content-secondary leading-snug">{c.name}</span>
-            </div>
-          ))}
-        </div>
-      </div>
-
-      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5 mb-10">
-        {[
-          {
-            num: 'I', creditos: 9,
-            cursos: [
-              { code: 'PSWE-01', name: 'Tendencias en Ingeniería del Software', cr: 4 },
-              { code: 'PSWE-02', name: 'Requerimientos de Software y Sistemas', cr: 5 },
-            ]
-          },
-          {
-            num: 'II', creditos: 13,
-            cursos: [
-              { code: 'PSWE-03', name: 'Construcción y Mantenimiento de Software', cr: 5 },
-              { code: 'PSWE-04', name: 'Diseño de Sistemas de Software', cr: 5 },
-              { code: 'PSWE-05', name: 'Taller de Innovación en Software 1', cr: 3 },
-            ]
-          },
-          {
-            num: 'III', creditos: 11,
-            cursos: [
-              { code: 'PSWE-06', name: 'Calidad y Pruebas de Software', cr: 4 },
-              { code: 'PSWE-07', name: 'Procesos y Administración de Software', cr: 4 },
-              { code: 'PSWE-08', name: 'Taller de Innovación en Software 2', cr: 3 },
-            ]
-          },
-          {
-            num: 'IV', creditos: 12,
-            cursos: [
-              { code: 'PSWE-12', name: 'Arquitectura de Sistemas de Software', cr: 4 },
-              { code: 'PSWE-09', name: 'Metodología de Investigación en Informática', cr: 4 },
-              { code: 'Electivo', name: 'Electivo del Énfasis (ver opciones)', cr: 4 },
-            ]
-          },
-          {
-            num: 'V', creditos: 9,
-            cursos: [
-              { code: 'PSWE-10', name: 'Proyecto de Investigación Aplicada 1 (*)', cr: 5 },
-              { code: 'Electivo', name: 'Electivo del Énfasis (ver opciones)', cr: 4 },
-            ]
-          },
-          {
-            num: 'VI', creditos: 10,
-            cursos: [
-              { code: 'PSWE-11', name: 'Proyecto de Investigación Aplicada 2', cr: 6 },
-              { code: 'Electivo', name: 'Electivo del Énfasis (ver opciones)', cr: 4 },
-            ]
-          },
-        ].map(q => (
-          <div class="card-premium rounded-[18px] overflow-hidden">
-            <div class="flex items-center justify-between px-5 py-3 border-b border-border-subtle" style="background: var(--color-bg-primary);">
-              <p class="text-[13px] font-bold text-content uppercase tracking-wide">Cuatrimestre {q.num}</p>
-              <span class="text-[12px] font-semibold text-brand bg-brand-soft px-2 py-0.5 rounded-full">{q.creditos} créditos</span>
-            </div>
-            <div class="p-4 space-y-2">
-              {q.cursos.map(c => (
-                <div class="flex items-start gap-3">
-                  <span class="text-[11px] font-mono font-bold text-brand-label bg-brand-soft px-1.5 py-0.5 rounded shrink-0 mt-0.5">{c.code}</span>
-                  <div class="flex-1 flex items-start justify-between gap-2">
-                    <span class="text-[13px] text-content-secondary leading-snug">{c.name}</span>
-                    <span class="text-[12px] font-semibold text-content-muted shrink-0">{c.cr}cr</span>
-                  </div>
-                </div>
-              ))}
-            </div>
-          </div>
-        ))}
-      </div>
-
-      <!-- Electivos del énfasis -->
-      <div class="card-premium rounded-[18px] overflow-hidden">
-        <div class="px-5 py-3 border-b border-border-subtle" style="background: var(--color-bg-primary);">
-          <p class="text-[13px] font-bold text-content">Electivos del Énfasis en Arquitectura y Diseño</p>
-        </div>
-        <div class="p-5 grid grid-cols-1 md:grid-cols-2 gap-3">
-          {[
-            { code: 'PSWE-13', name: 'Diseño de Experiencias Interactivas', req: 'PSWE-02, PSWE-04' },
-            { code: 'PSWE-14', name: 'Ingeniería de Rendimiento de Sistemas y Software', req: 'PSWE-03, PSWE-04' },
-            { code: 'PSWE-15', name: 'Ingeniería de Software Basada en Modelos', req: 'PSWE-02, PSWE-04' },
-            { code: 'PSWE-16', name: 'Arquitecturas de Servicios', req: 'PSWE-12' },
-            { code: 'PSWE-17', name: 'Arquitectura Empresarial y Tecnologías de Información', req: 'PSWE-01, PSWE-02, PSWE-12' },
-          ].map(c => (
-            <div class="flex items-start gap-3 rounded-xl border border-border-subtle p-3 bg-bg-primary">
-              <span class="text-[11px] font-mono font-bold text-brand-label bg-brand-soft px-1.5 py-0.5 rounded shrink-0 mt-0.5">{c.code}</span>
-              <div>
-                <p class="text-[13px] text-content-secondary font-medium">{c.name}</p>
-                <p class="text-[12px] text-content-muted mt-0.5">Req: {c.req}</p>
-              </div>
-            </div>
-          ))}
-        </div>
+  <div slot="curriculum-extra" class="mt-8 space-y-6">
+    <div class="card-premium rounded-[18px] p-6">
+      <p class="text-[13px] font-bold text-content-muted tracking-widest uppercase mb-4">Ciclo Nivelatorio (0 créditos — según necesidad)</p>
+      <div class="grid grid-cols-2 md:grid-cols-5 gap-3">
+        {nivelatoria.map(c => <div class="flex flex-col gap-1 bg-bg-elevated rounded-xl p-3"><span class="text-[11px] font-mono font-bold text-content-muted">{c.code}</span><span class="text-[12px] text-content-secondary leading-snug">{c.name}</span></div>)}
       </div>
     </div>
-  </section>
+    <div class="card-premium rounded-[18px] overflow-hidden">
+      <div class="px-5 py-3 border-b border-border-subtle" style="background: var(--color-bg-primary);"><p class="text-[13px] font-bold text-content">Electivos del Énfasis en Arquitectura y Diseño</p></div>
+      <div class="p-5 grid grid-cols-1 md:grid-cols-2 gap-3">
+        {electivos.map(c => <div class="flex items-start gap-3 rounded-xl border border-border-subtle p-3 bg-bg-primary"><span class="text-[11px] font-mono font-bold text-brand-label bg-brand-soft px-1.5 py-0.5 rounded shrink-0 mt-0.5">{c.code}</span><div><p class="text-[13px] text-content-secondary font-medium">{c.name}</p><p class="text-[12px] text-content-muted mt-0.5">Req: {c.req}</p></div></div>)}
+      </div>
+    </div>
+  </div>
 
-  <!-- Áreas y ejes -->
-  <section class="py-16 md:py-20 px-6" style="background: var(--color-bg-primary);">
+  <section slot="after-curriculum" class="py-16 md:py-20 px-6" style="background: var(--color-bg-primary);">
     <div class="max-w-[1060px] mx-auto grid grid-cols-1 md:grid-cols-2 gap-6">
       <div class="card-premium rounded-[18px] p-6">
-        <p class="text-[13px] font-bold text-brand-label tracking-widest uppercase mb-4">Áreas disciplinarias</p>
-        <ul class="space-y-2">
-          {['Desarrollo','Gestión','Innovación','Arquitectura y Diseño de Software','Investigación'].map(e => (
-            <li class="flex gap-2 text-[14px] text-content-secondary"><span class="text-brand shrink-0">◆</span>{e}</li>
-          ))}
-        </ul>
+        <SectionBadge texto="Áreas disciplinarias" />
+        <ul class="space-y-2">{['Desarrollo','Gestión','Innovación','Arquitectura y Diseño de Software','Investigación'].map(e => <li class="flex gap-2 text-[14px] text-content-secondary"><span class="text-brand shrink-0">◆</span>{e}</li>)}</ul>
       </div>
       <div class="card-premium rounded-[18px] p-6">
-        <p class="text-[13px] font-bold text-brand-label tracking-widest uppercase mb-4">Ejes curriculares</p>
-        <ul class="space-y-2">
-          {['Ingeniería de Sistemas','Pensamiento de Diseño','Tecnología Informática'].map(e => (
-            <li class="flex gap-2 text-[14px] text-content-secondary"><span class="text-accent2 shrink-0">◆</span>{e}</li>
-          ))}
-        </ul>
+        <SectionBadge texto="Ejes curriculares" />
+        <ul class="space-y-2">{['Ingeniería de Sistemas','Pensamiento de Diseño','Tecnología Informática'].map(e => <li class="flex gap-2 text-[14px] text-content-secondary"><span class="text-accent2 shrink-0">◆</span>{e}</li>)}</ul>
       </div>
     </div>
   </section>
-
-  <!-- CTA -->
-  <section class="py-16 md:py-24 px-6 text-center" style="background: var(--color-bg-secondary);">
-    <div class="max-w-[560px] mx-auto">
-      <h2 class="headline-display text-[clamp(1.5rem,3.5vw,2.5rem)] mb-5">
-        Diseñá los sistemas<br />
-        <span class="text-gradient-hero">que soportan el mundo digital.</span>
-      </h2>
-      <p class="text-content-secondary text-[15px] leading-[1.8] mb-8">
-        2 años · 15 cursos · 64 créditos · Modalidad presencial · Universidad CENFOTEC
-      </p>
-      <a href="/admision/solicitar-informacion" class="btn-primary inline-flex items-center bg-accent2 text-white font-semibold px-8 py-3.5 rounded-full text-[15px] hover:bg-[#a01855] transition-colors duration-300">
-        Solicitar información
-      </a>
-    </div>
-  </section>
-
-</Base>
+</ProgramaLayout>

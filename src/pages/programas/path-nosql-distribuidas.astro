@@ -1,5 +1,23 @@
 ---
-import Base from '../../layouts/Base.astro';
+import ProgramaLayout from '../../components/programa/ProgramaLayout.astro'
+import SectionBadge from '../../components/ui/SectionBadge.astro'
+
+const ACCENT = '#1f8f5f'
+const ACCENT_LIGHT = 'rgba(31,143,95,0.4)'
+const GRADIENT = 'linear-gradient(135deg, #1f8f5f, #38b26f)'
+
+const roles = [
+  { role: 'Desarrollador NoSQL junior',                     nivel: 'Junior' },
+  { role: 'Backend Developer con énfasis en NoSQL',         nivel: 'Junior' },
+  { role: 'Junior Data Engineer',                           nivel: 'Junior' },
+  { role: 'Data Platform Assistant',                        nivel: 'Técnico' },
+  { role: 'Implementador junior de persistencia moderna',   nivel: 'Junior' },
+]
+
+const proyectoFinal = {
+  num: 12, nombre: 'Proyecto final aplicado NoSQL y distribuido',
+  tareas: ['Análisis del caso y selección del modelo NoSQL.','Diseño e implementación de la base de datos (documental o key-value).','Integración con aplicación o API; seguridad básica.','Documentación técnica y defensa de decisiones de diseño.'],
+}
 
 const microciclos = [
   {
@@ -101,72 +119,41 @@ const microciclos = [
       { t: 'Justificación de decisiones', s: 'Selección tecnológica; embebido vs referencia; consistencia; escalabilidad; límites y riesgos.' },
     ]
   },
-];
+]
+
+const programa = {
+  titulo:               'Path: Bases de Datos NoSQL y Distribuidas',
+  tituloAcento:         'NoSQL y Distribuidas',
+  descripcion:          'Seleccioná, modelá, implementá, consultá, integrá y documentá soluciones NoSQL y distribuidas: bases documentales, key-value, datos distribuidos y servicios administrados para aplicaciones modernas.',
+  tipo:                 'tecnico',
+  duracionCuatrimestres: 12,
+  badgeOverride:        'Path técnico especializado · 12 microciclos',
+  estadisticas: [
+    { valor: '12',     label: 'Microciclos' },
+    { valor: '280',    label: 'Horas totales' },
+    { valor: 'SFIA',   label: 'Nivel 2–3', colorValor: 'brand' as const, size: 'lg' as const },
+    { valor: 'Virtual\nen vivo', label: 'Modalidad', colorValor: 'accent2' as const, size: 'lg' as const },
+  ],
+  ctaTitulo:       'Persistencia moderna.',
+  ctaTituloAcento: 'Más allá del modelo relacional.',
+  ctaDescripcion:  '12 microciclos · 280 horas · Virtual en vivo · Universidad CENFOTEC',
+  cursos: [],
+}
 ---
-
-<Base title="Path: Bases de Datos NoSQL y Distribuidas" description="Path técnico especializado en bases de datos NoSQL y distribuidas. 12 microciclos, 280 horas. Universidad CENFOTEC.">
-
-  <section class="relative py-16 md:py-24 px-6" style="background: radial-gradient(ellipse 60% 40% at 50% 0%, rgba(31,143,95,0.06) 0%, transparent 60%), var(--color-bg-secondary);">
-    <div class="max-w-[1060px] mx-auto">
-      <nav class="text-[13px] text-content-muted mb-8">
-        <a href="/programas" class="hover:text-content transition-colors">Programas</a>
-        <span class="mx-2">·</span>
-        <span class="text-content">Path: Bases de Datos NoSQL y Distribuidas</span>
-      </nav>
-      <div class="grid grid-cols-1 lg:grid-cols-2 gap-14 items-center">
-        <div>
-          <p class="text-[13px] font-bold text-brand-label tracking-widest uppercase mb-4">Path técnico especializado · 12 microciclos</p>
-          <h1 class="headline-display text-[clamp(2rem,4.5vw,3rem)] mb-6">
-            Bases de Datos<br />
-            <span class="text-gradient-hero">NoSQL y Distribuidas</span>
-          </h1>
-          <p class="text-content-secondary text-[16px] leading-[1.85] mb-6 max-w-[480px]">
-            Seleccioná, modelá, implementá, consultá, integrá y documentá soluciones NoSQL y distribuidas: bases documentales, key-value, datos distribuidos y servicios administrados para aplicaciones modernas.
-          </p>
-          <div class="card-premium rounded-[14px] p-4 mb-8 flex gap-3 items-start">
-            <span class="text-brand text-[18px] shrink-0">→</span>
-            <p class="text-[13px] text-content-secondary leading-snug">
-              <strong>Requisito:</strong> Haber aprobado <a href="/programas/python-foundations" class="text-brand underline">Python Foundations</a> o demostrar suficiencia en lógica, funciones, JSON, APIs, conexión a BD y Git.
-            </p>
-          </div>
-          <div class="flex flex-wrap gap-4">
-            <a href="/admision/solicitar-informacion" class="btn-primary inline-flex items-center bg-accent2 text-white font-semibold px-7 py-3.5 rounded-full text-[15px] hover:bg-[#a01855] transition-colors duration-300">
-              Solicitar información
-            </a>
-            <a href="/admision" class="btn-ghost inline-flex items-center border border-border-default text-content-secondary font-medium px-7 py-3.5 rounded-full text-[15px]">
-              Proceso de admisión
-            </a>
-          </div>
-        </div>
-        <div class="grid grid-cols-2 gap-4">
-          <div class="card-stat p-6 text-center"><p class="text-[2.25rem] font-extrabold text-content">12</p><p class="text-[14px] text-content-secondary mt-1">Microciclos</p></div>
-          <div class="card-stat p-6 text-center"><p class="text-[2.25rem] font-extrabold text-content">280</p><p class="text-[14px] text-content-secondary mt-1">Horas totales</p></div>
-          <div class="card-stat p-6 text-center"><p class="text-[1.75rem] font-extrabold leading-tight" style="color:#1f8f5f;">SFIA<br/><span class="text-[1rem]">Nivel 2–3</span></p><p class="text-[14px] text-content-secondary mt-1">Alineación</p></div>
-          <div class="card-stat p-6 text-center"><p class="text-[1.25rem] font-extrabold text-accent2 leading-tight">Virtual<br/>en vivo</p><p class="text-[14px] text-content-secondary mt-1">Modalidad</p></div>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <section class="py-12 md:py-16 px-6" style="background: var(--color-bg-primary);">
+<ProgramaLayout programa={programa} heroGradient="rgba(31,143,95,0.06)">
+  <section slot="before-curriculum" class="py-12 md:py-16 px-6" style="background: var(--color-bg-primary);">
     <div class="max-w-[1060px] mx-auto grid grid-cols-1 lg:grid-cols-2 gap-10">
       <div>
-        <p class="text-[13px] font-bold text-brand-label tracking-widest uppercase mb-4">Perfil de salida</p>
-        <p class="text-content-secondary text-[15px] leading-[1.85]">Seleccionar, modelar, implementar e integrar soluciones de datos no relacionales y distribuidas usando modelos documentales, key-value, replicación, particionamiento, escalabilidad y criterios de consistencia. Podrá usar servicios administrados como entorno de implementación.</p>
+        <SectionBadge texto="Perfil de salida" />
+        <p class="text-content-secondary text-[15px] leading-[1.85]">Seleccionar, modelar, implementar e integrar soluciones de datos no relacionales y distribuidas usando modelos documentales, key-value, replicación, particionamiento, escalabilidad y criterios de consistencia.</p>
       </div>
       <div>
-        <p class="text-[13px] font-bold text-brand-label tracking-widest uppercase mb-4">Roles laborales</p>
+        <SectionBadge texto="Roles laborales" />
         <ul class="space-y-2">
-          {[
-            { role: 'Desarrollador NoSQL junior', nivel: 'Junior' },
-            { role: 'Backend Developer con énfasis en NoSQL', nivel: 'Junior' },
-            { role: 'Junior Data Engineer', nivel: 'Junior' },
-            { role: 'Data Platform Assistant', nivel: 'Técnico' },
-            { role: 'Implementador junior de persistencia moderna', nivel: 'Junior' },
-          ].map(r => (
+          {roles.map(r => (
             <li class="flex items-center justify-between rounded-xl border border-border-subtle px-4 py-2.5 bg-bg-secondary">
               <span class="text-[14px] text-content-secondary">{r.role}</span>
-              <span class="text-[11px] font-bold px-2 py-0.5 rounded-full shrink-0 ml-2" style="background: rgba(31,143,95,0.1); color: #1f8f5f;">{r.nivel}</span>
+              <span class="text-[11px] font-bold px-2 py-0.5 rounded-full shrink-0 ml-2" style={`background: rgba(31,143,95,0.1); color: ${ACCENT};`}>{r.nivel}</span>
             </li>
           ))}
         </ul>
@@ -174,19 +161,18 @@ const microciclos = [
     </div>
   </section>
 
-  <section class="py-16 md:py-24 px-6" style="background: var(--color-bg-secondary);">
+  <section slot="after-curriculum" class="py-16 md:py-24 px-6" style="background: var(--color-bg-secondary);">
     <div class="max-w-[1060px] mx-auto">
       <div class="text-center mb-12">
-        <p class="text-[13px] font-bold text-brand-label tracking-widest uppercase mb-3">Plan de estudios</p>
+        <SectionBadge texto="Plan de estudios" mb="mb-3" />
         <h2 class="headline-display text-[clamp(1.5rem,3vw,2.25rem)] mb-4">12 Microciclos · 280 horas</h2>
         <p class="text-content-secondary text-[15px]">11 microciclos formativos de 24h + 1 microciclo final integrador de 16h</p>
       </div>
-
       <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
         {microciclos.map(m => (
           <div class="card-premium rounded-[18px] overflow-hidden">
             <div class="flex items-center gap-3 px-5 py-3 border-b border-border-subtle" style="background: var(--color-bg-primary);">
-              <span class="w-8 h-8 rounded-full flex items-center justify-center text-[12px] font-bold text-white shrink-0" style="background: #1f8f5f;">{m.num}</span>
+              <span class="w-8 h-8 rounded-full flex items-center justify-center text-[12px] font-bold text-white shrink-0" style={`background: ${ACCENT};`}>{m.num}</span>
               <div class="flex-1">
                 <p class="text-[13px] font-bold text-content leading-snug">{m.name}</p>
                 <p class="text-[11px] text-content-muted">{m.hours} horas · 4 semanas</p>
@@ -194,7 +180,7 @@ const microciclos = [
             </div>
             <div class="p-4 space-y-3">
               {m.temas.map(tema => (
-                <div class="border-l-2 pl-3" style="border-color: rgba(31,143,95,0.4);">
+                <div class="border-l-2 pl-3" style={`border-color: ${ACCENT_LIGHT};`}>
                   <p class="text-[12px] font-bold text-content mb-0.5">{tema.t}</p>
                   <p class="text-[11px] text-content-secondary leading-snug">{tema.s}</p>
                 </div>
@@ -203,40 +189,22 @@ const microciclos = [
           </div>
         ))}
       </div>
-
-      <div class="rounded-[18px] p-6 text-white" style="background: linear-gradient(135deg, #1f8f5f, #38b26f);">
+      <div class="rounded-[18px] p-6 text-white mb-6" style={`background: ${GRADIENT};`}>
         <div class="flex items-center gap-3 mb-3">
-          <span class="w-8 h-8 rounded-full flex items-center justify-center text-[12px] font-bold bg-white/20 shrink-0">12</span>
+          <span class="w-8 h-8 rounded-full flex items-center justify-center text-[12px] font-bold bg-white/20 shrink-0">{proyectoFinal.num}</span>
           <div>
-            <p class="text-[12px] font-bold tracking-widest uppercase opacity-80">Microciclo 12 · Proyecto final aplicado · 16 horas</p>
-            <p class="text-[15px] font-bold">Proyecto final aplicado NoSQL y distribuido</p>
+            <p class="text-[12px] font-bold tracking-widest uppercase opacity-80">Microciclo {proyectoFinal.num} · Proyecto final aplicado · 16 horas</p>
+            <p class="text-[15px] font-bold">{proyectoFinal.nombre}</p>
           </div>
         </div>
         <div class="grid grid-cols-1 md:grid-cols-2 gap-3 mt-3">
-          {['Análisis del caso y selección del modelo NoSQL.','Diseño e implementación de la base de datos (documental o key-value).','Integración con aplicación o API; seguridad básica.','Documentación técnica y defensa de decisiones de diseño.'].map(t => (
-            <div class="flex gap-2 text-[13px] opacity-90"><span class="shrink-0">·</span>{t}</div>
-          ))}
+          {proyectoFinal.tareas.map(t => <div class="flex gap-2 text-[13px] opacity-90"><span class="shrink-0">·</span>{t}</div>)}
         </div>
       </div>
-
-      <div class="mt-8 card-premium rounded-[18px] p-6 text-center">
+      <div class="card-premium rounded-[18px] p-6 text-center">
         <p class="text-[13px] font-bold text-brand-label tracking-widest uppercase mb-2">Credencial al completar</p>
         <p class="text-[15px] font-bold text-content">CENFOTEC Certified NoSQL & Distributed Databases Developer – Junior</p>
       </div>
     </div>
   </section>
-
-  <section class="py-16 md:py-24 px-6 text-center" style="background: var(--color-bg-primary);">
-    <div class="max-w-[560px] mx-auto">
-      <h2 class="headline-display text-[clamp(1.5rem,3.5vw,2.5rem)] mb-5">
-        Persistencia moderna.<br />
-        <span class="text-gradient-hero">Más allá del modelo relacional.</span>
-      </h2>
-      <p class="text-content-secondary text-[15px] leading-[1.8] mb-8">12 microciclos · 280 horas · Virtual en vivo · Universidad CENFOTEC</p>
-      <a href="/admision/solicitar-informacion" class="btn-primary inline-flex items-center bg-accent2 text-white font-semibold px-8 py-3.5 rounded-full text-[15px] hover:bg-[#a01855] transition-colors duration-300">
-        Solicitar información
-      </a>
-    </div>
-  </section>
-
-</Base>
+</ProgramaLayout>

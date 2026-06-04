@@ -1,0 +1,31 @@
+---
+interface Props {
+  href: string
+  texto: string
+  variante?: 'primary' | 'secondary'
+  clase?: string
+}
+const { href, texto, variante = 'primary', clase = '' } = Astro.props
+---
+
+{variante === 'primary' ? (
+  <a
+    href={href}
+    class:list={[
+      'btn-primary inline-flex items-center bg-accent2 text-white font-semibold px-7 py-3.5 rounded-full text-[15px] hover:bg-accent2-hover transition-colors duration-300',
+      clase,
+    ]}
+  >
+    {texto}
+  </a>
+) : (
+  <a
+    href={href}
+    class:list={[
+      'btn-ghost inline-flex items-center border border-border-default text-content-secondary font-medium px-7 py-3.5 rounded-full text-[15px]',
+      clase,
+    ]}
+  >
+    {texto}
+  </a>
+)}

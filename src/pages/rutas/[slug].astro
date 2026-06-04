@@ -1,0 +1,36 @@
+---
+import { db } from '../../db/client'
+import { rutas, programas } from '../../db/schema'
+import { eq, inArray } from 'drizzle-orm'
+import Base from '../../layouts/Base.astro'
+
+const { slug } = Astro.params
+if (!slug) return Astro.redirect('/rutas')
+
+const ruta = await db.query.rutas.findFirst({ where: eq(rutas.slug, slug) })
+if (!ruta || !ruta.activo) return new Response(null, { status: 404 })
+
+const ids = (ruta.programaIds ?? []) as string[]
+const programasDeRuta = ids.length > 0
+  ? await db.select().from(programas)
+      .where(inArray(programas.id, ids))
+      .then(rows => { const m = new Map(rows.map(p => [p.id, p])); return ids.map(id => m.get(id)).filter(Boolean) })
+  : []
+---
+<Base title={ruta.titulo} description={ruta.descripcion ?? ''}>
+  <section class="max-w-5xl mx-auto px-6 py-16">
+    <h1 class="headline-display text-gradient-hero mb-4">{ruta.titulo}</h1>
+    {ruta.descripcion && <p class="text-content-secondary text-[17px] leading-[1.8] mb-12">{ruta.descripcion}</p>}
+    <ol class="space-y-6">
+      {programasDeRuta.map((p, i) => (
+        <li class="flex gap-6 items-start card-premium p-6">
+          <span class="text-brand font-bold text-2xl shrink-0">{i + 1}</span>
+          <div>
+            <a href={`/programas/${p!.slug}`} class="text-lg font-semibold text-brand hover:underline">{p!.titulo}</a>
+            <p class="text-content-secondary text-[15px] mt-1">{p!.descripcion}</p>
+          </div>
+        </li>
+      ))}
+    </ol>
+  </section>
+</Base>

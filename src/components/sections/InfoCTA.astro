@@ -1,0 +1,41 @@
+---
+interface Props {
+  titulo: string
+  tituloAcento?: string
+  descripcion: string
+  textoCTA?: string
+  slugCTA?: string
+}
+
+const {
+  titulo,
+  tituloAcento,
+  descripcion,
+  textoCTA = 'Solicitar información',
+  slugCTA = '/admision/solicitar-informacion',
+} = Astro.props
+---
+
+<section
+  class="py-16 md:py-24 px-6 text-center"
+  style="background: var(--color-bg-secondary);"
+>
+  <div class="max-w-[560px] mx-auto">
+    <h2 class="headline-display text-[clamp(1.5rem,3.5vw,2.5rem)] mb-5">
+      {titulo}
+      {tituloAcento && (
+        <>
+          <br />
+          <span class="text-gradient-hero">{tituloAcento}</span>
+        </>
+      )}
+    </h2>
+    <p class="text-content-secondary text-[15px] leading-[1.8] mb-8">{descripcion}</p>
+    <a
+      href={slugCTA}
+      class="btn-primary inline-flex items-center bg-accent2 text-white font-semibold px-8 py-3.5 rounded-full text-[15px] hover:bg-accent2-hover transition-colors duration-300"
+    >
+      {textoCTA}
+    </a>
+  </div>
+</section>

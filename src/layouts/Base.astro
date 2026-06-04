@@ -33,7 +33,7 @@ const { title, description = 'ESOFT — Escuela de Software' } = Astro.props;
     <ParticleGrid />
     <a href="#main-content" class="skip-link">Saltar al contenido principal</a>
     <Nav />
-    <main id="main-content" class="relative flex-1 w-full pt-[72px]" style="z-index:1;">
+    <main id="main-content" class="relative flex-1 w-full pt-[var(--nav-height)]" style="z-index:1;">
       <slot />
     </main>
     <Footer />

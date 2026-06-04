@@ -1,0 +1,77 @@
+---
+import Breadcrumb from '../ui/Breadcrumb.astro'
+import SectionBadge from '../ui/SectionBadge.astro'
+import CTAButton from '../ui/CTAButton.astro'
+import StatCard from '../ui/StatCard.astro'
+
+interface Estadistica {
+  valor: string
+  label: string
+  colorValor?: 'content' | 'brand' | 'accent2'
+  size?: 'lg' | 'xl'
+}
+
+interface Props {
+  titulo: string
+  tituloAcento?: string
+  descripcion: string
+  badge: string
+  breadcrumbItems: { label: string; href?: string }[]
+  estadisticas: Estadistica[]
+  slugSolicitud?: string
+  heroGradient?: string
+}
+
+const {
+  titulo,
+  tituloAcento,
+  descripcion,
+  badge,
+  breadcrumbItems,
+  estadisticas,
+  slugSolicitud = '/admision/solicitar-informacion',
+  heroGradient = 'rgba(27,58,140,0.05)',
+} = Astro.props
+---
+
+<section
+  class="relative py-16 md:py-24 px-6"
+  style={`background: radial-gradient(ellipse 60% 40% at 50% 0%, ${heroGradient} 0%, transparent 60%), var(--color-bg-secondary);`}
+>
+  <div class="max-w-[1060px] mx-auto">
+    <Breadcrumb items={breadcrumbItems} />
+
+    <div class="grid grid-cols-1 lg:grid-cols-2 gap-14 items-center">
+      <div>
+        <SectionBadge texto={badge} />
+        <h1 class="headline-display text-[clamp(2rem,4.5vw,3.25rem)] mb-6">
+          {titulo}
+          {tituloAcento && (
+            <>
+              <br />
+              <span class="text-gradient-hero">{tituloAcento}</span>
+            </>
+          )}
+        </h1>
+        <p class="text-content-secondary text-[16px] leading-[1.85] mb-8 max-w-[480px]">
+          {descripcion}
+        </p>
+        <div class="flex flex-wrap gap-4">
+          <CTAButton href={slugSolicitud} texto="Solicitar información" variante="primary" />
+          <CTAButton href="/admision" texto="Proceso de admisión" variante="secondary" />
+        </div>
+      </div>
+
+      <div class="grid grid-cols-2 gap-4">
+        {estadisticas.map(e => (
+          <StatCard
+            valor={e.valor}
+            label={e.label}
+            colorValor={e.colorValor ?? 'content'}
+            size={e.size ?? 'lg'}
+          />
+        ))}
+      </div>
+    </div>
+  </div>
+</section>
