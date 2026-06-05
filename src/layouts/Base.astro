@@ -1,5 +1,6 @@
 ---
 import '../styles/global.css';
+import '@fontsource-variable/inter';
 import Nav from '../components/Nav.astro';
 import Footer from '../components/Footer.astro';
 import ParticleGrid from '../components/ParticleGrid.astro';
@@ -44,9 +45,6 @@ const fullTitle = `${title} | ESOFT`
     <meta name="twitter:description" content={description} />
     <meta name="twitter:image"       content={new URL(ogImage, canonicalURL)} />
 
-    <link rel="preconnect" href="https://fonts.googleapis.com" />
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet" />
     <title>{fullTitle}</title>
   </head>
   <body class="min-h-screen flex flex-col bg-bg-primary text-content overflow-x-hidden">

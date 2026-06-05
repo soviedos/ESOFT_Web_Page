@@ -12,7 +12,6 @@
   /* ── Brand — azul institucional CENFOTEC ──────────── */
   --color-brand: #164a98;
   --color-brand-hover: #006AEA;
-  --color-brand-vivid: #006AEA;
   --color-brand-label: #164a98;
   --color-brand-soft: rgba(22, 74, 152, 0.08);
 
@@ -33,17 +32,6 @@
   --color-border-subtle: rgba(15, 23, 42, 0.06);
   --color-border-default: rgba(15, 23, 42, 0.10);
   --color-border-brand: rgba(22, 74, 152, 0.20);
-
-  /* ── Type scale (t-xs → t-4xl) ────────────────────── */
-  --text-t-xs:   0.75rem;   /* 12px */
-  --text-t-sm:   0.875rem;  /* 14px */
-  --text-t-base: 1rem;      /* 16px */
-  --text-t-md:   1.0625rem; /* 17px — body long-form */
-  --text-t-lg:   1.125rem;  /* 18px */
-  --text-t-xl:   1.25rem;   /* 20px */
-  --text-t-2xl:  1.5rem;    /* 24px */
-  --text-t-3xl:  2rem;      /* 32px */
-  --text-t-4xl:  2.5rem;    /* 40px */
 
   /* ── Fonts ────────────────────────────────────────── */
   --font-sans: 'Inter', 'SF Pro Display', -apple-system, system-ui, sans-serif;

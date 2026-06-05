@@ -2,6 +2,7 @@
 import Base from '../layouts/Base.astro';
 import Card from '../components/Card.astro';
 import Terminal from '../components/Terminal.astro';
+import CTAButton from '../components/ui/CTAButton.astro';
 ---
 
 <Base title="Inicio" description="ESOFT — Escuela de Ingeniería de Software de la Universidad CENFOTEC. IA, cloud, testing, arquitectura y desarrollo real.">
@@ -36,12 +37,8 @@ import Terminal from '../components/Terminal.astro';
       </p>
 
       <div class="mt-12 flex flex-col sm:flex-row gap-4 justify-center animate-fade-up" style="animation-delay: 0.35s">
-        <a href="/programas" class="btn-primary inline-flex justify-center items-center bg-brand text-bg-primary font-semibold px-8 py-3.5 rounded-full text-[15px]">
-          Conocer programas
-        </a>
-        <a href="/admision/solicitar-informacion" class="btn-primary inline-flex justify-center items-center bg-accent2 text-white font-semibold px-8 py-3.5 rounded-full text-[15px]">
-          Solicitar información
-        </a>
+        <CTAButton href="/programas" texto="Conocer programas" variante="brand" />
+        <CTAButton href="/admision/solicitar-informacion" texto="Solicitar información" />
       </div>
 
       <!-- Logos -->
@@ -268,9 +265,7 @@ import Terminal from '../components/Terminal.astro';
       <p class="text-content-secondary text-[15px] leading-[1.8] mb-10 max-w-[440px] mx-auto">
         Descubrí cuál es la ruta ideal para vos. En minutos tenés toda la información.
       </p>
-      <a href="/admision/solicitar-informacion" class="btn-primary inline-flex items-center bg-accent2 text-white font-semibold px-8 py-3.5 rounded-full text-[15px]">
-        Solicitar información
-      </a>
+      <CTAButton href="/admision/solicitar-informacion" texto="Solicitar información" />
     </div>
   </section>
 
@@ -438,9 +433,7 @@ import Terminal from '../components/Terminal.astro';
             Alianzas directas de la Universidad CENFOTEC con más de 50 empresas tecnológicas. Proyectos reales desde el primer cuatrimestre. Certificaciones internacionales incluidas en tu formación.
           </p>
           <div class="flex flex-wrap gap-4">
-            <a href="/industria-empleabilidad" class="btn-primary inline-flex items-center bg-brand text-bg-primary font-semibold px-7 py-3.5 rounded-full text-[14px]">
-              Explorar alianzas
-            </a>
+            <CTAButton href="/industria-empleabilidad" texto="Explorar alianzas" variante="brand" />
             <a href="/industria-empleabilidad/certificaciones" class="link-arrow text-[15px]">
               Certificaciones <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7" /></svg>
             </a>

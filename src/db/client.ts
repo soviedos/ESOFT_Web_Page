@@ -15,3 +15,7 @@ const pool = new Pool({
 
 export const db = drizzle(pool, { schema })
 export { pool }
+
+const shutdown = () => pool.end().finally(() => process.exit(0))
+process.once('SIGTERM', shutdown)
+process.once('SIGINT',  shutdown)
