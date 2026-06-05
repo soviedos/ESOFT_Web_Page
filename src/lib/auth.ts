@@ -1,13 +1,16 @@
 import * as jose from 'jose'
 
-if (!process.env.SESSION_SECRET) {
-  throw new Error('SESSION_SECRET no está definida. Revisa tu .env')
-}
-
-const SECRET = new TextEncoder().encode(process.env.SESSION_SECRET)
-
 export interface SessionUser {
   id: string; email: string; rol: 'admin' | 'docente'
+}
+
+// Lazy para que el check ocurra en tiempo de request (no de inicialización del módulo).
+// Necesario en Astro 6 SSR: el module runner de Vite no tiene process.env del .env
+// disponible en el worker al evaluar el módulo, pero sí en cada request handler.
+function getSecret(): Uint8Array {
+  const s = process.env.SESSION_SECRET
+  if (!s) throw new Error('SESSION_SECRET no está definida. Revisa tu .env')
+  return new TextEncoder().encode(s)
 }
 
 export async function signToken(user: SessionUser): Promise<string> {
@@ -15,7 +18,7 @@ export async function signToken(user: SessionUser): Promise<string> {
     .setProtectedHeader({ alg: 'HS256' })
     .setIssuedAt()
     .setExpirationTime('7d')
-    .sign(SECRET)
+    .sign(getSecret())
 }
 
 export async function requireAuth(
@@ -28,7 +31,7 @@ export async function requireAuth(
     const authHeader = request.headers.get('authorization') ?? ''
     const token = match?.[1] ?? (authHeader.startsWith('Bearer ') ? authHeader.slice(7) : null)
     if (!token) return null
-    const { payload } = await jose.jwtVerify(token, SECRET)
+    const { payload } = await jose.jwtVerify(token, getSecret())
     const user: SessionUser = {
       id: payload.sub as string,
       email: payload.email as string,
