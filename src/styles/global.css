@@ -23,6 +23,10 @@
   /* ── Accent 3 — sky blue (datos / stats) ─────────── */
   --color-accent3: #0EA5E9;
 
+  /* ── Accent orange — energía / efectos ambientales ── */
+  --color-accent-orange:      #F97316;
+  --color-accent-orange-soft: rgba(249, 115, 22, 0.10);
+
   /* ── Text — todos pasan WCAG AA sobre #F8F9FC ─────── */
   --color-content: #0F172A;           /* 19.5:1 ✅ */
   --color-content-secondary: #475569; /* ~7.0:1 ✅ */
@@ -58,8 +62,8 @@ body {
 }
 
 ::selection {
-  background: rgba(0, 229, 255, 0.25);
-  color: #fff;
+  background: rgba(249, 115, 22, 0.20);
+  color: var(--color-content);
 }
 
 /* ── Display headline ─────────────────────── */
@@ -72,7 +76,15 @@ body {
 
 /* ── Gradient text ────────────────────────── */
 .text-gradient-hero {
-  background: linear-gradient(135deg, #164a98 0%, #006AEA 100%);
+  background: linear-gradient(135deg, #164a98 0%, #006AEA 55%, #F97316 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+/* Variante cálida: naranja → azul (para subtítulos de sección) */
+.text-gradient-warm {
+  background: linear-gradient(135deg, #F97316 0%, #006AEA 100%);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
@@ -263,10 +275,11 @@ body {
   border-radius: 50%;
   background: conic-gradient(
     from 0deg at 50% 50%,
-    rgba(22, 74, 152, 0.08),
-    rgba(200, 31, 102, 0.05),
-    rgba(0, 106, 234, 0.04),
-    rgba(22, 74, 152, 0.08)
+    rgba(22,  74, 152, 0.08),
+    rgba(249, 115, 22, 0.06),
+    rgba(0,  106, 234, 0.04),
+    rgba(249, 115, 22, 0.04),
+    rgba(22,  74, 152, 0.08)
   );
   filter: blur(100px);
   animation: aurora-drift 20s ease-in-out infinite;
