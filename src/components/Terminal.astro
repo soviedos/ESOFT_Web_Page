@@ -2,9 +2,9 @@
 ---
 <div class="terminal" role="img" aria-label="Terminal mostrando flujo de trabajo de un ingeniero de software">
   <div class="terminal__bar">
-    <span class="terminal__dot" style="background:#FF5F57"></span>
-    <span class="terminal__dot" style="background:#FFBD2E"></span>
-    <span class="terminal__dot" style="background:#28C840"></span>
+    <span class="terminal__dot" style="background:#164A98"></span>
+    <span class="terminal__dot" style="background:#006AEA"></span>
+    <span class="terminal__dot" style="background:#9CC8FF"></span>
     <span class="terminal__title">bash — esoft-project</span>
   </div>
   <div class="terminal__body" id="terminal-body">
@@ -44,7 +44,7 @@
     { cmd: 'git push origin feat/ai-endpoint',  output: '✓ PR #84 opened → review requested',         cls: 't-cyan'   },
     { cmd: 'docker build -t app:2.5.0 .',       output: '✓ Image built → registry.esoft.dev',         cls: 't-cyan'   },
     { cmd: 'kubectl rollout status deploy/api', output: '✓ 3/3 pods ready — deploy successful',       cls: 't-green'  },
-    { cmd: 'curl /api/health | jq .status',     output: '"ok"  ← live in production ✓',               cls: 't-green'  },
+    { cmd: 'curl /api/health | jq .status',     output: '"ok"  ← live in production ✓',               cls: 't-live'   },
   ];
 
   let stepIdx = 0;
@@ -192,14 +192,14 @@
 }
 
 .terminal__prompt {
-  color: #c81f66;
+  color: #9CC8FF;
   font-weight: 600;
   flex-shrink: 0;
 }
 
 .terminal__prompt::after {
   content: ' $';
-  color: #475569;
+  color: #9CC8FF;
   font-weight: 400;
 }
 
@@ -208,7 +208,7 @@
 }
 
 .terminal__cursor {
-  color: #c81f66;
+  color: #9CC8FF;
   animation: blink 1s step-end infinite;
   margin-left: 1px;
 }
@@ -223,7 +223,10 @@
   padding-left: 4px;
 }
 
-.t-green { color: #4ADE80; }
-.t-cyan  { color: #38BDF8; }
+/* Salidas de éxito/info — azul claro de marca (sin verde neón ni cian) */
+.t-green { color: #9CC8FF; }
+.t-cyan  { color: #9CC8FF; }
 .t-muted { color: #475569; }
+/* Remate final — único uso de magenta en la terminal */
+.t-live  { color: #C81F66; font-weight: 600; }
 </style>
