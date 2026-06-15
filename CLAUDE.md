@@ -44,6 +44,29 @@ Tanto `DATABASE_URL` como `SESSION_SECRET` lanzan `Error` al inicio si no están
 - `--color-brand` = `#164a98` (azul CENFOTEC).
 - `--color-accent2` = `#c81f66` (magenta ESOFT, para CTAs).
 
+## Sistema visual — Libro de marca CENFOTEC / ESOFT
+
+Reglas oficiales del libro de marca (Escuela de Software Engineering). **Deben respetarse en todo cambio visual de aquí en adelante.**
+
+### Paleta oficial
+| Rol | Hex | Uso |
+|-----|-----|-----|
+| Azul cobalt primario | `#164A98` | Color base; domina la estructura |
+| Azul brillante | `#006AEA` | Interacción / hover / enlaces |
+| Azul claro | `#9CC8FF` | Fondos y tintes suaves |
+| Magenta de la Escuela | `#C81F66` | SOLO acciones y acentos puntuales |
+| Magenta oscuro | `#A81857` | Hover de CTAs |
+| Neutro oscuro | `#7C7B75` | Texto secundario, bordes |
+| Neutro claro | `#D2D2D2` | Separadores, deshabilitado |
+| Off-white | `#F8F9FC` | Fondo base existente |
+
+### Reglas de uso
+- El **cobalt y los azules dominan**. El magenta **nunca** se usa como fondo grande ni en mayor proporción que los azules; se reserva para CTAs ("Solicitar información"), badges activos y **1–2 acentos por pantalla**.
+- **PROHIBIDO el naranja** (`#F97316` y cualquier `orange-*`) y el **púrpura**: no están en el libro de marca.
+- **Tipografía de títulos:** geométrica tipo DIN — **Archivo** como sustituto web del DIN Alternate Bold oficial.
+- **Tipografía de cuerpo:** **Inter**.
+- **Eslogan institucional:** "SOMOS LO QUE SABEMOS".
+
 ## Estructura de componentes
 ```
 src/components/
