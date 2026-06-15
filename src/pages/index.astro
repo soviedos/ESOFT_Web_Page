@@ -22,13 +22,15 @@ import CTAButton from '../components/ui/CTAButton.astro';
 
     <div class="relative max-w-[820px] mx-auto text-center px-6">
 
-      <h1 class="headline-display text-[clamp(3.25rem,7.5vw,5.5rem)] animate-fade-up" style="animation-delay: 0.15s; text-shadow: 0 0 24px rgba(249,115,22,0.18);">
-        El software del futuro<br />
-        <span class="text-gradient-hero">se construye aquí.</span>
+      <h1 class="headline-display uppercase text-brand text-[clamp(3.25rem,7.5vw,5.5rem)] animate-fade-up" style="animation-delay: 0.15s;">
+        Somos lo que sabemos
       </h1>
 
+      <!-- Barra de acento — magenta ESOFT -->
+      <div class="mx-auto mt-6 w-16 h-[5px] rounded-full bg-accent2 animate-fade-up" style="animation-delay: 0.18s;" aria-hidden="true"></div>
+
       <div class="mt-8 inline-flex items-center gap-3 rounded-full px-7 py-3 animate-fade-up" style="animation-delay: 0.2s; background: rgba(27,58,140,0.07); border: 1px solid rgba(27,58,140,0.18); box-shadow: 0 2px 12px rgba(27,58,140,0.10);">
-        <span class="w-2 h-2 rounded-full shrink-0" style="background: #c81f66; box-shadow: 0 0 6px rgba(200,31,102,0.5); animation: pulse 2s ease-in-out infinite;" aria-hidden="true"></span>
+        <span class="w-2 h-2 rounded-full shrink-0" style="background: var(--color-accent2); box-shadow: 0 0 6px rgba(200,31,102,0.5); animation: pulse 2s ease-in-out infinite;" aria-hidden="true"></span>
         <span class="text-[clamp(0.9rem,1.6vw,1.05rem)] font-semibold tracking-wide text-brand-label">Escuela de Ingeniería de Software (ESOFT) · Universidad CENFOTEC</span>
       </div>
 
@@ -86,7 +88,7 @@ import CTAButton from '../components/ui/CTAButton.astro';
   <!-- ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
        ¿QUÉ ES ESOFT? — Institutional clarity
   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ -->
-  <section class="relative py-20 md:py-28 px-6" style="background: radial-gradient(ellipse 60% 40% at 50% 0%, rgba(249,115,22,0.04) 0%, transparent 50%), var(--color-bg-primary);" aria-label="¿Qué es ESOFT?">
+  <section class="relative py-20 md:py-28 px-6" style="background: radial-gradient(ellipse 60% 40% at 50% 0%, rgba(0,106,234,0.04) 0%, transparent 50%), var(--color-bg-primary);" aria-label="¿Qué es ESOFT?">
     <div class="max-w-[860px] mx-auto reveal">
       <div class="card-feature p-8 md:p-14 text-center">
             <p class="text-[14px] font-bold text-brand-label tracking-widest uppercase mb-4">¿Qué es ESOFT?</p>
@@ -122,7 +124,7 @@ import CTAButton from '../components/ui/CTAButton.astro';
   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ -->
   <section class="relative py-24 md:py-36 px-6 overflow-hidden section-dramatic" aria-label="Declaración de marca">
     <hr class="hr-gradient max-w-[500px] mx-auto mb-16 md:mb-24" role="presentation" />
-    <div class="ambient-glow w-[400px] md:w-[700px] h-[280px] md:h-[450px] top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2" style="background: radial-gradient(ellipse at center, rgba(249,115,22,0.06) 0%, rgba(0,106,234,0.03) 50%, transparent 70%);" aria-hidden="true"></div>
+    <div class="ambient-glow w-[400px] md:w-[700px] h-[280px] md:h-[450px] top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2" style="background: radial-gradient(ellipse at center, rgba(22,74,152,0.06) 0%, rgba(0,106,234,0.03) 50%, transparent 70%);" aria-hidden="true"></div>
     <div class="relative max-w-[800px] mx-auto text-center reveal">
       <h2 class="headline-display text-[clamp(2.25rem,5.5vw,4rem)] leading-[1.06]">
         Cada línea de código<br />
@@ -139,7 +141,7 @@ import CTAButton from '../components/ui/CTAButton.astro';
        3. RUTAS — Premium card grid
   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ -->
   <section class="relative py-24 md:py-36 lg:py-48 px-6 overflow-hidden section-deep" aria-label="Rutas de especialización">
-    <div class="ambient-glow w-[300px] md:w-[600px] h-[200px] md:h-[350px] top-[25%] right-[-5%]" style="background: radial-gradient(ellipse at center, rgba(249,115,22,0.04) 0%, transparent 70%);" aria-hidden="true"></div>
+    <div class="ambient-glow w-[300px] md:w-[600px] h-[200px] md:h-[350px] top-[25%] right-[-5%]" style="background: radial-gradient(ellipse at center, rgba(0,106,234,0.04) 0%, transparent 70%);" aria-hidden="true"></div>
 
     <div class="relative max-w-[1060px] mx-auto">
       <div class="text-center max-w-[600px] mx-auto mb-14 md:mb-20 reveal">
@@ -168,7 +170,7 @@ import CTAButton from '../components/ui/CTAButton.astro';
   <!-- ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
        4. PROGRAMAS — Feature program showcase
   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ -->
-  <section class="relative py-24 md:py-36 lg:py-48 px-6" style="background: radial-gradient(ellipse 60% 40% at 30% 0%, rgba(249,115,22,0.04) 0%, transparent 50%), var(--color-bg-secondary);" aria-label="Programas académicos">
+  <section class="relative py-24 md:py-36 lg:py-48 px-6" style="background: radial-gradient(ellipse 60% 40% at 30% 0%, rgba(0,106,234,0.04) 0%, transparent 50%), var(--color-bg-secondary);" aria-label="Programas académicos">
     <div class="section-divider max-w-[400px] mx-auto mb-16 md:mb-28"></div>
 
     <div class="max-w-[1060px] mx-auto">
@@ -192,10 +194,10 @@ import CTAButton from '../components/ui/CTAButton.astro';
             <!-- Avatares de estudiantes del programa -->
             <div class="flex items-center gap-3 mb-8">
               <div class="flex -space-x-3">
-                <div class="w-9 h-9 rounded-full border-2 border-bg-card flex items-center justify-center text-[14px] font-bold text-brand" style="background: rgba(22,74,152,0.10);">S</div>
-                <div class="w-9 h-9 rounded-full border-2 border-bg-card flex items-center justify-center text-[14px] font-bold text-accent2" style="background: rgba(249,115,22,0.10);">M</div>
-                <div class="w-9 h-9 rounded-full border-2 border-bg-card flex items-center justify-center text-[14px] font-bold text-accent3" style="background: rgba(52,211,153,0.12);">K</div>
-                <div class="w-9 h-9 rounded-full border-2 border-bg-card flex items-center justify-center text-[14px] font-bold text-brand" style="background: rgba(22,74,152,0.10);">+</div>
+                <div class="w-9 h-9 rounded-full border-2 border-bg-card flex items-center justify-center text-[14px] font-bold text-brand bg-brand-soft">S</div>
+                <div class="w-9 h-9 rounded-full border-2 border-bg-card flex items-center justify-center text-[14px] font-bold text-accent2 bg-accent2-soft">M</div>
+                <div class="w-9 h-9 rounded-full border-2 border-bg-card flex items-center justify-center text-[14px] font-bold text-brand bg-brand-soft">K</div>
+                <div class="w-9 h-9 rounded-full border-2 border-bg-card flex items-center justify-center text-[14px] font-bold text-brand bg-brand-soft">+</div>
               </div>
               <p class="text-[14px] text-content-secondary">+200 graduados</p>
             </div>
@@ -257,7 +259,7 @@ import CTAButton from '../components/ui/CTAButton.astro';
        MID CTA — Conversion break
   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ -->
   <section class="relative py-20 md:py-32 px-6 overflow-hidden" style="background: var(--color-bg-primary);" aria-label="Solicitar información">
-    <div class="ambient-glow w-[300px] md:w-[600px] h-[200px] md:h-[350px] top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2" style="background: radial-gradient(ellipse at center, rgba(249,115,22,0.05) 0%, transparent 60%);" aria-hidden="true"></div>
+    <div class="ambient-glow w-[300px] md:w-[600px] h-[200px] md:h-[350px] top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2" style="background: radial-gradient(ellipse at center, rgba(0,106,234,0.05) 0%, transparent 60%);" aria-hidden="true"></div>
     <div class="relative max-w-[620px] mx-auto text-center reveal">
       <h2 class="headline-display text-[clamp(1.5rem,3.5vw,2.5rem)] mb-6">
         ¿Listo para construir el software<br />que el mundo necesita?
@@ -309,7 +311,7 @@ import CTAButton from '../components/ui/CTAButton.astro';
           <div class="flex justify-center mt-6 -space-x-2">
             <div class="w-8 h-8 rounded-full border-2 border-bg-secondary flex items-center justify-center text-[13px] font-bold text-brand bg-brand-soft">J</div>
             <div class="w-8 h-8 rounded-full border-2 border-bg-secondary flex items-center justify-center text-[13px] font-bold text-accent2 bg-accent2-soft">R</div>
-            <div class="w-8 h-8 rounded-full border-2 border-bg-secondary flex items-center justify-center text-[13px] font-bold text-accent3" style="background:rgba(14,165,233,0.10)">A</div>
+            <div class="w-8 h-8 rounded-full border-2 border-bg-secondary flex items-center justify-center text-[13px] font-bold text-brand bg-brand-soft">A</div>
           </div>
           <p class="text-[14px] text-content-muted mt-2 text-center">100+ profesionales activos</p>
         </div>
@@ -338,7 +340,7 @@ import CTAButton from '../components/ui/CTAButton.astro';
   <!-- ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
        TESTIMONIOS — Voces reales de la comunidad
   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ -->
-  <section class="relative py-24 md:py-36 lg:py-48 px-6 overflow-hidden" style="background: radial-gradient(ellipse 60% 40% at 50% 0%, rgba(249,115,22,0.03) 0%, transparent 50%), var(--color-bg-primary);" aria-label="Testimonios de la comunidad">
+  <section class="relative py-24 md:py-36 lg:py-48 px-6 overflow-hidden" style="background: radial-gradient(ellipse 60% 40% at 50% 0%, rgba(0,106,234,0.03) 0%, transparent 50%), var(--color-bg-primary);" aria-label="Testimonios de la comunidad">
     <div class="section-divider max-w-[400px] mx-auto mb-16 md:mb-28"></div>
 
     <div class="max-w-[1060px] mx-auto">
@@ -355,7 +357,7 @@ import CTAButton from '../components/ui/CTAButton.astro';
         <div class="card-premium rounded-[20px] p-8 md:p-10">
           <div class="flex items-center gap-4 mb-6">
             <!-- Avatar — reemplazar con foto real del egresado -->
-            <div class="w-14 h-14 rounded-full border-2 border-brand/20 flex items-center justify-center shrink-0" style="background: linear-gradient(135deg, rgba(249,115,22,0.15) 0%, rgba(22,74,152,0.10) 100%);">
+            <div class="w-14 h-14 rounded-full border-2 border-brand/20 flex items-center justify-center shrink-0" style="background: linear-gradient(135deg, rgba(200,31,102,0.15) 0%, rgba(22,74,152,0.10) 100%);">
               <span class="text-[18px] font-bold text-brand">AC</span>
             </div>
             <div>
@@ -373,7 +375,7 @@ import CTAButton from '../components/ui/CTAButton.astro';
         <div class="card-premium rounded-[20px] p-8 md:p-10">
           <div class="flex items-center gap-4 mb-6">
             <!-- Avatar — reemplazar con foto real de la estudiante -->
-            <div class="w-14 h-14 rounded-full border-2 border-accent2/20 flex items-center justify-center shrink-0" style="background: linear-gradient(135deg, rgba(22,74,152,0.12) 0%, rgba(249,115,22,0.10) 100%);">
+            <div class="w-14 h-14 rounded-full border-2 border-accent2/20 flex items-center justify-center shrink-0" style="background: linear-gradient(135deg, rgba(22,74,152,0.12) 0%, rgba(200,31,102,0.10) 100%);">
               <span class="text-[18px] font-bold text-accent2">MR</span>
             </div>
             <div>
@@ -391,8 +393,8 @@ import CTAButton from '../components/ui/CTAButton.astro';
         <div class="card-premium rounded-[20px] p-8 md:p-10">
           <div class="flex items-center gap-4 mb-6">
             <!-- Avatar — reemplazar con foto real del docente -->
-            <div class="w-14 h-14 rounded-full border-2 border-brand/20 flex items-center justify-center shrink-0" style="background: linear-gradient(135deg, rgba(249,115,22,0.12) 0%, rgba(14,165,233,0.10) 100%);">
-              <span class="text-[18px] font-bold text-accent3">DV</span>
+            <div class="w-14 h-14 rounded-full border-2 border-brand/20 flex items-center justify-center shrink-0" style="background: linear-gradient(135deg, rgba(200,31,102,0.12) 0%, rgba(22,74,152,0.10) 100%);">
+              <span class="text-[18px] font-bold text-brand">DV</span>
             </div>
             <div>
               <p class="text-[16px] font-bold text-content">Daniel Vargas</p>
@@ -418,7 +420,7 @@ import CTAButton from '../components/ui/CTAButton.astro';
   <!-- ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
        6. INDUSTRIA — Connection with industry
   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ -->
-  <section class="py-24 md:py-36 lg:py-48 px-6" style="background: radial-gradient(ellipse 60% 40% at 70% 0%, rgba(249,115,22,0.03) 0%, transparent 50%), var(--color-bg-secondary);" aria-label="Conexión con la industria">
+  <section class="py-24 md:py-36 lg:py-48 px-6" style="background: radial-gradient(ellipse 60% 40% at 70% 0%, rgba(0,106,234,0.03) 0%, transparent 50%), var(--color-bg-secondary);" aria-label="Conexión con la industria">
     <div class="section-divider max-w-[400px] mx-auto mb-16 md:mb-28"></div>
 
     <div class="max-w-[1060px] mx-auto">
@@ -503,7 +505,7 @@ import CTAButton from '../components/ui/CTAButton.astro';
   <!-- ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
        RESPALDO INSTITUCIONAL — Universidad CENFOTEC
   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ -->
-  <section class="relative py-20 md:py-32 px-6" style="background: radial-gradient(ellipse 50% 40% at 50% 0%, rgba(249,115,22,0.03) 0%, transparent 50%), var(--color-bg-primary);" aria-label="Respaldo institucional">
+  <section class="relative py-20 md:py-32 px-6" style="background: radial-gradient(ellipse 50% 40% at 50% 0%, rgba(0,106,234,0.03) 0%, transparent 50%), var(--color-bg-primary);" aria-label="Respaldo institucional">
     <div class="section-divider max-w-[400px] mx-auto mb-16 md:mb-24"></div>
     <div class="max-w-[860px] mx-auto text-center reveal">
       <img src="/UCENFOTEC_LogoHorizontal-Azul.png" alt="" class="w-[140px] md:w-[180px] h-auto mx-auto mb-8" aria-hidden="true" />
@@ -539,7 +541,7 @@ import CTAButton from '../components/ui/CTAButton.astro';
   <section class="relative py-32 md:py-48 lg:py-64 px-6 overflow-hidden section-dramatic" aria-label="Llamada a la acción final">
     <!-- Single unified glow for the CTA -->
     <div class="aurora-orb hidden md:block" style="width: 500px; height: 500px; top: 50%; left: 50%; transform: translate(-50%, -50%); opacity: 0.4;" aria-hidden="true"></div>
-    <div class="ambient-glow w-[400px] md:w-[800px] h-[300px] md:h-[550px] top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 animate-pulse-glow" style="background: radial-gradient(ellipse at center, rgba(249,115,22,0.14) 0%, rgba(22,74,152,0.06) 50%, transparent 70%);" aria-hidden="true"></div>
+    <div class="ambient-glow w-[400px] md:w-[800px] h-[300px] md:h-[550px] top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 animate-pulse-glow" style="background: radial-gradient(ellipse at center, rgba(0,106,234,0.14) 0%, rgba(22,74,152,0.06) 50%, transparent 70%);" aria-hidden="true"></div>
 
     <div class="relative max-w-[680px] mx-auto text-center reveal">
       <h2 class="headline-display text-[clamp(2.5rem,6vw,4.5rem)]">

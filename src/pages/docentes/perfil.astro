@@ -92,7 +92,7 @@ const espec = (docente.especialidades as string[] ?? []).join(', ')
     {error && (
       <div role="alert"
            class="mb-6 flex items-start gap-3 px-5 py-3.5 rounded-2xl text-[13px]"
-           style="background: rgba(200,31,102,0.06); border: 1px solid rgba(200,31,102,0.20); color: #9b1153;">
+           style="background: rgba(200,31,102,0.06); border: 1px solid rgba(200,31,102,0.20); color: var(--color-accent-hover);">
         <span class="shrink-0">⚠</span> {error}
       </div>
     )}
