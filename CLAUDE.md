@@ -39,7 +39,7 @@ PUBLIC_SITE_URL=https://esoft.ucenfotec.ac.cr
 Tanto `DATABASE_URL` como `SESSION_SECRET` lanzan `Error` al inicio si no están definidas.
 
 ### CSS
-- Nunca usar `bg-[#a01855]` directo — usar `bg-accent2-hover` (token en `@theme`).
+- Nunca usar `bg-[#a01855]` directo — usar `bg-accent-hover` (token en `@theme`).
 - Nunca usar `pt-[72px]` directo — usar `pt-[var(--nav-height)]`.
 - `--color-brand` = `#164a98` (azul CENFOTEC).
 - `--color-accent2` = `#c81f66` (magenta ESOFT, para CTAs).
