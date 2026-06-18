@@ -34,6 +34,20 @@ services:
       NODE_ENV: production
     ports:
       - "4321:4321"
+    # `docker compose watch` reconstruye la imagen y recrea el contenedor
+    # automáticamente al detectar cambios en el código fuente o config.
+    develop:
+      watch:
+        - action: rebuild
+          path: ./src
+        - action: rebuild
+          path: ./public
+        - action: rebuild
+          path: ./astro.config.mjs
+        - action: rebuild
+          path: ./package.json
+        - action: rebuild
+          path: ./package-lock.json
 
   pgadmin:
     image: dpage/pgadmin4:latest
