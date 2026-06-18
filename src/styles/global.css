@@ -11,6 +11,8 @@
 
   /* ── Brand — azul institucional CENFOTEC ──────────── */
   --color-brand: #164A98;
+  /* Triplete RGB del cobalt oficial (#164A98) para efectos con alfa: rgb(var(--color-brand-rgb) / A) */
+  --color-brand-rgb: 22 74 152;
   --color-brand-hover: #006AEA;
   --color-brand-label: #164a98;
   --color-brand-soft: #9CC8FF;
@@ -99,7 +101,7 @@ h1, h2, h3 {
   background: rgba(255, 255, 255, 0.70);
   backdrop-filter: blur(12px);
   -webkit-backdrop-filter: blur(12px);
-  border: 1px solid rgba(27, 58, 140, 0.10);
+  border: 1px solid rgb(var(--color-brand-rgb) / 0.10);
 }
 
 /* ── Card — single unified surface ───────────
@@ -127,7 +129,7 @@ h1, h2, h3 {
   left: 0;
   right: 0;
   height: 2px;
-  background: linear-gradient(90deg, transparent 10%, rgba(27, 58, 140, 0.35) 50%, transparent 90%);
+  background: linear-gradient(90deg, transparent 10%, rgb(var(--color-brand-rgb) / 0.35) 50%, transparent 90%);
   pointer-events: none;
   opacity: 0;
   transition: opacity 0.4s ease;
@@ -135,7 +137,7 @@ h1, h2, h3 {
 .card-premium:hover,
 .card-feature:hover {
   background: var(--color-bg-card-hover);
-  border-color: rgba(27, 58, 140, 0.18);
+  border-color: rgb(var(--color-brand-rgb) / 0.18);
   transform: translateY(-4px);
   box-shadow:
     0 12px 32px rgba(15, 23, 42, 0.12),
@@ -157,7 +159,7 @@ h1, h2, h3 {
   transition: all 0.3s ease;
 }
 .card-stat:hover {
-  border-color: rgba(27, 58, 140, 0.18);
+  border-color: rgb(var(--color-brand-rgb) / 0.18);
   transform: translateY(-2px);
   box-shadow: 0 8px 24px rgba(15, 23, 42, 0.10);
 }
@@ -174,11 +176,11 @@ h1, h2, h3 {
   z-index: 1;
   transition: all 0.3s ease;
   will-change: transform;
-  box-shadow: 0 2px 8px rgba(27, 58, 140, 0.25), 0 1px 3px rgba(27, 58, 140, 0.15);
+  box-shadow: 0 2px 8px rgb(var(--color-brand-rgb) / 0.25), 0 1px 3px rgb(var(--color-brand-rgb) / 0.15);
 }
 .btn-primary:hover {
   transform: translateY(-2px);
-  box-shadow: 0 6px 20px rgba(27, 58, 140, 0.30), 0 2px 6px rgba(27, 58, 140, 0.15);
+  box-shadow: 0 6px 20px rgb(var(--color-brand-rgb) / 0.30), 0 2px 6px rgb(var(--color-brand-rgb) / 0.15);
 }
 .btn-primary:active {
   transform: scale(0.98);
@@ -189,8 +191,8 @@ h1, h2, h3 {
   transition: all 0.3s ease;
 }
 .btn-ghost:hover {
-  background: rgba(27, 58, 140, 0.05);
-  border-color: rgba(27, 58, 140, 0.22);
+  background: rgb(var(--color-brand-rgb) / 0.05);
+  border-color: rgb(var(--color-brand-rgb) / 0.22);
   color: var(--color-brand);
   transform: translateY(-1px);
 }
@@ -249,14 +251,14 @@ h1, h2, h3 {
 /* ── Section divider with brand accent ────── */
 .section-divider {
   height: 1px;
-  background: linear-gradient(90deg, transparent, rgba(27, 58, 140, 0.18) 50%, transparent);
+  background: linear-gradient(90deg, transparent, rgb(var(--color-brand-rgb) / 0.18) 50%, transparent);
 }
 
 /* ── Hero grid background ─────────────────── */
 .hero-grid {
   background-image:
-    linear-gradient(rgba(27, 58, 140, 0.055) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(27, 58, 140, 0.055) 1px, transparent 1px);
+    linear-gradient(rgb(var(--color-brand-rgb) / 0.055) 1px, transparent 1px),
+    linear-gradient(90deg, rgb(var(--color-brand-rgb) / 0.055) 1px, transparent 1px);
   background-size: 64px 64px;
   mask-image: radial-gradient(ellipse 85% 70% at 50% 30%, black 0%, transparent 100%);
   -webkit-mask-image: radial-gradient(ellipse 85% 70% at 50% 30%, black 0%, transparent 100%);
@@ -304,7 +306,7 @@ h1, h2, h3 {
   left: -50%;
   width: 50%;
   height: 200%;
-  background: linear-gradient(90deg, transparent, rgba(27,58,140,0.04), transparent);
+  background: linear-gradient(90deg, transparent, rgb(var(--color-brand-rgb) / 0.04), transparent);
   animation: light-sweep 10s ease-in-out infinite;
   pointer-events: none;
 }
@@ -400,12 +402,12 @@ h1, h2, h3 {
 /* ── Section background variants ─────────── */
 .section-alt {
   background:
-    radial-gradient(ellipse 70% 50% at 50% 0%, rgba(27,58,140,0.05) 0%, transparent 50%),
+    radial-gradient(ellipse 70% 50% at 50% 0%, rgb(var(--color-brand-rgb) / 0.05) 0%, transparent 50%),
     var(--color-bg-secondary);
 }
 .section-deep {
   background:
-    radial-gradient(ellipse 80% 50% at 50% 0%, rgba(27,58,140,0.04) 0%, transparent 50%),
+    radial-gradient(ellipse 80% 50% at 50% 0%, rgb(var(--color-brand-rgb) / 0.04) 0%, transparent 50%),
     var(--color-bg-primary);
 }
 .section-dramatic {
@@ -419,7 +421,7 @@ h1, h2, h3 {
 .hr-gradient {
   height: 1px;
   border: none;
-  background: linear-gradient(90deg, transparent, rgba(27,58,140,0.10) 20%, rgba(27,58,140,0.18) 50%, rgba(27,58,140,0.10) 80%, transparent);
+  background: linear-gradient(90deg, transparent, rgb(var(--color-brand-rgb) / 0.10) 20%, rgb(var(--color-brand-rgb) / 0.18) 50%, rgb(var(--color-brand-rgb) / 0.10) 80%, transparent);
 }
 
 /* ── Mobile responsive overrides ──────────── */
