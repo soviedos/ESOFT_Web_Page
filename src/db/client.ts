@@ -1,13 +1,9 @@
+import { DATABASE_URL } from 'astro:env/server'
 import { drizzle } from 'drizzle-orm/node-postgres'
 import { Pool } from 'pg'
 import * as schema from './schema'
 
-const DATABASE_URL = process.env.DATABASE_URL
-if (!DATABASE_URL) {
-  throw new Error('DATABASE_URL no está definida. Revisa tu .env')
-}
-
-const pool = new Pool({
+export const pool = new Pool({
   connectionString: DATABASE_URL,
   max: 10,
   idleTimeoutMillis: 30_000,
@@ -15,7 +11,6 @@ const pool = new Pool({
 })
 
 export const db = drizzle(pool, { schema })
-export { pool }
 
 const shutdown = () => pool.end().finally(() => process.exit(0))
 process.once('SIGTERM', shutdown)

@@ -7,7 +7,14 @@
  * No toca las tablas users, docentes, noticias, solicitudes.
  */
 
-import { db, pool } from './client.js'
+import { Pool } from 'pg'
+import { drizzle } from 'drizzle-orm/node-postgres'
+import * as schema from './schema.js'
+
+const _url = process.env.DATABASE_URL
+if (!_url) throw new Error('DATABASE_URL no está definida. Pasa DATABASE_URL=... npm run db:seed')
+const _pool = new Pool({ connectionString: _url })
+const db = drizzle(_pool, { schema })
 import { programas, cursos as cursosTable, rutas as rutasTable } from './schema.js'
 
 // ── Tipos internos ──────────────────────────────────────────────────
@@ -546,7 +553,7 @@ async function seed() {
    • ${RUTAS.length} rutas
 `)
 
-  await pool.end()
+  await _pool.end()
 }
 
 seed().catch(err => {
