@@ -9,7 +9,26 @@ Los mensajes de commit siguen [Conventional Commits](https://www.conventionalcom
 
 ## [Unreleased]
 
-Sin cambios pendientes de documentar.
+### Añadido
+
+- **Login y sesión:** página `/login` (`src/pages/login.astro`) conectada a `POST /api/auth/login` y `POST /api/auth/logout`; autenticación JWT con `jose` en cookie `esoft_session` (`HttpOnly`, `SameSite=Strict`)
+- **Panel de administración:** `/admin` y `/admin/programas` (índice, `nuevo`, `[id]`) para gestionar programas; `POST /api/programas` protegido por rol `admin`
+- **Perfil de docente self-service:** `/docentes/perfil` con `GET`/`PATCH /api/docentes/[id]` autenticados
+- Tokens RGB de marca (`--color-brand-rgb`) para efectos con transparencia centralizados en `@theme`
+- Rebuild automático del contenedor `app` vía `docker compose watch`
+
+### Modificado
+
+- **Refactor de marca al libro oficial CENFOTEC / ESOFT:** paleta migrada a cobalt `#164A98` + magenta `#C81F66` (CTAs) con sus tokens en `@theme`; tipografía de títulos geométrica tipo DIN (**Archivo**) y cuerpo en **Inter**; CTAs en magenta con hover oscuro y variante *ghost* para secundarios; terminal, partículas y glows recolorados a la paleta de marca
+- **Routing de programas y rutas 100% dinámico:** eliminadas las páginas estáticas de programa; ahora se sirven desde la BD vía `[slug].astro`
+- **Secretos de servidor migrados a `astro:env/server`** (`DATABASE_URL`, `SESSION_SECRET`), reemplazando los checks manuales de `process.env`
+- Eliminada la sección de calidad académica (`/calidad-academica`) y sus enlaces en Nav y Footer
+- **Documentación actualizada al estado real:** `README.md` reescrito (SSR, Docker, paleta de marca, API, routing dinámico) y `CLAUDE.md` corregido (routing dinámico, estado del proyecto)
+
+### Corregido
+
+- **Auth en SSR:** check de `SESSION_SECRET` resuelto para Astro 6 SSR vía `astro:env/server`
+- Eliminados naranja (`#F97316`/`orange-*`) y púrpura fuera del libro de marca; corregidos hallazgos de auditoría visual (hero, avatares, magenta off-token)
 
 ---
 

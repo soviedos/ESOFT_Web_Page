@@ -24,10 +24,10 @@ Sitio web institucional de la Escuela de Ingeniería del Software (ESOFT) de la 
 - Se aplican **desde el host**, no desde el contenedor: `DATABASE_URL=postgresql://esoft:PASS@localhost:5433/esoft_db npm run db:migrate`.
 - Los archivos de migración están en `db/migrations/` (raíz del proyecto, no en `src/`).
 
-### Routing — coexistencia estático/dinámico
-- `src/pages/programas/[slug].astro` existe pero es bloqueado por las páginas estáticas del mismo directorio (Astro prioriza rutas estáticas). Esto es deuda técnica conocida.
-- Los programas en BD solo son servidos por `[slug].astro` si no hay archivo `.astro` estático con ese slug.
-- `src/pages/rutas/[slug].astro` tiene el mismo patrón.
+### Routing — programas y rutas 100% dinámicos
+- Las páginas estáticas de programa fueron eliminadas. Hoy `src/pages/programas/` contiene solo `index.astro` (índice) y `[slug].astro`; `src/pages/rutas/` igual.
+- Los programas y rutas se sirven **dinámicamente desde la BD** vía `[slug].astro` (`db.query.programas.findFirst({ where slug })` / `db.query.rutas.findFirst`). El listado se gestiona desde `/admin/programas` y se puebla con `npm run db:seed`.
+- Salvedad vigente: Astro prioriza rutas estáticas sobre `[slug].astro`. Si en el futuro se agrega un `.astro` con el mismo slug en esos directorios, ese archivo bloquearía al dinámico — por eso no deben crearse páginas estáticas de programa/ruta.
 
 ### Variables de entorno requeridas
 ```
@@ -118,6 +118,16 @@ docker compose --profile dev up -d     # + pgadmin en :5050
 ```
 
 ## Estado del proyecto (junio 2026)
-- Formulario de admisión (`/admision/solicitar-informacion`) pendiente de conectar al CRM universitario. El endpoint `/api/solicitud` no existe intencionalmente por ahora.
-- Sin UI de login aún — los endpoints `/api/programas` (POST) y `/api/docentes/[id]` (PATCH) requieren JWT pero no hay página de login implementada.
-- AWS Amplify desconectado (`amplify.yml.bak` en repo como referencia histórica).
+
+### Implementado
+- **Autenticación:** UI de login en `/login` (`src/pages/login.astro`) conectada a `/api/auth/login` y `/api/auth/logout`. JWT con `jose` en cookie `esoft_session` (`HttpOnly`, `SameSite=Strict`). Secretos validados vía `astro:env/server`.
+- **Panel admin:** `/admin` y `/admin/programas` (índice, `nuevo`, `[id]`) para gestionar programas. `POST /api/programas` requiere rol `admin`.
+- **Perfil de docente self-service:** `/docentes/perfil` (`src/pages/docentes/perfil.astro`); `GET`/`PATCH /api/docentes/[id]` requieren autenticación.
+- **Routing dinámico:** programas y rutas servidos desde BD vía `[slug].astro` (ver sección Routing).
+- **Despliegue:** Docker Compose (postgres, app, pgadmin). AWS Amplify descontinuado — no quedan archivos `amplify*` en el repo.
+
+### Pendiente
+- **Formulario de admisión → CRM:** `/admision/solicitar-informacion` aún no conecta al CRM universitario; el endpoint `/api/solicitud` no existe intencionalmente por ahora.
+- **Endurecimiento de auth:** falta robustecer el flujo (p. ej. rate limiting, manejo de expiración/refresh, protección de rutas más allá del check de JWT).
+- **Modelo académico:** el schema aún no modela la oferta 360 / paths / cursos sueltos como entidades de primer nivel.
+- **Bot / RAG:** asistente conversacional con RAG no iniciado (existe la variable `AI_API_KEY` en `.env.example` como reserva).

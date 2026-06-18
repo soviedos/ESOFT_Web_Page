@@ -48,7 +48,7 @@ Este repositorio sigue un flujo simplificado sobre `main`:
 1. Hacer los cambios localmente
 2. Verificar el build: `npm run build`
 3. Hacer commit con mensaje convencional
-4. Push a `main` — el deploy en Amplify se dispara automáticamente
+4. Push a `main` y desplegar con Docker Compose (reconstruir la imagen de la app: `docker compose up -d --build app`)
 
 > **No usar `git push --force` sobre `main` bajo ninguna circunstancia.**
 
@@ -125,7 +125,7 @@ const { title, href, icon } = Astro.props;
 - Los tokens de diseño se definen en `@theme` en `global.css`, no como variables CSS sueltas
 - Preferir tokens semánticos (`text-content-secondary`) sobre colores directos (`text-slate-500`)
 - Si un componente requiere estilos que no están en el design system, agregarlos en `global.css` con una clase semántica — no usar `style=""` inline salvo para valores dinámicos
-- El hover del botón naranja siempre es `hover:bg-orange-600` (Tailwind puro, sin token)
+- Los CTAs ("Solicitar información") usan magenta de marca: `bg-accent2` con `hover:bg-accent-hover` (tokens en `@theme`); nunca naranja ni `hover:bg-orange-*`
 
 ### Paleta de colores — reglas de uso
 
