@@ -36,7 +36,7 @@ DATABASE_URL=postgresql://esoft:PASSWORD@postgres:5432/esoft_db   # desde contai
 SESSION_SECRET=string-seguro-minimo-32-chars
 PUBLIC_SITE_URL=https://esoft.ucenfotec.ac.cr
 ```
-Tanto `DATABASE_URL` como `SESSION_SECRET` lanzan `Error` al inicio si no están definidas.
+`DATABASE_URL` y `SESSION_SECRET` se validan vía `astro:env/server` (esquema en `astro.config.mjs` con `context: 'server', access: 'secret'`); ambas lanzan `Error` al inicio si no están definidas.
 
 ### CSS
 - Nunca usar `bg-[#a01855]` directo — usar `bg-accent-hover` (token en `@theme`).
