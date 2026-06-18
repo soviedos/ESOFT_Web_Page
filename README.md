@@ -1,13 +1,15 @@
 # ESOFT Web — Escuela de Ingeniería de Software
 
 > Sitio web institucional de la **Escuela de Ingeniería de Software (ESOFT)** de la **Universidad CENFOTEC**, Costa Rica.
+>
+> *SOMOS LO QUE SABEMOS.*
 
-![Astro](https://img.shields.io/badge/Astro-6.x_SSR-FF5D01?logo=astro&logoColor=white)
-![Tailwind CSS](https://img.shields.io/badge/Tailwind_CSS-4.2-06B6D4?logo=tailwindcss&logoColor=white)
-![TypeScript](https://img.shields.io/badge/TypeScript-5.9-3178C6?logo=typescript&logoColor=white)
-![Node.js](https://img.shields.io/badge/Node.js-22-339933?logo=nodedotjs&logoColor=white)
-![Docker](https://img.shields.io/badge/Deploy-Docker-2496ED?logo=docker&logoColor=white)
+![Astro](https://img.shields.io/badge/Astro-6.x_SSR-BC52EE?logo=astro&logoColor=white)
+![Tailwind CSS](https://img.shields.io/badge/Tailwind_CSS-4.x-38BDF8?logo=tailwindcss&logoColor=white)
+![TypeScript](https://img.shields.io/badge/TypeScript-5.9_strict-3178C6?logo=typescript&logoColor=white)
+![Node.js](https://img.shields.io/badge/Node.js-%E2%89%A5_22.12-339933?logo=nodedotjs&logoColor=white)
 ![PostgreSQL](https://img.shields.io/badge/DB-PostgreSQL_16-4169E1?logo=postgresql&logoColor=white)
+![Docker](https://img.shields.io/badge/Deploy-Docker_Compose-2496ED?logo=docker&logoColor=white)
 
 ---
 
@@ -16,28 +18,31 @@
 1. [Descripción general](#descripción-general)
 2. [Stack tecnológico](#stack-tecnológico)
 3. [Inicio rápido](#inicio-rápido)
-4. [Estructura del proyecto](#estructura-del-proyecto)
-5. [Catálogo de páginas](#catálogo-de-páginas)
-6. [Design System](#design-system)
-7. [Efectos visuales](#efectos-visuales)
-8. [Convenciones de desarrollo](#convenciones-de-desarrollo)
-9. [Deploy](#deploy)
+4. [Comandos](#comandos)
+5. [Estructura del proyecto](#estructura-del-proyecto)
+6. [Páginas y routing](#páginas-y-routing)
+7. [API](#api)
+8. [Base de datos](#base-de-datos)
+9. [Design System — Libro de marca](#design-system--libro-de-marca)
+10. [Deploy](#deploy)
 
 ---
 
 ## Descripción general
 
-Aplicación web institucional construida con **Astro 6 en modo SSR**, con base de datos PostgreSQL, autenticación JWT y despliegue mediante Docker. Presenta la oferta académica completa de ESOFT: maestrías, bachillerato, técnicos cuatrimestrales (N5 y N2) y paths de microciclos, con información curricular detallada extraída de los documentos oficiales de la Universidad CENFOTEC.
+Aplicación web institucional construida con **Astro 6 en modo SSR** (`output: 'server'`), **no es un sitio estático**. El servidor renderiza en cada request, consulta una base de datos PostgreSQL mediante Drizzle ORM y protege rutas y endpoints con autenticación JWT. Todo el entorno (app, base de datos y administración de BD) se levanta con Docker Compose.
+
+Presenta la oferta académica de ESOFT — maestrías, bachillerato, técnicos y rutas de aprendizaje — servida **dinámicamente desde la base de datos**, además de un panel de administración para gestionar contenido sin tocar código y perfiles editables de docentes.
 
 **Características principales:**
 
-- Light mode institucional con paleta cobalt + magenta (`#c81f66`) sobre fondo off-white
-- Sistema de partículas interactivas (canvas, 72 nodos, reactividad al cursor)
-- Terminal animada con loop de 11 pasos que simula el flujo de un ingeniero de software
-- Animaciones de scroll con `IntersectionObserver` (fade-up individual y escalonado)
-- Páginas dinámicas de programas y rutas servidas desde PostgreSQL vía Drizzle ORM
-- 100% accesible: skip links, `aria-label` en secciones, roles correctos
-- API REST para gestión de programas (admin) y perfiles de docentes
+- SSR con adapter Node.js standalone (entry point: `dist/server/entry.mjs`).
+- Programas y rutas servidos dinámicamente desde PostgreSQL vía Drizzle ORM (`[slug].astro`).
+- Autenticación JWT con `jose`, cookie `esoft_session` (`HttpOnly`, `SameSite=Strict`).
+- Panel admin (`/admin`) y perfil de docente (`/docentes/perfil`) protegidos por rol.
+- Cabeceras de seguridad globales vía middleware (CSP, HSTS, X-Frame-Options, etc.).
+- Sistema visual alineado al **libro de marca CENFOTEC / ESOFT** (cobalt + magenta), tipografía Archivo + Inter.
+- Sistema de partículas interactivas (canvas) y terminal animada en el landing.
 
 ---
 
@@ -45,15 +50,20 @@ Aplicación web institucional construida con **Astro 6 en modo SSR**, con base d
 
 | Tecnología | Versión | Propósito |
 |:-----------|:--------|:----------|
-| [Astro](https://astro.build) | 6.x | Framework SSR con adapter Node.js standalone |
-| [Tailwind CSS](https://tailwindcss.com) | 4.2 | Utility-first CSS con `@theme` design tokens |
-| [TypeScript](https://www.typescriptlang.org) | 5.9 | Tipado estático strict |
-| [Drizzle ORM](https://orm.drizzle.team) | 0.45 | ORM para PostgreSQL con migraciones |
+| [Astro](https://astro.build) | 6.x | Framework **SSR** (`output: 'server'`) |
+| [@astrojs/node](https://docs.astro.build/en/guides/integrations-guide/node/) | 10.x | Adapter Node.js en modo `standalone` |
+| [Tailwind CSS](https://tailwindcss.com) | 4.x | Utility-first vía `@tailwindcss/vite` (no usa `@astrojs/tailwind` v3) |
+| [TypeScript](https://www.typescriptlang.org) | 5.9 | Tipado estático **strict** (`astro/tsconfigs/strict`) |
+| [Drizzle ORM](https://orm.drizzle.team) | 0.45 | ORM para PostgreSQL + migraciones (`drizzle-kit`) |
 | [PostgreSQL](https://www.postgresql.org) | 16 | Base de datos relacional |
 | [jose](https://github.com/panva/jose) | 6.x | JWT para autenticación (cookie `esoft_session`) |
-| [Docker](https://www.docker.com) | — | Contenedores: app, postgres, pgadmin |
-| Inter (Google Fonts) | — | Tipografía principal, pesos 400–900 |
+| [pg](https://node-postgres.com) | 8.x | Driver de PostgreSQL (`Pool`) |
+| [Docker Compose](https://docs.docker.com/compose/) | — | Servicios: `app`, `postgres`, `pgadmin` |
+| [Archivo](https://fonts.google.com/specimen/Archivo) | variable | Tipografía de **títulos** (sustituto web del DIN Alternate Bold) |
+| [Inter](https://fonts.google.com/specimen/Inter) | variable | Tipografía de **cuerpo** |
 | Node.js | ≥ 22.12 | Entorno de ejecución |
+
+Las fuentes se cargan localmente vía `@fontsource-variable/archivo` y `@fontsource-variable/inter` (importadas en `src/layouts/Base.astro`).
 
 ---
 
@@ -63,30 +73,80 @@ Aplicación web institucional construida con **Astro 6 en modo SSR**, con base d
 
 - Node.js ≥ 22.12 (`node -v`)
 - npm ≥ 10 (`npm -v`)
+- Docker + Docker Compose (para la base de datos y el entorno completo)
 
-### Instalación y desarrollo
+### Variables de entorno
+
+Copiá `.env.example` a `.env` y completá los valores:
 
 ```bash
-# Clonar el repositorio
+cp .env.example .env
+```
+
+```dotenv
+POSTGRES_USER=esoft
+POSTGRES_PASSWORD=cambia_esto_en_produccion
+POSTGRES_DB=esoft_db
+SESSION_SECRET=cambia_esto_en_produccion   # mínimo 32 caracteres
+PUBLIC_SITE_URL=https://esoft.ucenfotec.ac.cr
+AI_API_KEY=
+PGADMIN_EMAIL=admin@esoft.local
+PGADMIN_PASSWORD=admin
+```
+
+`DATABASE_URL` y `SESSION_SECRET` se validan vía `astro:env/server` y lanzan error al inicio si faltan. La forma de `DATABASE_URL` depende del contexto:
+
+```bash
+# desde el host (migraciones, seed, studio)
+DATABASE_URL=postgresql://esoft:PASSWORD@localhost:5433/esoft_db
+
+# desde el contenedor app (la define docker-compose.yml)
+DATABASE_URL=postgresql://esoft:PASSWORD@postgres:5432/esoft_db
+```
+
+### Desarrollo local
+
+```bash
 git clone https://github.com/soviedos/ESOFT_Web_Page.git
 cd ESOFT_Web_Page
-
-# Instalar dependencias
 npm install
 
-# Iniciar servidor de desarrollo
+# Levantar solo la base de datos con Docker
+docker compose up -d postgres
+
+# Aplicar migraciones y poblar datos (desde el host, puerto 5433)
+DATABASE_URL=postgresql://esoft:PASSWORD@localhost:5433/esoft_db npm run db:migrate
+DATABASE_URL=postgresql://esoft:PASSWORD@localhost:5433/esoft_db npm run db:seed
+
+# Servidor de desarrollo
 npm run dev
 # → http://localhost:4321
 ```
 
-### Comandos disponibles
+---
+
+## Comandos
 
 | Comando | Descripción |
 |:--------|:------------|
 | `npm run dev` | Servidor de desarrollo en `localhost:4321` con HMR |
-| `npm run build` | Build de producción optimizado en `./dist/` |
-| `npm run preview` | Preview del build local antes de deploy |
-| `npm run astro` | CLI de Astro para comandos adicionales |
+| `npm run build` | Build de producción SSR en `./dist/` |
+| `npm run preview` | Sirve el build local para validación |
+| `npm run check` | Verificación de tipos TypeScript (`astro check`) |
+| `npm run db:generate` | Genera una migración a partir del schema |
+| `npm run db:migrate` | Aplica las migraciones pendientes (requiere `DATABASE_URL`) |
+| `npm run db:seed` | Puebla programas, cursos y rutas (requiere `DATABASE_URL`) |
+| `npm run db:studio` | Abre Drizzle Studio para inspeccionar la BD |
+
+**Docker Compose:**
+
+```bash
+docker compose up -d                  # postgres + app
+docker compose --profile dev up -d    # + pgadmin en :5050
+docker compose up -d --build app      # reconstruir la imagen de la app tras cambios
+docker compose watch app              # rebuild automático al detectar cambios en src/, public/, config
+docker compose down                   # detener
+```
 
 ---
 
@@ -94,320 +154,238 @@ npm run dev
 
 ```
 ESOFT_Web_Page/
-├── public/                         # Assets estáticos (imágenes, favicon, logos)
-│   ├── ESOFT_Software-Engineering-Azul.png
-│   ├── UCENFOTEC_LogoHorizontal-Azul.png
+├── public/                          # Assets estáticos (logos, sellos, favicon)
+│   ├── ESOFT_Software-Engineering-Azul.png / -Negro.png
+│   ├── UCENFOTEC_LogoHorizontal-Azul.png / -Negro.png / Vertical-*
 │   ├── Logo_SINAES.jpg
-│   └── favicon.svg
+│   ├── Sello Oficial-01.png
+│   └── favicon.svg / favicon.ico
 │
 ├── src/
-│   ├── components/                 # Componentes Astro reutilizables
-│   │   ├── Nav.astro               # Barra de navegación (sticky, blur, z-50)
-│   │   ├── Footer.astro            # Footer con CTA y mapa de sitio
-│   │   ├── Card.astro              # Card de ruta/programa (9 íconos: development,
-│   │   │                           #   testing, design, ai, architecture, routes,
-│   │   │                           #   web, database, devops)
-│   │   ├── Terminal.astro          # Terminal animada (11 pasos, loop con fade)
-│   │   ├── ParticleGrid.astro      # Canvas de partículas interactivas
-│   │   └── CodeCard.astro          # Card decorativa de código
+│   ├── components/
+│   │   ├── Nav.astro · Footer.astro · Card.astro
+│   │   ├── Terminal.astro · ParticleGrid.astro
+│   │   ├── ui/                      # Átomos: CTAButton, Breadcrumb, SectionBadge,
+│   │   │                            #   BulletItem, StatCard, TechBadge
+│   │   ├── sections/                # Moléculas: ProgramaHero, CurriculumSection,
+│   │   │                            #   InfoCTA, TechGrid, RutaLayout
+│   │   └── programa/                # ProgramaLayout (motor) + variantes:
+│   │                                #   Bachillerato, Maestria, Tecnico, Corporativo
 │   │
 │   ├── layouts/
-│   │   └── Base.astro              # Shell HTML global — incluye:
-│   │                               #   · hero-grid (cuadrícula fija)
-│   │                               #   · glow ambiental top-center
-│   │                               #   · ParticleGrid (canvas global)
-│   │                               #   · Nav + Footer
+│   │   ├── Base.astro               # Shell HTML global (Nav, Footer, partículas, fuentes)
+│   │   └── Admin.astro              # Shell del panel de administración
 │   │
-│   ├── pages/                      # 50 páginas estáticas (.astro)
-│   │   ├── index.astro             # Landing principal
-│   │   ├── contacto.astro
-│   │   ├── admision/               # 5 páginas
-│   │   ├── blog/                   # 1 página
-│   │   ├── calidad-academica/      # 4 páginas
-│   │   ├── escuela/                # 4 páginas
-│   │   ├── historias/              # 4 páginas
-│   │   ├── industria-empleabilidad/ # 4 páginas
-│   │   ├── landing/                # 4 páginas de conversión
-│   │   ├── programas/              # 15 páginas — ver catálogo
-│   │   └── rutas/                  # 6 páginas de especialización
+│   ├── pages/                       # Rutas (SSR)
+│   │   ├── index.astro · contacto.astro · login.astro
+│   │   ├── admision/                # index, proceso, requisitos, financiamiento,
+│   │   │                            #   solicitar-informacion
+│   │   ├── escuela/                 # index, director, docentes, metodologia
+│   │   ├── historias/               # index, docentes, egresados, estudiantes
+│   │   ├── industria-empleabilidad/ # index, alianzas, certificaciones, empleabilidad
+│   │   ├── blog/                    # index
+│   │   ├── landing/                 # bachillerato-software, maestria-ia,
+│   │   │                            #   ruta-testing, ux-ui-agil
+│   │   ├── programas/               # index + [slug].astro (dinámico desde BD)
+│   │   ├── rutas/                   # index + [slug].astro (dinámico desde BD)
+│   │   ├── admin/                   # index + programas/{index, nuevo, [id]}
+│   │   ├── docentes/                # perfil
+│   │   └── api/                     # Endpoints — ver sección API
 │   │
+│   ├── db/
+│   │   ├── schema.ts                # Tablas y enums Drizzle
+│   │   ├── client.ts                # Pool pg + instancia drizzle
+│   │   └── seed.ts                  # Seed de programas, cursos y rutas
+│   │
+│   ├── lib/
+│   │   ├── auth.ts                  # JWT (jose): signToken / requireAuth
+│   │   ├── password.ts              # Hash y verificación de contraseñas
+│   │   ├── utils.ts                 # Utilidades (slugify, etc.)
+│   │   └── types.ts                 # Tipos compartidos
+│   │
+│   ├── middleware.ts                # Cabeceras de seguridad (CSP, HSTS, …)
 │   └── styles/
-│       └── global.css              # Design system completo:
-│                                   #   · @theme (tokens de color y tipografía)
-│                                   #   · Componentes (cards, buttons, nav)
-│                                   #   · Efectos (aurora, glow, grid, marquee)
-│                                   #   · Animaciones (fade-up, blink, pulse-glow)
-│                                   #   · Reveal (scroll-triggered, nth-child 1–9)
+│       └── global.css              # Design system: @theme + componentes + efectos
 │
-├── astro.config.mjs                # Configuración de Astro + Tailwind Vite plugin
-├── tsconfig.json                   # TypeScript strict mode (extends astro/strict)
-├── amplify.yml                     # Pipeline CI/CD de AWS Amplify
+├── db/migrations/                   # Migraciones generadas por drizzle-kit
+├── astro.config.mjs                 # Config Astro (SSR, node adapter, astro:env, tailwind vite)
+├── drizzle.config.ts                # Config drizzle-kit (schema → db/migrations)
+├── docker-compose.yml               # Servicios postgres, app, pgadmin
+├── Dockerfile                       # Build multi-stage (deps → builder → runtime)
+├── tsconfig.json                    # TypeScript strict (extends astro/strict)
+├── .env.example
 └── package.json
 ```
 
 ---
 
-## Catálogo de páginas
+## Páginas y routing
 
-### Landing principal (`/`)
+El sitio usa **routing de archivos de Astro en modo SSR**. Las páginas de contenido son archivos `.astro`; los programas y las rutas de aprendizaje se sirven **dinámicamente desde la base de datos**.
 
-Página de mayor complejidad visual. Incluye:
+### Contenido dinámico (desde PostgreSQL)
 
-- Hero con animaciones de entrada escalonadas (`animate-fade-up`)
-- Aurora orb, ambient glow y light sweep (efectos exclusivos del hero)
-- Trust bar con 4 estadísticas (count-up animado) y logo SINAES
-- Sección "¿Qué es ESOFT?" con Visión y Misión
-- Editorial break
-- 9 Rutas de especialización en grid 3×3 con stagger reveal
-- Programa hero (BISOFT) + dos programas secundarios
-- Terminal animada "En producción, hoy"
-- Testimonios
-- Strip de empresas aliadas (marquee)
-- Respaldo institucional UCENFOTEC
-- CTA final
+- `src/pages/programas/[slug].astro` — consulta `db.query.programas.findFirst({ where slug })` y renderiza la variante correspondiente (`ProgramaBachillerato`, `ProgramaMaestria`, `ProgramaTecnico`, `ProgramaCorporativo`).
+- `src/pages/rutas/[slug].astro` — consulta la ruta por slug y sus programas asociados.
 
-### Admisión (`/admision/`)
+> **Nota de routing:** si existiera un archivo `.astro` estático con el mismo slug en `programas/` o `rutas/`, Astro prioriza la ruta estática sobre `[slug].astro`. Actualmente no hay páginas estáticas de programa: todo el catálogo proviene de la BD. El listado se gestiona desde `/admin/programas` y se puebla con `npm run db:seed`.
 
-| Ruta | Contenido |
-|:-----|:----------|
-| `/admision` | Proceso general, pasos y opciones |
-| `/admision/proceso` | Detalle del proceso de admisión |
-| `/admision/requisitos` | Requisitos de ingreso por programa |
-| `/admision/financiamiento` | Opciones de financiamiento y becas |
-| `/admision/solicitar-informacion` | Formulario de contacto |
+### Páginas de contenido (estáticas `.astro`)
 
-### Programas (`/programas/`)
+| Sección | Rutas |
+|:--------|:------|
+| Inicio | `/` |
+| Contacto | `/contacto` |
+| Acceso | `/login` |
+| Admisión | `/admision`, `/admision/proceso`, `/admision/requisitos`, `/admision/financiamiento`, `/admision/solicitar-informacion` |
+| Escuela | `/escuela`, `/escuela/director`, `/escuela/docentes`, `/escuela/metodologia` |
+| Historias | `/historias`, `/historias/docentes`, `/historias/egresados`, `/historias/estudiantes` |
+| Industria y empleabilidad | `/industria-empleabilidad`, `/industria-empleabilidad/alianzas`, `/industria-empleabilidad/certificaciones`, `/industria-empleabilidad/empleabilidad` |
+| Blog | `/blog` |
+| Landing (conversión) | `/landing/bachillerato-software`, `/landing/maestria-ia`, `/landing/ruta-testing`, `/landing/ux-ui-agil` |
+| Programas | `/programas` (índice) · `/programas/[slug]` (dinámico) |
+| Rutas | `/rutas` (índice) · `/rutas/[slug]` (dinámico) |
 
-**Maestrías — modalidad virtual en vivo**
+### Área autenticada
 
-| Ruta | Nombre oficial | Código | Duración |
-|:-----|:---------------|:-------|:---------|
-| `/programas/maestria-ingenieria-software-ia` | Maestría en Ing. del Software con Énfasis en IA | MISIA | 2 años · 6 cuatrimestres · 64 cr |
-| `/programas/maestria-arquitectura-diseno-software` | Maestría en Ing. del Software con Énfasis en Arq. y Diseño | MISAD | 2 años · 6 cuatrimestres · 64 cr |
-
-**Bachillerato — modalidad virtual en vivo · Acreditado SINAES**
-
-| Ruta | Nombre oficial | Código | Duración |
-|:-----|:---------------|:-------|:---------|
-| `/programas/bachillerato-ingenieria-software` | Bachillerato en Ingeniería del Software | BISOFT | 3 años · 9 cuatrimestres · 141 cr · 43 cursos |
-
-**Técnicos cuatrimestrales N5 — modalidad virtual en vivo**
-
-| Ruta | Nombre oficial | Código | Duración |
-|:-----|:---------------|:-------|:---------|
-| `/programas/tecnico-ingenieria-software` | Técnico en Ingeniería del Software | SOFTN5 | 2 años 4 meses · 7 cuatrimestres · 62 cr |
-| `/programas/tecnico-desarrollo-web-avanzado` | Técnico en Desarrollo y Diseño Web Avanzado | WEBN5 | 7 cuatrimestres · 61 cr |
-
-**Técnicos cuatrimestrales N2 — modalidad virtual en vivo**
-
-| Ruta | Nombre oficial | Código | Duración |
-|:-----|:---------------|:-------|:---------|
-| `/programas/tecnico-desarrollo-software` | Técnico en Desarrollo de Software | SOFTN2 | 1 año 4 meses · 4 cuatrimestres · 36 cr |
-| `/programas/tecnico-desarrollo-diseno-web` | Técnico en Desarrollo y Diseño Web | WEBTEC | 4 cuatrimestres · 35 cr |
-
-> Los N2 son puerta de entrada y salida lateral de sus respectivos N5.
-
-**Técnicos ágiles — Paths de microciclos (microciclos de 4 semanas)**
-
-| Ruta | Nombre oficial | Horas | Microciclos |
-|:-----|:---------------|:------|:------------|
-| `/programas/python-foundations` | Python Foundations: Programación Aplicada desde Cero *(base habilitadora)* | 144h | 6 |
-| `/programas/path-sql-bases-datos-relacionales` | Desarrollo SQL y Bases de Datos Relacionales | 304h | 13 |
-| `/programas/path-nosql-distribuidas` | Bases de Datos NoSQL y Distribuidas | 280h | 12 |
-| `/programas/path-vectoriales-ia-rag` | Bases de Datos Vectoriales, IA Generativa y RAG | 328h | 14 |
-| `/programas/tecnico-diseno-grafico-web-ux` | Técnico en Diseño Gráfico Web y Experiencia de Usuario | — | 12 (EXUTEC) |
-| `/programas/testing-manual-software` | Testing Manual de Software | — | — |
-| `/programas/automatizacion-pruebas-software` | Automatización de Pruebas de Software | — | — |
-| `/programas/testing-software-ia-sistemas-inteligentes` | Testing de Software con IA | — | — |
-
-> **Python Foundations** es el prerequisito de todos los paths de BD y Testing. Los estudiantes con experiencia previa pueden ingresar directamente mediante prueba de suficiencia.
+| Ruta | Acceso | Descripción |
+|:-----|:-------|:------------|
+| `/login` | Público | Formulario de acceso institucional |
+| `/admin` | Rol `admin` | Panel de administración |
+| `/admin/programas` | Rol `admin` | Listado y gestión de programas (`/nuevo`, `/[id]`) |
+| `/docentes/perfil` | Autenticado | Perfil editable del docente |
 
 ---
 
-## Design System
+## API
 
-### Paleta de colores
+Endpoints en `src/pages/api/` (SSR):
 
-Todos los tokens están definidos en el bloque `@theme` de `global.css`. El sitio es **light mode** con fondo off-white.
+| Método | Endpoint | Acceso | Descripción |
+|:-------|:---------|:-------|:------------|
+| `POST` | `/api/auth/login` | Público | Valida credenciales y emite la cookie `esoft_session` (JWT, `HttpOnly`, `SameSite=Strict`) |
+| `POST` | `/api/auth/logout` | Público | Limpia la cookie de sesión (`Max-Age=0`) |
+| `GET` | `/api/programas` | Público | Devuelve los programas activos |
+| `POST` | `/api/programas` | Rol `admin` | Crea un programa (requiere JWT) y sincroniza sus rutas |
+| `GET` | `/api/docentes/[id]` | Autenticado | Devuelve un docente por id |
+| `PATCH` | `/api/docentes/[id]` | Autenticado | Actualiza el perfil de un docente |
 
-| Token | Valor | Uso | Contraste WCAG |
-|:------|:------|:----|:---------------|
-| `--color-bg-primary` | `#F8F9FC` | Fondo base | — |
-| `--color-bg-secondary` | `#FFFFFF` | Secciones alternas | — |
-| `--color-bg-tertiary` | `#EEF2F8` | Superficies de soporte | — |
-| `--color-bg-elevated` | `#E4EAF4` | Elementos destacados | — |
-| `--color-content` | `#0F172A` | Texto principal | 19.5:1 ✅ AA |
-| `--color-content-secondary` | `#475569` | Texto secundario | 7.0:1 ✅ AA |
-| `--color-content-muted` | `#64748B` | Captions / muted | 4.6:1 ✅ AA |
-| `--color-brand` | `#1B3A8C` | Azul cobalt institucional | — |
-| `--color-brand-hover` | `#2548B5` | Brand en hover | — |
-| `--color-accent2` | `#F97316` | Naranja eléctrico (CTAs) | — |
-| `--color-accent3` | `#0EA5E9` | Sky blue (datos / stats) | — |
+> **`/api/solicitud` no existe a propósito.** El formulario de admisión (`/admision/solicitar-informacion`) está pendiente de conectarse al CRM universitario; el endpoint se implementará en esa fase.
 
-### Componentes CSS de referencia
+---
 
-| Clase | Descripción |
-|:------|:------------|
-| `.card-premium` | Card con borde `border-border-subtle`, fondo `bg-bg-card` y `hover:shadow-md` |
-| `.card-feature` | Card showcase con padding generoso para secciones de programa |
-| `.card-stat` | Card de estadística con fondo semitransparente |
-| `.btn-primary` | Botón sólido · siempre `bg-accent2 text-white` para "Solicitar información" |
-| `.btn-ghost` | Botón outline con `border-border-default` |
-| `.headline-display` | `font-weight: 800; letter-spacing: -0.03em; line-height: 1.06` |
-| `.text-gradient-hero` | Gradiente cobalt → cyan (texto) |
-| `.text-gradient-purple` | Gradiente purple → cyan (texto) |
-| `.link-arrow` | Link con flecha `→` animada en hover |
-| `.hero-grid` | Cuadrícula de líneas cobalt con mask radial `85% 70%` |
-| `.aurora-orb` | Conic-gradient animado, `filter: blur(100px)`, 20s loop |
-| `.ambient-glow` | `position: absolute; border-radius: 50%; filter: blur(120px)` |
-| `.light-sweep` | `::after` con gradiente y animación de barrido 10s |
-| `.reveal` | Fade-up en scroll: `opacity 0 → 1`, `translateY(20px → 0)` |
-| `.reveal-stagger` | Igual que `.reveal` pero con `transition-delay` por hijo (1–9) |
-| `.marquee-track` | Flex, `animation: marquee 35s linear infinite`, pausa en hover |
-| `.section-divider` | Línea de 1px con gradiente brand al centro |
+## Base de datos
 
-> **Nota:** Si un grid usa `.reveal-stagger` con más de 9 hijos, agregar las reglas `nth-child(n)` correspondientes en `global.css`.
+PostgreSQL 16 gestionado con Drizzle ORM. El schema (`src/db/schema.ts`) define:
+
+- **Tablas:** `users`, `docentes`, `programas`, `cursos`, `rutas`, `noticias`, `solicitudes`.
+- **Enums:** `rol` (`admin`, `docente`), `tipo_programa` (`bachillerato`, `maestria`, `tecnico`, `ruta_corporativa`), `nivel_programa` (`tecnico`, `bachillerato`, `maestria`).
+
+**Convención Drizzle:** las propiedades TypeScript son **camelCase** aunque la columna en DB sea snake_case (p. ej. `perfilEgresado: text('perfil_egresado')`).
+
+**Migraciones:** se generan con `npm run db:generate` (salida en `db/migrations/`) y se aplican **desde el host** apuntando al puerto 5433:
+
+```bash
+DATABASE_URL=postgresql://esoft:PASSWORD@localhost:5433/esoft_db npm run db:migrate
+```
+
+**Seed:** `src/db/seed.ts` inserta 15 programas y 5 rutas de aprendizaje (más sus cursos / planes de estudio). **Borra y reinserta** programas, cursos y rutas; **no** toca `users`, `docentes`, `noticias` ni `solicitudes`.
+
+```bash
+DATABASE_URL=postgresql://esoft:PASSWORD@localhost:5433/esoft_db npm run db:seed
+```
+
+**Primer usuario admin:** no hay UI de registro. Se crea directamente en la tabla `users` (rol `admin`) vía Drizzle Studio (`npm run db:studio`) o un script que use `hashPassword` de `src/lib/password.ts`.
+
+---
+
+## Design System — Libro de marca
+
+Sistema visual alineado al **libro de marca CENFOTEC / ESOFT**. Los tokens viven en el bloque `@theme {}` de `src/styles/global.css`. El sitio es **light mode** sobre fondo off-white.
+
+### Paleta oficial
+
+| Rol | Hex | Token `@theme` | Uso |
+|:----|:----|:---------------|:----|
+| Azul cobalt primario | `#164A98` | `--color-brand` | Color base; domina la estructura |
+| Azul brillante | `#006AEA` | `--color-brand-hover` / `--color-accent3` | Interacción, hover, enlaces, datos |
+| Azul claro | `#9CC8FF` | `--color-brand-soft` | Fondos y tintes suaves |
+| Magenta de la Escuela | `#C81F66` | `--color-accent2` | **Solo** acciones y acentos puntuales (CTAs) |
+| Magenta oscuro | `#A81857` | `--color-accent-hover` | Hover de CTAs |
+| Neutro oscuro | `#7C7B75` | — | Texto secundario, bordes |
+| Neutro claro | `#D2D2D2` | — | Separadores, deshabilitado |
+| Off-white | `#F8F9FC` | `--color-bg-primary` | Fondo base |
+
+> Para efectos con transparencia se usa el triplete `--color-brand-rgb: 22 74 152` con la sintaxis `rgb(var(--color-brand-rgb) / α)`.
+
+### Reglas de marca
+
+- **El cobalt y los azules dominan.** El magenta **nunca** se usa como fondo grande ni en mayor proporción que los azules: se reserva para CTAs ("Solicitar información"), badges activos y **1–2 acentos por pantalla**.
+- **Prohibido el naranja** (`#F97316` y cualquier `orange-*`) y el **púrpura**: no están en el libro de marca.
+- **CTAs:** sólidos en magenta (`bg-accent2`) con hover a magenta oscuro (`--color-accent-hover`); los secundarios usan la variante *ghost*.
+- **Nunca** usar valores hex directos en clases (`bg-[#a01855]`): usar el token (`bg-accent2-hover`). **Nunca** `pt-[72px]`: usar `pt-[var(--nav-height)]`.
+- **Eslogan institucional:** *SOMOS LO QUE SABEMOS.*
 
 ### Tipografía
 
-- **Familia:** Inter (Google Fonts) — `font-family: 'Inter', 'SF Pro Display', -apple-system, system-ui, sans-serif`
-- **Mínimo en producción:** 14px — nunca texto menor a este tamaño
-- **Line-height base:** 1.7
-- **Párrafos descriptivos:** `leading-[1.85]`
-- **Headlines:** `font-weight 800`, `letter-spacing -0.03em`, `line-height 1.06`
-- **Suavizado:** `-webkit-font-smoothing: antialiased`
+- **Títulos:** **Archivo** (variable) — geométrica tipo DIN, sustituto web del **DIN Alternate Bold** oficial. Token `--font-display`; aplicada a `h1, h2, h3` y `.headline-display`.
+- **Cuerpo:** **Inter** (variable). Token `--font-sans`.
+- Headlines: `font-weight 800`, `letter-spacing -0.03em`, `line-height 1.06`. Cuerpo: `line-height 1.7`, suavizado antialiased.
 
----
+### Componentes y efectos CSS de referencia
 
-## Efectos visuales
-
-### Efectos globales (aplicados en todas las páginas vía `Base.astro`)
-
-| Efecto | Implementación | Z-index |
-|:-------|:---------------|:--------|
-| Cuadrícula `hero-grid` | `div` fijo, `background-image` con `linear-gradient` + mask radial | 0 |
-| Glow top-center | `div` fijo con `radial-gradient` y `filter: blur(40px)` | 0 |
-| Partículas `ParticleGrid` | `<canvas>` fijo, 72 nodos, conexiones reactivas al cursor | 0 |
-
-### Efectos exclusivos del hero del landing
-
-Estos efectos están en `index.astro` y **no** forman parte del layout base:
-
-| Efecto | Clase CSS | Descripción |
-|:-------|:----------|:------------|
-| Aurora orb | `.aurora-orb` | Conic-gradient animado de 600×600px, 20s loop |
-| Ambient glow hero | `.ambient-glow` | Ellipse de 900px con `animate-pulse-glow` |
-| Light sweep | `.light-sweep` | Barrido diagonal cada 10s |
-
-### Terminal animada (`Terminal.astro`)
-
-El componente simula el flujo diario de un ingeniero de software en producción:
-
-```
-git pull origin main          → Already up to date.
-git checkout -b feat/...      → Switched to branch "feat/ai-endpoint"
-npm install                   → ✓ 847 packages — 0 vulnerabilities
-npm run lint                  → ✓ ESLint: 0 errors, 0 warnings
-npm test                      → ✓ 312 tests passed in 1.4s
-git add -p                    → ✓ Staged 6 files
-git commit -m "feat: ..."     → [feat/ai-endpoint c9f2a11] feat: AI endpoint
-git push origin feat/...      → ✓ PR #84 opened → review requested
-docker build -t app:2.5.0 .   → ✓ Image built → registry.esoft.dev
-kubectl rollout status ...    → ✓ 3/3 pods ready — deploy successful
-curl /api/health | jq .status → "ok" ← live in production ✓
-```
-
-**Comportamiento:**
-- Se activa cuando el componente entra al viewport (threshold: 30%)
-- Velocidad de escritura: 38ms/carácter
-- Al completar los 11 pasos: pausa 3s → fade-out 0.5s → limpia → fade-in → reinicia
-- `prefers-reduced-motion`: muestra versión estática inmediatamente
-- Los estilos usan `<style is:global>` para que apliquen a los elementos creados por JavaScript (`document.createElement`)
-
----
-
-## Convenciones de desarrollo
-
-### Código
-
-- **Sin comentarios de código** salvo que el *porqué* sea no obvio (una restricción oculta, un invariante sutil, un workaround)
-- **Sin docstrings ni bloques de comentarios multi-línea**
-- **Sin abstracciones prematuras** — tres líneas similares son preferibles a una abstracción innecesaria
-- **Sin manejo de errores para escenarios imposibles** — confiar en las garantías del framework
-
-### CSS y componentes
-
-- Todos los botones **"Solicitar información"** usan `bg-accent2 text-white` (`#F97316`)
-- El hover de "Solicitar información" usa `hover:bg-orange-600`
-- Scripts de componentes Astro que crean elementos con `document.createElement` **deben** usar `<style is:global>` para que los estilos apliquen (los estilos con scope Astro no alcanzan elementos creados en JS)
-- Al agregar `.reveal-stagger` a un grid con más de 9 hijos, agregar las reglas `nth-child` en `global.css`
-
-### Git
-
-- Mensajes de commit en formato `type(scope): description` siguiendo Conventional Commits
-- **No forzar push** a `main`
-- Cada commit debe representar un cambio coherente y funcional
-
-### Imágenes
-
-- Logos institucionales: `/ESOFT_Software-Engineering-Azul.png` y `/UCENFOTEC_LogoHorizontal-Azul.png`
-- Logo SINAES: `/Logo_SINAES.jpg`
-- Todos los assets estáticos viven en `/public/`
+| Clase | Descripción |
+|:------|:------------|
+| `.card-premium` / `.card-feature` / `.card-stat` | Superficies de tarjeta con hover de borde cobalt |
+| `.btn-primary` | CTA sólido en magenta (`bg-accent2`) |
+| `.btn-ghost` | CTA secundario outline con tinte cobalt en hover |
+| `.headline-display` | Titular display (Archivo, 800) |
+| `.text-gradient-hero` | Gradiente cobalt → azul brillante (`#164A98 → #006AEA`) |
+| `.hero-grid` | Cuadrícula de líneas cobalt con mask radial |
+| `.aurora-orb` / `.ambient-glow` / `.light-sweep` | Efectos ambientales del hero |
+| `.reveal` / `.reveal-stagger` | Animaciones de scroll (fade-up, escalonado) |
+| `.section-divider` / `.hr-gradient` | Separadores con gradiente de marca |
 
 ---
 
 ## Deploy
 
-### AWS Amplify (automático)
+El despliegue es vía **Docker Compose**. El `Dockerfile` es multi-stage (`deps → prod-deps → builder → runtime`): construye el sitio SSR y la imagen final ejecuta `node ./dist/server/entry.mjs`.
 
-El proyecto se despliega automáticamente en **AWS Amplify** en cada push a `main`:
+### Servicios (`docker-compose.yml`)
 
-```yaml
-# amplify.yml
-version: 1
-frontend:
-  phases:
-    preBuild:
-      commands:
-        - nvm install 22
-        - nvm use 22
-        - npm ci
-    build:
-      commands:
-        - npm run build
-  artifacts:
-    baseDirectory: dist
-    files:
-      - '**/*'
-  cache:
-    paths:
-      - node_modules/**/*
-      - .astro/**/*
-```
+| Servicio | Imagen | Puerto host → contenedor | Notas |
+|:---------|:-------|:-------------------------|:------|
+| `postgres` | `postgres:16-alpine` | `5433 → 5432` | Volumen `postgres_data`, healthcheck |
+| `app` | build local | `4321 → 4321` | `NODE_ENV=production`, depende de `postgres` healthy |
+| `pgadmin` | `dpage/pgadmin4` | `5050 → 80` | Solo con `--profile dev` |
 
-### Pipeline
-
-```
-git push origin main
-        ↓
-AWS Amplify detecta el push
-        ↓
-npm ci → npm run build
-        ↓
-Astro genera ./dist/ (50 páginas HTML estáticas)
-        ↓
-Amplify sirve desde CDN global
-```
-
-### Build local antes de push
+### Puesta en marcha
 
 ```bash
-npm run build     # Verifica que compile sin errores
-npm run preview   # Valida el output en http://localhost:4321
+# 1. Configurar .env (ver Inicio rápido)
+cp .env.example .env
+
+# 2. Levantar postgres + app
+docker compose up -d
+
+# 3. Aplicar migraciones y seed desde el host (puerto 5433)
+DATABASE_URL=postgresql://esoft:PASSWORD@localhost:5433/esoft_db npm run db:migrate
+DATABASE_URL=postgresql://esoft:PASSWORD@localhost:5433/esoft_db npm run db:seed
+
+# 4. (Opcional) pgAdmin para administrar la BD
+docker compose --profile dev up -d
+# → http://localhost:5050
 ```
+
+La app queda disponible en `http://localhost:4321`. Para reflejar cambios de código en el contenedor hay que reconstruir la imagen (`docker compose up -d --build app`) o dejar corriendo `docker compose watch app` para rebuild automático.
+
+> El despliegue en AWS Amplify quedó descontinuado; ya no forma parte del flujo de este repositorio.
 
 ---
 
 ## Licencia
 
 Uso interno — Universidad CENFOTEC / ESOFT. Todos los derechos reservados.
+</content>
+</invoke>
