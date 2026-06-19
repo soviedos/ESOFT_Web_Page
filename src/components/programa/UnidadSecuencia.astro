@@ -1,0 +1,54 @@
+---
+import type { UnidadDato } from '../../lib/types'
+import CompetenciaItem from './CompetenciaItem.astro'
+
+interface Props {
+  unidades: UnidadDato[]
+  unidadLabel: string      // "Microciclo" | "Módulo"
+  badge?: string
+  titulo?: string
+}
+const { unidades, unidadLabel, badge = 'Plan de estudios', titulo = 'Ruta de aprendizaje' } = Astro.props
+---
+
+<section class="py-16 md:py-24 px-6" style="background: var(--color-bg-primary);">
+  <div class="max-w-[860px] mx-auto">
+    <div class="text-center mb-12">
+      <p class="text-[13px] font-bold text-brand-label tracking-widest uppercase mb-3">{badge}</p>
+      <h2 class="headline-display text-[clamp(1.5rem,3vw,2.25rem)]">{titulo}</h2>
+    </div>
+
+    <ol class="relative space-y-5">
+      {unidades.map((u, i) => (
+        <li class="card-premium rounded-[18px] p-6 md:p-7">
+          <div class="flex items-start gap-4">
+            <span class="flex h-9 w-9 shrink-0 items-center justify-center rounded-full bg-brand text-white text-[14px] font-bold">
+              {i + 1}
+            </span>
+            <div class="flex-1">
+              <div class="flex flex-wrap items-center gap-2">
+                <span class="text-[11px] font-bold uppercase tracking-widest text-brand">{unidadLabel} {u.secuencia}</span>
+                {u.codigo && (
+                  <span class="text-[11px] font-mono font-bold text-brand-label bg-brand-soft px-1.5 py-0.5 rounded">{u.codigo}</span>
+                )}
+              </div>
+              <h3 class="text-[17px] font-bold text-content leading-snug mt-1">{u.nombre}</h3>
+              {u.descripcion && (
+                <p class="text-[14px] text-content-secondary leading-[1.75] mt-2">{u.descripcion}</p>
+              )}
+
+              {u.competencias.length > 0 && (
+                <div class="mt-4 pt-4 border-t border-border-subtle">
+                  <p class="text-[12px] font-semibold uppercase tracking-wide text-content-muted mb-3">Competencias</p>
+                  <div class="space-y-3">
+                    {u.competencias.map(c => <CompetenciaItem competencia={c} />)}
+                  </div>
+                </div>
+              )}
+            </div>
+          </div>
+        </li>
+      ))}
+    </ol>
+  </div>
+</section>
