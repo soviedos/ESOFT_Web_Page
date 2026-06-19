@@ -6,6 +6,7 @@ import { db } from '../../../db/client'
 import { programas, areasCurriculares } from '../../../db/schema'
 import { and, eq, ne } from 'drizzle-orm'
 import { MODALIDAD_CONFIG, parseProgramaForm } from '../../../lib/modalidades'
+import { actualizarPrograma } from '../../../lib/programa-write'
 
 const user = await requireAuth(Astro.request, 'admin')
 if (!user) return Astro.redirect(`/login?next=/admin/programas`)
@@ -30,24 +31,7 @@ if (Astro.request.method === 'POST') {
     error = 'Completá el título y la descripción.'
   } else {
     try {
-      await db.update(programas)
-        .set({
-          titulo:                valores.titulo,
-          descripcion:           valores.descripcion,
-          nivel:                 valores.nivel as any,
-          objetivo:              valores.objetivo,
-          perfilEgresado:        valores.perfilEgresado,
-          tecnologias:           valores.tecnologias,
-          activo:                valores.activo,
-          duracionCuatrimestres: valores.duracionCuatrimestres,
-          areaCurricularId:      valores.areaCurricularId,
-          nivelCredencial:       valores.nivelCredencial as any,
-          totalMicrociclos:      valores.totalMicrociclos,
-          duracionHoras:         valores.duracionHoras,
-          prerequisitoId:        valores.prerequisitoId,
-          updatedAt:             new Date(),
-        })
-        .where(eq(programas.id, id))
+      await actualizarPrograma(id, modalidad, valores)
       return Astro.redirect('/admin/programas?updated=1')
     } catch (err: any) {
       error = 'Error al guardar. Intentá de nuevo.'
@@ -100,5 +84,21 @@ const updated = Astro.url.searchParams.get('updated')
     programa={programa}
     error={error}
   />
+
+  <!-- Acceso al editor del plan de estudios -->
+  <div class="mt-6 bg-bg-secondary rounded-2xl border border-border-subtle p-6 flex items-center justify-between gap-4">
+    <div>
+      <p class="text-[14px] font-semibold text-content">Plan de estudios</p>
+      <p class="text-[12px] text-content-muted mt-0.5">
+        {cfg?.plan.tipoUnidad
+          ? `Gestioná ${cfg.plan.unidadLabelPlural.toLowerCase()} y sus competencias.`
+          : 'Gestioná las competencias del programa.'}
+      </p>
+    </div>
+    <a href={`/admin/programas/${id}/plan`}
+       class="shrink-0 text-[13px] font-medium px-4 py-2.5 rounded-xl border border-brand text-brand hover:bg-brand-soft transition-colors">
+      Editar plan →
+    </a>
+  </div>
 
 </Admin>

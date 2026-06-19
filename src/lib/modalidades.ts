@@ -12,12 +12,34 @@ export interface CamposModalidad {
   prerequisito?: boolean
 }
 
+// Configuración del plan de estudios (unidades) por modalidad.
+export type TipoUnidad = 'curso' | 'microciclo' | 'modulo_360'
+
+export interface CamposUnidad {
+  codigo?: boolean
+  cuatrimestre?: boolean
+  horas?: boolean       // HL / HP / HE
+  creditos?: boolean
+  secuencia?: boolean
+  descripcion?: boolean
+}
+
+export interface PlanConfig {
+  // tipoUnidad null → la modalidad no tiene unidades; competencias a nivel de programa.
+  tipoUnidad: TipoUnidad | null
+  unidadLabel: string
+  unidadLabelPlural: string
+  campos: CamposUnidad
+  ayuda: string
+}
+
 export interface ModalidadConfig {
   value: string
   label: string
   descripcion: string
   formato: string
   campos: CamposModalidad
+  plan: PlanConfig
 }
 
 export const MODALIDAD_CONFIG: Record<string, ModalidadConfig> = {
@@ -27,6 +49,13 @@ export const MODALIDAD_CONFIG: Record<string, ModalidadConfig> = {
     descripcion: 'Programa titulado por cuatrimestres (técnico, bachillerato o maestría). Plan de estudios con cursos, créditos y horas.',
     formato: 'Nivel · Duración en cuatrimestres · Cursos con créditos',
     campos: { nivel: true, duracionCuatrimestres: true },
+    plan: {
+      tipoUnidad: 'curso',
+      unidadLabel: 'Curso',
+      unidadLabelPlural: 'Cursos',
+      campos: { codigo: true, cuatrimestre: true, horas: true, creditos: true },
+      ayuda: 'Cargá los cursos del plan. Asigná el cuatrimestre a cada uno; se agrupan por cuatrimestre en la ficha pública.',
+    },
   },
   path: {
     value: 'path',
@@ -34,6 +63,13 @@ export const MODALIDAD_CONFIG: Record<string, ModalidadConfig> = {
     descripcion: 'Itinerario fundacional por microciclos. Base común sobre la que se construyen las especializaciones.',
     formato: 'Área · Credencial · Microciclos · Horas · Prerequisito',
     campos: { area: true, nivelCredencial: true, totalMicrociclos: true, duracionHoras: true, prerequisito: true },
+    plan: {
+      tipoUnidad: 'microciclo',
+      unidadLabel: 'Microciclo',
+      unidadLabelPlural: 'Microciclos',
+      campos: { secuencia: true, descripcion: true },
+      ayuda: 'Cargá los microciclos en orden. Cada uno puede tener sus competencias con código SFIA.',
+    },
   },
   curso_360: {
     value: 'curso_360',
@@ -41,6 +77,13 @@ export const MODALIDAD_CONFIG: Record<string, ModalidadConfig> = {
     descripcion: 'Especialización modular que cubre un dominio o tecnología de principio a fin.',
     formato: 'Área · Credencial · Horas · Prerequisito',
     campos: { area: true, nivelCredencial: true, duracionHoras: true, prerequisito: true },
+    plan: {
+      tipoUnidad: 'modulo_360',
+      unidadLabel: 'Módulo',
+      unidadLabelPlural: 'Módulos',
+      campos: { secuencia: true, descripcion: true },
+      ayuda: 'Un curso 360 suele tener 3 módulos. Cada uno puede tener sus competencias.',
+    },
   },
   curso_continuo: {
     value: 'curso_continuo',
@@ -48,6 +91,13 @@ export const MODALIDAD_CONFIG: Record<string, ModalidadConfig> = {
     descripcion: 'Formación corta y puntual sobre una competencia específica.',
     formato: 'Área · Credencial · Horas',
     campos: { area: true, nivelCredencial: true, duracionHoras: true },
+    plan: {
+      tipoUnidad: null,
+      unidadLabel: 'Competencia',
+      unidadLabelPlural: 'Competencias',
+      campos: {},
+      ayuda: 'Un curso continuo no tiene unidades: cargá directamente las competencias que desarrolla.',
+    },
   },
 }
 

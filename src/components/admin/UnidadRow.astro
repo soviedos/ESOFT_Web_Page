@@ -1,0 +1,95 @@
+---
+import type { CamposUnidad } from '../../lib/modalidades'
+import type { Curso, CompetenciaDato } from '../../lib/types'
+import CompetenciaRow from './CompetenciaRow.astro'
+
+interface Props {
+  campos: CamposUnidad
+  unidadLabel: string
+  unidad?: Curso | null
+  competencias?: CompetenciaDato[]
+}
+const { campos, unidadLabel, unidad = null, competencias = [] } = Astro.props
+
+const INPUT = 'w-full rounded-lg border border-border-default bg-bg-tertiary text-content px-3 py-2 text-[13px] focus:outline-none focus:ring-2 focus:ring-brand transition-colors'
+const LABEL = 'block text-[11px] font-medium text-content-muted mb-1'
+---
+
+<div class="js-unidad rounded-2xl border border-border-default bg-bg-secondary p-5 space-y-4">
+  <!-- Encabezado de la unidad -->
+  <div class="flex items-center justify-between">
+    <p class="text-[12px] font-semibold uppercase tracking-widest text-brand-label">
+      {unidadLabel} <span class="js-unidad-num text-content-muted"></span>
+    </p>
+    <button type="button" class="js-remove-unidad text-[12px] text-content-muted hover:text-accent2 transition-colors inline-flex items-center gap-1" aria-label={`Quitar ${unidadLabel.toLowerCase()}`}>
+      <svg width="13" height="13" viewBox="0 0 14 14" fill="none"><path d="M3 3l8 8M11 3l-8 8" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
+      Quitar
+    </button>
+  </div>
+
+  <!-- Campos de la unidad -->
+  <div class="grid grid-cols-2 sm:grid-cols-4 gap-3">
+    {campos.codigo && (
+      <div class="col-span-1">
+        <label class={LABEL}>Código</label>
+        <input type="text" class={`u-field ${INPUT}`} data-field="codigo" placeholder="SOFT-01" value={unidad?.codigo ?? ''} />
+      </div>
+    )}
+    <div class={campos.codigo ? 'col-span-2 sm:col-span-3' : 'col-span-2 sm:col-span-4'}>
+      <label class={LABEL}>Nombre</label>
+      <input type="text" class={`u-field ${INPUT}`} data-field="nombre" placeholder="Nombre de la unidad" value={unidad?.nombre ?? ''} />
+    </div>
+
+    {campos.cuatrimestre && (
+      <div class="col-span-1">
+        <label class={LABEL}>Cuatrimestre</label>
+        <input type="number" min="1" max="20" class={`u-field ${INPUT}`} data-field="cuatrimestre" placeholder="1" value={unidad?.cuatrimestre ?? ''} />
+      </div>
+    )}
+    {campos.secuencia && (
+      <div class="col-span-1">
+        <label class={LABEL}>Secuencia</label>
+        <input type="number" min="1" max="100" class={`u-field ${INPUT}`} data-field="secuencia" placeholder="1" value={unidad?.secuencia ?? ''} />
+      </div>
+    )}
+    {campos.horas && (
+      <>
+        <div class="col-span-1">
+          <label class={LABEL}>HL</label>
+          <input type="number" min="0" class={`u-field ${INPUT}`} data-field="horasLectivas" placeholder="0" value={unidad?.horasLectivas ?? ''} />
+        </div>
+        <div class="col-span-1">
+          <label class={LABEL}>HP</label>
+          <input type="number" min="0" class={`u-field ${INPUT}`} data-field="horasPracticas" placeholder="0" value={unidad?.horasPracticas ?? ''} />
+        </div>
+        <div class="col-span-1">
+          <label class={LABEL}>HE</label>
+          <input type="number" min="0" class={`u-field ${INPUT}`} data-field="horasEstudio" placeholder="0" value={unidad?.horasEstudio ?? ''} />
+        </div>
+      </>
+    )}
+    {campos.creditos && (
+      <div class="col-span-1">
+        <label class={LABEL}>Créditos</label>
+        <input type="number" min="0" class={`u-field ${INPUT}`} data-field="creditos" placeholder="0" value={unidad?.creditos ?? ''} />
+      </div>
+    )}
+    {campos.descripcion && (
+      <div class="col-span-2 sm:col-span-4">
+        <label class={LABEL}>Descripción</label>
+        <textarea rows="2" class={`u-field ${INPUT} resize-y`} data-field="descripcion" placeholder="Descripción de la unidad (opcional)">{unidad?.descripcion ?? ''}</textarea>
+      </div>
+    )}
+  </div>
+
+  <!-- Competencias de la unidad -->
+  <div class="rounded-xl border border-border-subtle p-3.5">
+    <div class="flex items-center justify-between mb-2.5">
+      <p class="text-[11px] font-semibold uppercase tracking-wide text-content-muted">Competencias</p>
+      <button type="button" class="js-add-comp text-[12px] font-medium text-brand hover:text-brand-hover transition-colors">+ Competencia</button>
+    </div>
+    <div class="js-comps space-y-2.5">
+      {competencias.map(c => <CompetenciaRow competencia={c} />)}
+    </div>
+  </div>
+</div>

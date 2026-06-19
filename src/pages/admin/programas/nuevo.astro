@@ -6,8 +6,9 @@ import { db } from '../../../db/client'
 import { programas, areasCurriculares } from '../../../db/schema'
 import { eq } from 'drizzle-orm'
 import {
-  MODALIDADES, MODALIDAD_CONFIG, esModalidadValida, parseProgramaForm, slugify,
+  MODALIDADES, MODALIDAD_CONFIG, esModalidadValida, parseProgramaForm,
 } from '../../../lib/modalidades'
+import { crearPrograma } from '../../../lib/programa-write'
 
 const user = await requireAuth(Astro.request, 'admin')
 if (!user) return Astro.redirect(`/login?next=/admin/programas/nuevo`)
@@ -26,24 +27,9 @@ if (Astro.request.method === 'POST' && modalidadValida) {
     error = 'Completá el título y la descripción.'
   } else {
     try {
-      await db.insert(programas).values({
-        slug: slugify(valores.titulo),
-        titulo:                valores.titulo,
-        descripcion:           valores.descripcion,
-        modalidad:             modalidad as any,
-        nivel:                 valores.nivel as any,
-        objetivo:              valores.objetivo,
-        perfilEgresado:        valores.perfilEgresado,
-        tecnologias:           valores.tecnologias,
-        activo:                valores.activo,
-        duracionCuatrimestres: valores.duracionCuatrimestres,
-        areaCurricularId:      valores.areaCurricularId,
-        nivelCredencial:       valores.nivelCredencial as any,
-        totalMicrociclos:      valores.totalMicrociclos,
-        duracionHoras:         valores.duracionHoras,
-        prerequisitoId:        valores.prerequisitoId,
-      })
-      return Astro.redirect('/admin/programas?created=1')
+      const nuevo = await crearPrograma(modalidad, valores)
+      // Tras crear, llevar directo al editor del plan de estudios.
+      return Astro.redirect(`/admin/programas/${nuevo.id}/plan?created=1`)
     } catch (err: any) {
       error = err?.code === '23505'
         ? 'Ya existe un programa con un título similar. Cambiá el título.'

@@ -1,0 +1,30 @@
+---
+import type { CompetenciaDato } from '../../lib/types'
+
+interface Props {
+  competencia?: CompetenciaDato | null
+}
+const { competencia: c = null } = Astro.props
+
+const INPUT = 'w-full rounded-lg border border-border-default bg-bg-tertiary text-content px-3 py-2 text-[13px] focus:outline-none focus:ring-2 focus:ring-brand transition-colors'
+---
+
+<div class="js-competencia rounded-xl border border-border-subtle bg-bg-tertiary/40 p-3 space-y-2.5">
+  <div class="flex items-start gap-2">
+    <input type="text" class={`c-field ${INPUT}`} data-field="nombre"
+           placeholder="Competencia (ej. Escribe scripts con funciones)" value={c?.nombre ?? ''} />
+    <button type="button" class="js-remove-comp shrink-0 text-content-muted hover:text-accent2 transition-colors p-1.5" aria-label="Quitar competencia" title="Quitar competencia">
+      <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M3 3l8 8M11 3l-8 8" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
+    </button>
+  </div>
+  <input type="text" class={`c-field ${INPUT}`} data-field="descripcion"
+         placeholder="Descripción (opcional)" value={c?.descripcion ?? ''} />
+  <div class="grid grid-cols-3 gap-2">
+    <input type="text" class={`c-field ${INPUT}`} data-field="sfiaCodigo"
+           placeholder="SFIA (ej. PROG)" value={c?.sfiaCodigo ?? ''} />
+    <input type="number" min="1" max="7" class={`c-field ${INPUT}`} data-field="sfiaNivel"
+           placeholder="Nivel" value={c?.sfiaNivel ?? ''} />
+    <input type="text" class={`c-field ${INPUT}`} data-field="microcredencial"
+           placeholder="Microcredencial" value={c?.microcredencial ?? ''} />
+  </div>
+</div>
