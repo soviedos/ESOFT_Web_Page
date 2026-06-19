@@ -15,14 +15,21 @@ const { programa, heroGradient } = Astro.props
 
 const ROMANS = ['I','II','III','IV','V','VI','VII','VIII','IX','X','XI','XII']
 
-const tipoLabel: Record<string, string> = {
-  bachillerato:     'Bachillerato',
-  maestria:         'Maestría',
-  tecnico:          'Técnico',
-  ruta_corporativa: 'Ruta Corporativa',
+const modalidadLabel: Record<string, string> = {
+  cuatrimestral:  'Programa cuatrimestral',
+  path:           'Path',
+  curso_360:      'Curso 360',
+  curso_continuo: 'Curso continuo',
 }
 
-const badge = programa.badgeOverride ?? `${tipoLabel[programa.tipo] ?? programa.tipo} · ${programa.duracionCuatrimestres} cuatrimestres`
+const duracionTexto =
+  programa.duracionCuatrimestres != null ? `${programa.duracionCuatrimestres} cuatrimestres`
+  : programa.totalMicrociclos    != null ? `${programa.totalMicrociclos} microciclos`
+  : programa.duracionHoras       != null ? `${programa.duracionHoras} horas`
+  : ''
+
+const badge = programa.badgeOverride ??
+  [modalidadLabel[programa.modalidad] ?? programa.modalidad, duracionTexto].filter(Boolean).join(' · ')
 
 const estadisticas = (programa.estadisticas ?? []).map(e => ({
   valor:      e.valor,
@@ -44,7 +51,7 @@ for (const c of cursosFlat) {
 const cuatrimestres = [...quarterMap.entries()].map(([num, lista]) => ({
   num:      ROMANS[num - 1] ?? String(num),
   creditos: lista.reduce((s, c) => s + (c.creditos ?? 0), 0),
-  cursos:   lista.map(c => ({ code: c.code ?? '', name: c.nombre, cr: c.creditos ?? 0 })),
+  cursos:   lista.map(c => ({ code: c.codigo ?? '', name: c.nombre, cr: c.creditos ?? 0 })),
 }))
 
 const subtitulo = cuatrimestres.length > 0

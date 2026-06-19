@@ -19,25 +19,31 @@ if (!row || !row.activo) {
 const programa: ProgramaData = {
   titulo:               row.titulo,
   descripcion:          row.descripcion,
-  tipo:                 row.tipo,
+  modalidad:            row.modalidad,
+  nivel:                row.nivel,
   duracionCuatrimestres: row.duracionCuatrimestres,
+  totalMicrociclos:     row.totalMicrociclos,
+  duracionHoras:        row.duracionHoras,
   estadisticas:         (row.estadisticas ?? []) as ProgramaData['estadisticas'],
   tecnologias:          (row.tecnologias  ?? []) as string[],
   objetivo:             row.objetivo,
   cursos:               (row.cursos ?? []).map(c => ({
-    nombre:       c.nombre,
-    cuatrimestre: c.cuatrimestre,
-    orden:        c.orden,
-    creditos:     c.creditos,
+    codigo:         c.codigo,
+    nombre:         c.nombre,
+    // microciclos/módulos no tienen cuatrimestre: se agrupan por su secuencia
+    cuatrimestre:   c.cuatrimestre ?? c.secuencia,
+    secuencia:      c.secuencia,
+    orden:          c.orden,
+    creditos:       c.creditos,
+    horasLectivas:  c.horasLectivas,
+    horasPracticas: c.horasPracticas,
+    horasEstudio:   c.horasEstudio,
   })),
 }
 
-const layouts: Record<string, any> = {
-  bachillerato:     (await import('../../components/programa/ProgramaBachillerato.astro')).default,
-  maestria:         (await import('../../components/programa/ProgramaMaestria.astro')).default,
-  tecnico:          (await import('../../components/programa/ProgramaTecnico.astro')).default,
-  ruta_corporativa: (await import('../../components/programa/ProgramaCorporativo.astro')).default,
-}
-const LayoutPrograma = layouts[programa.tipo]
+// Mapeo mínimo: todas las modalidades usan el layout que sí renderiza el plan
+// (ProgramaTecnico → ProgramaLayout → CurriculumSection). Los layouts ricos por
+// modalidad son Fase 2. (ProgramaCorporativo se descarta acá porque oculta el plan.)
+const LayoutPrograma = (await import('../../components/programa/ProgramaTecnico.astro')).default
 ---
 <LayoutPrograma programa={programa} />

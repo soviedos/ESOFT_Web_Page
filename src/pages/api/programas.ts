@@ -5,19 +5,16 @@ import { eq } from 'drizzle-orm'
 import { requireAuth } from '../../lib/auth'
 import { slugify } from '../../lib/utils'
 
-const TIPOS_VALIDOS = ['bachillerato', 'maestria', 'tecnico', 'ruta_corporativa'] as const
+const MODALIDADES_VALIDAS = ['cuatrimestral', 'path', 'curso_360', 'curso_continuo'] as const
 const NIVELES_VALIDOS = ['tecnico', 'bachillerato', 'maestria'] as const
 
-async function syncRutasForPrograma(programaId: string, tipo: string) {
+async function syncRutasForPrograma(programaId: string, modalidad: string) {
   const todasLasRutas = await db.select().from(rutas)
   for (const ruta of todasLasRutas) {
     const ids = (ruta.programaIds ?? []) as string[]
     const yaIncluido = ids.includes(programaId)
 
-    const debeIncluir = ruta.slug === tipo ||
-      ruta.slug.includes(tipo) ||
-      (tipo === 'bachillerato' && ruta.slug === 'desarrollo-software') ||
-      (tipo === 'maestria'     && (ruta.slug === 'arquitectura-software' || ruta.slug === 'inteligencia-artificial'))
+    const debeIncluir = ruta.slug === modalidad || ruta.slug.includes(modalidad)
 
     if (debeIncluir && !yaIncluido) {
       await db.update(rutas)
@@ -41,15 +38,15 @@ export const POST: APIRoute = async ({ request }) => {
     return new Response('JSON inválido', { status: 400 })
   }
 
-  const { titulo, tipo, nivel, descripcion, duracionCuatrimestres } = body
-  if (!titulo || !tipo || !nivel || !descripcion || !duracionCuatrimestres) {
-    return new Response('Campos requeridos faltantes', { status: 422 })
+  const { titulo, modalidad, nivel, descripcion } = body
+  if (!titulo || !modalidad || !descripcion) {
+    return new Response('Campos requeridos faltantes (titulo, modalidad, descripcion)', { status: 422 })
   }
 
-  if (!TIPOS_VALIDOS.includes(tipo)) {
-    return new Response(`tipo inválido. Valores aceptados: ${TIPOS_VALIDOS.join(', ')}`, { status: 422 })
+  if (!MODALIDADES_VALIDAS.includes(modalidad)) {
+    return new Response(`modalidad inválida. Valores aceptados: ${MODALIDADES_VALIDAS.join(', ')}`, { status: 422 })
   }
-  if (!NIVELES_VALIDOS.includes(nivel)) {
+  if (nivel && !NIVELES_VALIDOS.includes(nivel)) {
     return new Response(`nivel inválido. Valores aceptados: ${NIVELES_VALIDOS.join(', ')}`, { status: 422 })
   }
 
@@ -59,17 +56,24 @@ export const POST: APIRoute = async ({ request }) => {
     const [nuevo] = await db.insert(programas).values({
       slug,
       titulo,
-      tipo,
-      nivel,
+      modalidad,
+      nivel:                 nivel ?? null,
       descripcion,
-      duracionCuatrimestres,
+      duracionCuatrimestres: body.duracionCuatrimestres ?? null,
+      totalMicrociclos:      body.totalMicrociclos      ?? null,
+      duracionHoras:         body.duracionHoras         ?? null,
+      areaCurricularId:      body.areaCurricularId      ?? null,
+      prerequisitoId:        body.prerequisitoId        ?? null,
+      nivelCredencial:       body.nivelCredencial       ?? null,
+      microcredencial:       body.microcredencial       ?? null,
+      badgeUrl:              body.badgeUrl              ?? null,
       estadisticas: body.estadisticas ?? [],
       tecnologias:  body.tecnologias  ?? [],
       objetivo:       body.objetivo        ?? null,
       perfilEgresado: body.perfilEgresado  ?? null,
     }).returning()
 
-    await syncRutasForPrograma(nuevo.id, nuevo.tipo)
+    await syncRutasForPrograma(nuevo.id, nuevo.modalidad)
     return Response.json(nuevo, { status: 201 })
   } catch (err: any) {
     if (err?.code === '23505') {

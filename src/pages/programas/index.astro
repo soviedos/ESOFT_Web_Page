@@ -2,21 +2,23 @@
 import Base from '../../layouts/Base.astro'
 import { db } from '../../db/client'
 import { programas } from '../../db/schema'
-import { eq, and } from 'drizzle-orm'
+import { eq } from 'drizzle-orm'
 
 const todos = await db.select({
-  id:                   programas.id,
-  slug:                 programas.slug,
-  titulo:               programas.titulo,
-  tipo:                 programas.tipo,
-  descripcion:          programas.descripcion,
+  id:                    programas.id,
+  slug:                  programas.slug,
+  titulo:                programas.titulo,
+  modalidad:             programas.modalidad,
+  descripcion:           programas.descripcion,
   duracionCuatrimestres: programas.duracionCuatrimestres,
+  totalMicrociclos:      programas.totalMicrociclos,
+  duracionHoras:         programas.duracionHoras,
 }).from(programas).where(eq(programas.activo, true))
 
-const maestrias    = todos.filter(p => p.tipo === 'maestria')
-const bachillerato = todos.filter(p => p.tipo === 'bachillerato')
-const tecnicos     = todos.filter(p => p.tipo === 'tecnico')
-const paths        = todos.filter(p => p.tipo === 'ruta_corporativa')
+const cuatrimestrales = todos.filter(p => p.modalidad === 'cuatrimestral')
+const paths           = todos.filter(p => p.modalidad === 'path')
+const cursos360       = todos.filter(p => p.modalidad === 'curso_360')
+const cursosContinuos = todos.filter(p => p.modalidad === 'curso_continuo')
 ---
 
 <Base
@@ -33,14 +35,14 @@ const paths        = todos.filter(p => p.tipo === 'ruta_corporativa')
     </div>
   </section>
 
-  {maestrias.length > 0 && (
+  {cuatrimestrales.length > 0 && (
     <section class="max-w-6xl mx-auto px-6 pb-14">
-      <h2 class="text-xl md:text-2xl font-bold mb-6 text-content">Maestrías</h2>
+      <h2 class="text-xl md:text-2xl font-bold mb-6 text-content">Programas cuatrimestrales</h2>
       <div class="grid grid-cols-1 md:grid-cols-2 gap-5">
-        {maestrias.map(p => (
+        {cuatrimestrales.map(p => (
           <a href={`/programas/${p.slug}`}
              class="card-premium rounded-[20px] p-7 flex flex-col gap-3 no-underline">
-            <span class="text-[11px] font-bold uppercase tracking-widest text-brand">Maestría · {p.duracionCuatrimestres} cuatrimestres</span>
+            <span class="text-[11px] font-bold uppercase tracking-widest text-brand">Cuatrimestral · {p.duracionCuatrimestres} cuatrimestres</span>
             <h3 class="text-[17px] font-bold text-content leading-snug">{p.titulo}</h3>
             <p class="text-[14px] text-content-secondary leading-[1.75] flex-1">{p.descripcion}</p>
             <span class="link-arrow mt-1">Ver programa <svg viewBox="0 0 14 14" fill="none"><path d="M1 7h12M8 2l5 5-5 5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
@@ -50,34 +52,37 @@ const paths        = todos.filter(p => p.tipo === 'ruta_corporativa')
     </section>
   )}
 
-  {bachillerato.length > 0 && (
+  {paths.length > 0 && (
     <section class="max-w-6xl mx-auto px-6 pb-14 border-t border-border-subtle pt-12">
-      <h2 class="text-xl md:text-2xl font-bold mb-6 text-content">Bachillerato</h2>
-      <div class="grid grid-cols-1 md:grid-cols-2 gap-5">
-        {bachillerato.map(p => (
-          <a href={`/programas/${p.slug}`}
-             class="card-premium rounded-[20px] p-7 flex flex-col gap-3 no-underline">
-            <span class="text-[11px] font-bold uppercase tracking-widest text-brand">Bachillerato · {p.duracionCuatrimestres} cuatrimestres</span>
-            <h3 class="text-[17px] font-bold text-content leading-snug">{p.titulo}</h3>
-            <p class="text-[14px] text-content-secondary leading-[1.75] flex-1">{p.descripcion}</p>
-            <span class="link-arrow mt-1">Ver programa <svg viewBox="0 0 14 14" fill="none"><path d="M1 7h12M8 2l5 5-5 5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
-          </a>
-        ))}
-      </div>
-    </section>
-  )}
-
-  {tecnicos.length > 0 && (
-    <section class="max-w-6xl mx-auto px-6 pb-14 border-t border-border-subtle pt-12">
-      <h2 class="text-xl md:text-2xl font-bold mb-2 text-content">Técnicos</h2>
+      <h2 class="text-xl md:text-2xl font-bold mb-2 text-content">Paths de microciclos</h2>
       <p class="text-content-secondary text-[14px] mb-8">
-        Programas cuatrimestrales (N5 y N2) y técnicos ágiles por microciclos.
+        Formación fundacional por microciclos. Base común para las rutas de conocimiento.
       </p>
-      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
-        {tecnicos.map(p => (
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-5">
+        {paths.map(p => (
           <a href={`/programas/${p.slug}`}
              class="card-premium rounded-[20px] p-6 flex flex-col gap-3 no-underline">
-            <span class="text-[11px] font-bold uppercase tracking-widest text-brand">Técnico · {p.duracionCuatrimestres} cuatrimestres</span>
+            <span class="text-[11px] font-bold uppercase tracking-widest text-accent2">Path · {p.totalMicrociclos} microciclos</span>
+            <h3 class="text-[15px] font-bold text-content leading-snug">{p.titulo}</h3>
+            <p class="text-[13px] text-content-secondary leading-[1.75] flex-1">{p.descripcion}</p>
+            <span class="link-arrow mt-1 text-[13px]">Ver path <svg viewBox="0 0 14 14" fill="none"><path d="M1 7h12M8 2l5 5-5 5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+          </a>
+        ))}
+      </div>
+    </section>
+  )}
+
+  {cursos360.length > 0 && (
+    <section class="max-w-6xl mx-auto px-6 pb-14 border-t border-border-subtle pt-12">
+      <h2 class="text-xl md:text-2xl font-bold mb-2 text-content">Cursos 360</h2>
+      <p class="text-content-secondary text-[14px] mb-8">
+        Especializaciones por módulos. Profundización aplicada sobre una tecnología o dominio.
+      </p>
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
+        {cursos360.map(p => (
+          <a href={`/programas/${p.slug}`}
+             class="card-premium rounded-[20px] p-6 flex flex-col gap-3 no-underline">
+            <span class="text-[11px] font-bold uppercase tracking-widest text-brand">Curso 360 · {p.totalMicrociclos} módulos</span>
             <h3 class="text-[15px] font-bold text-content leading-snug">{p.titulo}</h3>
             <p class="text-[13px] text-content-secondary leading-[1.75] flex-1 line-clamp-3">{p.descripcion}</p>
             <span class="link-arrow mt-1 text-[13px]">Ver programa <svg viewBox="0 0 14 14" fill="none"><path d="M1 7h12M8 2l5 5-5 5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
@@ -87,20 +92,20 @@ const paths        = todos.filter(p => p.tipo === 'ruta_corporativa')
     </section>
   )}
 
-  {paths.length > 0 && (
+  {cursosContinuos.length > 0 && (
     <section class="max-w-6xl mx-auto px-6 pb-20 border-t border-border-subtle pt-12">
-      <h2 class="text-xl md:text-2xl font-bold mb-2 text-content">Rutas corporativas · Paths de microciclos</h2>
+      <h2 class="text-xl md:text-2xl font-bold mb-2 text-content">Cursos continuos</h2>
       <p class="text-content-secondary text-[14px] mb-8">
-        Formación intensiva en tecnologías específicas. Cada path se compone de microciclos de 4 semanas.
+        Formación corta y puntual sobre una competencia específica.
       </p>
       <div class="grid grid-cols-1 md:grid-cols-2 gap-5">
-        {paths.map(p => (
+        {cursosContinuos.map(p => (
           <a href={`/programas/${p.slug}`}
              class="card-premium rounded-[20px] p-6 flex flex-col gap-3 no-underline">
-            <span class="text-[11px] font-bold uppercase tracking-widest text-accent2">Path · {p.duracionCuatrimestres} microciclos</span>
+            <span class="text-[11px] font-bold uppercase tracking-widest text-accent2">Curso continuo · {p.duracionHoras} horas</span>
             <h3 class="text-[15px] font-bold text-content leading-snug">{p.titulo}</h3>
             <p class="text-[13px] text-content-secondary leading-[1.75] flex-1">{p.descripcion}</p>
-            <span class="link-arrow mt-1 text-[13px]">Ver path <svg viewBox="0 0 14 14" fill="none"><path d="M1 7h12M8 2l5 5-5 5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+            <span class="link-arrow mt-1 text-[13px]">Ver programa <svg viewBox="0 0 14 14" fill="none"><path d="M1 7h12M8 2l5 5-5 5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
           </a>
         ))}
       </div>

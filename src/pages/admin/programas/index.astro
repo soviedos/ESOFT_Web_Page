@@ -13,11 +13,11 @@ const lista = await db.select().from(programas).orderBy(desc(programas.createdAt
 const creado   = Astro.url.searchParams.get('created')
 const editado  = Astro.url.searchParams.get('updated')
 
-const TIPO_LABEL: Record<string, string> = {
-  bachillerato:     'Bachillerato',
-  maestria:         'Maestría',
-  tecnico:          'Técnico',
-  ruta_corporativa: 'Ruta Corp.',
+const MODALIDAD_LABEL: Record<string, string> = {
+  cuatrimestral:  'Cuatrimestral',
+  path:           'Path',
+  curso_360:      'Curso 360',
+  curso_continuo: 'Curso continuo',
 }
 
 const NIVEL_LABEL: Record<string, string> = {
@@ -56,7 +56,7 @@ const NIVEL_LABEL: Record<string, string> = {
       <thead>
         <tr class="border-b border-border-subtle bg-bg-tertiary text-content-muted">
           <th class="text-left px-5 py-3 font-medium">Título</th>
-          <th class="text-left px-5 py-3 font-medium">Tipo</th>
+          <th class="text-left px-5 py-3 font-medium">Modalidad</th>
           <th class="text-left px-5 py-3 font-medium">Nivel</th>
           <th class="text-center px-5 py-3 font-medium">Cuatrimestres</th>
           <th class="text-center px-5 py-3 font-medium">Estado</th>
@@ -67,9 +67,9 @@ const NIVEL_LABEL: Record<string, string> = {
         {lista.map(p => (
           <tr class="border-b border-border-subtle last:border-0 hover:bg-bg-tertiary transition-colors">
             <td class="px-5 py-3.5 font-medium text-content max-w-[260px] truncate">{p.titulo}</td>
-            <td class="px-5 py-3.5 text-content-secondary">{TIPO_LABEL[p.tipo] ?? p.tipo}</td>
-            <td class="px-5 py-3.5 text-content-secondary">{NIVEL_LABEL[p.nivel] ?? p.nivel}</td>
-            <td class="px-5 py-3.5 text-center text-content-secondary">{p.duracionCuatrimestres}</td>
+            <td class="px-5 py-3.5 text-content-secondary">{MODALIDAD_LABEL[p.modalidad] ?? p.modalidad}</td>
+            <td class="px-5 py-3.5 text-content-secondary">{p.nivel ? (NIVEL_LABEL[p.nivel] ?? p.nivel) : '—'}</td>
+            <td class="px-5 py-3.5 text-center text-content-secondary">{p.duracionCuatrimestres ?? '—'}</td>
             <td class="px-5 py-3.5 text-center">
               {p.activo
                 ? <span class="inline-flex items-center gap-1 text-[11px] font-medium px-2.5 py-1 rounded-full"

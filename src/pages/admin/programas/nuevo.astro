@@ -14,24 +14,25 @@ if (Astro.request.method === 'POST') {
   const form  = await Astro.request.formData()
 
   const titulo               = (form.get('titulo')   as string).trim()
-  const tipo                 = form.get('tipo')       as string
-  const nivel                = form.get('nivel')      as string
+  const modalidad            = form.get('modalidad')  as string
+  const nivel                = (form.get('nivel')     as string) || null
   const descripcion          = (form.get('descripcion')    as string).trim()
-  const duracionCuatrimestres = parseInt(form.get('duracion') as string, 10)
+  const duracionRaw          = parseInt(form.get('duracion') as string, 10)
+  const duracionCuatrimestres = Number.isNaN(duracionRaw) ? null : duracionRaw
   const objetivo             = (form.get('objetivo')  as string)?.trim() || null
   const perfilEgresado       = (form.get('perfil')    as string)?.trim() || null
   const tecnologias          = (form.get('tecnologias') as string)
     ?.split(',').map(t => t.trim()).filter(Boolean) ?? []
 
-  if (!titulo || !tipo || !nivel || !descripcion || !duracionCuatrimestres) {
+  if (!titulo || !modalidad || !descripcion) {
     error = 'Completá todos los campos obligatorios.'
   } else {
     try {
       await db.insert(programas).values({
         slug: slugify(titulo),
         titulo, descripcion, duracionCuatrimestres,
-        tipo:  tipo  as any,
-        nivel: nivel as any,
+        modalidad: modalidad as any,
+        nivel:     nivel      as any,
         objetivo, perfilEgresado, tecnologias,
         activo: true,
       })
@@ -76,25 +77,25 @@ if (Astro.request.method === 'POST') {
     <!-- Tipo + Nivel -->
     <div class="grid grid-cols-1 sm:grid-cols-2 gap-5">
       <div>
-        <label for="tipo" class="block text-[13px] font-medium text-content-secondary mb-1.5">
-          Tipo <span class="text-accent2">*</span>
+        <label for="modalidad" class="block text-[13px] font-medium text-content-secondary mb-1.5">
+          Modalidad <span class="text-accent2">*</span>
         </label>
-        <select id="tipo" name="tipo" required
+        <select id="modalidad" name="modalidad" required
                 class="w-full rounded-xl border border-border-default bg-bg-tertiary text-content px-4 py-2.5 text-[14px] focus:outline-none focus:ring-2 focus:ring-brand transition-colors">
-          <option value="">Seleccioná un tipo</option>
-          <option value="bachillerato">Bachillerato</option>
-          <option value="maestria">Maestría</option>
-          <option value="tecnico">Técnico</option>
-          <option value="ruta_corporativa">Ruta corporativa</option>
+          <option value="">Seleccioná una modalidad</option>
+          <option value="cuatrimestral">Cuatrimestral</option>
+          <option value="path">Path</option>
+          <option value="curso_360">Curso 360</option>
+          <option value="curso_continuo">Curso continuo</option>
         </select>
       </div>
       <div>
         <label for="nivel" class="block text-[13px] font-medium text-content-secondary mb-1.5">
-          Nivel <span class="text-accent2">*</span>
+          Nivel <span class="text-content-muted text-[12px]">(solo cuatrimestral)</span>
         </label>
-        <select id="nivel" name="nivel" required
+        <select id="nivel" name="nivel"
                 class="w-full rounded-xl border border-border-default bg-bg-tertiary text-content px-4 py-2.5 text-[14px] focus:outline-none focus:ring-2 focus:ring-brand transition-colors">
-          <option value="">Seleccioná un nivel</option>
+          <option value="">— Ninguno —</option>
           <option value="tecnico">Técnico</option>
           <option value="bachillerato">Bachillerato</option>
           <option value="maestria">Maestría</option>
@@ -105,9 +106,9 @@ if (Astro.request.method === 'POST') {
     <!-- Duración -->
     <div class="w-48">
       <label for="duracion" class="block text-[13px] font-medium text-content-secondary mb-1.5">
-        Duración (cuatrimestres) <span class="text-accent2">*</span>
+        Duración (cuatrimestres) <span class="text-content-muted text-[12px]">(solo cuatrimestral)</span>
       </label>
-      <input type="number" id="duracion" name="duracion" required min="1" max="20"
+      <input type="number" id="duracion" name="duracion" min="1" max="20"
              class="w-full rounded-xl border border-border-default bg-bg-tertiary text-content px-4 py-2.5 text-[14px] focus:outline-none focus:ring-2 focus:ring-brand transition-colors" />
     </div>
 
