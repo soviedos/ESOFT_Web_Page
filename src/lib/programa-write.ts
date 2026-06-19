@@ -1,5 +1,5 @@
 import { db } from '../db/client'
-import { programas, cursos, competencias } from '../db/schema'
+import { programas, cursos, competencias, bloquesContenido } from '../db/schema'
 import { eq } from 'drizzle-orm'
 import { slugify } from './utils'
 import { MODALIDAD_CONFIG, type ProgramaValores } from './modalidades'
@@ -31,6 +31,23 @@ export async function crearPrograma(modalidad: string, v: ProgramaValores) {
     ...valoresAColumnas(modalidad, v),
   }).returning()
   return nuevo
+}
+
+// ── Bloques de contenido editables ───────────────────────────────────
+
+export async function guardarBloque(
+  id: string,
+  datos: { titulo: string | null; cuerpo: string | null },
+  userId: string,
+) {
+  await db.update(bloquesContenido)
+    .set({
+      titulo:         datos.titulo,
+      cuerpo:         datos.cuerpo,
+      actualizadoEn:  new Date(),
+      actualizadoPor: userId,
+    })
+    .where(eq(bloquesContenido.id, id))
 }
 
 export async function actualizarPrograma(id: string, modalidad: string, v: ProgramaValores) {

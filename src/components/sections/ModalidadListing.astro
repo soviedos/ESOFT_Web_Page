@@ -1,7 +1,8 @@
 ---
 // Landing reutilizable para las sub-modalidades de microciclos.
-// El texto explicativo (`intro`) es un placeholder estático; en la pieza 4
-// pasará a editarse vía bloques_contenido.
+// El texto explicativo (`intro`) llega desde bloques_contenido (con fallback).
+import RichText from '../RichText.astro'
+
 interface Item {
   slug: string
   titulo: string
@@ -33,7 +34,9 @@ const {
     </nav>
     <span class="text-[11px] font-bold uppercase tracking-widest text-brand">{eyebrow}</span>
     <h1 class="text-3xl md:text-5xl font-bold tracking-tight mt-2 mb-4">{titulo}</h1>
-    <p class="text-content-secondary text-base md:text-lg max-w-3xl leading-[1.8]">{intro}</p>
+    <div class="max-w-3xl space-y-4">
+      <RichText texto={intro} pClass="text-content-secondary text-base md:text-lg leading-[1.8]" />
+    </div>
   </div>
 </section>
 

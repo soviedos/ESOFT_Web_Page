@@ -4,6 +4,7 @@ import ModalidadListing from '../../../components/sections/ModalidadListing.astr
 import { db } from '../../../db/client'
 import { programas } from '../../../db/schema'
 import { and, eq } from 'drizzle-orm'
+import { getBloque } from '../../../lib/contenido'
 
 const rows = await db.select({
   slug:             programas.slug,
@@ -18,6 +19,10 @@ const items = rows.map(p => ({
   descripcion: p.descripcion,
   meta: p.totalMicrociclos ? `Ruta · ${p.totalMicrociclos} microciclos` : 'Ruta de conocimiento',
 }))
+
+const FALLBACK_INTRO = 'Las rutas de conocimiento son itinerarios fundacionales organizados por microciclos. Te dan una base sólida y común sobre la que después construís especializaciones más profundas. Cada microciclo otorga competencias verificables y se conecta con el siguiente para que avances con un orden claro, sin atajos ni vacíos.'
+const bloque = await getBloque('rutas-intro')
+const intro = bloque?.cuerpo ?? FALLBACK_INTRO
 ---
 
 <Base
@@ -28,7 +33,7 @@ const items = rows.map(p => ({
     breadcrumbLabel="Rutas de conocimiento"
     eyebrow="Microciclos · Fundacional"
     titulo="Rutas de conocimiento"
-    intro="Las rutas de conocimiento son itinerarios fundacionales organizados por microciclos. Te dan una base sólida y común sobre la que después construís especializaciones más profundas. Cada microciclo otorga competencias verificables y se conecta con el siguiente para que avances con un orden claro, sin atajos ni vacíos."
+    intro={intro}
     items={items}
   />
 </Base>

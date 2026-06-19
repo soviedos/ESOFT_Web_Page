@@ -4,6 +4,7 @@ import ModalidadListing from '../../../components/sections/ModalidadListing.astr
 import { db } from '../../../db/client'
 import { programas } from '../../../db/schema'
 import { and, eq } from 'drizzle-orm'
+import { getBloque } from '../../../lib/contenido'
 
 const rows = await db.select({
   slug:          programas.slug,
@@ -18,6 +19,10 @@ const items = rows.map(p => ({
   descripcion: p.descripcion,
   meta: p.duracionHoras ? `Curso continuo · ${p.duracionHoras} horas` : 'Curso continuo',
 }))
+
+const FALLBACK_INTRO = 'Los cursos de aprendizaje continuo son formaciones cortas y puntuales pensadas para sumar una competencia concreta sin comprometerte con un plan completo. Son perfectos para actualizarte, cubrir una brecha específica o probar un tema nuevo en pocas horas. Cada curso es independiente y otorga una microcredencial al completarlo.'
+const bloque = await getBloque('cursos-continuos-intro')
+const intro = bloque?.cuerpo ?? FALLBACK_INTRO
 ---
 
 <Base
@@ -28,7 +33,7 @@ const items = rows.map(p => ({
     breadcrumbLabel="Cursos de aprendizaje continuo"
     eyebrow="Microciclos · Formación corta"
     titulo="Cursos de aprendizaje continuo"
-    intro="Los cursos de aprendizaje continuo son formaciones cortas y puntuales pensadas para sumar una competencia concreta sin comprometerte con un plan completo. Son perfectos para actualizarte, cubrir una brecha específica o probar un tema nuevo en pocas horas. Cada curso es independiente y otorga una microcredencial al completarlo."
+    intro={intro}
     items={items}
   />
 </Base>

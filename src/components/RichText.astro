@@ -1,0 +1,13 @@
+---
+// Renderiza un texto plano como párrafos simples (sin dependencias).
+// Separa por líneas en blanco; cada párrafo se escapa automáticamente.
+interface Props {
+  texto: string
+  pClass?: string
+}
+const { texto, pClass = '' } = Astro.props
+
+const parrafos = texto.split(/\n\s*\n/).map(p => p.trim()).filter(Boolean)
+---
+
+{parrafos.map(p => <p class={pClass}>{p}</p>)}

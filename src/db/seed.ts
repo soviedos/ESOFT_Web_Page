@@ -243,16 +243,43 @@ async function seed() {
   })
   count.rutas++
 
-  // 9) Bloque de contenido — Metodología XperiencEd ───────────────────
-  console.log('→ Insertando bloque de contenido...')
-  await db.insert(bloquesContenido).values({
-    clave:          'metodologia-xperienced',
-    titulo:         'Metodología XperiencEd',
-    seccion:        'metodologia',
-    cuerpo:         'XperiencEd es la metodología de aprendizaje de CENFOTEC, con una distribución de 20% teoría, 60% práctica y 20% reflexión. Es el pilar del modelo Credentials as you Grow, que acredita competencias de forma progresiva.',
-    actualizadoPor: admin.id,
-  })
-  count.bloques++
+  // 9) Bloques de contenido ───────────────────────────────────────────
+  console.log('→ Insertando bloques de contenido...')
+  await db.insert(bloquesContenido).values([
+    {
+      clave:          'rutas-intro',
+      titulo:         'Rutas de conocimiento',
+      seccion:        'modalidad',
+      orden:          1,
+      cuerpo:         'Las rutas de conocimiento son técnicos ágiles organizados por microciclos. Construyen una base sólida y común sobre la que después se levantan las especializaciones. Cada microciclo otorga competencias verificables y se conecta con el siguiente, para que avances con un orden claro y sin vacíos.',
+      actualizadoPor: admin.id,
+    },
+    {
+      clave:          'cursos-360-intro',
+      titulo:         'Cursos 360',
+      seccion:        'modalidad',
+      orden:          2,
+      cuerpo:         'Los cursos 360 cubren un dominio completo en 3 módulos. Combinan teoría y práctica aplicada para que domines un tema de principio a fin —del frontend al despliegue, por ejemplo— y obtengas una microcredencial que respalde lo aprendido.',
+      actualizadoPor: admin.id,
+    },
+    {
+      clave:          'cursos-continuos-intro',
+      titulo:         'Cursos de aprendizaje continuo',
+      seccion:        'modalidad',
+      orden:          3,
+      cuerpo:         'Los cursos de aprendizaje continuo desarrollan una competencia puntual en pocas horas. Son formaciones cortas e independientes, ideales para actualizarte o cubrir una brecha específica sin comprometerte con un plan completo. Cada curso otorga su propia microcredencial.',
+      actualizadoPor: admin.id,
+    },
+    {
+      clave:          'metodologia-xperienced',
+      titulo:         'Metodología XperiencEd',
+      seccion:        'metodologia',
+      orden:          1,
+      cuerpo:         'XperiencEd es la metodología de aprendizaje de CENFOTEC, con una distribución de 20% teoría, 60% práctica y 20% reflexión. Es el pilar del modelo Credentials as you Grow, que acredita competencias de forma progresiva.',
+      actualizadoPor: admin.id,
+    },
+  ])
+  count.bloques += 4
 
   console.log(`
 ✅ Seed completado:
@@ -262,7 +289,7 @@ async function seed() {
    • ${count.cursos} cursos (curso/microciclo/modulo_360)
    • ${count.competencias} competencias
    • ${count.rutas} ruta transversal
-   • ${count.bloques} bloque de contenido
+   • ${count.bloques} bloques de contenido
 `)
 
   await _pool.end()
