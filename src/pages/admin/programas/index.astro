@@ -4,6 +4,8 @@ import { requireAuth } from '../../../lib/auth'
 import { db } from '../../../db/client'
 import { programas } from '../../../db/schema'
 import { desc } from 'drizzle-orm'
+import { MODALIDAD_CONFIG } from '../../../lib/modalidades'
+import { nivelLabel as NIVEL_LABEL } from '../../../lib/labels'
 
 const user = await requireAuth(Astro.request, 'admin')
 if (!user) return Astro.redirect(`/login?next=/admin/programas`)
@@ -13,18 +15,8 @@ const lista = await db.select().from(programas).orderBy(desc(programas.createdAt
 const creado   = Astro.url.searchParams.get('created')
 const editado  = Astro.url.searchParams.get('updated')
 
-const MODALIDAD_LABEL: Record<string, string> = {
-  cuatrimestral:  'Cuatrimestral',
-  path:           'Path',
-  curso_360:      'Curso 360',
-  curso_continuo: 'Curso continuo',
-}
-
-const NIVEL_LABEL: Record<string, string> = {
-  tecnico:      'Técnico',
-  bachillerato: 'Bachillerato',
-  maestria:     'Maestría',
-}
+const MODALIDAD_LABEL: Record<string, string> =
+  Object.fromEntries(Object.entries(MODALIDAD_CONFIG).map(([k, c]) => [k, c.label]))
 ---
 
 <Admin user={user} title="Programas">

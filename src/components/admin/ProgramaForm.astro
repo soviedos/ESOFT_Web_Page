@@ -1,0 +1,216 @@
+---
+import type { Programa } from '../../lib/types'
+import { MODALIDAD_CONFIG } from '../../lib/modalidades'
+import { nivelCredencialLabel } from '../../lib/labels'
+
+interface Opcion { id: string; nombre: string }
+
+interface Props {
+  modalidad: string
+  modo: 'crear' | 'editar'
+  formAction: string
+  areas: Opcion[]
+  prerequisitos: Opcion[]
+  programa?: Programa | null
+  error?: string
+}
+
+const { modalidad, modo, formAction, areas, prerequisitos, programa = null, error } = Astro.props
+
+const cfg = MODALIDAD_CONFIG[modalidad]
+const campos = cfg?.campos ?? {}
+
+const INPUT = 'w-full rounded-xl border border-border-default bg-bg-tertiary text-content px-4 py-2.5 text-[14px] focus:outline-none focus:ring-2 focus:ring-brand transition-colors'
+const LABEL = 'block text-[13px] font-medium text-content-secondary mb-1.5'
+
+// Valores actuales (edición) o vacíos (alta).
+const v = {
+  titulo:          programa?.titulo ?? '',
+  descripcion:     programa?.descripcion ?? '',
+  objetivo:        programa?.objetivo ?? '',
+  perfil:          programa?.perfilEgresado ?? '',
+  tecnologias:     (programa?.tecnologias as string[] ?? []).join(', '),
+  activo:          programa ? programa.activo : true,
+  nivel:           programa?.nivel ?? '',
+  duracion:        programa?.duracionCuatrimestres ?? '',
+  area:            programa?.areaCurricularId ?? '',
+  nivelCredencial: programa?.nivelCredencial ?? '',
+  totalMicrociclos: programa?.totalMicrociclos ?? '',
+  duracionHoras:   programa?.duracionHoras ?? '',
+  prerequisito:    programa?.prerequisitoId ?? '',
+}
+
+const credenciales = Object.entries(nivelCredencialLabel)
+const niveles: [string, string][] = [
+  ['tecnico', 'Técnico'], ['bachillerato', 'Bachillerato'], ['maestria', 'Maestría'],
+]
+---
+
+{error && (
+  <div role="alert"
+       class="mb-6 flex items-start gap-3 px-5 py-3.5 rounded-2xl text-[13px]"
+       style="background: rgba(200,31,102,0.06); border: 1px solid rgba(200,31,102,0.20); color: var(--color-accent-hover);">
+    <span class="shrink-0">⚠</span> {error}
+  </div>
+)}
+
+<form method="POST" action={formAction} class="bg-bg-secondary rounded-2xl border border-border-subtle p-8 space-y-6">
+  {modo === 'editar' && <input type="hidden" name="_action" value="update" />}
+  <input type="hidden" name="modalidad" value={modalidad} />
+
+  <!-- Modalidad (inmutable) -->
+  <div class="flex items-center justify-between gap-4 rounded-xl bg-bg-tertiary border border-border-subtle px-4 py-3">
+    <div>
+      <p class="text-[12px] font-medium text-content-muted">Modalidad</p>
+      <p class="text-[14px] font-semibold text-content">{cfg?.label ?? modalidad}</p>
+    </div>
+    <span class="text-[11px] text-content-muted bg-bg-elevated px-2.5 py-1 rounded-full">No editable</span>
+  </div>
+
+  {modo === 'editar' && programa && (
+    <div>
+      <p class="text-[12px] font-medium text-content-muted mb-1">Slug (generado del título, no editable)</p>
+      <p class="text-[13px] font-mono text-content-secondary bg-bg-tertiary px-4 py-2.5 rounded-xl border border-border-subtle">
+        /programas/{programa.slug}
+      </p>
+    </div>
+  )}
+
+  <!-- Título -->
+  <div>
+    <label for="titulo" class={LABEL}>Título <span class="text-accent2">*</span></label>
+    <input type="text" id="titulo" name="titulo" required maxlength="300" value={v.titulo}
+           placeholder="ej. Técnico en Desarrollo y Diseño Web Avanzado" class={INPUT} />
+  </div>
+
+  <!-- Descripción -->
+  <div>
+    <label for="descripcion" class={LABEL}>Descripción <span class="text-accent2">*</span></label>
+    <textarea id="descripcion" name="descripcion" required rows="3"
+              placeholder="Breve descripción pública del programa..."
+              class={`${INPUT} resize-y`}>{v.descripcion}</textarea>
+  </div>
+
+  <!-- ── Campos específicos por modalidad ── -->
+  {(campos.nivel || campos.duracionCuatrimestres || campos.area || campos.nivelCredencial || campos.totalMicrociclos || campos.duracionHoras || campos.prerequisito) && (
+    <div class="rounded-xl border border-border-subtle p-5 space-y-5">
+      <p class="text-[12px] font-semibold uppercase tracking-widest text-brand-label">Datos de {cfg?.label}</p>
+
+      <div class="grid grid-cols-1 sm:grid-cols-2 gap-5">
+        {campos.nivel && (
+          <div>
+            <label for="nivel" class={LABEL}>Nivel</label>
+            <select id="nivel" name="nivel" class={INPUT}>
+              <option value="" selected={!v.nivel}>— Seleccioná —</option>
+              {niveles.map(([val, lbl]) => (
+                <option value={val} selected={v.nivel === val}>{lbl}</option>
+              ))}
+            </select>
+          </div>
+        )}
+
+        {campos.duracionCuatrimestres && (
+          <div>
+            <label for="duracion" class={LABEL}>Duración (cuatrimestres)</label>
+            <input type="number" id="duracion" name="duracion" min="1" max="20" value={v.duracion} class={INPUT} />
+          </div>
+        )}
+
+        {campos.area && (
+          <div>
+            <label for="area" class={LABEL}>Área curricular</label>
+            <select id="area" name="area" class={INPUT}>
+              <option value="" selected={!v.area}>— Seleccioná —</option>
+              {areas.map(a => (
+                <option value={a.id} selected={v.area === a.id}>{a.nombre}</option>
+              ))}
+            </select>
+          </div>
+        )}
+
+        {campos.nivelCredencial && (
+          <div>
+            <label for="nivelCredencial" class={LABEL}>Nivel de credencial</label>
+            <select id="nivelCredencial" name="nivelCredencial" class={INPUT}>
+              <option value="" selected={!v.nivelCredencial}>— Seleccioná —</option>
+              {credenciales.map(([val, lbl]) => (
+                <option value={val} selected={v.nivelCredencial === val}>{lbl}</option>
+              ))}
+            </select>
+          </div>
+        )}
+
+        {campos.totalMicrociclos && (
+          <div>
+            <label for="totalMicrociclos" class={LABEL}>Total de microciclos</label>
+            <input type="number" id="totalMicrociclos" name="totalMicrociclos" min="1" max="100" value={v.totalMicrociclos} class={INPUT} />
+          </div>
+        )}
+
+        {campos.duracionHoras && (
+          <div>
+            <label for="duracionHoras" class={LABEL}>Horas</label>
+            <input type="number" id="duracionHoras" name="duracionHoras" min="1" max="2000" value={v.duracionHoras} class={INPUT} />
+          </div>
+        )}
+
+        {campos.prerequisito && (
+          <div class="sm:col-span-2">
+            <label for="prerequisito" class={LABEL}>Prerequisito <span class="text-content-muted text-[12px]">(opcional)</span></label>
+            <select id="prerequisito" name="prerequisito" class={INPUT}>
+              <option value="" selected={!v.prerequisito}>— Ninguno —</option>
+              {prerequisitos.map(p => (
+                <option value={p.id} selected={v.prerequisito === p.id}>{p.nombre}</option>
+              ))}
+            </select>
+          </div>
+        )}
+      </div>
+    </div>
+  )}
+
+  <!-- Objetivo -->
+  <div>
+    <label for="objetivo" class={LABEL}>Objetivo general <span class="text-content-muted text-[12px]">(opcional)</span></label>
+    <textarea id="objetivo" name="objetivo" rows="3"
+              placeholder="Objetivo general del programa..."
+              class={`${INPUT} resize-y`}>{v.objetivo}</textarea>
+  </div>
+
+  <!-- Perfil del egresado -->
+  <div>
+    <label for="perfil" class={LABEL}>Perfil de egreso <span class="text-content-muted text-[12px]">(opcional)</span></label>
+    <textarea id="perfil" name="perfil" rows="3"
+              placeholder="Perfil profesional al egresar..."
+              class={`${INPUT} resize-y`}>{v.perfil}</textarea>
+  </div>
+
+  <!-- Tecnologías -->
+  <div>
+    <label for="tecnologias" class={LABEL}>Tecnologías <span class="text-content-muted text-[12px]">(separadas por coma, opcional)</span></label>
+    <input type="text" id="tecnologias" name="tecnologias" value={v.tecnologias}
+           placeholder="ej. Python, React, PostgreSQL" class={INPUT} />
+  </div>
+
+  <!-- Estado -->
+  <div class="w-56">
+    <label for="activo" class={LABEL}>Estado</label>
+    <select id="activo" name="activo" class={INPUT}>
+      <option value="true" selected={v.activo === true}>Activo (visible en el sitio)</option>
+      <option value="false" selected={v.activo === false}>Borrador (oculto)</option>
+    </select>
+  </div>
+
+  <div class="h-px bg-border-subtle"></div>
+
+  <!-- Acciones — CTA magenta -->
+  <div class="flex items-center gap-4">
+    <button type="submit"
+            class="btn-primary bg-accent2 text-white font-semibold px-6 py-2.5 rounded-xl text-[14px] hover:bg-accent-hover transition-colors">
+      {modo === 'crear' ? 'Crear programa' : 'Guardar cambios'}
+    </button>
+    <a href="/admin/programas" class="text-[13px] text-content-secondary hover:text-content transition-colors">
+      Cancelar
+    </a>
+  </div>
+</form>
