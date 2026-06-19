@@ -16,7 +16,9 @@
     "db:reset": "docker compose exec -T postgres sh -c 'psql -U \"$POSTGRES_USER\" -d \"$POSTGRES_DB\" -c \"DROP SCHEMA IF EXISTS public CASCADE; CREATE SCHEMA public; DROP SCHEMA IF EXISTS drizzle CASCADE;\"' && npm run db:migrate",
     "db:seed": "tsx src/db/seed.ts",
     "db:studio": "drizzle-kit studio",
-    "ai:test": "node --env-file=.env --import tsx scripts/ai-test.ts"
+    "ai:test": "node --env-file=.env --import tsx scripts/ai-test.ts",
+    "ai:reindex": "node --env-file=.env --import tsx scripts/ai-reindex.ts",
+    "ai:search": "node --env-file=.env --import tsx scripts/ai-search.ts"
   },
   "dependencies": {
     "@astrojs/node": "^10.1.3",

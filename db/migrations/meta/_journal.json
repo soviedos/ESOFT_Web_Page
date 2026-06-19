@@ -29,6 +29,13 @@
       "when": 1781895893232,
       "tag": "0003_enable_pgvector",
       "breakpoints": true
+    },
+    {
+      "idx": 4,
+      "version": "7",
+      "when": 1781900723322,
+      "tag": "0004_chunks_rag",
+      "breakpoints": true
     }
   ]
 }

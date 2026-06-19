@@ -1,6 +1,6 @@
 import {
   pgTable, pgEnum,
-  uuid, varchar, text, boolean, integer, timestamp, jsonb,
+  uuid, varchar, text, boolean, integer, timestamp, jsonb, vector,
   uniqueIndex, index,
   type AnyPgColumn,
 } from 'drizzle-orm/pg-core'
@@ -105,6 +105,28 @@ export const competencias = pgTable('competencias', {
   cursoIdx: index('competencias_curso_idx').on(t.cursoId),
 }))
 
+// Corpus del RAG: fragmentos de texto de un programa con su embedding.
+export interface ChunkMetadata {
+  programaSlug?: string
+  titulo?: string
+  modalidad?: string
+  area?: string | null
+}
+
+export const chunks = pgTable('chunks', {
+  id: uuid('id').defaultRandom().primaryKey(),
+  programaId: uuid('programa_id').notNull().references(() => programas.id, { onDelete: 'cascade' }),
+  seccion: varchar('seccion', { length: 50 }).notNull(),
+  contenido: text('contenido').notNull(),
+  embedding: vector('embedding', { dimensions: 768 }).notNull(),
+  metadata: jsonb('metadata').$type<ChunkMetadata>().default({}),
+  createdAt: timestamp('created_at').defaultNow().notNull(),
+}, (t) => ({
+  programaIdx: index('chunks_programa_idx').on(t.programaId),
+  // Índice HNSW para búsqueda por distancia coseno (embedding <=> query).
+  embeddingIdx: index('chunks_embedding_hnsw_idx').using('hnsw', t.embedding.op('vector_cosine_ops')),
+}))
+
 export const rutas = pgTable('rutas', {
   id: uuid('id').defaultRandom().primaryKey(),
   slug: varchar('slug', { length: 200 }).notNull(),
@@ -163,7 +185,9 @@ export const programasRelations = relations(programas, ({ one, many }) => ({
   cursos: many(cursos),
   competencias: many(competencias),
   solicitudes: many(solicitudes),
+  chunks: many(chunks),
 }))
+export const chunksRelations = relations(chunks, ({ one }) => ({ programa: one(programas, { fields: [chunks.programaId], references: [programas.id] }) }))
 export const cursosRelations = relations(cursos, ({ one, many }) => ({ programa: one(programas, { fields: [cursos.programaId], references: [programas.id] }), competencias: many(competencias) }))
 export const competenciasRelations = relations(competencias, ({ one }) => ({ programa: one(programas, { fields: [competencias.programaId], references: [programas.id] }), curso: one(cursos, { fields: [competencias.cursoId], references: [cursos.id] }) }))
 export const rutasRelations = relations(rutas, ({ one }) => ({ area: one(areasCurriculares, { fields: [rutas.areaCurricularId], references: [areasCurriculares.id] }) }))
