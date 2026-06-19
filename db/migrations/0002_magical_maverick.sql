@@ -1,0 +1,1 @@
+ALTER TABLE "cursos" ADD COLUMN "codigo" varchar(30);

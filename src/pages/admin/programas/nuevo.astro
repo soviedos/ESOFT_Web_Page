@@ -1,41 +1,35 @@
 ---
 import Admin from '../../../layouts/Admin.astro'
+import ProgramaForm from '../../../components/admin/ProgramaForm.astro'
 import { requireAuth } from '../../../lib/auth'
 import { db } from '../../../db/client'
-import { programas } from '../../../db/schema'
-import { slugify } from '../../../lib/utils'
+import { programas, areasCurriculares } from '../../../db/schema'
+import { eq } from 'drizzle-orm'
+import {
+  MODALIDADES, MODALIDAD_CONFIG, esModalidadValida, parseProgramaForm,
+} from '../../../lib/modalidades'
+import { crearPrograma } from '../../../lib/programa-write'
 
 const user = await requireAuth(Astro.request, 'admin')
 if (!user) return Astro.redirect(`/login?next=/admin/programas/nuevo`)
 
+const modalidad = Astro.url.searchParams.get('modalidad')
+const modalidadValida = esModalidadValida(modalidad)
+
 let error = ''
 
-if (Astro.request.method === 'POST') {
-  const form  = await Astro.request.formData()
+// POST: alta de programa (solo si la modalidad es válida).
+if (Astro.request.method === 'POST' && modalidadValida) {
+  const form = await Astro.request.formData()
+  const valores = parseProgramaForm(form, modalidad)
 
-  const titulo               = (form.get('titulo')   as string).trim()
-  const tipo                 = form.get('tipo')       as string
-  const nivel                = form.get('nivel')      as string
-  const descripcion          = (form.get('descripcion')    as string).trim()
-  const duracionCuatrimestres = parseInt(form.get('duracion') as string, 10)
-  const objetivo             = (form.get('objetivo')  as string)?.trim() || null
-  const perfilEgresado       = (form.get('perfil')    as string)?.trim() || null
-  const tecnologias          = (form.get('tecnologias') as string)
-    ?.split(',').map(t => t.trim()).filter(Boolean) ?? []
-
-  if (!titulo || !tipo || !nivel || !descripcion || !duracionCuatrimestres) {
-    error = 'Completá todos los campos obligatorios.'
+  if (!valores.titulo || !valores.descripcion) {
+    error = 'Completá el título y la descripción.'
   } else {
     try {
-      await db.insert(programas).values({
-        slug: slugify(titulo),
-        titulo, descripcion, duracionCuatrimestres,
-        tipo:  tipo  as any,
-        nivel: nivel as any,
-        objetivo, perfilEgresado, tecnologias,
-        activo: true,
-      })
-      return Astro.redirect('/admin/programas?created=1')
+      const nuevo = await crearPrograma(modalidad, valores)
+      // Tras crear, llevar directo al editor del plan de estudios.
+      return Astro.redirect(`/admin/programas/${nuevo.id}/plan?created=1`)
     } catch (err: any) {
       error = err?.code === '23505'
         ? 'Ya existe un programa con un título similar. Cambiá el título.'
@@ -43,128 +37,66 @@ if (Astro.request.method === 'POST') {
     }
   }
 }
+
+// Datos para los selects (solo cuando hay formulario).
+let areas: { id: string; nombre: string }[] = []
+let prerequisitos: { id: string; nombre: string }[] = []
+if (modalidadValida) {
+  const cfg = MODALIDAD_CONFIG[modalidad]
+  if (cfg.campos.area) {
+    areas = await db.select({ id: areasCurriculares.id, nombre: areasCurriculares.nombre })
+      .from(areasCurriculares).where(eq(areasCurriculares.activo, true)).orderBy(areasCurriculares.nombre)
+  }
+  if (cfg.campos.prerequisito) {
+    prerequisitos = await db.select({ id: programas.id, nombre: programas.titulo })
+      .from(programas).where(eq(programas.activo, true)).orderBy(programas.titulo)
+  }
+}
+
+const cfg = modalidadValida ? MODALIDAD_CONFIG[modalidad] : null
 ---
 
-<Admin user={user} title="Nuevo programa">
+<Admin user={user} title={cfg ? `Nuevo: ${cfg.label}` : 'Nuevo programa'}>
 
   <div class="mb-6">
-    <a href="/admin/programas" class="text-[13px] text-content-muted hover:text-brand transition-colors">
-      ← Volver a programas
+    <a href={modalidadValida ? '/admin/programas/nuevo' : '/admin/programas'}
+       class="text-[13px] text-content-muted hover:text-brand transition-colors">
+      {modalidadValida ? '← Cambiar modalidad' : '← Volver a programas'}
     </a>
   </div>
 
-  {error && (
-    <div role="alert"
-         class="mb-6 flex items-start gap-3 px-5 py-3.5 rounded-2xl text-[13px]"
-         style="background: rgba(200,31,102,0.06); border: 1px solid rgba(200,31,102,0.20); color: var(--color-accent-hover);">
-      <span class="shrink-0">⚠</span> {error}
-    </div>
+  {!modalidadValida ? (
+    <>
+      <div class="mb-6">
+        <h2 class="text-[18px] font-semibold text-content mb-1">Elegí la modalidad del programa</h2>
+        <p class="text-[13px] text-content-muted">Cada modalidad tiene su propio formato de datos. La modalidad no se puede cambiar después.</p>
+      </div>
+
+      <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+        {MODALIDADES.map(m => (
+          <a href={`/admin/programas/nuevo?modalidad=${m.value}`}
+             class="group block rounded-2xl border border-border-subtle bg-bg-secondary p-6 hover:border-brand transition-colors">
+            <div class="flex items-start justify-between gap-3">
+              <h3 class="text-[15px] font-semibold text-content group-hover:text-brand transition-colors">{m.label}</h3>
+              <svg class="w-4 h-4 text-content-muted group-hover:text-brand transition-colors shrink-0 mt-0.5" viewBox="0 0 14 14" fill="none">
+                <path d="M1 7h12M8 2l5 5-5 5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+              </svg>
+            </div>
+            <p class="text-[13px] text-content-secondary leading-[1.7] mt-2">{m.descripcion}</p>
+            <p class="text-[11px] font-medium text-brand-label bg-brand-soft/50 rounded-lg px-2.5 py-1.5 mt-4 inline-block">{m.formato}</p>
+          </a>
+        ))}
+      </div>
+    </>
+  ) : (
+    <ProgramaForm
+      modalidad={modalidad}
+      modo="crear"
+      formAction={`/admin/programas/nuevo?modalidad=${modalidad}`}
+      areas={areas}
+      prerequisitos={prerequisitos}
+      error={error}
+    />
   )}
 
-  <form method="POST" class="bg-bg-secondary rounded-2xl border border-border-subtle p-8 space-y-6">
-
-    <!-- Título -->
-    <div>
-      <label for="titulo" class="block text-[13px] font-medium text-content-secondary mb-1.5">
-        Título <span class="text-accent2">*</span>
-      </label>
-      <input type="text" id="titulo" name="titulo" required maxlength="300"
-             placeholder="ej. Bachillerato en Ingeniería del Software"
-             class="w-full rounded-xl border border-border-default bg-bg-tertiary text-content px-4 py-2.5 text-[14px] focus:outline-none focus:ring-2 focus:ring-brand transition-colors" />
-    </div>
-
-    <!-- Tipo + Nivel -->
-    <div class="grid grid-cols-1 sm:grid-cols-2 gap-5">
-      <div>
-        <label for="tipo" class="block text-[13px] font-medium text-content-secondary mb-1.5">
-          Tipo <span class="text-accent2">*</span>
-        </label>
-        <select id="tipo" name="tipo" required
-                class="w-full rounded-xl border border-border-default bg-bg-tertiary text-content px-4 py-2.5 text-[14px] focus:outline-none focus:ring-2 focus:ring-brand transition-colors">
-          <option value="">Seleccioná un tipo</option>
-          <option value="bachillerato">Bachillerato</option>
-          <option value="maestria">Maestría</option>
-          <option value="tecnico">Técnico</option>
-          <option value="ruta_corporativa">Ruta corporativa</option>
-        </select>
-      </div>
-      <div>
-        <label for="nivel" class="block text-[13px] font-medium text-content-secondary mb-1.5">
-          Nivel <span class="text-accent2">*</span>
-        </label>
-        <select id="nivel" name="nivel" required
-                class="w-full rounded-xl border border-border-default bg-bg-tertiary text-content px-4 py-2.5 text-[14px] focus:outline-none focus:ring-2 focus:ring-brand transition-colors">
-          <option value="">Seleccioná un nivel</option>
-          <option value="tecnico">Técnico</option>
-          <option value="bachillerato">Bachillerato</option>
-          <option value="maestria">Maestría</option>
-        </select>
-      </div>
-    </div>
-
-    <!-- Duración -->
-    <div class="w-48">
-      <label for="duracion" class="block text-[13px] font-medium text-content-secondary mb-1.5">
-        Duración (cuatrimestres) <span class="text-accent2">*</span>
-      </label>
-      <input type="number" id="duracion" name="duracion" required min="1" max="20"
-             class="w-full rounded-xl border border-border-default bg-bg-tertiary text-content px-4 py-2.5 text-[14px] focus:outline-none focus:ring-2 focus:ring-brand transition-colors" />
-    </div>
-
-    <!-- Descripción -->
-    <div>
-      <label for="descripcion" class="block text-[13px] font-medium text-content-secondary mb-1.5">
-        Descripción <span class="text-accent2">*</span>
-      </label>
-      <textarea id="descripcion" name="descripcion" required rows="3"
-                placeholder="Breve descripción pública del programa..."
-                class="w-full rounded-xl border border-border-default bg-bg-tertiary text-content px-4 py-2.5 text-[14px] focus:outline-none focus:ring-2 focus:ring-brand transition-colors resize-y"></textarea>
-    </div>
-
-    <!-- Objetivo -->
-    <div>
-      <label for="objetivo" class="block text-[13px] font-medium text-content-secondary mb-1.5">
-        Objetivo general <span class="text-content-muted text-[12px]">(opcional)</span>
-      </label>
-      <textarea id="objetivo" name="objetivo" rows="3"
-                placeholder="Descripción del objetivo general del programa..."
-                class="w-full rounded-xl border border-border-default bg-bg-tertiary text-content px-4 py-2.5 text-[14px] focus:outline-none focus:ring-2 focus:ring-brand transition-colors resize-y"></textarea>
-    </div>
-
-    <!-- Perfil del egresado -->
-    <div>
-      <label for="perfil" class="block text-[13px] font-medium text-content-secondary mb-1.5">
-        Perfil del egresado <span class="text-content-muted text-[12px]">(opcional)</span>
-      </label>
-      <textarea id="perfil" name="perfil" rows="3"
-                placeholder="Descripción del perfil profesional al egresar..."
-                class="w-full rounded-xl border border-border-default bg-bg-tertiary text-content px-4 py-2.5 text-[14px] focus:outline-none focus:ring-2 focus:ring-brand transition-colors resize-y"></textarea>
-    </div>
-
-    <!-- Tecnologías -->
-    <div>
-      <label for="tecnologias" class="block text-[13px] font-medium text-content-secondary mb-1.5">
-        Tecnologías <span class="text-content-muted text-[12px]">(separadas por coma, opcional)</span>
-      </label>
-      <input type="text" id="tecnologias" name="tecnologias"
-             placeholder="ej. Python, Docker, PostgreSQL, React"
-             class="w-full rounded-xl border border-border-default bg-bg-tertiary text-content px-4 py-2.5 text-[14px] focus:outline-none focus:ring-2 focus:ring-brand transition-colors" />
-    </div>
-
-    <!-- Divisor -->
-    <div class="h-px bg-border-subtle"></div>
-
-    <!-- Acciones -->
-    <div class="flex items-center gap-4">
-      <button type="submit"
-              class="btn-primary bg-brand text-white font-semibold px-6 py-2.5 rounded-xl text-[14px]">
-        Crear programa
-      </button>
-      <a href="/admin/programas"
-         class="text-[13px] text-content-secondary hover:text-content transition-colors">
-        Cancelar
-      </a>
-    </div>
-
-  </form>
 </Admin>

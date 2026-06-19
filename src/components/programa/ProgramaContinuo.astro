@@ -1,0 +1,80 @@
+---
+import type { ProgramaDetalle, EstadisticaDato } from '../../lib/types'
+import { modalidadLabel, nivelCredencialLabel } from '../../lib/labels'
+import Base from '../../layouts/Base.astro'
+import ProgramaHero from '../sections/ProgramaHero.astro'
+import CompetenciaItem from './CompetenciaItem.astro'
+import TechGrid from '../sections/TechGrid.astro'
+import InfoCTA from '../sections/InfoCTA.astro'
+
+interface Props { programa: ProgramaDetalle }
+const { programa } = Astro.props
+
+const credencial = programa.nivelCredencial
+  ? nivelCredencialLabel[programa.nivelCredencial] ?? programa.nivelCredencial
+  : null
+
+// El continuo no tiene unidades; sus competencias pueden venir como
+// generales (sin curso) o anidadas en unidades. Las consolidamos.
+const competencias = [
+  ...(programa.competenciasGenerales ?? []),
+  ...(programa.unidades ?? []).flatMap(u => u.competencias),
+]
+
+const badge = [
+  modalidadLabel[programa.modalidad] ?? programa.modalidad,
+  credencial,
+  programa.duracionHoras != null ? `${programa.duracionHoras} horas` : '',
+].filter(Boolean).join(' · ')
+
+const estadisticas: EstadisticaDato[] = [
+  programa.duracionHoras != null && { valor: String(programa.duracionHoras), label: 'Horas', colorValor: 'brand', size: 'lg' },
+  credencial && { valor: credencial, label: 'Credencial', colorValor: 'accent2', size: 'lg' },
+  programa.area && { valor: programa.area.nombre, label: 'Área', colorValor: 'content', size: 'lg' },
+  competencias.length > 0 && { valor: String(competencias.length), label: competencias.length === 1 ? 'Competencia' : 'Competencias', colorValor: 'content', size: 'lg' },
+].filter(Boolean) as EstadisticaDato[]
+---
+
+<Base title={programa.titulo} description={programa.descripcion}>
+  <ProgramaHero
+    titulo={programa.titulo}
+    descripcion={programa.descripcion}
+    badge={badge}
+    breadcrumbItems={[
+      { label: 'Programas', href: '/programas' },
+      { label: 'Microciclos', href: '/programas/microciclos' },
+      { label: 'Cursos de aprendizaje continuo', href: '/programas/microciclos/cursos-continuos' },
+      { label: programa.titulo },
+    ]}
+    estadisticas={estadisticas}
+  />
+
+  {competencias.length > 0 && (
+    <section class="py-16 md:py-24 px-6" style="background: var(--color-bg-primary);">
+      <div class="max-w-[760px] mx-auto">
+        <div class="text-center mb-10">
+          <p class="text-[13px] font-bold text-brand-label tracking-widest uppercase mb-3">Resultados de aprendizaje</p>
+          <h2 class="headline-display text-[clamp(1.5rem,3vw,2.25rem)]">
+            {competencias.length === 1 ? 'Competencia que desarrollás' : 'Competencias que desarrollás'}
+          </h2>
+        </div>
+        <div class="card-premium rounded-[18px] p-6 md:p-8 space-y-4">
+          {competencias.map(c => <CompetenciaItem competencia={c} />)}
+        </div>
+      </div>
+    </section>
+  )}
+
+  {(programa.tecnologias?.length ?? 0) > 0 && (
+    <section class="py-12 md:py-16 px-6" style="background: var(--color-bg-secondary);">
+      <div class="max-w-[1060px] mx-auto">
+        <TechGrid tecnologias={programa.tecnologias!} />
+      </div>
+    </section>
+  )}
+
+  <InfoCTA
+    titulo={programa.titulo}
+    descripcion={programa.objetivo ?? programa.descripcion}
+  />
+</Base>

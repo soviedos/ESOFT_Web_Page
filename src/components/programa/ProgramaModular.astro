@@ -1,0 +1,93 @@
+---
+import type { ProgramaDetalle, EstadisticaDato } from '../../lib/types'
+import { modalidadLabel, nivelCredencialLabel, unidadLabel } from '../../lib/labels'
+import Base from '../../layouts/Base.astro'
+import ProgramaHero from '../sections/ProgramaHero.astro'
+import UnidadSecuencia from './UnidadSecuencia.astro'
+import TechGrid from '../sections/TechGrid.astro'
+import InfoCTA from '../sections/InfoCTA.astro'
+
+interface Props { programa: ProgramaDetalle }
+const { programa } = Astro.props
+
+const esPath = programa.modalidad === 'path'
+const unidades = programa.unidades ?? []
+const unidad = unidadLabel[programa.modalidad] ?? 'Unidad'
+const totalUnidades = programa.totalMicrociclos ?? unidades.length
+
+const credencial = programa.nivelCredencial
+  ? nivelCredencialLabel[programa.nivelCredencial] ?? programa.nivelCredencial
+  : null
+
+const badge = [
+  modalidadLabel[programa.modalidad] ?? programa.modalidad,
+  credencial,
+  totalUnidades != null ? `${totalUnidades} ${esPath ? 'microciclos' : 'módulos'}` : '',
+].filter(Boolean).join(' · ')
+
+// Breadcrumb hacia la landing correspondiente.
+const landing = esPath
+  ? { label: 'Rutas de conocimiento', href: '/programas/microciclos/rutas' }
+  : { label: 'Cursos 360', href: '/programas/microciclos/cursos-360' }
+
+const estadisticas: EstadisticaDato[] = [
+  totalUnidades != null && { valor: String(totalUnidades), label: esPath ? 'Microciclos' : 'Módulos', colorValor: 'brand', size: 'lg' },
+  programa.duracionHoras != null && { valor: String(programa.duracionHoras), label: 'Horas', colorValor: 'content', size: 'lg' },
+  credencial && { valor: credencial, label: 'Credencial', colorValor: 'accent2', size: 'lg' },
+  programa.area && { valor: programa.area.nombre, label: 'Área', colorValor: 'content', size: 'lg' },
+].filter(Boolean) as EstadisticaDato[]
+---
+
+<Base title={programa.titulo} description={programa.descripcion}>
+  <ProgramaHero
+    titulo={programa.titulo}
+    descripcion={programa.descripcion}
+    badge={badge}
+    breadcrumbItems={[
+      { label: 'Programas', href: '/programas' },
+      { label: 'Microciclos', href: '/programas/microciclos' },
+      landing,
+      { label: programa.titulo },
+    ]}
+    estadisticas={estadisticas}
+  />
+
+  {programa.prerequisito && (
+    <section class="px-6 pt-10" style="background: var(--color-bg-primary);">
+      <div class="max-w-[860px] mx-auto">
+        <div class="card-premium rounded-[16px] p-5 flex flex-wrap items-center gap-x-3 gap-y-1">
+          <span class="text-[11px] font-bold uppercase tracking-widest text-accent2">Prerequisito</span>
+          <span class="text-[14px] text-content-secondary">Requiere haber completado</span>
+          <a href={`/programas/${programa.prerequisito.slug}`} class="text-[14px] font-semibold text-brand hover:text-brand-hover transition-colors">
+            {programa.prerequisito.titulo}
+          </a>
+        </div>
+      </div>
+    </section>
+  )}
+
+  {unidades.length > 0 ? (
+    <UnidadSecuencia
+      unidades={unidades}
+      unidadLabel={unidad}
+      titulo={esPath ? 'Ruta de microciclos' : 'Módulos del curso 360'}
+    />
+  ) : (
+    <section class="py-16 px-6 text-center" style="background: var(--color-bg-primary);">
+      <p class="text-content-muted text-[15px]">El detalle de las unidades estará disponible pronto.</p>
+    </section>
+  )}
+
+  {(programa.tecnologias?.length ?? 0) > 0 && (
+    <section class="py-12 md:py-16 px-6" style="background: var(--color-bg-secondary);">
+      <div class="max-w-[1060px] mx-auto">
+        <TechGrid tecnologias={programa.tecnologias!} />
+      </div>
+    </section>
+  )}
+
+  <InfoCTA
+    titulo={programa.titulo}
+    descripcion={programa.objetivo ?? programa.descripcion}
+  />
+</Base>

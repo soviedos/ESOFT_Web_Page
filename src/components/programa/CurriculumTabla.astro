@@ -1,0 +1,104 @@
+---
+import type { CursoDato } from '../../lib/types'
+
+interface Props {
+  cursos: CursoDato[]
+  badge?: string
+  titulo?: string
+}
+const { cursos, badge = 'Plan de estudios', titulo = 'Malla curricular' } = Astro.props
+
+const ROMANS = ['I', 'II', 'III', 'IV', 'V', 'VI', 'VII', 'VIII', 'IX', 'X', 'XI', 'XII']
+
+// Agrupar por cuatrimestre preservando el orden.
+const mapa = new Map<number, CursoDato[]>()
+for (const c of cursos) {
+  if (!mapa.has(c.cuatrimestre)) mapa.set(c.cuatrimestre, [])
+  mapa.get(c.cuatrimestre)!.push(c)
+}
+
+const sum = (lista: CursoDato[], key: keyof CursoDato) =>
+  lista.reduce((s, c) => s + (Number(c[key]) || 0), 0)
+
+const grupos = [...mapa.entries()]
+  .sort((a, b) => a[0] - b[0])
+  .map(([num, lista]) => ({
+    num: ROMANS[num - 1] ?? String(num),
+    cursos: lista,
+    hl: sum(lista, 'horasLectivas'),
+    hp: sum(lista, 'horasPracticas'),
+    he: sum(lista, 'horasEstudio'),
+    cr: sum(lista, 'creditos'),
+  }))
+
+const totalCr = grupos.reduce((s, g) => s + g.cr, 0)
+const totalCursos = cursos.length
+---
+
+<section class="py-16 md:py-24 px-6" style="background: var(--color-bg-primary);">
+  <div class="max-w-[1060px] mx-auto">
+    <div class="text-center mb-12">
+      <p class="text-[13px] font-bold text-brand-label tracking-widest uppercase mb-3">{badge}</p>
+      <h2 class="headline-display text-[clamp(1.5rem,3vw,2.25rem)] mb-4">{titulo}</h2>
+      <p class="text-content-secondary text-[15px]">
+        {totalCursos} cursos · {totalCr} créditos · {grupos.length} cuatrimestres
+      </p>
+    </div>
+
+    <div class="space-y-8">
+      {grupos.map(g => (
+        <div class="card-premium rounded-[18px] overflow-hidden">
+          <div
+            class="flex items-center justify-between px-5 py-3 border-b border-border-subtle"
+            style="background: var(--color-bg-secondary);"
+          >
+            <p class="text-[13px] font-bold text-content uppercase tracking-wide">Cuatrimestre {g.num}</p>
+            <span class="text-[12px] font-semibold text-brand bg-brand-soft px-2.5 py-0.5 rounded-full">
+              {g.cr} créditos
+            </span>
+          </div>
+
+          <div class="overflow-x-auto">
+            <table class="w-full text-left border-collapse">
+              <thead>
+                <tr class="text-[11px] font-bold uppercase tracking-wide text-content-muted border-b border-border-subtle">
+                  <th class="px-4 py-2.5 font-bold">Código</th>
+                  <th class="px-4 py-2.5 font-bold">Curso</th>
+                  <th class="px-3 py-2.5 font-bold text-center" title="Horas lectivas">HL</th>
+                  <th class="px-3 py-2.5 font-bold text-center" title="Horas prácticas">HP</th>
+                  <th class="px-3 py-2.5 font-bold text-center" title="Horas de estudio">HE</th>
+                  <th class="px-4 py-2.5 font-bold text-center">Créditos</th>
+                </tr>
+              </thead>
+              <tbody>
+                {g.cursos.map(c => (
+                  <tr class="border-b border-border-subtle/60 last:border-0">
+                    <td class="px-4 py-2.5 align-top">
+                      {c.codigo
+                        ? <span class="text-[11px] font-mono font-bold text-brand-label bg-brand-soft px-1.5 py-0.5 rounded">{c.codigo}</span>
+                        : <span class="text-content-disabled">—</span>}
+                    </td>
+                    <td class="px-4 py-2.5 text-[13.5px] text-content-secondary leading-snug">{c.nombre}</td>
+                    <td class="px-3 py-2.5 text-[13px] text-content-muted text-center">{c.horasLectivas ?? '—'}</td>
+                    <td class="px-3 py-2.5 text-[13px] text-content-muted text-center">{c.horasPracticas ?? '—'}</td>
+                    <td class="px-3 py-2.5 text-[13px] text-content-muted text-center">{c.horasEstudio ?? '—'}</td>
+                    <td class="px-4 py-2.5 text-[13px] font-semibold text-content text-center">{c.creditos ?? '—'}</td>
+                  </tr>
+                ))}
+              </tbody>
+              <tfoot>
+                <tr class="text-[12px] font-bold text-content" style="background: var(--color-bg-secondary);">
+                  <td class="px-4 py-2.5" colspan="2">Subtotal cuatrimestre {g.num}</td>
+                  <td class="px-3 py-2.5 text-center">{g.hl}</td>
+                  <td class="px-3 py-2.5 text-center">{g.hp}</td>
+                  <td class="px-3 py-2.5 text-center">{g.he}</td>
+                  <td class="px-4 py-2.5 text-center text-brand">{g.cr}</td>
+                </tr>
+              </tfoot>
+            </table>
+          </div>
+        </div>
+      ))}
+    </div>
+  </div>
+</section>

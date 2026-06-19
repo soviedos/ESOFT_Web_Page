@@ -1,0 +1,111 @@
+---
+import Admin from '../../../../layouts/Admin.astro'
+import PlanEditor from '../../../../components/admin/PlanEditor.astro'
+import type { UnidadConPlan } from '../../../../components/admin/PlanEditor.astro'
+import { requireAuth } from '../../../../lib/auth'
+import { db } from '../../../../db/client'
+import { programas, cursos, competencias } from '../../../../db/schema'
+import { eq, asc } from 'drizzle-orm'
+import { MODALIDAD_CONFIG } from '../../../../lib/modalidades'
+import { parsePlan, guardarPlan } from '../../../../lib/programa-write'
+import type { CompetenciaDato } from '../../../../lib/types'
+
+const user = await requireAuth(Astro.request, 'admin')
+if (!user) return Astro.redirect(`/login?next=/admin/programas`)
+
+const { id } = Astro.params
+if (!id) return Astro.redirect('/admin/programas')
+
+const programa = await db.query.programas.findFirst({ where: eq(programas.id, id) })
+if (!programa) return new Response(null, { status: 404 })
+
+const modalidad = programa.modalidad
+const cfg = MODALIDAD_CONFIG[modalidad]
+
+let error = ''
+
+if (Astro.request.method === 'POST') {
+  const form = await Astro.request.formData()
+  if (form.get('_action') === 'plan') {
+    try {
+      const plan = parsePlan(form.get('plan') as string)
+      await guardarPlan(id, modalidad, plan)
+      return Astro.redirect(`/admin/programas/${id}/plan?saved=1`)
+    } catch {
+      error = 'Error al guardar el plan. Intentá de nuevo.'
+    }
+  }
+}
+
+// Cargar el plan actual.
+const cursosRows = await db.select().from(cursos)
+  .where(eq(cursos.programaId, id))
+  .orderBy(asc(cursos.secuencia), asc(cursos.orden))
+
+const compRows = await db.select().from(competencias)
+  .where(eq(competencias.programaId, id))
+  .orderBy(asc(competencias.orden))
+
+const toDato = (c: typeof compRows[number]): CompetenciaDato => ({
+  nombre: c.nombre,
+  descripcion: c.descripcion,
+  microcredencial: c.microcredencial,
+  sfiaCodigo: c.sfiaCodigo,
+  sfiaNivel: c.sfiaNivel,
+})
+
+const compPorCurso = new Map<string, CompetenciaDato[]>()
+const compPrograma: CompetenciaDato[] = []
+for (const c of compRows) {
+  if (c.cursoId) {
+    if (!compPorCurso.has(c.cursoId)) compPorCurso.set(c.cursoId, [])
+    compPorCurso.get(c.cursoId)!.push(toDato(c))
+  } else {
+    compPrograma.push(toDato(c))
+  }
+}
+
+const unidades: UnidadConPlan[] = cfg.plan.tipoUnidad
+  ? cursosRows.map(u => ({ unidad: u, competencias: compPorCurso.get(u.id) ?? [] }))
+  : []
+
+const saved   = Astro.url.searchParams.get('saved')
+const created = Astro.url.searchParams.get('created')
+---
+
+<Admin user={user} title={`Plan de estudios: ${programa.titulo}`}>
+
+  <div class="mb-6 flex items-center justify-between">
+    <a href={`/admin/programas/${id}`} class="text-[13px] text-content-muted hover:text-brand transition-colors">
+      ← Volver al programa
+    </a>
+    <a href={`/programas/${programa.slug}`} target="_blank" rel="noopener"
+       class="text-[13px] text-content-muted hover:text-brand transition-colors">
+      Ver página pública →
+    </a>
+  </div>
+
+  <div class="mb-6">
+    <h2 class="text-[18px] font-semibold text-content mb-1">Plan de estudios</h2>
+    <p class="text-[13px] text-content-muted">
+      {programa.titulo} · <span class="text-brand-label font-medium">{cfg.label}</span>
+    </p>
+  </div>
+
+  {(saved || created) && (
+    <div role="status"
+         class="mb-6 flex items-center gap-3 px-5 py-3.5 rounded-2xl text-[13px]"
+         style="background: rgba(22,74,152,0.06); border: 1px solid rgba(22,74,152,0.18); color: var(--color-brand);">
+      {created ? '✓ Programa creado. Ahora cargá su plan de estudios.' : '✓ Plan guardado correctamente.'}
+    </div>
+  )}
+
+  <PlanEditor
+    plan={cfg.plan}
+    formAction={`/admin/programas/${id}/plan`}
+    unidades={unidades}
+    competenciasPrograma={compPrograma}
+    error={error}
+  />
+
+</Admin>

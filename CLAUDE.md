@@ -17,12 +17,13 @@ Sitio web institucional de la Escuela de Ingeniería del Software (ESOFT) de la 
 ### Drizzle schema
 - Los nombres de propiedades TypeScript son **camelCase** aunque el column en DB sea snake_case.
 - Ejemplo correcto: `perfilEgresado: text('perfil_egresado')`.
-- Los enums válidos están definidos en `schema.ts`: `tipoPrograma` y `nivelPrograma`.
+- Los enums válidos están definidos en `schema.ts`: `modalidadPrograma`, `nivelPrograma`, `tipoUnidad` y `nivelCredencial`.
 
 ### Migraciones
 - Se generan con `npm run db:generate`.
 - Se aplican **desde el host**, no desde el contenedor: `DATABASE_URL=postgresql://esoft:PASS@localhost:5433/esoft_db npm run db:migrate`.
 - Los archivos de migración están en `db/migrations/` (raíz del proyecto, no en `src/`).
+- **Reset completo de la BD de desarrollo (`npm run db:reset`):** dropea **dos** schemas, no solo `public`. Drizzle guarda su tabla de tracking `__drizzle_migrations` en un schema aparte llamado `drizzle`; si solo dropeás `public`, el tracking sobrevive, Drizzle cree que las migraciones ya están aplicadas y las saltea (la siguiente `db:migrate` falla con errores tipo `DROP INDEX ... does not exist` sobre tablas que ya no existen). Por eso el reset hace `DROP SCHEMA public CASCADE; CREATE SCHEMA public; DROP SCHEMA IF EXISTS drizzle CASCADE;` y luego re-aplica todas las migraciones desde cero. **Destructivo:** borra todos los datos de desarrollo.
 
 ### Routing — programas y rutas 100% dinámicos
 - Las páginas estáticas de programa fueron eliminadas. Hoy `src/pages/programas/` contiene solo `index.astro` (índice) y `[slug].astro`; `src/pages/rutas/` igual.
@@ -121,7 +122,7 @@ docker compose --profile dev up -d     # + pgadmin en :5050
 
 ### Implementado
 - **Autenticación:** UI de login en `/login` (`src/pages/login.astro`) conectada a `/api/auth/login` y `/api/auth/logout`. JWT con `jose` en cookie `esoft_session` (`HttpOnly`, `SameSite=Strict`). Secretos validados vía `astro:env/server`.
-- **Panel admin:** `/admin` y `/admin/programas` (índice, `nuevo`, `[id]`) para gestionar programas. `POST /api/programas` requiere rol `admin`.
+- **Panel admin:** `/admin` y `/admin/programas` (índice, `nuevo`, `[id]`, `[id]/plan`) para gestionar programas y su plan de estudios. El alta/edición pasa por el camino server-side del admin (`src/lib/programa-write.ts`), no por la API REST. `GET /api/programas` es una API pública de solo lectura.
 - **Perfil de docente self-service:** `/docentes/perfil` (`src/pages/docentes/perfil.astro`); `GET`/`PATCH /api/docentes/[id]` requieren autenticación.
 - **Routing dinámico:** programas y rutas servidos desde BD vía `[slug].astro` (ver sección Routing).
 - **Despliegue:** Docker Compose (postgres, app, pgadmin). AWS Amplify descontinuado — no quedan archivos `amplify*` en el repo.

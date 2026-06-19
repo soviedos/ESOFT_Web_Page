@@ -1,5 +1,22 @@
 ---
 import Base from '../../layouts/Base.astro';
+import RichText from '../../components/RichText.astro';
+import { getBloque } from '../../lib/contenido';
+
+const FALLBACK = {
+  titulo: 'Metodología XperiencEd',
+  cuerpo: 'XperiencEd es la metodología de aprendizaje de CENFOTEC, con una distribución de 20% teoría, 60% práctica y 20% reflexión. Es el pilar del modelo Credentials as you Grow, que acredita competencias de forma progresiva.',
+};
+const bloque = await getBloque('metodologia-xperienced');
+const titulo = bloque?.titulo ?? FALLBACK.titulo;
+const cuerpo = bloque?.cuerpo ?? FALLBACK.cuerpo;
+
+const pilares = [
+  { titulo: 'Formación por competencias', texto: 'Cada programa está diseñado alrededor de competencias profesionales reales que el mercado demanda. Los estudiantes desarrollan habilidades técnicas y blandas desde el primer día.' },
+  { titulo: 'Aprendizaje basado en proyectos', texto: 'Los cursos integran proyectos reales como eje central del aprendizaje. Los estudiantes trabajan en equipos, con metodologías ágiles y herramientas de la industria.' },
+  { titulo: 'Evaluación auténtica', texto: 'La evaluación se centra en la demostración de competencias a través de entregables, presentaciones y portafolios profesionales, no solo exámenes teóricos.' },
+  { titulo: 'Vinculación con la industria', texto: 'Programas co-diseñados con empresas del sector, prácticas profesionales, certificaciones y mentorías con profesionales activos.' },
+];
 ---
 
 <Base title="Metodología" description="Modelo educativo de ESOFT: formación por competencias y aprendizaje basado en proyectos.">
@@ -8,38 +25,21 @@ import Base from '../../layouts/Base.astro';
       <a href="/escuela" class="hover:text-content">Escuela</a> / <span class="text-content">Metodología</span>
     </nav>
     <h1 class="text-3xl md:text-5xl font-bold tracking-tight mb-6">Modelo educativo</h1>
-    <p class="text-content-muted mb-10 max-w-3xl">
-      ESOFT utiliza un modelo educativo basado en competencias profesionales, aprendizaje por proyectos y vinculación directa con la industria del software.
-    </p>
 
-    <div class="space-y-8 md:space-y-12">
-      <div>
-        <h2 class="text-xl md:text-2xl font-semibold mb-3">Formación por competencias</h2>
-        <p class="text-content-muted max-w-3xl">
-          Cada programa está diseñado alrededor de competencias profesionales reales que el mercado demanda. Los estudiantes desarrollan habilidades técnicas y blandas desde el primer día.
-        </p>
-      </div>
+    <!-- Bloque editable: metodologia-xperienced -->
+    <div class="card-premium rounded-[20px] p-8 md:p-10 max-w-3xl mb-12 md:mb-16">
+      <span class="text-[11px] font-bold uppercase tracking-widest text-brand">Metodología</span>
+      <h2 class="text-2xl md:text-3xl font-bold tracking-tight mt-2 mb-4">{titulo}</h2>
+      <RichText texto={cuerpo} class="text-content-secondary text-[15px] md:text-base leading-[1.85]" />
+    </div>
 
-      <div>
-        <h2 class="text-xl md:text-2xl font-semibold mb-3">Aprendizaje basado en proyectos</h2>
-        <p class="text-content-muted max-w-3xl">
-          Los cursos integran proyectos reales como eje central del aprendizaje. Los estudiantes trabajan en equipos, con metodologías ágiles y herramientas de la industria.
-        </p>
-      </div>
-
-      <div>
-        <h2 class="text-xl md:text-2xl font-semibold mb-3">Evaluación auténtica</h2>
-        <p class="text-content-muted max-w-3xl">
-          La evaluación se centra en la demostración de competencias a través de entregables, presentaciones y portafolios profesionales, no solo exámenes teóricos.
-        </p>
-      </div>
-
-      <div>
-        <h2 class="text-xl md:text-2xl font-semibold mb-3">Vinculación con la industria</h2>
-        <p class="text-content-muted max-w-3xl">
-          Programas co-diseñados con empresas del sector, prácticas profesionales, certificaciones y mentorías con profesionales activos.
-        </p>
-      </div>
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-8 md:gap-10">
+      {pilares.map(p => (
+        <div>
+          <h3 class="text-xl md:text-2xl font-semibold mb-3">{p.titulo}</h3>
+          <p class="text-content-muted max-w-3xl">{p.texto}</p>
+        </div>
+      ))}
     </div>
   </section>
 </Base>

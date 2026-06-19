@@ -266,7 +266,6 @@ Endpoints en `src/pages/api/` (SSR):
 | `POST` | `/api/auth/login` | Público | Valida credenciales y emite la cookie `esoft_session` (JWT, `HttpOnly`, `SameSite=Strict`) |
 | `POST` | `/api/auth/logout` | Público | Limpia la cookie de sesión (`Max-Age=0`) |
 | `GET` | `/api/programas` | Público | Devuelve los programas activos |
-| `POST` | `/api/programas` | Rol `admin` | Crea un programa (requiere JWT) y sincroniza sus rutas |
 | `GET` | `/api/docentes/[id]` | Autenticado | Devuelve un docente por id |
 | `PATCH` | `/api/docentes/[id]` | Autenticado | Actualiza el perfil de un docente |
 

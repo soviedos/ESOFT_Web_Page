@@ -1,0 +1,39 @@
+---
+import Base from '../../../layouts/Base.astro'
+import ModalidadListing from '../../../components/sections/ModalidadListing.astro'
+import { db } from '../../../db/client'
+import { programas } from '../../../db/schema'
+import { and, eq } from 'drizzle-orm'
+import { getBloque } from '../../../lib/contenido'
+
+const rows = await db.select({
+  slug:             programas.slug,
+  titulo:           programas.titulo,
+  descripcion:      programas.descripcion,
+  totalMicrociclos: programas.totalMicrociclos,
+}).from(programas).where(and(eq(programas.activo, true), eq(programas.modalidad, 'curso_360')))
+
+const items = rows.map(p => ({
+  slug: p.slug,
+  titulo: p.titulo,
+  descripcion: p.descripcion,
+  meta: p.totalMicrociclos ? `Curso 360 · ${p.totalMicrociclos} módulos` : 'Curso 360',
+}))
+
+const FALLBACK_INTRO = 'Los cursos 360 son especializaciones modulares que abordan un dominio o una tecnología de principio a fin. Combinan teoría y práctica aplicada para que domines un tema completo —del frontend al despliegue, por ejemplo— y obtengas una microcredencial que respalde lo aprendido. Son ideales si ya tenés una base y querés profundizar con foco.'
+const bloque = await getBloque('cursos-360-intro')
+const intro = bloque?.cuerpo ?? FALLBACK_INTRO
+---
+
+<Base
+  title="Cursos 360"
+  description="Cursos 360 de ESOFT: especializaciones modulares que cubren un dominio o tecnología de principio a fin con enfoque aplicado."
+>
+  <ModalidadListing
+    breadcrumbLabel="Cursos 360"
+    eyebrow="Microciclos · Especialización"
+    titulo="Cursos 360"
+    intro={intro}
+    items={items}
+  />
+</Base>

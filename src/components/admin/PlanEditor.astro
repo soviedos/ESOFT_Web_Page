@@ -1,0 +1,171 @@
+---
+import type { PlanConfig } from '../../lib/modalidades'
+import type { Curso, CompetenciaDato } from '../../lib/types'
+import UnidadRow from './UnidadRow.astro'
+import CompetenciaRow from './CompetenciaRow.astro'
+
+export interface UnidadConPlan {
+  unidad: Curso
+  competencias: CompetenciaDato[]
+}
+
+interface Props {
+  plan: PlanConfig
+  formAction: string
+  unidades: UnidadConPlan[]
+  competenciasPrograma: CompetenciaDato[]
+  error?: string
+}
+const { plan, formAction, unidades, competenciasPrograma, error } = Astro.props
+
+const tieneUnidades = plan.tipoUnidad !== null
+---
+
+{error && (
+  <div role="alert"
+       class="mb-6 flex items-start gap-3 px-5 py-3.5 rounded-2xl text-[13px]"
+       style="background: rgba(200,31,102,0.06); border: 1px solid rgba(200,31,102,0.20); color: var(--color-accent-hover);">
+    <span class="shrink-0">⚠</span> {error}
+  </div>
+)}
+
+<form id="plan-form" method="POST" action={formAction} class="space-y-6">
+  <input type="hidden" name="_action" value="plan" />
+  <input type="hidden" name="plan" id="plan-json" />
+
+  <p class="text-[13px] text-content-secondary bg-bg-tertiary border border-border-subtle rounded-xl px-4 py-3">
+    {plan.ayuda}
+  </p>
+
+  {tieneUnidades ? (
+    <>
+      <div id="unidades" class="js-unidades space-y-4">
+        {unidades.map(u => (
+          <UnidadRow campos={plan.campos} unidadLabel={plan.unidadLabel} unidad={u.unidad} competencias={u.competencias} />
+        ))}
+      </div>
+
+      <button type="button" id="add-unidad"
+              class="w-full rounded-2xl border-2 border-dashed border-border-default text-[13px] font-medium text-brand hover:border-brand hover:bg-brand-soft/30 transition-colors py-3.5">
+        + Agregar {plan.unidadLabel.toLowerCase()}
+      </button>
+    </>
+  ) : (
+    <div class="rounded-2xl border border-border-default bg-bg-secondary p-5">
+      <div class="flex items-center justify-between mb-3">
+        <p class="text-[12px] font-semibold uppercase tracking-widest text-brand-label">Competencias del programa</p>
+        <button type="button" class="js-add-prog-comp text-[12px] font-medium text-brand hover:text-brand-hover transition-colors">+ Competencia</button>
+      </div>
+      <div class="js-prog-comps space-y-2.5">
+        {competenciasPrograma.map(c => <CompetenciaRow competencia={c} />)}
+      </div>
+    </div>
+  )}
+
+  <div class="h-px bg-border-subtle"></div>
+
+  <div class="flex items-center gap-4">
+    <button type="submit"
+            class="btn-primary bg-accent2 text-white font-semibold px-6 py-2.5 rounded-xl text-[14px] hover:bg-accent-hover transition-colors">
+      Guardar plan
+    </button>
+    <a href="/admin/programas" class="text-[13px] text-content-secondary hover:text-content transition-colors">
+      Cancelar
+    </a>
+  </div>
+</form>
+
+<!-- Plantillas para clonar (no se envían) -->
+{tieneUnidades && (
+  <template id="tpl-unidad">
+    <UnidadRow campos={plan.campos} unidadLabel={plan.unidadLabel} />
+  </template>
+)}
+<template id="tpl-comp">
+  <CompetenciaRow />
+</template>
+
+<script>
+  (() => {
+    const form = document.getElementById('plan-form') as HTMLFormElement | null
+    if (!form) return
+
+    const tplUnidad = document.getElementById('tpl-unidad') as HTMLTemplateElement | null
+    const tplComp   = document.getElementById('tpl-comp')   as HTMLTemplateElement | null
+
+    function cloneFrom(tpl: HTMLTemplateElement | null, selector: string): HTMLElement | null {
+      const node = tpl?.content.querySelector(selector)
+      return node ? (node.cloneNode(true) as HTMLElement) : null
+    }
+
+    function renumber() {
+      form!.querySelectorAll('.js-unidades > .js-unidad').forEach((el, i) => {
+        const tag = el.querySelector('.js-unidad-num')
+        if (tag) tag.textContent = String(i + 1)
+      })
+    }
+
+    function addComp(container: Element | null) {
+      const row = cloneFrom(tplComp, '.js-competencia')
+      if (row && container) container.appendChild(row)
+    }
+
+    // Delegación de eventos en el formulario.
+    form.addEventListener('click', (e) => {
+      const t = (e.target as HTMLElement).closest('button')
+      if (!t) return
+
+      if (t.id === 'add-unidad') {
+        const row = cloneFrom(tplUnidad, '.js-unidad')
+        if (row) {
+          document.getElementById('unidades')!.appendChild(row)
+          renumber()
+        }
+      } else if (t.classList.contains('js-remove-unidad')) {
+        t.closest('.js-unidad')?.remove()
+        renumber()
+      } else if (t.classList.contains('js-add-comp')) {
+        addComp(t.closest('.js-unidad')?.querySelector('.js-comps') ?? null)
+      } else if (t.classList.contains('js-add-prog-comp')) {
+        addComp(form!.querySelector('.js-prog-comps'))
+      } else if (t.classList.contains('js-remove-comp')) {
+        t.closest('.js-competencia')?.remove()
+      }
+    })
+
+    function readFields(scope: Element, selector: string): Record<string, string> {
+      const o: Record<string, string> = {}
+      scope.querySelectorAll(selector).forEach((inp) => {
+        const el = inp as HTMLInputElement | HTMLTextAreaElement
+        const f = (el as HTMLElement).dataset.field
+        if (f) o[f] = el.value.trim()
+      })
+      return o
+    }
+
+    function readComps(container: Element | null): any[] {
+      if (!container) return []
+      return [...container.querySelectorAll(':scope > .js-competencia')]
+        .map((el) => readFields(el, '.c-field'))
+        .filter((c) => c.nombre)
+    }
+
+    // Serializar el plan a JSON en el submit (un solo envío).
+    form.addEventListener('submit', () => {
+      const unidades = [...form.querySelectorAll('.js-unidades > .js-unidad')]
+        .map((el) => {
+          const u: any = readFields(el, '.u-field')
+          u.competencias = readComps(el.querySelector('.js-comps'))
+          return u
+        })
+        .filter((u) => u.nombre)
+
+      const competencias = readComps(form.querySelector('.js-prog-comps'))
+
+      const hidden = document.getElementById('plan-json') as HTMLInputElement
+      hidden.value = JSON.stringify({ unidades, competencias })
+    })
+
+    renumber()
+  })()
+</script>

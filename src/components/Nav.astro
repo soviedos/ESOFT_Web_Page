@@ -4,15 +4,45 @@ import { requireAuth } from '../lib/auth'
 const currentPath = Astro.url.pathname;
 const sessionUser = await requireAuth(Astro.request)
 
-const links = [
-  { href: '/programas', label: 'Programas' },
-  { href: '/rutas', label: 'Rutas' },
-  { href: '/escuela', label: 'Escuela' },
-  { href: '/contacto', label: 'Contacto' },
+// Menú "Programas" — dos grupos por modalidad
+const programasGroups = [
+  {
+    label: 'Cuatrimestrales',
+    href: '/programas/cuatrimestrales',
+    items: [
+      { href: '/programas/cuatrimestrales?nivel=tecnico',      label: 'Técnicos' },
+      { href: '/programas/cuatrimestrales?nivel=bachillerato', label: 'Bachillerato' },
+      { href: '/programas/cuatrimestrales?nivel=maestria',     label: 'Maestrías' },
+    ],
+  },
+  {
+    label: 'Microciclos',
+    href: '/programas/microciclos',
+    items: [
+      { href: '/programas/microciclos/rutas',            label: 'Rutas de conocimiento' },
+      { href: '/programas/microciclos/cursos-360',       label: 'Cursos 360' },
+      { href: '/programas/microciclos/cursos-continuos', label: 'Cursos de aprendizaje continuo' },
+    ],
+  },
+];
+
+const escuelaItems = [
+  { href: '/escuela',             label: 'La Escuela' },
+  { href: '/escuela/director',    label: 'Dirección' },
+  { href: '/escuela/docentes',    label: 'Docentes' },
+  { href: '/escuela/metodologia', label: 'Metodología' },
+];
+
+const simpleLinks = [
+  { href: '/admision',  label: 'Admisión' },
+  { href: '/historias', label: 'Historias' },
 ];
 
 const isActive = (href: string) =>
   href === '/' ? currentPath === '/' : currentPath.startsWith(href);
+
+const triggerBase =
+  'text-[14px] font-medium tracking-[0.01em] transition-colors duration-300';
 ---
 
 <header id="site-header" class="fixed top-0 inset-x-0 z-50 transition-all duration-500 ease-out" role="banner">
@@ -28,22 +58,86 @@ const isActive = (href: string) =>
       </svg>
     </button>
 
-    <ul class="hidden md:flex items-center gap-9">
-      {links.map(({ href, label }) => (
+    <ul class="hidden md:flex items-center gap-8">
+      <!-- Programas ▾ (mega-menú: dos grupos) -->
+      <li class="relative group">
+        <button
+          type="button"
+          class:list={[
+            triggerBase, 'inline-flex items-center gap-1',
+            isActive('/programas') ? 'text-content' : 'text-content-secondary group-hover:text-content',
+          ]}
+          aria-haspopup="true"
+          aria-expanded="false"
+        >
+          Programas
+          <svg class="w-3 h-3 transition-transform duration-300 group-hover:rotate-180 group-focus-within:rotate-180" viewBox="0 0 12 12" fill="none" aria-hidden="true">
+            <path d="M3 4.5L6 7.5L9 4.5" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+        </button>
+        <div class="dropdown-panel left-0 w-[440px] grid grid-cols-2 gap-2 p-3">
+          {programasGroups.map((group) => (
+            <div class="p-2">
+              <a href={group.href} class="block px-2 pb-2 text-[11px] font-bold uppercase tracking-widest text-brand hover:text-brand-hover transition-colors">
+                {group.label}
+              </a>
+              <ul class="space-y-0.5">
+                {group.items.map(({ href, label }) => (
+                  <li>
+                    <a href={href} class="block rounded-lg px-2 py-2 text-[13.5px] text-content-secondary hover:bg-brand-soft/40 hover:text-content transition-colors">
+                      {label}
+                    </a>
+                  </li>
+                ))}
+              </ul>
+            </div>
+          ))}
+        </div>
+      </li>
+
+      <!-- Escuela ▾ -->
+      <li class="relative group">
+        <button
+          type="button"
+          class:list={[
+            triggerBase, 'inline-flex items-center gap-1',
+            isActive('/escuela') ? 'text-content' : 'text-content-secondary group-hover:text-content',
+          ]}
+          aria-haspopup="true"
+          aria-expanded="false"
+        >
+          Escuela
+          <svg class="w-3 h-3 transition-transform duration-300 group-hover:rotate-180 group-focus-within:rotate-180" viewBox="0 0 12 12" fill="none" aria-hidden="true">
+            <path d="M3 4.5L6 7.5L9 4.5" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+        </button>
+        <div class="dropdown-panel left-0 w-[230px] p-3">
+          <ul class="space-y-0.5">
+            {escuelaItems.map(({ href, label }) => (
+              <li>
+                <a href={href} class="block rounded-lg px-2 py-2 text-[13.5px] text-content-secondary hover:bg-brand-soft/40 hover:text-content transition-colors">
+                  {label}
+                </a>
+              </li>
+            ))}
+          </ul>
+        </div>
+      </li>
+
+      {simpleLinks.map(({ href, label }) => (
         <li>
           <a
             href={href}
             class:list={[
-              'text-[14px] font-medium tracking-[0.01em] transition-colors duration-300',
-              isActive(href)
-                ? 'text-content'
-                : 'text-content-secondary hover:text-content',
+              triggerBase,
+              isActive(href) ? 'text-content' : 'text-content-secondary hover:text-content',
             ]}
           >
             {label}
           </a>
         </li>
       ))}
+
       {sessionUser ? (
         <li>
           <a
@@ -73,20 +167,65 @@ const isActive = (href: string) =>
           </a>
         </li>
       )}
-      <li class="ml-2">
+      <li class="ml-1">
         <a
           href="/admision/solicitar-informacion"
           class="btn-primary inline-flex items-center rounded-full bg-accent2 px-5 py-2 text-[14px] font-semibold text-white"
         >
-          Matricular ahora
+          Solicitar información
         </a>
       </li>
     </ul>
   </nav>
 
-  <div id="mobile-menu" class="hidden md:hidden border-t border-border-subtle px-5 pb-8 pt-5" style="background: rgba(248,249,252,0.97); backdrop-filter: blur(20px) saturate(1.4); -webkit-backdrop-filter: blur(20px) saturate(1.4);">
+  <div id="mobile-menu" class="hidden md:hidden border-t border-border-subtle px-5 pb-8 pt-3" style="background: rgba(248,249,252,0.97); backdrop-filter: blur(20px) saturate(1.4); -webkit-backdrop-filter: blur(20px) saturate(1.4);">
     <ul class="flex flex-col gap-0">
-      {links.map(({ href, label }) => (
+      <!-- Programas (acordeón nativo) -->
+      <li>
+        <details class="group border-b border-border-subtle">
+          <summary class="flex items-center justify-between py-3.5 text-[16px] text-content-secondary cursor-pointer list-none [&::-webkit-details-marker]:hidden">
+            Programas
+            <svg class="w-4 h-4 transition-transform duration-300 group-open:rotate-180" viewBox="0 0 12 12" fill="none" aria-hidden="true">
+              <path d="M3 4.5L6 7.5L9 4.5" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+          </summary>
+          <div class="pb-3 pl-3">
+            {programasGroups.map((group) => (
+              <div class="mb-2">
+                <a href={group.href} class="block py-2 text-[12px] font-bold uppercase tracking-widest text-brand">{group.label}</a>
+                <ul>
+                  {group.items.map(({ href, label }) => (
+                    <li>
+                      <a href={href} class="block py-2 pl-2 text-[15px] text-content-secondary">{label}</a>
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            ))}
+          </div>
+        </details>
+      </li>
+
+      <!-- Escuela (acordeón nativo) -->
+      <li>
+        <details class="group border-b border-border-subtle">
+          <summary class="flex items-center justify-between py-3.5 text-[16px] text-content-secondary cursor-pointer list-none [&::-webkit-details-marker]:hidden">
+            Escuela
+            <svg class="w-4 h-4 transition-transform duration-300 group-open:rotate-180" viewBox="0 0 12 12" fill="none" aria-hidden="true">
+              <path d="M3 4.5L6 7.5L9 4.5" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+          </summary>
+          <ul class="pb-3 pl-3">
+            {escuelaItems.map(({ href, label }) => (
+              <li>
+                <a href={href} class="block py-2 pl-2 text-[15px] text-content-secondary">{label}</a>
+              </li>
+            ))}
+          </ul>
+        </details>
+      </li>
+
+      {simpleLinks.map(({ href, label }) => (
         <li>
           <a
             href={href}
@@ -99,6 +238,7 @@ const isActive = (href: string) =>
           </a>
         </li>
       ))}
+
       {sessionUser ? (
         <li>
           <a
@@ -121,12 +261,46 @@ const isActive = (href: string) =>
           href="/admision/solicitar-informacion"
           class="block text-center rounded-full bg-accent2 px-5 py-3 text-[15px] font-semibold text-white"
         >
-          Matricular ahora
+          Solicitar información
         </a>
       </li>
     </ul>
   </div>
 </header>
+
+<style>
+  /* Panel de dropdown desktop — visible en hover y al enfocar con teclado (focus-within) */
+  .dropdown-panel {
+    position: absolute;
+    top: calc(100% + 6px);
+    opacity: 0;
+    visibility: hidden;
+    transform: translateY(6px);
+    transition: opacity 0.2s ease, transform 0.2s ease, visibility 0.2s;
+    background: rgba(248, 249, 252, 0.98);
+    backdrop-filter: blur(20px) saturate(1.4);
+    -webkit-backdrop-filter: blur(20px) saturate(1.4);
+    border: 1px solid var(--color-border-subtle, rgba(15, 23, 42, 0.08));
+    border-radius: 16px;
+    box-shadow: 0 18px 50px -12px rgba(22, 74, 152, 0.18);
+    z-index: 60;
+  }
+  /* Puente invisible para que el cursor no pierda el hover entre el botón y el panel */
+  .dropdown-panel::before {
+    content: '';
+    position: absolute;
+    top: -8px;
+    left: 0;
+    right: 0;
+    height: 8px;
+  }
+  .group:hover > .dropdown-panel,
+  .group:focus-within > .dropdown-panel {
+    opacity: 1;
+    visibility: visible;
+    transform: translateY(0);
+  }
+</style>
 
 <script>
   (() => {

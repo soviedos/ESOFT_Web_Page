@@ -1,0 +1,99 @@
+---
+// Renderiza Markdown sanitizado (negritas, listas, enlaces, encabezados)
+// con estilos de marca acotados al contenedor.
+import { renderMarkdown } from '../lib/markdown'
+
+interface Props {
+  texto: string
+  class?: string
+}
+const { texto, class: clase = '' } = Astro.props
+
+const html = renderMarkdown(texto)
+---
+
+<div class:list={['richtext', clase]} set:html={html} />
+
+<style>
+  /* Estilos acotados al contenido renderizado por RichText. */
+  .richtext :global(> *:first-child) { margin-top: 0; }
+  .richtext :global(> *:last-child)  { margin-bottom: 0; }
+
+  .richtext :global(p) {
+    margin: 0 0 1em;
+    line-height: inherit;
+  }
+
+  .richtext :global(strong),
+  .richtext :global(b) {
+    font-weight: 700;
+    color: var(--color-content);
+  }
+
+  .richtext :global(em),
+  .richtext :global(i) { font-style: italic; }
+
+  .richtext :global(a) {
+    color: var(--color-brand);
+    font-weight: 500;
+    text-decoration: underline;
+    text-underline-offset: 2px;
+    text-decoration-thickness: 1px;
+    transition: color 0.2s ease;
+  }
+  .richtext :global(a:hover) { color: var(--color-brand-hover); }
+
+  .richtext :global(ul),
+  .richtext :global(ol) {
+    margin: 0 0 1em;
+    padding-left: 1.4em;
+  }
+  .richtext :global(ul) { list-style: disc; }
+  .richtext :global(ol) { list-style: decimal; }
+  .richtext :global(li) { margin: 0.35em 0; padding-left: 0.2em; }
+  .richtext :global(li::marker) { color: var(--color-brand); }
+
+  .richtext :global(h1),
+  .richtext :global(h2),
+  .richtext :global(h3),
+  .richtext :global(h4) {
+    font-family: var(--font-display);
+    color: var(--color-content);
+    font-weight: 700;
+    line-height: 1.25;
+    margin: 1.4em 0 0.5em;
+  }
+  .richtext :global(h1) { font-size: 1.6em; }
+  .richtext :global(h2) { font-size: 1.4em; }
+  .richtext :global(h3) { font-size: 1.2em; }
+  .richtext :global(h4) { font-size: 1.05em; }
+
+  .richtext :global(blockquote) {
+    margin: 0 0 1em;
+    padding: 0.25em 0 0.25em 1em;
+    border-left: 3px solid var(--color-brand-soft, #9CC8FF);
+    color: var(--color-content-secondary);
+  }
+
+  .richtext :global(code) {
+    font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+    font-size: 0.9em;
+    background: var(--color-bg-tertiary, rgba(15,23,42,0.05));
+    padding: 0.1em 0.35em;
+    border-radius: 4px;
+  }
+  .richtext :global(pre) {
+    margin: 0 0 1em;
+    padding: 1em;
+    overflow-x: auto;
+    background: var(--color-bg-tertiary, rgba(15,23,42,0.05));
+    border-radius: 10px;
+  }
+  .richtext :global(pre code) { background: none; padding: 0; }
+
+  .richtext :global(hr) {
+    border: 0;
+    border-top: 1px solid var(--color-border-subtle, rgba(15,23,42,0.08));
+    margin: 1.5em 0;
+  }
+</style>

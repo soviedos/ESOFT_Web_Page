@@ -1,0 +1,36 @@
+---
+import type { CompetenciaDato } from '../../lib/types'
+
+interface Props {
+  competencia: CompetenciaDato
+}
+const { competencia: c } = Astro.props
+
+const sfia = c.sfiaCodigo
+  ? `SFIA ${c.sfiaCodigo}${c.sfiaNivel != null ? ` · N${c.sfiaNivel}` : ''}`
+  : null
+---
+
+<div class="flex items-start gap-3">
+  <span class="mt-1.5 h-1.5 w-1.5 shrink-0 rounded-full bg-accent2" aria-hidden="true"></span>
+  <div class="flex-1">
+    <p class="text-[14px] text-content leading-snug">{c.nombre}</p>
+    {c.descripcion && (
+      <p class="text-[13px] text-content-secondary leading-[1.7] mt-1">{c.descripcion}</p>
+    )}
+    {(sfia || c.microcredencial) && (
+      <div class="flex flex-wrap items-center gap-2 mt-2">
+        {sfia && (
+          <span class="text-[11px] font-mono font-semibold text-brand-label bg-brand-soft px-2 py-0.5 rounded">
+            {sfia}
+          </span>
+        )}
+        {c.microcredencial && (
+          <span class="text-[11px] font-semibold text-accent2 bg-accent2-soft px-2 py-0.5 rounded-full">
+            {c.microcredencial}
+          </span>
+        )}
+      </div>
+    )}
+  </div>
+</div>

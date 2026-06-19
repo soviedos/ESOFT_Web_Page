@@ -2,42 +2,104 @@
 import { db } from '../../db/client'
 import { programas } from '../../db/schema'
 import { eq } from 'drizzle-orm'
-import type { ProgramaData } from '../../lib/types'
+import type { ProgramaDetalle, CompetenciaDato, UnidadDato, CursoDato } from '../../lib/types'
+
+import ProgramaCuatrimestral from '../../components/programa/ProgramaCuatrimestral.astro'
+import ProgramaModular from '../../components/programa/ProgramaModular.astro'
+import ProgramaContinuo from '../../components/programa/ProgramaContinuo.astro'
 
 const { slug } = Astro.params
 if (!slug) return Astro.redirect('/programas')
 
 const row = await db.query.programas.findFirst({
   where: eq(programas.slug, slug),
-  with: { cursos: { orderBy: (c, { asc }) => [asc(c.cuatrimestre), asc(c.orden)] } }
+  with: {
+    cursos:       { orderBy: (c, { asc })  => [asc(c.secuencia), asc(c.orden)] },
+    competencias: { orderBy: (co, { asc }) => [asc(co.orden)] },
+    area:         true,
+  },
 })
 
 if (!row || !row.activo) {
   return new Response(null, { status: 404 })
 }
 
-const programa: ProgramaData = {
-  titulo:               row.titulo,
-  descripcion:          row.descripcion,
-  tipo:                 row.tipo,
-  duracionCuatrimestres: row.duracionCuatrimestres,
-  estadisticas:         (row.estadisticas ?? []) as ProgramaData['estadisticas'],
-  tecnologias:          (row.tecnologias  ?? []) as string[],
-  objetivo:             row.objetivo,
-  cursos:               (row.cursos ?? []).map(c => ({
-    nombre:       c.nombre,
-    cuatrimestre: c.cuatrimestre,
-    orden:        c.orden,
-    creditos:     c.creditos,
-  })),
+// Prerequisito (consulta aparte para no depender de la auto-relación).
+let prerequisito: ProgramaDetalle['prerequisito'] = null
+if (row.prerequisitoId) {
+  const pre = await db.query.programas.findFirst({
+    where: eq(programas.id, row.prerequisitoId),
+    columns: { slug: true, titulo: true },
+  })
+  if (pre) prerequisito = { slug: pre.slug, titulo: pre.titulo }
 }
 
-const layouts: Record<string, any> = {
-  bachillerato:     (await import('../../components/programa/ProgramaBachillerato.astro')).default,
-  maestria:         (await import('../../components/programa/ProgramaMaestria.astro')).default,
-  tecnico:          (await import('../../components/programa/ProgramaTecnico.astro')).default,
-  ruta_corporativa: (await import('../../components/programa/ProgramaCorporativo.astro')).default,
+// Competencias agrupadas por curso; las que no tienen curso son "generales".
+const competenciasPorCurso = new Map<string, CompetenciaDato[]>()
+const competenciasGenerales: CompetenciaDato[] = []
+for (const co of row.competencias ?? []) {
+  const dato: CompetenciaDato = {
+    nombre:          co.nombre,
+    descripcion:     co.descripcion,
+    microcredencial: co.microcredencial,
+    sfiaCodigo:      co.sfiaCodigo,
+    sfiaNivel:       co.sfiaNivel,
+  }
+  if (co.cursoId) {
+    if (!competenciasPorCurso.has(co.cursoId)) competenciasPorCurso.set(co.cursoId, [])
+    competenciasPorCurso.get(co.cursoId)!.push(dato)
+  } else {
+    competenciasGenerales.push(dato)
+  }
 }
-const LayoutPrograma = layouts[programa.tipo]
+
+// Cursos cuatrimestrales (tipo 'curso', con cuatrimestre y horas).
+const cursos: CursoDato[] = (row.cursos ?? [])
+  .filter(c => c.tipo === 'curso')
+  .map(c => ({
+    codigo:         c.codigo,
+    nombre:         c.nombre,
+    cuatrimestre:   c.cuatrimestre ?? c.secuencia,
+    orden:          c.orden,
+    creditos:       c.creditos,
+    horasLectivas:  c.horasLectivas,
+    horasPracticas: c.horasPracticas,
+    horasEstudio:   c.horasEstudio,
+  }))
+
+// Unidades modulares (microciclos / módulos 360) con sus competencias.
+const unidades: UnidadDato[] = (row.cursos ?? [])
+  .filter(c => c.tipo === 'microciclo' || c.tipo === 'modulo_360')
+  .map(c => ({
+    codigo:       c.codigo,
+    nombre:       c.nombre,
+    secuencia:    c.secuencia,
+    orden:        c.orden,
+    descripcion:  c.descripcion,
+    competencias: competenciasPorCurso.get(c.id) ?? [],
+  }))
+
+const programa: ProgramaDetalle = {
+  titulo:                row.titulo,
+  descripcion:           row.descripcion,
+  modalidad:             row.modalidad,
+  nivel:                 row.nivel,
+  nivelCredencial:       row.nivelCredencial,
+  duracionCuatrimestres: row.duracionCuatrimestres,
+  totalMicrociclos:      row.totalMicrociclos,
+  duracionHoras:         row.duracionHoras,
+  microcredencial:       row.microcredencial,
+  objetivo:              row.objetivo,
+  perfilEgresado:        row.perfilEgresado,
+  tecnologias:           (row.tecnologias ?? []) as string[],
+  area:                  row.area ? { nombre: row.area.nombre, slug: row.area.slug } : null,
+  prerequisito,
+  cursos,
+  unidades,
+  competenciasGenerales,
+}
 ---
-<LayoutPrograma programa={programa} />
+
+{programa.modalidad === 'cuatrimestral' && <ProgramaCuatrimestral programa={programa} />}
+{(programa.modalidad === 'path' || programa.modalidad === 'curso_360') && <ProgramaModular programa={programa} />}
+{programa.modalidad === 'curso_continuo' && <ProgramaContinuo programa={programa} />}
