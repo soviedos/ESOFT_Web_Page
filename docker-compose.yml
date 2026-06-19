@@ -1,6 +1,7 @@
 services:
   postgres:
-    image: postgres:16-alpine
+    # Imagen oficial de pgvector sobre PostgreSQL 16 (incluye la extensión vector).
+    image: pgvector/pgvector:pg16
     container_name: esoft_postgres
     restart: unless-stopped
     environment:
