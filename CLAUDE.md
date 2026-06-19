@@ -122,7 +122,7 @@ docker compose --profile dev up -d     # + pgadmin en :5050
 
 ### Implementado
 - **Autenticación:** UI de login en `/login` (`src/pages/login.astro`) conectada a `/api/auth/login` y `/api/auth/logout`. JWT con `jose` en cookie `esoft_session` (`HttpOnly`, `SameSite=Strict`). Secretos validados vía `astro:env/server`.
-- **Panel admin:** `/admin` y `/admin/programas` (índice, `nuevo`, `[id]`) para gestionar programas. `POST /api/programas` requiere rol `admin`.
+- **Panel admin:** `/admin` y `/admin/programas` (índice, `nuevo`, `[id]`, `[id]/plan`) para gestionar programas y su plan de estudios. El alta/edición pasa por el camino server-side del admin (`src/lib/programa-write.ts`), no por la API REST. `GET /api/programas` es una API pública de solo lectura.
 - **Perfil de docente self-service:** `/docentes/perfil` (`src/pages/docentes/perfil.astro`); `GET`/`PATCH /api/docentes/[id]` requieren autenticación.
 - **Routing dinámico:** programas y rutas servidos desde BD vía `[slug].astro` (ver sección Routing).
 - **Despliegue:** Docker Compose (postgres, app, pgadmin). AWS Amplify descontinuado — no quedan archivos `amplify*` en el repo.
