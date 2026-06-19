@@ -4,120 +4,68 @@ import { db } from '../../db/client'
 import { programas } from '../../db/schema'
 import { eq } from 'drizzle-orm'
 
-const todos = await db.select({
-  id:                    programas.id,
-  slug:                  programas.slug,
-  titulo:                programas.titulo,
-  modalidad:             programas.modalidad,
-  descripcion:           programas.descripcion,
-  duracionCuatrimestres: programas.duracionCuatrimestres,
-  totalMicrociclos:      programas.totalMicrociclos,
-  duracionHoras:         programas.duracionHoras,
-}).from(programas).where(eq(programas.activo, true))
+const todos = await db.select({ modalidad: programas.modalidad })
+  .from(programas).where(eq(programas.activo, true))
 
-const cuatrimestrales = todos.filter(p => p.modalidad === 'cuatrimestral')
-const paths           = todos.filter(p => p.modalidad === 'path')
-const cursos360       = todos.filter(p => p.modalidad === 'curso_360')
-const cursosContinuos = todos.filter(p => p.modalidad === 'curso_continuo')
+const cuatri = todos.filter(p => p.modalidad === 'cuatrimestral').length
+const micros = todos.filter(p => p.modalidad !== 'cuatrimestral').length
+
+const modalidades = [
+  {
+    href: '/programas/cuatrimestrales',
+    eyebrow: 'Formación titulada',
+    titulo: 'Cuatrimestrales',
+    descripcion: 'Programas titulados por cuatrimestres: técnicos, bachillerato y maestrías. La ruta formal hacia un grado académico en ingeniería de software.',
+    bullets: ['Técnicos', 'Bachillerato', 'Maestrías'],
+    conteo: cuatri,
+    unidad: cuatri === 1 ? 'programa' : 'programas',
+  },
+  {
+    href: '/programas/microciclos',
+    eyebrow: 'Formación modular',
+    titulo: 'Microciclos',
+    descripcion: 'Aprendizaje flexible por microciclos: rutas de conocimiento, cursos 360 y cursos de aprendizaje continuo. Sumá competencias y microcredenciales a tu ritmo.',
+    bullets: ['Rutas de conocimiento', 'Cursos 360', 'Cursos de aprendizaje continuo'],
+    conteo: micros,
+    unidad: micros === 1 ? 'programa' : 'programas',
+  },
+]
 ---
 
 <Base
   title="Programas académicos"
-  description="Oferta académica de ESOFT: maestrías, bachillerato, técnicos cuatrimestrales y técnicos ágiles. Formación en software, IA, testing y UX."
+  description="Oferta académica de ESOFT: programas cuatrimestrales titulados y microciclos modulares en software, IA, testing, UX y arquitectura."
 >
   <section class="relative py-12 md:py-20 px-6">
     <div class="max-w-6xl mx-auto">
       <h1 class="text-3xl md:text-5xl font-bold tracking-tight mb-4">Programas académicos</h1>
       <p class="text-content-secondary text-base md:text-lg max-w-3xl">
-        Formación especializada en software, IA, testing, UX y arquitectura.
-        Elegí el programa que se adapta a tus metas.
+        Dos modalidades para construir tu camino en ingeniería de software: formación titulada
+        por cuatrimestres o aprendizaje modular por microciclos. Elegí cómo querés avanzar.
       </p>
     </div>
   </section>
 
-  {cuatrimestrales.length > 0 && (
-    <section class="max-w-6xl mx-auto px-6 pb-14">
-      <h2 class="text-xl md:text-2xl font-bold mb-6 text-content">Programas cuatrimestrales</h2>
-      <div class="grid grid-cols-1 md:grid-cols-2 gap-5">
-        {cuatrimestrales.map(p => (
-          <a href={`/programas/${p.slug}`}
-             class="card-premium rounded-[20px] p-7 flex flex-col gap-3 no-underline">
-            <span class="text-[11px] font-bold uppercase tracking-widest text-brand">Cuatrimestral · {p.duracionCuatrimestres} cuatrimestres</span>
-            <h3 class="text-[17px] font-bold text-content leading-snug">{p.titulo}</h3>
-            <p class="text-[14px] text-content-secondary leading-[1.75] flex-1">{p.descripcion}</p>
-            <span class="link-arrow mt-1">Ver programa <svg viewBox="0 0 14 14" fill="none"><path d="M1 7h12M8 2l5 5-5 5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
-          </a>
-        ))}
-      </div>
-    </section>
-  )}
-
-  {paths.length > 0 && (
-    <section class="max-w-6xl mx-auto px-6 pb-14 border-t border-border-subtle pt-12">
-      <h2 class="text-xl md:text-2xl font-bold mb-2 text-content">Paths de microciclos</h2>
-      <p class="text-content-secondary text-[14px] mb-8">
-        Formación fundacional por microciclos. Base común para las rutas de conocimiento.
-      </p>
-      <div class="grid grid-cols-1 md:grid-cols-2 gap-5">
-        {paths.map(p => (
-          <a href={`/programas/${p.slug}`}
-             class="card-premium rounded-[20px] p-6 flex flex-col gap-3 no-underline">
-            <span class="text-[11px] font-bold uppercase tracking-widest text-accent2">Path · {p.totalMicrociclos} microciclos</span>
-            <h3 class="text-[15px] font-bold text-content leading-snug">{p.titulo}</h3>
-            <p class="text-[13px] text-content-secondary leading-[1.75] flex-1">{p.descripcion}</p>
-            <span class="link-arrow mt-1 text-[13px]">Ver path <svg viewBox="0 0 14 14" fill="none"><path d="M1 7h12M8 2l5 5-5 5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
-          </a>
-        ))}
-      </div>
-    </section>
-  )}
-
-  {cursos360.length > 0 && (
-    <section class="max-w-6xl mx-auto px-6 pb-14 border-t border-border-subtle pt-12">
-      <h2 class="text-xl md:text-2xl font-bold mb-2 text-content">Cursos 360</h2>
-      <p class="text-content-secondary text-[14px] mb-8">
-        Especializaciones por módulos. Profundización aplicada sobre una tecnología o dominio.
-      </p>
-      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
-        {cursos360.map(p => (
-          <a href={`/programas/${p.slug}`}
-             class="card-premium rounded-[20px] p-6 flex flex-col gap-3 no-underline">
-            <span class="text-[11px] font-bold uppercase tracking-widest text-brand">Curso 360 · {p.totalMicrociclos} módulos</span>
-            <h3 class="text-[15px] font-bold text-content leading-snug">{p.titulo}</h3>
-            <p class="text-[13px] text-content-secondary leading-[1.75] flex-1 line-clamp-3">{p.descripcion}</p>
-            <span class="link-arrow mt-1 text-[13px]">Ver programa <svg viewBox="0 0 14 14" fill="none"><path d="M1 7h12M8 2l5 5-5 5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
-          </a>
-        ))}
-      </div>
-    </section>
-  )}
-
-  {cursosContinuos.length > 0 && (
-    <section class="max-w-6xl mx-auto px-6 pb-20 border-t border-border-subtle pt-12">
-      <h2 class="text-xl md:text-2xl font-bold mb-2 text-content">Cursos continuos</h2>
-      <p class="text-content-secondary text-[14px] mb-8">
-        Formación corta y puntual sobre una competencia específica.
-      </p>
-      <div class="grid grid-cols-1 md:grid-cols-2 gap-5">
-        {cursosContinuos.map(p => (
-          <a href={`/programas/${p.slug}`}
-             class="card-premium rounded-[20px] p-6 flex flex-col gap-3 no-underline">
-            <span class="text-[11px] font-bold uppercase tracking-widest text-accent2">Curso continuo · {p.duracionHoras} horas</span>
-            <h3 class="text-[15px] font-bold text-content leading-snug">{p.titulo}</h3>
-            <p class="text-[13px] text-content-secondary leading-[1.75] flex-1">{p.descripcion}</p>
-            <span class="link-arrow mt-1 text-[13px]">Ver programa <svg viewBox="0 0 14 14" fill="none"><path d="M1 7h12M8 2l5 5-5 5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
-          </a>
-        ))}
-      </div>
-    </section>
-  )}
-
-  {todos.length === 0 && (
-    <section class="max-w-6xl mx-auto px-6 py-20 text-center">
-      <p class="text-content-muted text-[15px]">
-        No hay programas disponibles. Volvé pronto.
-      </p>
-    </section>
-  )}
-
+  <section class="max-w-6xl mx-auto px-6 pb-20 md:pb-28">
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+      {modalidades.map(m => (
+        <a href={m.href} class="card-premium rounded-[20px] p-8 md:p-10 flex flex-col gap-4 no-underline group">
+          <span class="text-[11px] font-bold uppercase tracking-widest text-brand">{m.eyebrow}</span>
+          <h2 class="text-2xl md:text-3xl font-bold text-content tracking-tight">{m.titulo}</h2>
+          <p class="text-[15px] text-content-secondary leading-[1.8] flex-1">{m.descripcion}</p>
+          <ul class="flex flex-wrap gap-2 mt-1">
+            {m.bullets.map(b => (
+              <li class="rounded-full border border-border-default bg-brand-soft/30 px-3 py-1 text-[12.5px] font-medium text-content-secondary">{b}</li>
+            ))}
+          </ul>
+          <div class="flex items-center justify-between mt-3 pt-4 border-t border-border-subtle">
+            <span class="text-[13px] text-content-muted">{m.conteo} {m.unidad} disponibles</span>
+            <span class="link-arrow text-[14px]">
+              Explorar <svg viewBox="0 0 14 14" fill="none"><path d="M1 7h12M8 2l5 5-5 5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            </span>
+          </div>
+        </a>
+      ))}
+    </div>
+  </section>
 </Base>

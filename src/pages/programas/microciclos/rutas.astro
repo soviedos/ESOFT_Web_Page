@@ -1,0 +1,34 @@
+---
+import Base from '../../../layouts/Base.astro'
+import ModalidadListing from '../../../components/sections/ModalidadListing.astro'
+import { db } from '../../../db/client'
+import { programas } from '../../../db/schema'
+import { and, eq } from 'drizzle-orm'
+
+const rows = await db.select({
+  slug:             programas.slug,
+  titulo:           programas.titulo,
+  descripcion:      programas.descripcion,
+  totalMicrociclos: programas.totalMicrociclos,
+}).from(programas).where(and(eq(programas.activo, true), eq(programas.modalidad, 'path')))
+
+const items = rows.map(p => ({
+  slug: p.slug,
+  titulo: p.titulo,
+  descripcion: p.descripcion,
+  meta: p.totalMicrociclos ? `Ruta · ${p.totalMicrociclos} microciclos` : 'Ruta de conocimiento',
+}))
+---
+
+<Base
+  title="Rutas de conocimiento"
+  description="Rutas de conocimiento de ESOFT: itinerarios fundacionales por microciclos que construyen una base común para especializarte."
+>
+  <ModalidadListing
+    breadcrumbLabel="Rutas de conocimiento"
+    eyebrow="Microciclos · Fundacional"
+    titulo="Rutas de conocimiento"
+    intro="Las rutas de conocimiento son itinerarios fundacionales organizados por microciclos. Te dan una base sólida y común sobre la que después construís especializaciones más profundas. Cada microciclo otorga competencias verificables y se conecta con el siguiente para que avances con un orden claro, sin atajos ni vacíos."
+    items={items}
+  />
+</Base>

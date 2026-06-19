@@ -1,0 +1,93 @@
+---
+import Base from '../../layouts/Base.astro'
+import { db } from '../../db/client'
+import { programas } from '../../db/schema'
+import { and, eq } from 'drizzle-orm'
+
+const NIVELES = [
+  { value: 'tecnico',      label: 'Técnicos' },
+  { value: 'bachillerato', label: 'Bachillerato' },
+  { value: 'maestria',     label: 'Maestrías' },
+] as const
+
+const nivelParam = Astro.url.searchParams.get('nivel')
+const nivelActivo = NIVELES.some(n => n.value === nivelParam) ? nivelParam : null
+
+const lista = await db.select({
+  slug:                  programas.slug,
+  titulo:                programas.titulo,
+  nivel:                 programas.nivel,
+  descripcion:           programas.descripcion,
+  duracionCuatrimestres: programas.duracionCuatrimestres,
+}).from(programas).where(
+  nivelActivo
+    ? and(eq(programas.activo, true), eq(programas.modalidad, 'cuatrimestral'), eq(programas.nivel, nivelActivo as any))
+    : and(eq(programas.activo, true), eq(programas.modalidad, 'cuatrimestral'))
+)
+
+const nivelLabel: Record<string, string> = {
+  tecnico: 'Técnico', bachillerato: 'Bachillerato', maestria: 'Maestría',
+}
+---
+
+<Base
+  title="Programas cuatrimestrales"
+  description="Programas titulados de ESOFT por cuatrimestres: técnicos, bachillerato y maestrías en ingeniería de software."
+>
+  <section class="relative py-12 md:py-20 px-6">
+    <div class="max-w-6xl mx-auto">
+      <nav class="text-[13px] text-content-muted mb-5" aria-label="Ruta de navegación">
+        <a href="/programas" class="hover:text-content transition-colors">Programas</a>
+        <span class="mx-2">/</span>
+        <span class="text-content-secondary">Cuatrimestrales</span>
+      </nav>
+      <span class="text-[11px] font-bold uppercase tracking-widest text-brand">Formación titulada</span>
+      <h1 class="text-3xl md:text-5xl font-bold tracking-tight mt-2 mb-4">Programas cuatrimestrales</h1>
+      <p class="text-content-secondary text-base md:text-lg max-w-3xl">
+        Formación titulada por cuatrimestres. Avanzá desde un técnico hasta un bachillerato o una
+        maestría en ingeniería de software, con planes de estudio estructurados y acreditados.
+      </p>
+    </div>
+  </section>
+
+  <section class="max-w-6xl mx-auto px-6 pb-20 md:pb-28">
+    <!-- Filtro por nivel -->
+    <div class="flex flex-wrap gap-2.5 mb-9" role="group" aria-label="Filtrar por nivel">
+      <a href="/programas/cuatrimestrales"
+         class:list={[
+           'rounded-full px-4 py-2 text-[13.5px] font-medium border transition-colors',
+           !nivelActivo ? 'bg-brand text-white border-brand' : 'border-border-default text-content-secondary hover:text-content hover:border-brand-soft',
+         ]}>
+        Todos
+      </a>
+      {NIVELES.map(n => (
+        <a href={`/programas/cuatrimestrales?nivel=${n.value}`}
+           class:list={[
+             'rounded-full px-4 py-2 text-[13.5px] font-medium border transition-colors',
+             nivelActivo === n.value ? 'bg-brand text-white border-brand' : 'border-border-default text-content-secondary hover:text-content hover:border-brand-soft',
+           ]}>
+          {n.label}
+        </a>
+      ))}
+    </div>
+
+    {lista.length > 0 ? (
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-5">
+        {lista.map(p => (
+          <a href={`/programas/${p.slug}`} class="card-premium rounded-[20px] p-7 flex flex-col gap-3 no-underline">
+            <span class="text-[11px] font-bold uppercase tracking-widest text-brand">
+              {p.nivel ? nivelLabel[p.nivel] : 'Cuatrimestral'}{p.duracionCuatrimestres ? ` · ${p.duracionCuatrimestres} cuatrimestres` : ''}
+            </span>
+            <h3 class="text-[17px] font-bold text-content leading-snug">{p.titulo}</h3>
+            <p class="text-[14px] text-content-secondary leading-[1.75] flex-1">{p.descripcion}</p>
+            <span class="link-arrow mt-1">Ver programa <svg viewBox="0 0 14 14" fill="none"><path d="M1 7h12M8 2l5 5-5 5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+          </a>
+        ))}
+      </div>
+    ) : (
+      <p class="text-content-muted text-[15px] py-12 text-center">
+        No hay programas cuatrimestrales{nivelActivo ? ` de nivel ${nivelLabel[nivelActivo].toLowerCase()}` : ''} disponibles por ahora.
+      </p>
+    )}
+  </section>
+</Base>

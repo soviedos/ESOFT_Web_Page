@@ -1,5 +1,13 @@
 ---
 import Base from '../../layouts/Base.astro';
+import { db } from '../../db/client';
+import { programas } from '../../db/schema';
+import { eq } from 'drizzle-orm';
+
+const opcionesPrograma = await db.select({
+  slug:   programas.slug,
+  titulo: programas.titulo,
+}).from(programas).where(eq(programas.activo, true)).orderBy(programas.titulo);
 ---
 
 <Base title="Solicitar información" description="Solicitá información sobre los programas de ESOFT.">
@@ -45,15 +53,9 @@ import Base from '../../layouts/Base.astro';
             <label for="programa" class="block text-sm font-medium text-content-secondary mb-1">Programa de interés</label>
             <select id="programa" name="programa" class="w-full rounded-md border border-border-default bg-bg-tertiary text-content px-3 py-2 text-sm placeholder:text-content-disabled focus:outline-none focus:ring-2 focus:ring-brand focus:border-transparent">
               <option value="">Seleccioná un programa</option>
-              <option value="bachillerato-ingenieria-software">Bachillerato en Ingeniería de Software</option>
-              <option value="tecnico-ingenieria-software">Técnico en Ingeniería de Software</option>
-              <option value="tecnico-desarrollo-web-avanzado">Técnico en Desarrollo Web Avanzado</option>
-              <option value="tecnico-diseno-grafico-web-ux">Diseño Gráfico Web y UX</option>
-              <option value="testing-manual-software">Testing Manual de Software</option>
-              <option value="automatizacion-pruebas-software">Automatización de Pruebas</option>
-              <option value="testing-software-ia">Testing con IA y Sistemas Inteligentes</option>
-              <option value="maestria-software-ia">Maestría en Ingeniería de Software e IA</option>
-              <option value="maestria-arquitectura">Maestría en Arquitectura y Diseño de Software</option>
+              {opcionesPrograma.map((p) => (
+                <option value={p.slug}>{p.titulo}</option>
+              ))}
             </select>
           </div>
           <div>
