@@ -25,13 +25,16 @@
     "astro": "^6.1.1",
     "drizzle-orm": "^0.45.2",
     "jose": "^6.2.3",
+    "marked": "^18.0.5",
     "pg": "^8.21.0",
+    "sanitize-html": "^2.17.5",
     "tailwindcss": "^4.2.2"
   },
   "devDependencies": {
     "@astrojs/check": "^0.9.9",
     "@astrojs/sitemap": "^3.7.3",
     "@types/pg": "^8.20.0",
+    "@types/sanitize-html": "^2.16.1",
     "drizzle-kit": "^0.31.10",
     "tsx": "^4.19.3",
     "typescript": "^5.9.3"

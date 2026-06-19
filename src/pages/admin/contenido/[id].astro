@@ -76,8 +76,15 @@ const fmt = (d: Date) => new Date(d).toLocaleString('es-CR', { dateStyle: 'long'
     <div>
       <label for="cuerpo" class={LABEL}>Cuerpo <span class="text-accent2">*</span></label>
       <textarea id="cuerpo" name="cuerpo" required rows="10"
-                class={`${INPUT} resize-y leading-[1.7]`}>{bloque.cuerpo ?? ''}</textarea>
-      <p class="text-[12px] text-content-muted mt-1.5">Separá los párrafos con una línea en blanco.</p>
+                class={`${INPUT} resize-y leading-[1.7] font-mono`}>{bloque.cuerpo ?? ''}</textarea>
+      <p class="text-[12px] text-content-muted mt-1.5">
+        Soporta <strong class="font-semibold text-content-secondary">Markdown</strong>:
+        negritas <code class="text-[11px] bg-bg-tertiary px-1 py-0.5 rounded">**texto**</code>,
+        listas (<code class="text-[11px] bg-bg-tertiary px-1 py-0.5 rounded">- item</code>),
+        enlaces <code class="text-[11px] bg-bg-tertiary px-1 py-0.5 rounded">[texto](https://…)</code>
+        y encabezados (<code class="text-[11px] bg-bg-tertiary px-1 py-0.5 rounded">## Título</code>).
+        Separá los párrafos con una línea en blanco.
+      </p>
     </div>
 
     <p class="text-[12px] text-content-muted">Última actualización: {fmt(bloque.actualizadoEn)}</p>
