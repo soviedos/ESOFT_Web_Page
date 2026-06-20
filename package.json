@@ -19,7 +19,8 @@
     "ai:test": "node --env-file=.env --import tsx scripts/ai-test.ts",
     "ai:reindex": "node --env-file=.env --import tsx scripts/ai-reindex.ts",
     "ai:search": "node --env-file=.env --import tsx scripts/ai-search.ts",
-    "ai:asesor": "node --env-file=.env --import tsx scripts/ai-asesor.ts"
+    "ai:asesor": "node --env-file=.env --import tsx scripts/ai-asesor.ts",
+    "ai:extraer": "node --env-file=.env --import tsx scripts/ai-extraer.ts"
   },
   "dependencies": {
     "@astrojs/node": "^10.1.3",
