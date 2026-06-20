@@ -1,0 +1,286 @@
+---
+import Admin from '../../../layouts/Admin.astro'
+import { requireAuth } from '../../../lib/auth'
+import { db } from '../../../db/client'
+import { areasCurriculares } from '../../../db/schema'
+import { eq } from 'drizzle-orm'
+import { MODALIDAD_CONFIG } from '../../../lib/modalidades'
+import { nivelLabel, nivelCredencialLabel } from '../../../lib/labels'
+import {
+  extraerProgramas, resolverPrograma, mapearYPersistir,
+  type ProgramaExtraido, type ResolucionPrograma, type ResultadoImportacion,
+} from '../../../lib/ingesta'
+
+const user = await requireAuth(Astro.request, 'admin')
+if (!user) return Astro.redirect('/login?next=/admin/programas/importar')
+
+const areas = await db.select({ id: areasCurriculares.id, slug: areasCurriculares.slug, nombre: areasCurriculares.nombre })
+  .from(areasCurriculares).where(eq(areasCurriculares.activo, true)).orderBy(areasCurriculares.nombre)
+
+let paso: 1 | 2 | 3 = 1
+let error = ''
+let documento = ''
+let revision: { ex: ProgramaExtraido; res: ResolucionPrograma }[] = []
+let resultados: ResultadoImportacion[] = []
+
+const MODALIDAD_LABEL = (m: string | null) => (m && MODALIDAD_CONFIG[m]?.label) || m || '—'
+const usaArea = (m: string | null) => !!(m && MODALIDAD_CONFIG[m]?.campos.area)
+
+if (Astro.request.method === 'POST') {
+  const form = await Astro.request.formData()
+  const accion = form.get('_paso')
+
+  if (accion === 'analizar') {
+    const archivo = form.get('archivo')
+    if (archivo instanceof File && archivo.size > 0) documento = await archivo.text()
+    else documento = ((form.get('documento') as string) ?? '').trim()
+
+    if (!documento) {
+      error = 'Pegá el documento o subí un archivo .md.'
+    } else {
+      try {
+        const extraidos = await extraerProgramas(documento)
+        if (extraidos.length === 0) {
+          error = 'No se detectaron programas en el documento. Revisá el formato (bloques “#” separados por “---”).'
+        } else {
+          const resoluciones = await Promise.all(extraidos.map(resolverPrograma))
+          revision = extraidos.map((ex, i) => ({ ex, res: resoluciones[i] }))
+          paso = 2
+        }
+      } catch (err: any) {
+        error = 'No se pudo analizar el documento. Probá de nuevo en un momento.'
+        console.error('[ingesta] analizar:', err?.message ?? err)
+      }
+    }
+  } else if (accion === 'importar') {
+    const total = parseInt((form.get('total') as string) ?? '0', 10) || 0
+    for (let i = 0; i < total; i++) {
+      if (!form.get(`incluir_${i}`)) continue
+      const raw = form.get(`extraido_${i}`) as string
+      if (!raw) continue
+      let ex: ProgramaExtraido
+      try { ex = JSON.parse(raw) } catch { continue }
+
+      // Aplicar ediciones del revisor.
+      const tituloEdit = ((form.get(`titulo_${i}`) as string) ?? '').trim()
+      if (tituloEdit) ex.titulo = tituloEdit
+      if (usaArea(ex.modalidad)) {
+        const areaSel = (form.get(`area_${i}`) as string) ?? ''
+        ex.area = areaSel || null
+      }
+
+      resultados.push(await mapearYPersistir(ex))
+    }
+    paso = 3
+  }
+}
+
+const INPUT = 'w-full rounded-xl border border-border-default bg-bg-tertiary text-content px-4 py-2.5 text-[14px] focus:outline-none focus:ring-2 focus:ring-brand transition-colors'
+const LABEL = 'block text-[13px] font-medium text-content-secondary mb-1.5'
+---
+
+<Admin user={user} title="Importar programas">
+
+  <div class="mb-6 flex items-center justify-between">
+    <a href="/admin/programas" class="text-[13px] text-content-muted hover:text-brand transition-colors">← Volver a programas</a>
+    <div class="flex items-center gap-2 text-[12px] text-content-muted">
+      <span class={paso === 1 ? 'text-brand font-semibold' : ''}>1 · Documento</span>
+      <span>›</span>
+      <span class={paso === 2 ? 'text-brand font-semibold' : ''}>2 · Revisión</span>
+      <span>›</span>
+      <span class={paso === 3 ? 'text-brand font-semibold' : ''}>3 · Resultado</span>
+    </div>
+  </div>
+
+  {error && (
+    <div role="alert"
+         class="mb-6 flex items-start gap-3 px-5 py-3.5 rounded-2xl text-[13px]"
+         style="background: rgba(200,31,102,0.06); border: 1px solid rgba(200,31,102,0.20); color: var(--color-accent-hover);">
+      <span class="shrink-0">⚠</span> {error}
+    </div>
+  )}
+
+  {/* ── PASO 1 ─────────────────────────────────────── */}
+  {paso === 1 && (
+    <form method="POST" enctype="multipart/form-data" class="bg-bg-secondary rounded-2xl border border-border-subtle p-8 space-y-6"
+          data-loading-form>
+      <input type="hidden" name="_paso" value="analizar" />
+
+      <div>
+        <h2 class="text-[18px] font-semibold text-content mb-1">Pegá el documento de programas</h2>
+        <p class="text-[13px] text-content-muted leading-[1.6]">
+          Cada programa es un bloque que empieza con <code class="text-[12px] bg-bg-tertiary px-1 py-0.5 rounded">#&nbsp;Título</code>,
+          separado del siguiente por una línea <code class="text-[12px] bg-bg-tertiary px-1 py-0.5 rounded">---</code>.
+          La línea <code class="text-[12px] bg-bg-tertiary px-1 py-0.5 rounded">Modalidad:</code> define qué campos aplican
+          (Cuatrimestral, Ruta de conocimiento, Curso 360, Curso continuo).
+        </p>
+      </div>
+
+      <div>
+        <label for="documento" class={LABEL}>Documento Markdown</label>
+        <textarea id="documento" name="documento" rows="14"
+                  placeholder={'# Técnico en…\nModalidad: Cuatrimestral\n…\n\n---\n\n# Ruta de…\nModalidad: Ruta de conocimiento\n…'}
+                  class={`${INPUT} resize-y font-mono text-[13px] leading-[1.6]`}>{documento}</textarea>
+      </div>
+
+      <div>
+        <label for="archivo" class={LABEL}>…o subí un archivo .md <span class="text-content-muted text-[12px]">(opcional)</span></label>
+        <input type="file" id="archivo" name="archivo" accept=".md,text/markdown,text/plain"
+               class="block text-[13px] text-content-secondary file:mr-3 file:rounded-lg file:border-0 file:bg-brand-soft file:text-brand file:px-3 file:py-1.5 file:text-[13px] file:font-medium" />
+      </div>
+
+      <div class="h-px bg-border-subtle"></div>
+
+      <div class="flex items-center gap-4">
+        <button type="submit" data-analizar
+                class="btn-primary bg-brand text-white font-semibold px-6 py-2.5 rounded-xl text-[14px] hover:bg-brand-hover transition-colors">
+          Analizar
+        </button>
+        <span data-loading class="hidden items-center gap-2 text-[13px] text-content-muted">
+          <span class="inline-block w-3.5 h-3.5 border-2 border-border-default border-t-brand rounded-full animate-spin"></span>
+          Analizando con IA… puede tardar unos segundos.
+        </span>
+      </div>
+    </form>
+  )}
+
+  {/* ── PASO 2 ─────────────────────────────────────── */}
+  {paso === 2 && (
+    <form method="POST" class="space-y-5" data-loading-form>
+      <input type="hidden" name="_paso" value="importar" />
+      <input type="hidden" name="total" value={revision.length} />
+
+      <p class="text-[14px] text-content">
+        Se detectaron <strong>{revision.length}</strong> {revision.length === 1 ? 'programa' : 'programas'}.
+        Revisá los datos y elegí cuáles importar. Se crearán en <strong>borrador</strong>.
+      </p>
+
+      {revision.map(({ ex, res }, i) => {
+        const v = res.valores
+        const areaSlugSel = areas.find(a => a.id === res.areaCurricularId)?.slug ?? ''
+        const dur = [
+          v?.duracionCuatrimestres != null ? `${v.duracionCuatrimestres} cuatrimestres` : null,
+          v?.totalMicrociclos != null ? `${v.totalMicrociclos} microciclos` : null,
+          v?.duracionHoras != null ? `${v.duracionHoras} h` : null,
+        ].filter(Boolean).join(' · ')
+        return (
+          <div class="bg-bg-secondary rounded-2xl border border-border-subtle p-6">
+            <input type="hidden" name={`extraido_${i}`} value={JSON.stringify(ex)} />
+
+            <div class="flex items-start justify-between gap-4 mb-4">
+              <label class="flex items-center gap-2.5 text-[13px] font-medium text-content cursor-pointer">
+                <input type="checkbox" name={`incluir_${i}`} checked={res.ok}
+                       class="w-4 h-4 rounded border-border-default accent-[color:var(--color-brand)]" />
+                Incluir
+              </label>
+              <span class="text-[11px] font-bold uppercase tracking-widest text-brand">{MODALIDAD_LABEL(res.modalidad)}</span>
+            </div>
+
+            {res.ok ? (
+              <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <div>
+                  <label for={`titulo_${i}`} class={LABEL}>Título</label>
+                  <input type="text" id={`titulo_${i}`} name={`titulo_${i}`} value={res.titulo} class={INPUT} />
+                </div>
+                {usaArea(res.modalidad) && (
+                  <div>
+                    <label for={`area_${i}`} class={LABEL}>Área</label>
+                    <select id={`area_${i}`} name={`area_${i}`} class={INPUT}>
+                      <option value="" selected={!areaSlugSel}>— Sin área —</option>
+                      {areas.map(a => (
+                        <option value={a.slug} selected={a.slug === areaSlugSel}>{a.nombre}</option>
+                      ))}
+                    </select>
+                  </div>
+                )}
+                <div class="md:col-span-2 flex flex-wrap gap-x-6 gap-y-1 text-[13px] text-content-secondary">
+                  {v?.nivel && <span>Nivel: <strong class="text-content">{nivelLabel[v.nivel] ?? v.nivel}</strong></span>}
+                  {v?.nivelCredencial && <span>Credencial: <strong class="text-content">{nivelCredencialLabel[v.nivelCredencial] ?? v.nivelCredencial}</strong></span>}
+                  {dur && <span>Duración: <strong class="text-content">{dur}</strong></span>}
+                  <span>Plan: <strong class="text-content">{res.numUnidades} unidades · {res.numCompetencias} competencias</strong></span>
+                </div>
+              </div>
+            ) : (
+              <p class="text-[14px] font-semibold text-content">{res.titulo}</p>
+            )}
+
+            {res.warnings.length > 0 && (
+              <ul class="mt-4 space-y-1.5">
+                {res.warnings.map(w => (
+                  <li class="flex items-start gap-2 text-[12.5px] text-accent2">
+                    <span class="shrink-0">⚠</span> {w}
+                  </li>
+                ))}
+              </ul>
+            )}
+          </div>
+        )
+      })}
+
+      <div class="flex items-center gap-4 pt-2">
+        <button type="submit" data-importar
+                class="btn-primary bg-accent2 text-white font-semibold px-6 py-2.5 rounded-xl text-[14px] hover:bg-accent-hover transition-colors">
+          Importar seleccionados
+        </button>
+        <a href="/admin/programas/importar" class="text-[13px] text-content-secondary hover:text-content transition-colors">Empezar de nuevo</a>
+        <span data-loading class="hidden items-center gap-2 text-[13px] text-content-muted">
+          <span class="inline-block w-3.5 h-3.5 border-2 border-border-default border-t-brand rounded-full animate-spin"></span>
+          Importando y vectorizando…
+        </span>
+      </div>
+    </form>
+  )}
+
+  {/* ── PASO 3 ─────────────────────────────────────── */}
+  {paso === 3 && (
+    <div class="space-y-5">
+      <div role="status"
+           class="flex items-center gap-3 px-5 py-3.5 rounded-2xl text-[13px]"
+           style="background: rgba(22,74,152,0.06); border: 1px solid rgba(22,74,152,0.18); color: var(--color-brand);">
+        ✓ Se importaron {resultados.filter(r => r.ok).length} de {resultados.length} programas (en borrador).
+      </div>
+
+      {resultados.map(r => (
+        <div class="bg-bg-secondary rounded-2xl border border-border-subtle p-5">
+          <div class="flex items-center justify-between gap-4">
+            <div class="flex items-center gap-2.5">
+              <span class={r.ok ? 'text-[#166534]' : 'text-accent2'}>{r.ok ? '✓' : '✗'}</span>
+              <span class="text-[14px] font-medium text-content">{r.titulo}</span>
+            </div>
+            {r.ok && r.programaId && (
+              <a href={`/admin/programas/${r.programaId}`}
+                 class="shrink-0 text-[13px] font-medium text-brand hover:text-brand-hover">Editar ficha →</a>
+            )}
+          </div>
+          {r.warnings.length > 0 && (
+            <ul class="mt-3 space-y-1.5">
+              {r.warnings.map(w => (
+                <li class="flex items-start gap-2 text-[12.5px] text-content-muted">
+                  <span class="shrink-0">⚠</span> {w}
+                </li>
+              ))}
+            </ul>
+          )}
+        </div>
+      ))}
+
+      <div class="flex items-center gap-4 pt-2">
+        <a href="/admin/programas" class="btn-primary bg-brand text-white font-semibold px-6 py-2.5 rounded-xl text-[14px]">Ver programas</a>
+        <a href="/admin/programas/importar" class="text-[13px] text-content-secondary hover:text-content transition-colors">Importar otro documento</a>
+      </div>
+    </div>
+  )}
+
+</Admin>
+
+<script>
+  // Estado de carga: deshabilita el botón y muestra el spinner al enviar.
+  document.querySelectorAll('form[data-loading-form]').forEach((form) => {
+    form.addEventListener('submit', () => {
+      const btn = form.querySelector('[data-analizar], [data-importar]') as HTMLButtonElement | null
+      const loading = form.querySelector('[data-loading]') as HTMLElement | null
+      if (btn) { btn.disabled = true; btn.classList.add('opacity-60', 'cursor-not-allowed') }
+      if (loading) { loading.classList.remove('hidden'); loading.classList.add('inline-flex') }
+    })
+  })
+</script>
