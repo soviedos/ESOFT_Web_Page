@@ -36,10 +36,16 @@ const MODALIDAD_LABEL: Record<string, string> =
     <p class="text-[13px] text-content-muted">
       {lista.length} {lista.length === 1 ? 'programa' : 'programas'} en total
     </p>
-    <a href="/admin/programas/nuevo"
-       class="btn-primary inline-flex items-center gap-2 bg-brand text-white text-[13px] font-medium px-4 py-2.5 rounded-xl">
-      + Nuevo programa
-    </a>
+    <div class="flex items-center gap-2.5">
+      <a href="/admin/programas/importar"
+         class="inline-flex items-center gap-2 border border-border-default text-content-secondary hover:text-content hover:border-brand text-[13px] font-medium px-4 py-2.5 rounded-xl transition-colors">
+        ↥ Importar desde documento
+      </a>
+      <a href="/admin/programas/nuevo"
+         class="btn-primary inline-flex items-center gap-2 bg-brand text-white text-[13px] font-medium px-4 py-2.5 rounded-xl">
+        + Nuevo programa
+      </a>
+    </div>
   </div>
 
   <!-- Tabla -->

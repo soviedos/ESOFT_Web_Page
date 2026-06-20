@@ -197,22 +197,40 @@ async function slugUnico(base: string): Promise<string> {
   return `${raiz}-${Date.now()}`
 }
 
+// Resultado de resolver un programa extraído contra la BD, SIN persistir.
+// Lo usa la previsualización del paso de revisión y también mapearYPersistir.
+export interface ResolucionPrograma {
+  ok: boolean
+  titulo: string
+  modalidad: string | null
+  areaCurricularId: string | null
+  prerequisitoId: string | null
+  valores: ProgramaValores | null
+  plan: PlanInput | null
+  numUnidades: number
+  numCompetencias: number
+  warnings: string[]
+}
+
 /**
- * Mapea un programa extraído al modelo de la BD y lo persiste como BORRADOR
- * (activo=false) junto con su plan. Resuelve área y prerequisito contra la BD,
- * valida los enums y acumula warnings sin frenar la importación.
+ * Resuelve un programa extraído al modelo de la BD (valida enums, resuelve área
+ * y prerequisito, arma valores y plan) acumulando warnings. NO persiste nada.
  */
-export async function mapearYPersistir(extraido: ProgramaExtraido): Promise<ResultadoImportacion> {
+export async function resolverPrograma(extraido: ProgramaExtraido): Promise<ResolucionPrograma> {
   const warnings: string[] = []
   const titulo = limpiar(extraido?.titulo) ?? ''
 
-  if (!titulo) {
-    return { ok: false, titulo: '(sin título)', warnings: ['El programa no tiene título.'] }
-  }
+  const vacio = (msg: string): ResolucionPrograma => ({
+    ok: false, titulo: titulo || '(sin título)', modalidad: null,
+    areaCurricularId: null, prerequisitoId: null, valores: null, plan: null,
+    numUnidades: 0, numCompetencias: 0, warnings: [msg],
+  })
+
+  if (!titulo) return vacio('El programa no tiene título.')
 
   // 1) Modalidad.
   if (!esModalidadValida(extraido.modalidad)) {
-    return { ok: false, titulo, warnings: [`Modalidad inválida: "${extraido.modalidad}".`] }
+    return vacio(`Modalidad inválida: "${extraido.modalidad}".`)
   }
   const modalidad = extraido.modalidad
   const cfg = MODALIDAD_CONFIG[modalidad]
@@ -331,14 +349,30 @@ export async function mapearYPersistir(extraido: ProgramaExtraido): Promise<Resu
 
   const plan: PlanInput = { unidades, competencias: compPrograma }
 
-  // 7) Persistir: crear BORRADOR + guardar plan (este último vectoriza).
+  return {
+    ok: true, titulo, modalidad,
+    areaCurricularId, prerequisitoId, valores, plan,
+    numUnidades: unidades.length,
+    numCompetencias: compPrograma.length + unidades.reduce((s, u) => s + u.competencias.length, 0),
+    warnings,
+  }
+}
+
+/**
+ * Resuelve y persiste un programa extraído como BORRADOR (activo=false) junto
+ * con su plan. guardarPlan dispara la vectorización best-effort.
+ */
+export async function mapearYPersistir(extraido: ProgramaExtraido): Promise<ResultadoImportacion> {
+  const r = await resolverPrograma(extraido)
+  if (!r.ok || !r.valores || !r.plan || !r.modalidad) {
+    return { ok: false, titulo: r.titulo, warnings: r.warnings }
+  }
   try {
-    const slug = await slugUnico(slugify(titulo))
-    const nuevo = await crearPrograma(modalidad, valores, slug)
-    await guardarPlan(nuevo.id, modalidad, plan)
-    return { ok: true, programaId: nuevo.id, slug: nuevo.slug, titulo, warnings }
+    const slug = await slugUnico(slugify(r.titulo))
+    const nuevo = await crearPrograma(r.modalidad, r.valores, slug)
+    await guardarPlan(nuevo.id, r.modalidad, r.plan)
+    return { ok: true, programaId: nuevo.id, slug: nuevo.slug, titulo: r.titulo, warnings: r.warnings }
   } catch (err: any) {
-    warnings.push(`Error al persistir: ${err?.message ?? err}`)
-    return { ok: false, titulo, warnings }
+    return { ok: false, titulo: r.titulo, warnings: [...r.warnings, `Error al persistir: ${err?.message ?? err}`] }
   }
 }
