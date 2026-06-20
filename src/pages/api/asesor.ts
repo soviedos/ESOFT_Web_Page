@@ -7,7 +7,43 @@ const json = (data: unknown, status = 200) =>
     headers: { 'Content-Type': 'application/json' },
   })
 
-export const POST: APIRoute = async ({ request }) => {
+// ── Rate-limit básico por IP (ventana deslizante) ────────────────────
+// En memoria: sirve para una sola instancia. Con varias instancias detrás de
+// un balanceador haría falta un store compartido (p. ej. Redis).
+const RATE_LIMIT = 15        // peticiones permitidas
+const RATE_WINDOW_MS = 60_000 // por ventana (1 minuto)
+const accesosPorIp = new Map<string, number[]>()
+
+function dentroDelLimite(ip: string): boolean {
+  const ahora = Date.now()
+  const previos = (accesosPorIp.get(ip) ?? []).filter(t => ahora - t < RATE_WINDOW_MS)
+  if (previos.length >= RATE_LIMIT) {
+    accesosPorIp.set(ip, previos)
+    return false
+  }
+  previos.push(ahora)
+  accesosPorIp.set(ip, previos)
+  // Limpieza oportunista para que el Map no crezca sin límite.
+  if (accesosPorIp.size > 5000) {
+    for (const [k, v] of accesosPorIp) {
+      if (v.every(t => ahora - t >= RATE_WINDOW_MS)) accesosPorIp.delete(k)
+    }
+  }
+  return true
+}
+
+export const POST: APIRoute = async ({ request, clientAddress }) => {
+  const ip = clientAddress
+    || request.headers.get('x-forwarded-for')?.split(',')[0]?.trim()
+    || 'desconocida'
+
+  if (!dentroDelLimite(ip)) {
+    return json(
+      { error: 'Estás enviando consultas muy seguido. Esperá un momento y volvé a intentar.' },
+      429,
+    )
+  }
+
   let body: any
   try {
     body = await request.json()
