@@ -1,7 +1,15 @@
 import { Type } from '@google/genai'
+import { eq } from 'drizzle-orm'
+import { db } from '../db/client'
+import { programas, areasCurriculares } from '../db/schema'
 import { generarJSON } from './gemini'
+import { MODALIDAD_CONFIG, esModalidadValida, slugify, type ProgramaValores } from './modalidades'
+import {
+  crearPrograma, guardarPlan,
+  type PlanInput, type PlanCompetenciaInput, type PlanUnidadInput,
+} from './programa-write'
 
-// ⚠️ SOLO SERVER-SIDE (usa la capa de IA).
+// ⚠️ SOLO SERVER-SIDE (usa la capa de IA y la BD).
 
 // ── Tipos de la extracción ───────────────────────────────────────────
 
@@ -153,4 +161,184 @@ export async function extraerProgramas(markdown: string): Promise<ProgramaExtrai
     throw new Error('La extracción no devolvió un arreglo de programas.')
   }
   return data as ProgramaExtraido[]
+}
+
+// ── Mapeo y persistencia ─────────────────────────────────────────────
+
+export interface ResultadoImportacion {
+  ok: boolean
+  programaId?: string
+  slug?: string
+  titulo: string
+  warnings: string[]
+}
+
+const NIVELES_VALIDOS = ['tecnico', 'bachillerato', 'maestria']
+const CREDENCIALES_VALIDAS = ['foundational', 'professional', 'advanced', 'expert']
+
+const limpiar = (s: unknown): string | null => {
+  const t = typeof s === 'string' ? s.trim() : (s == null ? '' : String(s).trim())
+  return t || null
+}
+
+// Genera un slug único en la BD (sufijo -2, -3… ante colisión).
+async function slugUnico(base: string): Promise<string> {
+  const raiz = base || 'programa'
+  let slug = raiz
+  let n = 1
+  // Bucle acotado por seguridad.
+  while (n < 1000) {
+    const [existe] = await db.select({ id: programas.id })
+      .from(programas).where(eq(programas.slug, slug)).limit(1)
+    if (!existe) return slug
+    n++
+    slug = `${raiz}-${n}`
+  }
+  return `${raiz}-${Date.now()}`
+}
+
+/**
+ * Mapea un programa extraído al modelo de la BD y lo persiste como BORRADOR
+ * (activo=false) junto con su plan. Resuelve área y prerequisito contra la BD,
+ * valida los enums y acumula warnings sin frenar la importación.
+ */
+export async function mapearYPersistir(extraido: ProgramaExtraido): Promise<ResultadoImportacion> {
+  const warnings: string[] = []
+  const titulo = limpiar(extraido?.titulo) ?? ''
+
+  if (!titulo) {
+    return { ok: false, titulo: '(sin título)', warnings: ['El programa no tiene título.'] }
+  }
+
+  // 1) Modalidad.
+  if (!esModalidadValida(extraido.modalidad)) {
+    return { ok: false, titulo, warnings: [`Modalidad inválida: "${extraido.modalidad}".`] }
+  }
+  const modalidad = extraido.modalidad
+  const cfg = MODALIDAD_CONFIG[modalidad]
+
+  // 2) nivel / nivelCredencial canónicos.
+  let nivel: string | null = null
+  const nivelRaw = limpiar(extraido.nivel)
+  if (nivelRaw) {
+    const v = nivelRaw.toLowerCase()
+    if (NIVELES_VALIDOS.includes(v)) nivel = v
+    else warnings.push(`Nivel no canónico ignorado: "${nivelRaw}".`)
+  }
+
+  let nivelCredencial: string | null = null
+  const credRaw = limpiar(extraido.nivelCredencial)
+  if (credRaw) {
+    const v = credRaw.toLowerCase()
+    if (CREDENCIALES_VALIDAS.includes(v)) nivelCredencial = v
+    else warnings.push(`Nivel de credencial no canónico ignorado: "${credRaw}".`)
+  }
+
+  // 3) Área (por slug o nombre, case-insensitive).
+  let areaCurricularId: string | null = null
+  const areaRaw = limpiar(extraido.area)
+  if (areaRaw && cfg.campos.area) {
+    const q = areaRaw.toLowerCase()
+    const qSlug = slugify(areaRaw)
+    const areas = await db.select({ id: areasCurriculares.id, slug: areasCurriculares.slug, nombre: areasCurriculares.nombre })
+      .from(areasCurriculares)
+    const match = areas.find(a =>
+      a.slug.toLowerCase() === q ||
+      a.nombre.trim().toLowerCase() === q ||
+      a.slug.toLowerCase() === qSlug ||
+      slugify(a.nombre) === qSlug,
+    )
+    if (match) areaCurricularId = match.id
+    else warnings.push(`Área "${areaRaw}" no encontrada.`)
+  } else if (areaRaw && !cfg.campos.area) {
+    warnings.push(`La modalidad ${modalidad} no usa área; "${areaRaw}" ignorada.`)
+  }
+
+  // 4) Prerequisito (por título, case-insensitive).
+  let prerequisitoId: string | null = null
+  const prereqRaw = limpiar(extraido.prerequisito)
+  if (prereqRaw && cfg.campos.prerequisito) {
+    const q = prereqRaw.toLowerCase()
+    const candidatos = await db.select({ id: programas.id, titulo: programas.titulo }).from(programas)
+    const match = candidatos.find(p => p.titulo.trim().toLowerCase() === q)
+    if (match) prerequisitoId = match.id
+    else warnings.push(`Prerequisito "${prereqRaw}" no encontrado.`)
+  }
+
+  // 5) Valores del programa (campos no aplicables a la modalidad → null). BORRADOR.
+  const valores: ProgramaValores = {
+    titulo,
+    descripcion:           limpiar(extraido.descripcion) ?? '',
+    objetivo:              limpiar(extraido.objetivo),
+    perfilEgresado:        limpiar(extraido.perfilEgresado),
+    tecnologias:           Array.isArray(extraido.tecnologias) ? extraido.tecnologias.map(t => String(t).trim()).filter(Boolean) : [],
+    activo:                false,
+    nivel:                 cfg.campos.nivel ? nivel : null,
+    duracionCuatrimestres: cfg.campos.duracionCuatrimestres ? (extraido.duracionCuatrimestres ?? null) : null,
+    areaCurricularId:      cfg.campos.area ? areaCurricularId : null,
+    nivelCredencial:       cfg.campos.nivelCredencial ? nivelCredencial : null,
+    totalMicrociclos:      cfg.campos.totalMicrociclos ? (extraido.totalMicrociclos ?? null) : null,
+    duracionHoras:         cfg.campos.duracionHoras ? (extraido.duracionHoras ?? null) : null,
+    prerequisitoId:        cfg.campos.prerequisito ? prerequisitoId : null,
+  }
+
+  // 6) Armar el plan: nestear competencias en su unidad por secuencia 1-based.
+  const tieneUnidades = cfg.plan.tipoUnidad !== null
+  const unidadesExtraidas = extraido.plan?.unidades ?? []
+  const competenciasExtraidas = extraido.plan?.competencias ?? []
+
+  const aCompetencia = (c: CompetenciaExtraida): PlanCompetenciaInput => ({
+    nombre:          limpiar(c.nombre) ?? '',
+    descripcion:     limpiar(c.descripcion),
+    sfiaCodigo:      limpiar(c.sfiaCodigo),
+    sfiaNivel:       c.sfiaNivel ?? null,
+    microcredencial: limpiar(c.microcredencial),
+  })
+
+  const compPorUnidad = new Map<number, PlanCompetenciaInput[]>()
+  const compPrograma: PlanCompetenciaInput[] = []
+  for (const c of competenciasExtraidas) {
+    const dato = aCompetencia(c)
+    if (!dato.nombre) continue
+    const idx = c.unidad
+    if (tieneUnidades && idx != null && idx >= 1 && idx <= unidadesExtraidas.length) {
+      if (!compPorUnidad.has(idx)) compPorUnidad.set(idx, [])
+      compPorUnidad.get(idx)!.push(dato)
+    } else {
+      if (tieneUnidades && idx != null) {
+        warnings.push(`Competencia "${dato.nombre}" referencia la unidad ${idx} (inexistente); se asignó al programa.`)
+      }
+      compPrograma.push(dato)
+    }
+  }
+
+  const unidades: PlanUnidadInput[] = tieneUnidades
+    ? unidadesExtraidas
+        .map((u, i): PlanUnidadInput => ({
+          codigo:         limpiar(u.codigo),
+          nombre:         limpiar(u.nombre) ?? '',
+          secuencia:      u.secuencia ?? null,
+          cuatrimestre:   u.cuatrimestre ?? null,
+          descripcion:    limpiar(u.descripcion),
+          horasLectivas:  u.horasLectivas ?? null,
+          horasPracticas: u.horasPracticas ?? null,
+          horasEstudio:   u.horasEstudio ?? null,
+          creditos:       u.creditos ?? null,
+          competencias:   compPorUnidad.get(i + 1) ?? [],
+        }))
+        .filter(u => u.nombre)
+    : []
+
+  const plan: PlanInput = { unidades, competencias: compPrograma }
+
+  // 7) Persistir: crear BORRADOR + guardar plan (este último vectoriza).
+  try {
+    const slug = await slugUnico(slugify(titulo))
+    const nuevo = await crearPrograma(modalidad, valores, slug)
+    await guardarPlan(nuevo.id, modalidad, plan)
+    return { ok: true, programaId: nuevo.id, slug: nuevo.slug, titulo, warnings }
+  } catch (err: any) {
+    warnings.push(`Error al persistir: ${err?.message ?? err}`)
+    return { ok: false, titulo, warnings }
+  }
 }

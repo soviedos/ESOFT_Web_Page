@@ -36,9 +36,9 @@ function valoresAColumnas(modalidad: string, v: ProgramaValores) {
   }
 }
 
-export async function crearPrograma(modalidad: string, v: ProgramaValores) {
+export async function crearPrograma(modalidad: string, v: ProgramaValores, slug?: string) {
   const [nuevo] = await db.insert(programas).values({
-    slug: slugify(v.titulo),
+    slug: slug ?? slugify(v.titulo),
     modalidad: modalidad as any,
     ...valoresAColumnas(modalidad, v),
   }).returning()
