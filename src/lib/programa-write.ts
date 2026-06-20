@@ -3,6 +3,18 @@ import { programas, cursos, competencias, bloquesContenido } from '../db/schema'
 import { eq } from 'drizzle-orm'
 import { slugify } from './utils'
 import { MODALIDAD_CONFIG, type ProgramaValores } from './modalidades'
+import { vectorizarPrograma } from './embeddings'
+
+// Reconstruye los chunks del RAG de un programa tras guardarlo.
+// BEST-EFFORT: si la IA falla (rate limit, key, red), se loguea un warning y
+// se continúa. La vectorización nunca debe bloquear ni romper el guardado.
+async function revectorizarBestEffort(programaId: string): Promise<void> {
+  try {
+    await vectorizarPrograma(programaId)
+  } catch (err: any) {
+    console.warn(`[rag] No se pudo vectorizar el programa ${programaId}: ${err?.message ?? err}`)
+  }
+}
 
 // ── Escritura de metadata del programa (único camino) ────────────────
 
@@ -30,6 +42,7 @@ export async function crearPrograma(modalidad: string, v: ProgramaValores) {
     modalidad: modalidad as any,
     ...valoresAColumnas(modalidad, v),
   }).returning()
+  await revectorizarBestEffort(nuevo.id)
   return nuevo
 }
 
@@ -54,6 +67,7 @@ export async function actualizarPrograma(id: string, modalidad: string, v: Progr
   await db.update(programas)
     .set({ ...valoresAColumnas(modalidad, v), updatedAt: new Date() })
     .where(eq(programas.id, id))
+  await revectorizarBestEffort(id)
 }
 
 // ── Plan de estudios (unidades + competencias) ───────────────────────
@@ -194,4 +208,8 @@ export async function guardarPlan(programaId: string, modalidad: string, plan: P
       })
     }
   })
+
+  // Tras persistir el plan, reconstruir los chunks (incluye unidades y
+  // competencias). Best-effort: no bloquea el guardado si la IA falla.
+  await revectorizarBestEffort(programaId)
 }
